@@ -3,7 +3,7 @@
 //
 // CreateConfiguration.java is part of ElectricCommander.
 //
-// Copyright (c) 2005-2010 Electric Cloud, Inc.
+// Copyright (c) 2005-2011 Electric Cloud, Inc.
 // All rights reserved.
 //
 
@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Anchor;
 
 import ecinternal.client.InternalFormBase;
 
-import ecinternal.client.ui.FormBuilderLoader;
+import ecinternal.client.ui.CustomEditorLoader;
 
 import com.electriccloud.commander.gwt.client.requests.CgiRequestProxy;
 import com.electriccloud.commander.gwt.client.requests.RunProcedureRequest;
@@ -60,9 +60,7 @@ public class CreateConfiguration
 
     @Override protected FormTable initializeFormTable()
     {
-        FormBuilder fb = getUIFactory().createFormBuilder();
-
-        return fb;
+        return getUIFactory().createFormBuilder();
     }
 
     @Override protected void load()
@@ -71,7 +69,7 @@ public class CreateConfiguration
 
         setStatus("Loading...");
 
-        FormBuilderLoader loader = new FormBuilderLoader(fb, this);
+        CustomEditorLoader loader = new CustomEditorLoader(fb, this);
 
         loader.setCustomEditorPath("/plugins/EC-IIS"
                 + "/project/ui_forms/IISCreateConfigForm");
