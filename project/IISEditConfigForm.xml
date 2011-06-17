@@ -1,0 +1,48 @@
+<editor>
+
+    <formElement>
+        <type>entry</type>
+        <label>IIS IP Address:</label>
+        <property>iis_url</property>
+        <value></value>
+        <documentation>IP Address of IIS Server. e.g. 192.168.1.100</documentation>
+        <required>1</required>
+    </formElement>
+    
+    <formElement>
+        <type>entry</type>
+        <label>IIS Port:</label>
+        <property>iis_port</property>
+        <value></value>
+        <documentation>IP Port of the IIS Server. If port is 80, leave the field blank.</documentation>
+        <required>0</required>
+    </formElement>
+    
+    <formElement>
+        <type>entry</type>
+        <label>Computer Name:</label>
+        <property>iis_computer</property>
+        <value>Computer name into scripts will be run. e.g. SRV01</value>
+        <documentation></documentation>
+        <required>0</required>
+    </formElement>
+    
+    <formElement>
+        <type>credential</type>
+        <label>Login as:</label>
+        <property>credential</property>
+        <value></value>
+        <required>0</required>
+    </formElement>
+    
+    <formElement>
+        <type>radio</type>
+        <label>IIS Version:</label>
+        <property>iisversion</property>
+        <required>0</required>
+        <documentation>Selects current IIS version that will be integrated through the plugin</documentation>
+        <option><name>6</name><value>iis6</value></option>
+        <option><name>7</name><value>iis7</value></option>
+    </formElement>
+    
+</editor>
