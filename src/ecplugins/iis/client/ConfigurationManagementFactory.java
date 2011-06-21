@@ -3,7 +3,7 @@
 //
 // ConfigurationManagementFactory.java is part of ElectricCommander.
 //
-// Copyright (c) 2005-2010 Electric Cloud, Inc.
+// Copyright (c) 2005-2011 Electric Cloud, Inc.
 // All rights reserved.
 //
 
@@ -11,18 +11,17 @@ package ecplugins.iis.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
-import com.electriccloud.commander.gwt.client.BrowserContext;
-import com.electriccloud.commander.gwt.client.Component;
-import com.electriccloud.commander.gwt.client.ComponentBaseFactory;
-
+import ecinternal.client.InternalComponentBaseFactory;
 import ecinternal.client.InternalFormBase;
 import ecinternal.client.PropertySheetEditor;
+
+import com.electriccloud.commander.gwt.client.BrowserContext;
+import com.electriccloud.commander.gwt.client.Component;
 
 import static com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder.createPageUrl;
 
 public class ConfigurationManagementFactory
-    extends ComponentBaseFactory
-
+    extends InternalComponentBaseFactory
 {
 
     //~ Methods ----------------------------------------------------------------
@@ -47,8 +46,8 @@ public class ConfigurationManagementFactory
                     "Edit IIS Configuration", configName, propSheetPath,
                     formXmlPath, getPluginName());
 
-            ((InternalFormBase) component).setDefaultRedirectToUrl(createPageUrl(
-                    getPluginName(), "configurations").buildString());
+            ((InternalFormBase) component).setDefaultRedirectToUrl(
+                createPageUrl(getPluginName(), "configurations").buildString());
         }
         else {
 

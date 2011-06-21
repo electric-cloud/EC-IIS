@@ -3,7 +3,7 @@
 //
 // ConfigurationList.java is part of ElectricCommander.
 //
-// Copyright (c) 2005-2010 Electric Cloud, Inc.
+// Copyright (c) 2005-2011 Electric Cloud, Inc.
 // All rights reserved.
 //
 
@@ -34,9 +34,10 @@ import com.electriccloud.commander.gwt.client.responses.RunProcedureResponse;
 import com.electriccloud.commander.gwt.client.ui.SimpleErrorBox;
 import com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder;
 
+import static ecinternal.client.InternalComponentBaseFactory.getPluginName;
+
 import static ecinternal.client.ui.ListTable.constructActionList;
 
-import static com.electriccloud.commander.gwt.client.ComponentBaseFactory.getPluginName;
 import static com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder.createPageUrl;
 import static com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder.createRedirectUrl;
 
