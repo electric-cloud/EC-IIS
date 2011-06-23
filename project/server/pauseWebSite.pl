@@ -211,11 +211,9 @@
             #set any additional error or warning conditions here
             #there may be cases in which an error occurs and the exit code is 0.
             #we want to set to correct outcome for the running step
-            if($content !~ m/Server cannot be stopped in its current state/){
-                
-                $ec->setProperty("/myJobStep/outcome", 'error');
-                
-            }
+            #if($content =~ m/Server cannot be stopped in its current state/){
+            #    $ec->setProperty("/myJobStep/outcome", 'error');
+            #}
             
         }else{
             $ec->setProperty("/myJobStep/outcome", 'error');
