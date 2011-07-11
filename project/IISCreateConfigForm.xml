@@ -30,8 +30,8 @@
         <type>entry</type>
         <label>Computer Name:</label>
         <property>iis_computer</property>
-        <value>Computer name into scripts will be run. e.g. SRV01</value>
-        <documentation></documentation>
+        <value></value>
+        <documentation>Computer name into scripts will be run. e.g. SRV01</documentation>
         <required>0</required>
     </formElement>
 
