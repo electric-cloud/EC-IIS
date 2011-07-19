@@ -1,189 +1,384 @@
+<!-- edited with XMLSpy v2007 sp1 (http://www.altova.com) by Edward Cardinal (Scheible Rassieur, Inc.) -->
 <helpDefinition>
-  <title>EC-IIS - Help</title>
-  <componentContainer>
-    <LINK REL="StyleSheet" HREF="../../plugins/EC-IIS/pluginhelp.css" TYPE="text/css" MEDIA="screen"/>
-    <div class="help" >
-    
-    <h1 class="help">EC-IIS</h1>
-
-    <h2 class="help">Overview</h2>
-        <p class="help">
-        This plugin allows users to interact with the Internet Information Services (IIS) server and accomplish tasks such as managing servers, web sites and virtual directories.
-        </p>
-    <p class="help">
-            <b>Supported IIS version</b><br/>
-            This plugin was developed and tested with IIS 6.0.
-       </p>
-
-    <h2 class="help">Configuration</h2>
-     <p class="help">
-               To enable Commander to communicate with your IIS installation, create a IIS configuration, 
-               supplying the following information:
-	</p>
-          <ul>
-          <li><b>Configuration Name</b> - Provide a unique name for the configuration, keeping in mind that you may need to create additional configurations over time.</li>
-          <li><b>IIS IP Address</b> - Provide the URL for the IIS server, it must include the protocol and port (example: http://192.168.1.100).</li>
-          <li><b>IIS Port</b> - Provide the port for the IIS server (example: 8081).</li>
-          <li><b>Computer Name</b> - Provide the computer name or IP address without backslashes (for example: server01 or 192.168.1.100).</li>
-          <li><b>Credential</b> - Provide the username and password for the IIS server.</li>
-          <li><b>IIS Version</b> - Select the compatibility mode for IIS version to be used.</li>
-          </ul>
-          
-     <h2 class="help">Using the Plugin</h2>
-          <p class="help">
-              See the <a href="/commander/link/showHelp?page=plugins&amp;section=using">Commander online help system</a> for details about how to use this plugin within a procedure.
-              </p>
-              
-              <p class="help">
-              When you provide information for this plugin, fill-in the fields as follows:
-        </p>
-
-          <p class="help">
-          The CheckServerStatus subprocedure checks the status of the specified server.
-
-          CheckServerStatus has the following fields:
-          </p><ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration.</li>
-               <li><b>usecredentials</b> - Indicate if credentials must be used.</li>
-          </ul>
-
-          <p class="help">
-          The CreateVirtualDirectory subprocedure creates a new virtual directory in the specified web site. 
-          CreateVirtualDirectory has the following fields:
-          </p>
-          <ul>
-               <li><b>absolutephysicalpath</b> - Provide the absolute physical path assigned to the virtual directory you want to create.</li>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisvdir or c:/windows/system32/iisvdir.vbs).</li>
-               <li><b>virtualdirname</b> - Provide the name for the virtual directory.</li>
-               <li><b>virtualpath</b> - Provide a path, if necessary, to the virtual directory within the web site.</li>
-               <li><b>website</b> - Provide the descriptive name, or the metabase path, of the web site of the virtual directory you want to create.</li>
-               
-          </ul>
-          
-          <p class="help">
-          The DeleteVirtualDirectory subprocedure deletes a virtual directory in the specified web site. 
-          DeleteVirtualDirectory has the following fields:
-          </p>
-          <ul>
-
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisvdir or c:/windows/system32/iisvdir.vbs).</li>
-               <li><b>virtualdirname</b> - Provide the name for the virtual directory.</li>
-               <li><b>virtualpath</b> - Provide a path, if necessary, to the virtual directory within the web site of the virtual directory you want to delete.</li>
-               <li><b>website</b> - Provide the descriptive name, or the metabase path, of the web site of the virtual directory you want to delete.</li>
-               
-          </ul>
-          
-          <p class="help">
-          The CreateWebSite subprocedure creates a web site configuration on a local or remote computer running a member of the Windows Server 2003 family with IIS 6.0. 
-          CreateWebSite has the following fields:
-          </p>
-          <ul>
-               <li><b>absolutephysicalpath</b> - Provide the absolute physical path assigned to the web site you want to create.</li>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisweb or c:/windows/system32/iisweb.vbs).</li>
-               <li><b>hostheader</b> - Provide the host header name for the web site.</li>
-               <li><b>startapp</b> - Indicate if web site must be started after creation.</li>
-               <li><b>website</b> - Provide the descriptive name, or the metabase path, of the web site you want to create.</li>
-               
-          </ul>
-          
-          <p class="help">
-          The StartWebSite subprocedure starts a web site. 
-          StartWebSite has the following fields:
-          </p>
-          <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisweb or c:/windows/system32/iisweb.vbs).</li>
-               <li><b>sitename</b> - Provide the descriptive name, or the metabase path, of the web site you want to start.</li>
-               
-          </ul>
-          
-          <p class="help">
-          The PauseWebSite subprocedure pauses a web site. This is similar to stopping, except pausing allows existing processes to continue to their conclusion.
-          PauseWebSite has the following fields:
-          </p>
-          <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisweb or c:/windows/system32/iisweb.vbs).</li>
-               <li><b>sitename</b> - Provide the descriptive name, or the metabase path, of the web site you want to pause.</li>
-               
-          </ul>
-          
-          <p class="help">
-          The StopWebSite subprocedure stops a web site.
-          StopWebSite has the following fields:
-          </p>
-          <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisweb or c:/windows/system32/iisweb.vbs).</li>
-               <li><b>sitename</b> - Provide the descriptive name, or the metabase path, of the web site you want to stop.</li>               
-          </ul>
-          
-          <p class="help">
-          The DeleteWebSite subprocedure deletes a web site.
-          DeleteWebSite has the following fields:
-          </p>
-          <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisweb or c:/windows/system32/iisweb.vbs).</li>
-               <li><b>sitename</b> - Provide the descriptive name, or the metabase path, of the web site you want to delete.</li>
-          </ul>
-
-          <p class="help">
-          The StartServer subprocedure starts a server using the <b>iisreset</b> utility.
-          StartServer has the following fields:
-          </p>
-          <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisreset or c:/windows/system32/iisreset.exe).</li>
-          </ul>
-
-          <p class="help">
-          The StopServer subprocedure stops a server using the <b>iisreset</b> utility.
-          StopServer has the following fields:
-          </p>
-          <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisreset or c:/windows/system32/iisreset.exe).</li>
-          </ul>
-
-          <p class="help">
-          The ResetServer subprocedure stops and starts a server using the <b>iisreset</b> utility.
-          ResetServer has the following fields:
-          </p>
-          <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-               <li><b>execpath</b> - Provide the absolute path of the script utility used to execute this step (for example: iisreset or c:/windows/system32/iisreset.exe).</li>
-          </ul>
-
-          <p class="help">
-          The StartIISServices subprocedure starts the necessary services to initialize the IIS server.
-          StartIISServices has the following fields:
-          </p>
-          <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-          </ul>
-          
-          <p class="help">
-          The StopIISServices subprocedure stops the necessary services to shut down the IIS server.
-          StopIISServices has the following fields:
-          </p>
-          <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the IIS server.</li>
-          </ul>
-
-     
-               
-     <h2 class="help">Additional Information</h2>
-          <ul>
-               <li><a href="http://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/95826e7a-bac4-4e1f-bcb6-c52d49c9d7f4.mspx?mfr=true" target="_blank">Using Command-Line Administration Scripts (IIS 6.0)</a></li>
-          </ul>
-        
-    
-    
-        
-     </div>
-  </componentContainer>
+	<title>EC-IIS - Help</title>
+	<componentContainer>
+		<LINK REL="StyleSheet" HREF="../../plugins/EC-IIS/pluginhelp.css" TYPE="text/css" MEDIA="screen"/>
+		<div class="help">
+			<h1 class="help">EC-IIS</h1>
+			<h2 class="help">Overview</h2>
+			<p class="help">This plugin allows users to interact with
+the Internet Information Services (IIS) server and accomplish tasks
+such as managing servers, web sites and virtual directories.</p>
+			<p class="help">
+				<b>Supported IIS version</b>
+				<br/>
+This plugin was developed and tested with IIS 6.0.</p>
+			<h2 class="help">Configuration</h2>
+			<p class="help">To enable Commander to communicate with
+your IIS installation, create a IIS configuration, supplying the
+following information:</p>
+			<ul>
+				<li>
+					<b>Configuration Name</b> - Provide a unique name for
+the configuration, keeping in mind that you may need to create
+additional configurations over time.</li>
+				<li>
+					<b>IIS IP Address</b> - Provide the URL for the IIS
+server, it must include the protocol and port (example:
+http://192.168.1.100).</li>
+				<li>
+					<b>IIS Port</b> - Provide the port for the IIS server
+(example: 8081).</li>
+				<li>
+					<b>Computer Name</b> - Provide the computer name or IP
+address without backslashes (for example: server01 or 192.168.1.100).</li>
+				<li>
+					<b>Credential</b> - Provide the username and password
+for the IIS server. NOTE: Credentials are optional. Supplying
+credentials for a "local" agent (an agent on the same machine as the
+IIS
+server) is unnecessary, and in some cases will generate a 'warning'
+condition.</li>
+				<li>
+					<b>IIS Version</b> - Select the compatibility mode for
+IIS version to be used (NOTE: currently, only IIS 6 is supported; IIS 7
+will be added in the near future).</li>
+			</ul>
+			<h2 class="help">Using the Plugin</h2>
+			<p class="help">See the <a href="/commander/link/showHelp?page=plugins&amp;section=using">Commander
+online help system</a>for details about how to use this plugin
+within a procedure.</p>
+			<p class="help">
+				<span style="text-decoration: underline;">CheckServerStatus</span>
+			</p>
+			<p class="help">Checks
+the status of the specified server.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server. In
+this case, only credentials are taken from the configuration.</li>
+				<li>
+					<b>usecredentials</b> - Indicate if credentials must be
+used.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">CreateVirtualDirectory</span>
+			</p>
+			<p class="help">Creates a new virtual directory in the
+specified web site.</p>
+			<ul>
+				<li>
+					<b>absolutephysicalpath</b> - Provide the absolute
+physical path assigned to the virtual directory you want to create.</li>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisvdir or
+c:/windows/system32/iisvdir.vbs).</li>
+				<li>
+					<b>virtualdirname</b> - Provide the name for the
+virtual
+directory.</li>
+				<li>
+					<b>virtualpath</b> - Provide a path, if necessary, to
+the virtual directory within the web site.</li>
+				<li>
+					<b>website</b> - Provide the descriptive name, or the
+metabase path, of the web site of the virtual directory you want to
+create.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">DeleteVirtualDirectory</span>
+			</p>
+			<p class="help">Deletes a virtual directory in the
+specified web site.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisvdir or
+c:/windows/system32/iisvdir.vbs).</li>
+				<li>
+					<b>virtualdirname</b> - Provide the name for the
+virtual
+directory.</li>
+				<li>
+					<b>virtualpath</b> - Provide a path, if necessary, to
+the virtual directory within the web site of the virtual directory you
+want to delete.</li>
+				<li>
+					<b>website</b> - Provide the descriptive name, or the
+metabase path, of the web site of the virtual directory you want to
+delete.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">CreateWebSite</span>
+			</p>
+			<p class="help">Creates a
+web site configuration on a local or remote computer.</p>
+			<ul>
+				<li>
+					<b>absolutephysicalpath</b> - Provide the absolute
+physical path assigned to the web site you want to create.</li>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisweb or
+c:/windows/system32/iisweb.vbs).</li>
+				<li>
+					<b>hostheader</b> - Provide the host header name for
+the
+web site.</li>
+				<li>
+					<b>startapp</b> - Indicate if web site must be started
+after creation.</li>
+				<li>
+					<b>website</b> - Provide the descriptive name, or the
+metabase path, of the web site you want to create.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">StartWebSite</span>
+			</p>
+			<p class="help">Starts a web
+site.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisweb or
+c:/windows/system32/iisweb.vbs).</li>
+				<li>
+					<b>sitename</b> - Provide the descriptive name, or the
+metabase path, of the web site you want to start.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">PauseWebSite</span>
+			</p>
+			<p class="help">Pauses a web
+site. This is similar to stopping, except pausing allows existing
+processes to continue to their conclusion.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisweb or
+c:/windows/system32/iisweb.vbs).</li>
+				<li>
+					<b>sitename</b> - Provide the descriptive name, or the
+metabase path, of the web site you want to pause.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">StopWebSite</span>
+			</p>
+			<p class="help">Stops a web
+site.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisweb or
+c:/windows/system32/iisweb.vbs).</li>
+				<li>
+					<b>sitename</b> - Provide the descriptive name, or the
+metabase path, of the web site you want to stop.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">DeleteWebSite</span>
+			</p>
+			<p class="help">Deletes a
+web site.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisweb or
+c:/windows/system32/iisweb.vbs).</li>
+				<li>
+					<b>sitename</b> - Provide the descriptive name, or the
+metabase path, of the web site you want to delete.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">StartServer</span>
+			</p>
+			<p class="help">Starts a
+server using the <b>iisreset</b> utility.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisreset or
+c:/windows/system32/iisreset.exe).</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">StopServer</span>
+			</p>
+			<p class="help">Stops a server
+using the <b>iisreset </b>utility.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisreset or
+c:/windows/system32/iisreset.exe).</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">ResetServer</span>
+			</p>
+			<p class="help">Stops and
+starts a server using the <b>iisreset </b>utility.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+				<li>
+					<b>execpath</b> - Provide the absolute path of the
+script utility used to execute this step (for example: iisreset or
+c:/windows/system32/iisreset.exe).</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">StartIISServices</span>
+			</p>
+			<p class="help">Starts
+the necessary services to initialize the IIS server.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">StopIISServices</span>
+			</p>
+			<p class="help">Stops the
+necessary services to shut down the IIS server.</p>
+			<ul>
+				<li>
+					<b>configname</b> - Provide the name of the
+configuration that holds connection information for the IIS server.</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">DeployCopy</span>
+			</p>
+			<p class="help">Copies the application files recursively
+to the website application's physical directory.</p>
+			<ul>
+				<li>
+					<b>ExecPath</b> - Relative or absolute path to the
+XCOPY
+(or similar) executable</li>
+				<li>
+					<b>SourcePath</b> - Path to the source directory</li>
+				<li>
+					<b>DestinationPath</b> - Path to the destination
+directory. This must be a physical directory, but it may have an IIS
+virtual directory pointing to it.</li>
+				<li>
+					<b>AdditionalOptions</b> - Option switches to the XCOPY
+executable, excluding source and destination directories. The default
+options are those recommended by Microsoft for ASP.NET and IIS Website
+deployment; change these with caution.</li>
+				<ul>
+					<li>/E - Deep copy including empty dirs</li>
+					<li>/K - Copy attributes</li>
+					<li>/R - Overwrite read-only files</li>
+					<li>/H - Copy hidden and system files</li>
+					<li>/I - If destination does not exist and copying more than
+one file, assumes that destination must be a directory.</li>
+					<li>/Y - Supress prompting for overwrite confirmation</li>
+				</ul>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">GetWebSiteIDs</span>
+			</p>
+			<p class="help">Fetches the numeric internal IIS
+identifiers of all Web Sites found on the host server. These IDs
+are necessary to access internal webite properties in order to perform
+certain control operations. The IDs are saved into
+Job Properties under the "iiswebsites" property sheet, with the web
+site name as the property name and the WebSiteID as the value. If the
+this procedure is run prior to other procedures which require a
+WebSiteID, you can use the property
+$[/myJob/iiswebsites/<span style="font-style: italic;">sitename</span>]
+ as the parameter value.</p>
+			<ul>
+				<li>
+					<b>HostName</b> -  The host name of
+the IIS Server (if the procedure is run on the host itself use
+"localhost", the default value).</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">GetWebSiteStatus</span>
+			</p>
+			<p class="help">Returns the current state of the site. The state is also saved in a Job
+Property under the "sitestatus" property sheet, with the web site name as
+the property name and the numeric status code as the value. The
+possible status values are: 1 (starting), 2 (started), 3 (stopping), 4
+(stopped), 5 (pausing), 6 (paused), or 7 (continuing).</p>
+			<ul>
+				<li>
+					<b>HostName</b> -  The host name of
+the IIS Server (if the procedure is run on the host itself use
+"localhost", the default value).</li>
+				<li>
+					<b>WebSiteID</b> - The WebSiteID
+parameter must be the numeric internal identifier from the server's MetaBase
+information. The default value is 1, which is the ID
+of the "Default Web Site" set up with the IIS installation.
+See the GetWebSiteIDs procedure to get the WebSiteID parameter value
+from the site name. NOTE: The ID of a Web
+Site can be found in the IIS Manager GUI (sort of). Open the Properties
+dialog of a web site and click on the "Properties" button in the
+Logging section at the bottom of the dialog. Look at the name of the
+log file at the bottom of that Logging Properties dialog: the site ID
+number follows the letters "W3SVC".</li>
+			</ul>
+			<p class="help">
+				<span style="text-decoration: underline;">GetVirtualDirectories</span>
+			</p>
+			<p class="help">Returns basic information for all Virtual Directories defined for the web site (recursively). This procedure is primarily for informational purposes rather than any specific controls.</p>
+			<ul>
+				<li>
+					<b>HostName</b> -  The host name of
+the IIS Server (if the procedure is run on the host itself use
+"localhost", the default value).</li>
+				<li>
+					<b>WebSiteID</b> - The WebSiteID
+parameter must be the numeric internal identifier from the server's MetaBase
+information. The default value is 1, which is the ID
+of the "Default Web Site" set up with the IIS installation.
+See the GetWebSiteIDs procedure to get the WebSiteID parameter value
+from the site name. NOTE: The ID of a Web
+Site can be found in the IIS Manager GUI (sort of). Open the Properties
+dialog of a web site and click on the "Properties" button in the
+Logging section at the bottom of the dialog. Look at the name of the
+log file at the bottom of that Logging Properties dialog: the site ID
+number follows the letters "W3SVC".</li>
+			</ul>
+			<h2 class="help">Additional Information</h2>
+			<ul>
+				<li>
+					<a href="http://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/95826e7a-bac4-4e1f-bcb6-c52d49c9d7f4.mspx?mfr=true" target="_blank">Using Command-Line Administration Scripts
+(IIS 6.0)</a>
+				</li>
+			</ul>
+		</div>
+	</componentContainer>
 </helpDefinition>

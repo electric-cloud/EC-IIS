@@ -6,6 +6,7 @@
  ['//property[propertyName="iisreset_matchers"]/value', 'matchers/iisresetMatchers.pl'],
  ['//property[propertyName="net_matchers"]/value', 'matchers/netMatchers.pl'],
  ['//property[propertyName="sitescript_matchers"]/value', 'matchers/siteScriptMatchers.pl'],
+ ['//property[propertyName="IISServer.pm"]/value', 'agent/lib/IISServer.pm'],
  
  
  ['//procedure[procedureName="StartServer"]/step[stepName="StartServer"]/command' , 'server/startServer.pl'],
@@ -21,6 +22,11 @@
  ['//procedure[procedureName="CheckServerStatus"]/step[stepName="CheckServerStatus"]/command' , 'server/checkServerStatus.pl'],
  ['//procedure[procedureName="StartIISServices"]/step[stepName="StartIISServices"]/command' , 'server/startIISService.pl'],
  ['//procedure[procedureName="StopIISServices"]/step[stepName="StopIISServices"]/command' , 'server/stopIISService.pl'],
+ ['//procedure[procedureName="DeployCopy"]/step[stepName="Deploy"]/command' , 'server/deployCopy.pl'],
+ ['//procedure[procedureName="GetWebSiteIDs"]/step[stepName="GetWebSiteIDs"]/command' , 'server/getWebSiteIDs.pl'],
+ ['//procedure[procedureName="GetWebSiteStatus"]/step[stepName="GetStatus"]/command' , 'server/getWebSiteStatus.pl'],
+ ['//procedure[procedureName="GetVirtualDirectories"]/step[stepName="GetVirtualDirectories"]/command' , 'server/getVirtualDirs.pl'],
+ ['//procedure[procedureName="CreateWebApplication"]/step[stepName="CreateWebApplication"]/command' , 'server/createWebApplication.pl'],
 
  ['//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateConfiguration"]/command' , 'conf/createcfg.pl'],
  ['//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateAndAttachCredential"]/command' , 'conf/createAndAttachCredential.pl'],

@@ -188,37 +188,6 @@
       }
   }
   
-  ########################################################################
-  # registerReports - creates a link for registering the generated report
-  # in the job step detail
-  #
-  # Arguments:
-  #   -reportFilename: name of the archive which will be linked to the job detail
-  #   -reportName: name which will be given to the generated linked report
-  #
-  # Returns:
-  #   none
-  #
-  ########################################################################
-  sub registerReports($){
-      
-      my ($reportFilename, $reportName) = @_;
-      
-      if($reportFilename && $reportFilename ne ''){    
-          
-          # get an EC object
-          my $ec = new ElectricCommander();
-          $ec->abortOnError(0);
-          
-          $ec->setProperty("/myJob/artifactsDirectory", '');
-                  
-          $ec->setProperty("/myJob/report-urls/" . $reportName, 
-             "jobSteps/$[jobStepId]/" . $reportFilename);
-              
-      }
-            
-  }
-  
   ##########################################################################
   # getConfiguration - get the information of the configuration given
   #

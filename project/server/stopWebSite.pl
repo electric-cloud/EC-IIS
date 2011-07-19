@@ -214,9 +214,9 @@
             #set any additional error or warning conditions here
             #there may be cases in which an error occurs and the exit code is 0.
             #we want to set to correct outcome for the running step
-            if($content !~ m/error/){
+            if($content !~ m/has been STOPPED|is already STOPPED/){
                 #license expired warning
-                print "Virtual directory could not be created. See log for more details.\n";
+                print "Web site could not be stopped.\n";
                 $ec->setProperty("/myJobStep/outcome", 'error');
             }
             
@@ -298,99 +298,6 @@
           my $val = $propHash->{$key};
           $ec->setProperty("/myCall/$key", $val);
       }
-  }
-  
-  ########################################################################
-  # registerReports - creates a link for registering the generated report
-  # in the job step detail
-  #
-  # Arguments:
-  #   -reportFilename: name of the archive which will be linked to the job detail
-  #   -reportName: name which will be given to the generated linked report
-  #
-  # Returns:
-  #   none
-  #
-  ########################################################################
-  sub registerReports($){
-      
-      my ($reportFilename, $reportName) = @_;
-      
-      if($reportFilename && $reportFilename ne ''){
-          
-          # get an EC object
-          my $ec = new ElectricCommander();
-          $ec->abortOnError(0);
-          
-          $ec->setProperty("/myJob/artifactsDirectory", '');
-                  
-          $ec->setProperty("/myJob/report-urls/" . $reportName, 
-             "jobSteps/$[jobStepId]/" . $reportFilename);
-              
-      }
-            
-  }
-  
-  sub fixPath($){
-   
-     my ($absPath) = @_;
-     
-     my $separator;
-     
-     if(!$absPath || $absPath eq ''){
-        return '';
-     }
-     
-     if((substr($absPath, length($absPath)-1,1) eq '\\') ||
-         substr($absPath, length($absPath)-1,1) eq '/'){
-          
-          return $absPath;
-          
-     }
-     
-     if($absPath =~ m/.*\/.+/){
-         
-         $separator = '/';
-         
-     }elsif($absPath =~ m/.+\\.+/) {
-       
-         $separator = "\\";
-      
-     }else{
-        exit ERROR;
-     }
-     
-     my $fixedPath = $absPath . $separator;
-    
-     
-     return $fixedPath;
-   
-  }
-  
-  sub startService($){
-   
-      my ($serviceName) = @_;
-      my %props;
-      
-      if($^O eq WIN_IDENTIFIER){
-          
-          my $cmdLine = "net start $serviceName";
-          
-          $props{'startServiceLine'} = $cmdLine;
-          setProperties(\%props);
-          
-          exec($cmdLine);
-          
-          
-       
-      }else{
-       
-         print "Start Service is only supported on Windows";
-         exit ERROR;
-       
-      }
-      
-      
   }
   
   ##########################################################################
