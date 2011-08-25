@@ -171,18 +171,11 @@
 #            exit ERROR;
         }
         
-        if($configuration{'iisversion'} && $configuration{'iisversion'} ne ''){
-            $iisVersion = $configuration{'iisversion'};
-        }else{
-            print 'Error: Could not get IIS version from configuration '. $::gConfigName;
-            exit ERROR;
-        }
-        
     }
     
     push(@args, '"' . $::gExecPath . '"');
     
-    if($iisVersion eq IIS_VERSION_6){
+
         
         #using vbs scripts
         push(@args, DEFAULT_CREATE_COMMAND_OPTION_IIS_6);
@@ -226,43 +219,7 @@
             push(@args, '/d ' . $::gHostHeader);
         }
         
-    }elsif($iisVersion eq IIS_VERSION_7){
-     
-        #using AppCmd
-        push(@args, DEFAULT_CREATE_COMMAND_OPTION_IIS_7);
-        
-        if($::gVirtualPath && $::gVirtualPath ne ''){
-            push(@args, '/app.name:"'.$::gWebsite . '/'. $::gVirtualPath);
-        }else{
-            push(@args, '/app.name:"'.$::gWebsite);
-        }
-        
-        if($::gVirtualPath && $::gVirtualPath ne ''){
-            push(@args, '/path:"'.$::gVirtualPath.'"');
-        }
-        
-        if($::gAbsolutePhysicalPath && $::gAbsolutePhysicalPath ne ''){
-            push(@args, '/physicalPath:"' . $::gAbsolutePhysicalPath . '"');
-        }
-        
-        if($url && $url ne ''){
-#            push(@args, '/s ' . $url);
-        }
-        
-        if($user && $user ne ''){
-#            push(@args, '/u ' . $user);
-        }
-        
-        if($pass && $pass ne ''){
-#            push(@args, '/p ' . $pass);
-        }
-     
-    }else{
-     
-        print 'Error: Selected IIS version ' . $iisVersion . ' not supported';
-        exit ERROR;
-        
-    }
+   
     
     #generate command line
     my $cmdLine = createCommandLine(\@args);

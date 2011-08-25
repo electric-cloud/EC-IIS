@@ -2,7 +2,7 @@
 
 # -------------------------------------------------------------------------
 # File
-#    pauseWebServer.pl
+#    stopWebServer.pl
 #
 # Dependencies
 #    None
@@ -19,6 +19,7 @@
 # Copyright (c) 2011 Electric Cloud, Inc.
 # All rights reserved
 # -------------------------------------------------------------------------
+
 
 # -------------------------------------------------------------------------
 # Includes
@@ -41,15 +42,17 @@ use constant {
     CREDENTIAL_ID => 'credential',
 };
 
+
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
-  
+
 my $ec = new ElectricCommander();
   
 my $host = ($ec->getProperty("HostName"))->findvalue("//value");
 my $webServerName = ($ec->getProperty("WebServerName"))->findvalue("//value");
 
+# -------------------------------------------------------------------------
 
 ########################################################################
 # main - contains the whole process to be done by the perl file
@@ -107,11 +110,11 @@ sub main(){
             // is the one we are looking for
             if(site.Name == "$webServerName"){
              
-                // Pause a Server
-                site.Pause();
+                // Stop a Server
+                site.Stop();
             
                 //Log pause
-                WScript.Echo("Server " + site.Name + " Paused");
+                WScript.Echo("Server " + site.Name + " Stopped");
                 
                 //setting "found" flag
                 siteFound = true;
@@ -149,7 +152,7 @@ EOSCRIPT
         #set any additional error or warning conditions here
         #there may be cases in which an error occurs and the exit code is 0.
         #we want to set to correct outcome for the running step
-        if($content !~ m/Server (.+) Paused/){
+        if($content !~ m/Server (.+) Stopped/){
             
             $ec->setProperty("/myJobStep/outcome", 'error');
             
@@ -168,10 +171,12 @@ EOSCRIPT
     #    print "$sitename ($siteid)\n";
     #    $ec->setProperty("/myJob/iiswebsites/$sitename", $siteid);
     #}
-
-
+    
+ 
 }
 
 main();
 
 1;
+
+

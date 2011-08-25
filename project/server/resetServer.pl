@@ -117,13 +117,6 @@
     #inject config...
     if(%configuration){
      
-     
-        if($configuration{'iisversion'} && $configuration{'iisversion'} ne ''){
-        
-            $iisVersion = $configuration{'iisversion'};
-        
-        }
-     
         if($configuration{'iis_url'} && $configuration{'iis_url'} ne ''){
             $url = $configuration{'iis_url'};
         }else{

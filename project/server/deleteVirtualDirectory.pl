@@ -149,19 +149,13 @@
             $computerName = $configuration{'iis_computer'};
         }
         
-        if($configuration{'iisversion'} && $configuration{'iisversion'} ne ''){
-            $iisVersion = $configuration{'iisversion'};
-        }else{
-            print 'Error: Could not get IIS version from configuration '. $::gConfigName;
-            exit ERROR;
-        }
+       
         
     }
     
     push(@args, '"' . $::gExecPath . '"');
     
-    if($iisVersion eq IIS_VERSION_6){
-        
+    
         #using vbs scripts
         push(@args, DEFAULT_DELETE_COMMAND_OPTION_IIS_6);
         
@@ -187,22 +181,7 @@
             push(@args, '/p ' . $pass);
         }
         
-    }elsif($iisVersion eq IIS_VERSION_7){
-     
-        #using AppCmd
-        push(@args, DEFAULT_DELETE_COMMAND_OPTION_IIS_7);
-        
-        if($::gVirtualDirName && $::gVirtualDirName ne ''){
-            push(@args, '"' . $::gVirtualDirName . '"');
-        }
-        
-     
-    }else{
-     
-        print 'Error: Selected IIS version ' . $iisVersion . ' not supported';
-        exit ERROR;
-        
-    }
+    
     
     #generate command line
     my $cmdLine = createCommandLine(\@args);

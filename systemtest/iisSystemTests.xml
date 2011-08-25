@@ -1030,16 +1030,7 @@
             <ownerType>propertySheet</ownerType>
             <parentId>193345</parentId>
           </acl>
-          <property>
-            <propertyId>201375</propertyId>
-            <propertyName>configname</propertyName>
-            <createTime>2011-04-01T17:39:22.452Z</createTime>
-            <expandable>1</expandable>
-            <lastModifiedBy>admin</lastModifiedBy>
-            <modifyTime>2011-04-01T17:39:22.452Z</modifyTime>
-            <owner>admin</owner>
-            <value>myconfig</value>
-          </property>
+          
         </actualParameters>
         <procedureName>startIISServices</procedureName>
         <projectName>IISTestProject</projectName>
@@ -1370,16 +1361,7 @@
             <ownerType>propertySheet</ownerType>
             <parentId>193364</parentId>
           </acl>
-          <property>
-            <propertyId>202135</propertyId>
-            <propertyName>configname</propertyName>
-            <createTime>2011-04-01T22:16:57.178Z</createTime>
-            <expandable>1</expandable>
-            <lastModifiedBy>admin</lastModifiedBy>
-            <modifyTime>2011-04-01T22:16:57.194Z</modifyTime>
-            <owner>admin</owner>
-            <value>myconfig</value>
-          </property>
+          
         </actualParameters>
         <procedureName>stopIISServices</procedureName>
         <projectName>IISTestProject</projectName>

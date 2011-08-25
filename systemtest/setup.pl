@@ -68,7 +68,7 @@ $msg = $N->getError();
 if ($msg ne '') {
     print "Error promoting plugin $plugin_name.\n";
     print $msg;
-    exit 1;
+    exit ERROR;
 }
 print "Done with setup\n";
-exit 0;
+exit SUCCESS;

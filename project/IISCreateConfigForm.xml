@@ -43,14 +43,4 @@
         <required>0</required>
     </formElement>
     
-    <formElement>
-        <type>radio</type>
-        <label>IIS Version:</label>
-        <property>iisversion</property>
-        <required>0</required>
-        <documentation>Selects current IIS version that will be integrated through the plugin</documentation>
-        <option><name>6</name><value>iis6</value></option>
-        <option><name>7</name><value>iis7</value></option>
-    </formElement>
-    
 </editor>

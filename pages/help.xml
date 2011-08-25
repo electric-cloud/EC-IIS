@@ -8,7 +8,7 @@
 			<h2 class="help">Overview</h2>
 			<p class="help">This plugin allows users to interact with
 the Internet Information Services (IIS) server and accomplish tasks
-such as managing servers, web sites and virtual directories.</p>
+such as managing servers, web sites, and virtual directories.</p>
 			<p class="help">
 				<b>Supported IIS version</b>
 				<br/>
@@ -24,34 +24,31 @@ the configuration, keeping in mind that you may need to create
 additional configurations over time.</li>
 				<li>
 					<b>IIS IP Address</b> - Provide the URL for the IIS
-server, it must include the protocol and port (example:
+server, it must include the protocol (example: 
 http://192.168.1.100).</li>
 				<li>
 					<b>IIS Port</b> - Provide the port for the IIS server
 (example: 8081).</li>
 				<li>
 					<b>Computer Name</b> - Provide the computer name or IP
-address without backslashes (for example: server01 or 192.168.1.100).</li>
+address without backslashes (example: server01 or 192.168.1.100).</li>
 				<li>
 					<b>Credential</b> - Provide the username and password
-for the IIS server. NOTE: Credentials are optional. Supplying
+for the IIS server. Note: Credentials are optional. Supplying
 credentials for a "local" agent (an agent on the same machine as the
 IIS
 server) is unnecessary, and in some cases will generate a 'warning'
 condition.</li>
-				<li>
-					<b>IIS Version</b> - Select the compatibility mode for
-IIS version to be used (NOTE: currently, only IIS 6 is supported; IIS 7
-will be added in the near future).</li>
+
 			</ul>
 			<h2 class="help">Using the Plugin</h2>
 			<p class="help">See the <a href="/commander/link/showHelp?page=plugins&amp;section=using">Commander
-online help system</a>for details about how to use this plugin
+online help system</a> for details about how to use this plugin
 within a procedure.</p>
 			<p class="help">
 				<span style="text-decoration: underline;">CheckServerStatus</span>
 			</p>
-			<p class="help">Checks
+			<p class="help">This procedure checks
 the status of the specified server.</p>
 			<ul>
 				<li>
@@ -62,10 +59,67 @@ this case, only credentials are taken from the configuration.</li>
 					<b>usecredentials</b> - Indicate if credentials must be
 used.</li>
 			</ul>
+			
+			
+			<p class="help">
+				<span style="text-decoration: underline;">CreateAppPool</span>
+			</p>
+			<p class="help">This procedure creates an IIS application pool.</p>
+			<ul>
+				
+				<li>
+					<b>HostName</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
+				<li>
+					<b>apppoolname</b> - Provide the name of the application pool to create.</li>
+				
+			</ul>
+			
+			<p class="help">
+				<span style="text-decoration: underline;">StartAppPool</span>
+			</p>
+			<p class="help">This procedure starts an IIS application pool.</p>
+			<ul>
+				
+				<li>
+					<b>HostName</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
+				<li>
+					<b>apppoolname</b> - Provide the name of the application pool to start.</li>
+				
+				
+			</ul>
+			
+			<p class="help">
+				<span style="text-decoration: underline;">StopAppPool</span>
+			</p>
+			<p class="help">This procedure stops an IIS application pool.</p>
+			<ul>
+				
+				<li>
+					<b>HostName</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
+				<li>
+					<b>apppoolname</b> - Provide the name of the application pool to stop.</li>
+			
+			</ul>
+			
+			<p class="help">
+				<span style="text-decoration: underline;">RecycleAppPool</span>
+			</p>
+			<p class="help">This procedure recycles an application pool. When recycling occurs, the worker process currently serving the application pool terminates and the WWW service restarts a new worker process to replace it.
+			</p>
+			<ul>
+				
+				<li>
+					<b>HostName</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
+				<li>
+					<b>apppoolname</b> - Provide the name of the application pool to recycle.</li>
+			
+			</ul>
+			
+			
 			<p class="help">
 				<span style="text-decoration: underline;">CreateVirtualDirectory</span>
 			</p>
-			<p class="help">Creates a new virtual directory in the
+			<p class="help">This procedure creates a new virtual directory in the
 specified web site.</p>
 			<ul>
 				<li>
@@ -80,20 +134,43 @@ script utility used to execute this step (for example: iisvdir or
 c:/windows/system32/iisvdir.vbs).</li>
 				<li>
 					<b>virtualdirname</b> - Provide the name for the
-virtual
-directory.</li>
+virtual directory.</li>
 				<li>
 					<b>virtualpath</b> - Provide a path, if necessary, to
 the virtual directory within the web site.</li>
 				<li>
 					<b>website</b> - Provide the descriptive name, or the
-metabase path, of the web site of the virtual directory you want to
+metabase path, of the web site for the virtual directory you want to
 create.</li>
 			</ul>
+			
+			
+			<p class="help">
+				<span style="text-decoration: underline;">CreateVirtualDirectory2</span>
+			</p>
+			<p class="help">This procedure uses the ADSI API to create a new virtual directory in the
+specified web site.</p>
+			<ul>
+			
+			<li>
+					<b>ApplicationDirPath</b> - Specify the path within the web site 
+					to the application directory (not the physical path).</li>			
+				<li>
+					<b>hostname</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
+				<li>
+					<b>PhysicalPath</b> - Provide the absolute physical path of the virtual directory.</li>
+				<li>
+					<b>VirtualDirectoryID</b> - Provide the virtual directory's identifier.</li>
+				<li>
+					<b>VirtualDirectoryName</b> - Provide the name for the virtual directory.</li>
+				<li>
+					<b>WebSiteID</b> - Provide the numeric internal identifier of the web site.</li>
+			</ul>
+			
 			<p class="help">
 				<span style="text-decoration: underline;">DeleteVirtualDirectory</span>
 			</p>
-			<p class="help">Deletes a virtual directory in the
+			<p class="help">This procedure deletes a virtual directory from the
 specified web site.</p>
 			<ul>
 				<li>
@@ -105,21 +182,43 @@ script utility used to execute this step (for example: iisvdir or
 c:/windows/system32/iisvdir.vbs).</li>
 				<li>
 					<b>virtualdirname</b> - Provide the name for the
-virtual
-directory.</li>
+virtual directory.</li>
 				<li>
 					<b>virtualpath</b> - Provide a path, if necessary, to
 the virtual directory within the web site of the virtual directory you
 want to delete.</li>
 				<li>
 					<b>website</b> - Provide the descriptive name, or the
-metabase path, of the web site of the virtual directory you want to
+metabase path, of the web site for the virtual directory you want to
 delete.</li>
 			</ul>
+			
+			
+			<p class="help">
+				<span style="text-decoration: underline;">CreateWebApplication</span>
+			</p>
+			<p class="help">This procedure creates and starts an in-process web application in the given directory. This procedure assumes that the specified application path exists as a virtual directory.</p>
+			<ul>
+			
+			<li>
+					<b>ApplicationDirPath</b> - Specify the path within the web site 
+					to the application directory (not the physical path). This path must exist on the IIS server.</li>
+							
+				<li>
+					<b>HostName</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
+				
+				<li>
+					<b>ApplicationName</b> - Provide the name for the application.</li>
+				<li>
+					<b>WebSiteID</b> - Provide the numeric internal identifier of the web site.</li>
+							
+			</ul>
+			
+			
 			<p class="help">
 				<span style="text-decoration: underline;">CreateWebSite</span>
 			</p>
-			<p class="help">Creates a
+			<p class="help">This procedure creates a
 web site configuration on a local or remote computer.</p>
 			<ul>
 				<li>
@@ -134,72 +233,99 @@ script utility used to execute this step (for example: iisweb or
 c:/windows/system32/iisweb.vbs).</li>
 				<li>
 					<b>hostheader</b> - Provide the host header name for
-the
-web site.</li>
+the web site.</li>
 				<li>
-					<b>startapp</b> - Indicate if web site must be started
+					<b>startapp</b> - Indicate if the web site must be started
 after creation.</li>
 				<li>
 					<b>website</b> - Provide the descriptive name, or the
 metabase path, of the web site you want to create.</li>
 			</ul>
+			
+			
+			
+			<p class="help">
+				<span style="text-decoration: underline;">CreateWebSite2</span>
+			</p>
+			<p class="help">This procedure uses the ADSI API to create a web site on an IIS server.</p>
+			<ul>
+			
+				<li>
+					<b>PhysicalPath</b> - Provide the absolute
+physical path assigned to the web site you want to create.</li>
+				
+				<li>
+					<b>GenerateRandomID</b> - If checked, this generates a random web site ID. Otherwise, it attempts to create the web site with the user-supplied ID.</li>
+				<li>
+					<b>HostName</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
+				<li>
+					<b>ServerID</b> - Provide the site identification number to attach to the site that you want to create. If no ID is specified, the site is created with a random ID.</li>
+				<li>
+					<b>ServerComment</b> - Provide the server comment for the new web site. In the IIS Manager, this is the Description field under Web Site Identification in a web site property sheet.</li>
+					
+				<li><b>Bindings</b> - Provide the binding string that includes at least one of these: host name, port, or IP address. Use this format: IP:Port:Hostname.</li>
+				
+			</ul>
+			
+			
+			
+			
 			<p class="help">
 				<span style="text-decoration: underline;">StartWebSite</span>
 			</p>
-			<p class="help">Starts a web
-site.</p>
+			<p class="help">This procedure starts a web site.</p>
 			<ul>
+				
 				<li>
-					<b>configname</b> - Provide the name of the
-configuration that holds connection information for the IIS server.</li>
+					<b>HostName</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
 				<li>
-					<b>execpath</b> - Provide the absolute path of the
-script utility used to execute this step (for example: iisweb or
-c:/windows/system32/iisweb.vbs).</li>
-				<li>
-					<b>sitename</b> - Provide the descriptive name, or the
-metabase path, of the web site you want to start.</li>
+					<b>WebServerName</b> - Provide the site identification number to attach to the site that you want to start.</li>
+								
 			</ul>
+			
+			
 			<p class="help">
 				<span style="text-decoration: underline;">PauseWebSite</span>
 			</p>
-			<p class="help">Pauses a web
-site. This is similar to stopping, except pausing allows existing
+			<p class="help">This procedure pauses a web site. This is similar to stopping, except pausing allows existing
 processes to continue to their conclusion.</p>
 			<ul>
+				
 				<li>
-					<b>configname</b> - Provide the name of the
-configuration that holds connection information for the IIS server.</li>
+					<b>HostName</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
 				<li>
-					<b>execpath</b> - Provide the absolute path of the
-script utility used to execute this step (for example: iisweb or
-c:/windows/system32/iisweb.vbs).</li>
-				<li>
-					<b>sitename</b> - Provide the descriptive name, or the
-metabase path, of the web site you want to pause.</li>
+					<b>WebServerName</b> - Provide the site identification number to attach to the site that you want to pause.</li>
+				
+				
 			</ul>
+			
+						<p class="help">
+				<span style="text-decoration: underline;">ResumeWebSite</span>
+			</p>
+			<p class="help">This procedure continues server operation after it has been paused.</p>
+			<ul>
+				<li>
+					<b>HostName</b> - Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</li>
+				<li>
+					<b>WebServerName</b> - Provide the site identification number to attach to the site that you want to resume.</li>
+				
+			</ul>
+			
 			<p class="help">
 				<span style="text-decoration: underline;">StopWebSite</span>
 			</p>
-			<p class="help">Stops a web
-site.</p>
+			<p class="help">This procedure stops a web site.</p>
 			<ul>
 				<li>
-					<b>configname</b> - Provide the name of the
-configuration that holds connection information for the IIS server.</li>
+					<b>HostName</b> - Provide the host name of the IIS Server (if the procedure is run on the host itself, use "localhost").</li>
 				<li>
-					<b>execpath</b> - Provide the absolute path of the
-script utility used to execute this step (for example: iisweb or
-c:/windows/system32/iisweb.vbs).</li>
-				<li>
-					<b>sitename</b> - Provide the descriptive name, or the
-metabase path, of the web site you want to stop.</li>
+					<b>WebServerName</b> - Provide the site identification number to attach to the site that you want to stop.</li>
+				
 			</ul>
 			<p class="help">
 				<span style="text-decoration: underline;">DeleteWebSite</span>
 			</p>
-			<p class="help">Deletes a
-web site.</p>
+			<p class="help">This procedure deletes a web site.</p>
 			<ul>
 				<li>
 					<b>configname</b> - Provide the name of the
@@ -215,8 +341,7 @@ metabase path, of the web site you want to delete.</li>
 			<p class="help">
 				<span style="text-decoration: underline;">StartServer</span>
 			</p>
-			<p class="help">Starts a
-server using the <b>iisreset</b> utility.</p>
+			<p class="help">This procedure uses the <b>iisreset</b> utility to start a server.</p>
 			<ul>
 				<li>
 					<b>configname</b> - Provide the name of the
@@ -229,8 +354,7 @@ c:/windows/system32/iisreset.exe).</li>
 			<p class="help">
 				<span style="text-decoration: underline;">StopServer</span>
 			</p>
-			<p class="help">Stops a server
-using the <b>iisreset </b>utility.</p>
+			<p class="help">This procedure uses the <b>iisreset </b>utility to stop a server.</p>
 			<ul>
 				<li>
 					<b>configname</b> - Provide the name of the
@@ -243,8 +367,7 @@ c:/windows/system32/iisreset.exe).</li>
 			<p class="help">
 				<span style="text-decoration: underline;">ResetServer</span>
 			</p>
-			<p class="help">Stops and
-starts a server using the <b>iisreset </b>utility.</p>
+			<p class="help">This procedure uses the <b>iisreset </b>utility to stop a server.</p>
 			<ul>
 				<li>
 					<b>configname</b> - Provide the name of the
@@ -257,8 +380,7 @@ c:/windows/system32/iisreset.exe).</li>
 			<p class="help">
 				<span style="text-decoration: underline;">StartIISServices</span>
 			</p>
-			<p class="help">Starts
-the necessary services to initialize the IIS server.</p>
+			<p class="help">This procedure starts the necessary services to initialize the IIS server.</p>
 			<ul>
 				<li>
 					<b>configname</b> - Provide the name of the
@@ -267,8 +389,7 @@ configuration that holds connection information for the IIS server.</li>
 			<p class="help">
 				<span style="text-decoration: underline;">StopIISServices</span>
 			</p>
-			<p class="help">Stops the
-necessary services to shut down the IIS server.</p>
+			<p class="help">This procedure stops the necessary services to shut down the IIS server.</p>
 			<ul>
 				<li>
 					<b>configname</b> - Provide the name of the
@@ -277,75 +398,72 @@ configuration that holds connection information for the IIS server.</li>
 			<p class="help">
 				<span style="text-decoration: underline;">DeployCopy</span>
 			</p>
-			<p class="help">Copies the application files recursively
-to the website application's physical directory.</p>
+			<p class="help">This procedure copies the application files recursively to the web site application's physical directory.</p>
 			<ul>
 				<li>
-					<b>ExecPath</b> - Relative or absolute path to the
-XCOPY
-(or similar) executable</li>
+					<b>ExecPath</b> - Provide the relative or absolute path to the XCOPY (or similar) executable.</li>
 				<li>
-					<b>SourcePath</b> - Path to the source directory</li>
+					<b>SourcePath</b> - Provide the path to the source directory.</li>
 				<li>
-					<b>DestinationPath</b> - Path to the destination
+					<b>DestinationPath</b> - Provide the path to the destination
 directory. This must be a physical directory, but it may have an IIS
 virtual directory pointing to it.</li>
 				<li>
-					<b>AdditionalOptions</b> - Option switches to the XCOPY
+					<b>AdditionalOptions</b> - Indicate option switches for the XCOPY
 executable, excluding source and destination directories. The default
-options are those recommended by Microsoft for ASP.NET and IIS Website
-deployment; change these with caution.</li>
+options are those recommended by Microsoft for ASP.NET and IIS web site
+deployment; exercise caution when changing these options.</li>
 				<ul>
 					<li>/E - Deep copy including empty dirs</li>
 					<li>/K - Copy attributes</li>
 					<li>/R - Overwrite read-only files</li>
 					<li>/H - Copy hidden and system files</li>
-					<li>/I - If destination does not exist and copying more than
-one file, assumes that destination must be a directory.</li>
-					<li>/Y - Supress prompting for overwrite confirmation</li>
+					<li>/I - If the destination does not exist and you are copying more than
+one file, it is assumed that the destination is a directory.</li>
+					<li>/Y - Suppress prompting for overwrite confirmation</li>
 				</ul>
 			</ul>
 			<p class="help">
 				<span style="text-decoration: underline;">GetWebSiteIDs</span>
 			</p>
-			<p class="help">Fetches the numeric internal IIS
-identifiers of all Web Sites found on the host server. These IDs
-are necessary to access internal webite properties in order to perform
-certain control operations. The IDs are saved into
+			<p class="help">This procedure fetches the numeric internal IIS
+identifiers of all web sites found on the host server. These IDs
+are necessary to access internal web site properties in order to perform
+certain control operations. The IDs are saved in
 Job Properties under the "iiswebsites" property sheet, with the web
-site name as the property name and the WebSiteID as the value. If the
-this procedure is run prior to other procedures which require a
+site name as the property name and the WebSiteID as the value. If 
+this procedure is run prior to other procedures that require a
 WebSiteID, you can use the property
 $[/myJob/iiswebsites/<span style="font-style: italic;">sitename</span>]
  as the parameter value.</p>
 			<ul>
 				<li>
-					<b>HostName</b> -  The host name of
-the IIS Server (if the procedure is run on the host itself use
+					<b>HostName</b> -  Provide the host name of
+the IIS server (if the procedure is run on the host itself, use
 "localhost", the default value).</li>
 			</ul>
 			<p class="help">
 				<span style="text-decoration: underline;">GetWebSiteStatus</span>
 			</p>
-			<p class="help">Returns the current state of the site. The state is also saved in a Job
+			<p class="help">This procedure returns the current state of the web site. The state is also saved in a Job
 Property under the "sitestatus" property sheet, with the web site name as
-the property name and the numeric status code as the value. The
-possible status values are: 1 (starting), 2 (started), 3 (stopping), 4
+the property name and the numeric status code as the value. 
+Possible status values: 1 (starting), 2 (started), 3 (stopping), 4
 (stopped), 5 (pausing), 6 (paused), or 7 (continuing).</p>
 			<ul>
 				<li>
-					<b>HostName</b> -  The host name of
-the IIS Server (if the procedure is run on the host itself use
+					<b>HostName</b> -  Provide the host name of
+the IIS server (if the procedure is run on the host itself, use
 "localhost", the default value).</li>
 				<li>
 					<b>WebSiteID</b> - The WebSiteID
 parameter must be the numeric internal identifier from the server's MetaBase
 information. The default value is 1, which is the ID
 of the "Default Web Site" set up with the IIS installation.
-See the GetWebSiteIDs procedure to get the WebSiteID parameter value
-from the site name. NOTE: The ID of a Web
-Site can be found in the IIS Manager GUI (sort of). Open the Properties
-dialog of a web site and click on the "Properties" button in the
+Refer to the GetWebSiteIDs procedure to get the WebSiteID parameter value
+from the site name. Note: The ID of a web
+site can be found in the IIS Manager GUI. Open a web site's Properties
+dialog and click the Properties button in the
 Logging section at the bottom of the dialog. Look at the name of the
 log file at the bottom of that Logging Properties dialog: the site ID
 number follows the letters "W3SVC".</li>
@@ -353,21 +471,21 @@ number follows the letters "W3SVC".</li>
 			<p class="help">
 				<span style="text-decoration: underline;">GetVirtualDirectories</span>
 			</p>
-			<p class="help">Returns basic information for all Virtual Directories defined for the web site (recursively). This procedure is primarily for informational purposes rather than any specific controls.</p>
+			<p class="help">This procedure returns basic information for all virtual directories defined for the web site (recursively). This procedure is primarily for gathering information rather than performing specific actions.</p>
 			<ul>
 				<li>
-					<b>HostName</b> -  The host name of
-the IIS Server (if the procedure is run on the host itself use
+					<b>HostName</b> -  Provide the host name of
+the IIS server (if the procedure is run on the host itself use
 "localhost", the default value).</li>
 				<li>
 					<b>WebSiteID</b> - The WebSiteID
 parameter must be the numeric internal identifier from the server's MetaBase
 information. The default value is 1, which is the ID
 of the "Default Web Site" set up with the IIS installation.
-See the GetWebSiteIDs procedure to get the WebSiteID parameter value
-from the site name. NOTE: The ID of a Web
-Site can be found in the IIS Manager GUI (sort of). Open the Properties
-dialog of a web site and click on the "Properties" button in the
+Refer to the GetWebSiteIDs procedure to get the WebSiteID parameter value
+from the site name. Note: The ID of a web
+site can be found in the IIS Manager GUI. Open a web site's Properties
+dialog and click the Properties button in the
 Logging section at the bottom of the dialog. Look at the name of the
 log file at the bottom of that Logging Properties dialog: the site ID
 number follows the letters "W3SVC".</li>

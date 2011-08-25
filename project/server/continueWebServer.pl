@@ -2,7 +2,7 @@
 
 # -------------------------------------------------------------------------
 # File
-#    pauseWebServer.pl
+#    continueWebServer.pl
 #
 # Dependencies
 #    None
@@ -11,7 +11,7 @@
 #    1.0
 #
 # Date
-#    07/22/2011
+#    07/21/2011
 #
 # Engineer
 #    Alonso Blanco
@@ -19,6 +19,7 @@
 # Copyright (c) 2011 Electric Cloud, Inc.
 # All rights reserved
 # -------------------------------------------------------------------------
+
 
 # -------------------------------------------------------------------------
 # Includes
@@ -44,9 +45,9 @@ use constant {
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
-  
+
 my $ec = new ElectricCommander();
-  
+
 my $host = ($ec->getProperty("HostName"))->findvalue("//value");
 my $webServerName = ($ec->getProperty("WebServerName"))->findvalue("//value");
 
@@ -63,6 +64,7 @@ my $webServerName = ($ec->getProperty("WebServerName"))->findvalue("//value");
 ########################################################################
 sub main(){
  
+
     # Create and open a temp file for the JScript code
     my ($scriptfh, $scriptfilename) = tempfile( DIR => '.', SUFFIX => '.js' );
     
@@ -87,7 +89,7 @@ sub main(){
     # is passed to cscript).
     my $jscript = <<"EOSCRIPT";
     // Iterate through all Web sites looking for the given server and then
-    // when it is found, it is paused.
+    // when it is found, it is continued.
     
     var w3svc = GetObject("IIS://$host/w3svc");
     var e = new Enumerator(w3svc);
@@ -107,11 +109,11 @@ sub main(){
             // is the one we are looking for
             if(site.Name == "$webServerName"){
              
-                // Pause a Server
-                site.Pause();
+                // Continue a Server
+                site.Continue();
             
-                //Log pause
-                WScript.Echo("Server " + site.Name + " Paused");
+                //Log continue statement
+                WScript.Echo("Server " + site.Name + " Continued");
                 
                 //setting "found" flag
                 siteFound = true;
@@ -149,7 +151,7 @@ EOSCRIPT
         #set any additional error or warning conditions here
         #there may be cases in which an error occurs and the exit code is 0.
         #we want to set to correct outcome for the running step
-        if($content !~ m/Server (.+) Paused/){
+        if($content !~ m/Server (.+) Continued/){
             
             $ec->setProperty("/myJobStep/outcome", 'error');
             
@@ -168,7 +170,6 @@ EOSCRIPT
     #    print "$sitename ($siteid)\n";
     #    $ec->setProperty("/myJob/iiswebsites/$sitename", $siteid);
     #}
-
 
 }
 

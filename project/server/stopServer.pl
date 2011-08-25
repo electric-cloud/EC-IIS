@@ -121,13 +121,6 @@
     #inject config...
     if(%configuration){
      
-     
-        if($configuration{'iisversion'} && $configuration{'iisversion'} ne ''){
-        
-            $iisVersion = $configuration{'iisversion'};
-        
-        }
-     
         if($configuration{'iis_url'} && $configuration{'iis_url'} ne ''){
             $url = $configuration{'iis_url'};
         }else{
@@ -151,11 +144,7 @@
     push(@args, $::gExecPath);
         
     push(@args, STOP_COMMAND);
-    
-#    if($iisVersion eq IIS_VERSION_6){
-#     
-#    }
-    
+ 
     #generate command line
     my $cmdLine = createCommandLine(\@args);
     

@@ -82,7 +82,7 @@
   # Variables
   # -------------------------------------------------------------------------
   
-  $::gConfigName = "$[configname]";
+ 
   
   
   # -------------------------------------------------------------------------
@@ -118,28 +118,6 @@
     my $ec = new ElectricCommander();
     $ec->abortOnError(0);
     
-    if($::gConfigName ne ''){
-        %configuration = getConfiguration($::gConfigName);
-    }
-    
-    #inject config...
-    if(%configuration){
-     
-        if($configuration{'iisversion'} && $configuration{'iisversion'} ne ''){
-        
-            $iisVersion = $configuration{'iisversion'};
-        
-        }
-    
-    }else{
-    
-        print "Error: Configuration doesn't exist\n";
-        exit ERROR;
-    
-    }
-    
-    if($iisVersion eq IIS_VERSION_6){
-    
         my $w3svcLine = START_SERVICE_DEFAULT_COMMAND . ' w3svc';
         my $smtpsvcLine = START_SERVICE_DEFAULT_COMMAND . ' Smtpsvc';
         my $httpFilterLine = START_SERVICE_DEFAULT_COMMAND . ' HTTPFilter';
@@ -158,15 +136,12 @@
             #set any additional error or warning conditions here
             #there may be cases in which an error occurs and the exit code is 0.
             #we want to set to correct outcome for the running step
-            if($content !~ m/service was started successfully/){
-             
-                $ec->setProperty("/myJobStep/outcome", 'error');
-            }else{
-               $successfulStartedServices++;
+            if($content =~ m/service was started successfully/){
+                
+                $successfulStartedServices++;
+                
             }
             
-        }else{
-            $ec->setProperty("/myJobStep/outcome", 'error');
         }
         
         #execute command line
@@ -180,15 +155,12 @@
             #set any additional error or warning conditions here
             #there may be cases in which an error occurs and the exit code is 0.
             #we want to set to correct outcome for the running step
-            if($content !~ m/service was started successfully/){
-             
-                $ec->setProperty("/myJobStep/outcome", 'error');
-            }else{
+            if($content =~ m/service was started successfully/){
+                
                 $successfulStartedServices++;
+                
             }
             
-        }else{
-            $ec->setProperty("/myJobStep/outcome", 'error');
         }
         
         #execute command line
@@ -202,15 +174,12 @@
             #set any additional error or warning conditions here
             #there may be cases in which an error occurs and the exit code is 0.
             #we want to set to correct outcome for the running step
-            if($content !~ m/service was started successfully/){
+            if($content =~ m/service was started successfully/){
              
-                $ec->setProperty("/myJobStep/outcome", 'error');
-            }else{
                 $successfulStartedServices++;
+                
             }
             
-        }else{
-            $ec->setProperty("/myJobStep/outcome", 'error');
         }
         
         #execute command line
@@ -224,16 +193,12 @@
             #set any additional error or warning conditions here
             #there may be cases in which an error occurs and the exit code is 0.
             #we want to set to correct outcome for the running step
-            if($content !~ m/service was started successfully/){
+            if($content =~ m/service was started successfully/){
              
-                $ec->setProperty("/myJobStep/outcome", 'error');
-                
-            }else{
                 $successfulStartedServices++;
+                
             }
             
-        }else{
-            $ec->setProperty("/myJobStep/outcome", 'error');
         }
         
         #execute command line
@@ -247,15 +212,12 @@
             #set any additional error or warning conditions here
             #there may be cases in which an error occurs and the exit code is 0.
             #we want to set to correct outcome for the running step
-            if($content !~ m/service was started successfully/){
+            if($content =~ m/service was started successfully/){
              
-                $ec->setProperty("/myJobStep/outcome", 'error');
-            }else{
                 $successfulStartedServices++;
+                
             }
             
-        }else{
-            $ec->setProperty("/myJobStep/outcome", 'error');
         }
         
         #execute command line
@@ -269,14 +231,10 @@
             #set any additional error or warning conditions here
             #there may be cases in which an error occurs and the exit code is 0.
             #we want to set to correct outcome for the running step
-            if($content !~ m/service was started successfully/){
-                $ec->setProperty("/myJobStep/outcome", 'error');
-            }else{
+            if($content =~ m/service was started successfully/){
                 $successfulStartedServices++;
             }
             
-        }else{
-            $ec->setProperty("/myJobStep/outcome", 'error');
         }
         
         print "$w3svcLine\n";
@@ -290,8 +248,14 @@
         
         if($services == $successfulStartedServices){
             print "Successfully started all services\n";
+            $ec->setProperty("/myJobStep/outcome", 'success');
+        }elsif($successfulStartedServices > 0){
+            print "Successfully started $successfulStartedServices service(s) out of $services\n";
+            $ec->setProperty("/myJobStep/outcome", 'success');
         }else{
-            print "Successfully started $successfulStartedServices services out of $services\n";
+            print "Could not start IIS Services\n";
+            $ec->setProperty("/myJobStep/outcome", 'error');
+            
         }
         
         #add command line to properties object
@@ -305,13 +269,6 @@
         #set prop's hash to EC properties
         setProperties(\%props);
 
-        
-    }elsif($iisVersion eq IIS_VERSION_7){
-     
-        
-     
-    }
-    
     
   }
   

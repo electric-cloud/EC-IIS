@@ -2,7 +2,7 @@
 
 # -------------------------------------------------------------------------
 # File
-#    pauseWebServer.pl
+#    startWebServer.pl
 #
 # Dependencies
 #    None
@@ -11,7 +11,7 @@
 #    1.0
 #
 # Date
-#    07/22/2011
+#    07/20/2011
 #
 # Engineer
 #    Alonso Blanco
@@ -26,6 +26,7 @@
 use ElectricCommander;
 use Data::Dumper;
 use File::Temp qw/tempfile/;
+
 
 # -------------------------------------------------------------------------
 # Constants
@@ -44,9 +45,8 @@ use constant {
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
-  
+
 my $ec = new ElectricCommander();
-  
 my $host = ($ec->getProperty("HostName"))->findvalue("//value");
 my $webServerName = ($ec->getProperty("WebServerName"))->findvalue("//value");
 
@@ -87,7 +87,7 @@ sub main(){
     # is passed to cscript).
     my $jscript = <<"EOSCRIPT";
     // Iterate through all Web sites looking for the given server and then
-    // when it is found, it is paused.
+    // when it is found, it is started.
     
     var w3svc = GetObject("IIS://$host/w3svc");
     var e = new Enumerator(w3svc);
@@ -103,15 +103,15 @@ sub main(){
             // Don't bother with anything but webservers
             if (site.Class != "IIsWebServer") continue;
             
-            // verify if the temp site obtained iterating 
+            // verify if the temp site obatained iterating 
             // is the one we are looking for
             if(site.Name == "$webServerName"){
              
-                // Pause a Server
-                site.Pause();
+                // Start a Server
+                site.Start();
             
-                //Log pause
-                WScript.Echo("Server " + site.Name + " Paused");
+                //Log start
+                WScript.Echo("Server " + site.Name + " Started");
                 
                 //setting "found" flag
                 siteFound = true;
@@ -121,10 +121,8 @@ sub main(){
         }
         
         if(!siteFound){
-            
-            //no site match, writing to the log that the site wasn't found
+            //no site match, logging site wasn't found
             WScript.Echo("Server $webServerName was not found");
-            
         }
         
     
@@ -149,7 +147,7 @@ EOSCRIPT
         #set any additional error or warning conditions here
         #there may be cases in which an error occurs and the exit code is 0.
         #we want to set to correct outcome for the running step
-        if($content !~ m/Server (.+) Paused/){
+        if($content !~ m/Server (.+) Continued/){
             
             $ec->setProperty("/myJobStep/outcome", 'error');
             
@@ -168,10 +166,10 @@ EOSCRIPT
     #    print "$sitename ($siteid)\n";
     #    $ec->setProperty("/myJob/iiswebsites/$sitename", $siteid);
     #}
-
-
+    
 }
 
 main();
 
 1;
+

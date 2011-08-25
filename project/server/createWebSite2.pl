@@ -2,7 +2,7 @@
 
 # -------------------------------------------------------------------------
 # File
-#    stopWebSite.pl
+#    createWebSite2.pl
 #
 # Dependencies
 #    None
@@ -11,7 +11,7 @@
 #    1.0
 #
 # Date
-#    07/22/2011
+#    08/18/2011
 #
 # Engineer
 #    Alonso Blanco
@@ -19,7 +19,6 @@
 # Copyright (c) 2011 Electric Cloud, Inc.
 # All rights reserved
 # -------------------------------------------------------------------------
-
 
 # -------------------------------------------------------------------------
 # Includes
@@ -42,17 +41,20 @@ use constant {
     CREDENTIAL_ID => 'credential',
 };
 
-
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
-
+  
 my $ec = new ElectricCommander();
   
 my $host = ($ec->getProperty("HostName"))->findvalue("//value");
-my $webServerName = ($ec->getProperty("WebServerName"))->findvalue("//value");
+my $physicalPath = ($ec->getProperty("PhysicalPath"))->findvalue("//value");
+my $serverComment = ($ec->getProperty("ServerComment"))->findvalue("//value");
+my $bindings = ($ec->getProperty("Bindings"))->findvalue("//value");
+my $serverID = ($ec->getProperty("ServerID"))->findvalue("//value");
+my $generateRandomServerID = ($ec->getProperty("GenerateRandomID"))->findvalue("//value");
 
-# -------------------------------------------------------------------------
+
 
 ########################################################################
 # main - contains the whole process to be done by the perl file
@@ -93,48 +95,42 @@ sub main(){
     // when it is found, it is paused.
     
     var w3svc = GetObject("IIS://$host/w3svc");
-    var e = new Enumerator(w3svc);
-    var siteFound = false;
+    var myNewSiteID;
+    var bindings = new Array();
+    bindings[0] = "$bindings";
     
-    if(!e.atEnd()){
+    var generateRandomKey = "$generateRandomServerID";
+
+    try{
+       
+       if(generateRandomKey == "1"){
+           
+           //random key
+           myNewSiteID = w3svc.CreateNewSite(
+                 "$serverComment", 
+                  bindings, 
+                 "$physicalPath");
+          
+           WScript.Echo("using random ID");
+       
+       }else{
+        
+           //create with supplied server ID
+           myNewSiteID = w3svc.CreateNewSite(
+                 "$serverComment", 
+                 bindings, 
+                 "$physicalPath", 
+                 "$serverID");
+                 
+           WScript.Echo("using supplied ID");
+       }
+       
+        WScript.Echo("WebSite $serverComment created successfully with ID " + 
+            myNewSiteID);
+       
+    }catch(e){
      
-        for (; !e.atEnd() && !siteFound; e.moveNext()) {
-    
-            //get object from the Enum
-            var site = e.item();
-        
-            // Don't bother with anything but webservers
-            if (site.Class != "IIsWebServer") continue;
-            
-            // verify if the temp site obtained iterating 
-            // is the one we are looking for
-            if(site.Name == "$webServerName"){
-             
-                // Stop a Server
-                site.Stop();
-            
-                //Log pause
-                WScript.Echo("Server " + site.Name + " Stopped");
-                
-                //setting "found" flag
-                siteFound = true;
-                
-            }
-            
-        }
-        
-        if(!siteFound){
-            
-            //no site match, writing to the log that the site wasn't found
-            WScript.Echo("Server $webServerName was not found");
-            
-        }
-        
-    
-    }else{
-     
-        WScript.Echo("Host $host was not found");
-        
+        WScript.Echo("Error: " + e.number + " " + e.description);
     }
     
 EOSCRIPT
@@ -152,12 +148,8 @@ EOSCRIPT
         #set any additional error or warning conditions here
         #there may be cases in which an error occurs and the exit code is 0.
         #we want to set to correct outcome for the running step
-        if($content !~ m/Server (.+) Stopped/){
+        if($content !~ m/WebSite (.+) created successfully with ID (.+)/){
             
-            $ec->setProperty("/myJobStep/outcome", 'error');
-            
-        }elsif($content =~ m/(Server|Host) (.+) was not found/){
-         
             $ec->setProperty("/myJobStep/outcome", 'error');
             
         }
@@ -171,12 +163,10 @@ EOSCRIPT
     #    print "$sitename ($siteid)\n";
     #    $ec->setProperty("/myJob/iiswebsites/$sitename", $siteid);
     #}
-    
- 
+
+
 }
 
 main();
 
 1;
-
-
