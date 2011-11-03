@@ -39,6 +39,7 @@
        
        PLUGIN_NAME => 'EC-IIS',
        CREDENTIAL_ID => 'credential',
+       CHECK_COMMAND => '/status',
        
        GENERATE_REPORT => 1,
        DO_NOT_GENERATE_REPORT => 0,
@@ -98,6 +99,7 @@
   sub main() {
       
     # create args array
+    my @args = ();
     my %props;
     
     my $url = '';
@@ -135,34 +137,68 @@
         }
         
     }
-    
-    #inject port
-    $url =~ s/(\/*)$/:$port/;
-    
-    my $agent = LWP::UserAgent->new(env_proxy => 1,keep_alive => 1, timeout => 30);
-    my $header = HTTP::Request->new(GET => $url);
-    my $request = HTTP::Request->new('GET', $url, $header);
-    
-    if($::gUseCredentials){
-        $request->authorization_basic($user, $pass);
-    }
-     
-    my $response = $agent->request($request);
-    
-    # Check the outcome of the response
-    if ($response->is_success){
-     
-        print "URL: $url\n";
-        print "Status returned: ", $response->status_line(), "\n";
         
-    }elsif ($response->is_error){
+    #commands to be executed for version 6
+    push(@args, 'iisreset');
+        
+    push(@args, CHECK_COMMAND);
+ 
+    #generate command line
+    my $cmdLine = createCommandLine(\@args);
     
-        print "Error: ", $response->status_line(), "\n";
-    
+    if($cmdLine && $cmdLine ne ''){
+     
+        #execute command line
+        system($cmdLine);
+        
+        #show masked command line
+        print "Command Line: $cmdLine\n";
+        
+        #add masked command line to properties object
+        $props{'cmdLine'} = $cmdLine;
+        
+        #set prop's hash to EC properties
+        setProperties(\%props);
+     
+    }else{
+     
+        print "Error: could not generate command line";
+        exit ERROR;
+     
     }
     
   }
   
+  ########################################################################
+  # createCommandLine - creates the command line for the invocation
+  # of the program to be executed.
+  #
+  # Arguments:
+  #   -arr: array containing the command name (must be the first element) 
+  #         and the arguments entered by the user in the UI
+  #
+  # Returns:
+  #   -the command line to be executed by the plugin
+  #
+  ########################################################################
+  sub createCommandLine($) {
+      
+      my ($arr) = @_;
+      
+      my $commandName = @$arr[0];
+      
+      my $command = $commandName;
+      
+      shift(@$arr);
+      
+      foreach my $elem (@$arr) {
+          $command .= " $elem";
+      }
+      
+      return $command;
+         
+  }
+	
   ########################################################################
   # setProperties - set a group of properties into the Electric Commander
   #

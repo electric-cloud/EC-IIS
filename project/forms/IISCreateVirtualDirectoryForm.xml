@@ -1,0 +1,52 @@
+<step>
+    <project>/plugins/@PLUGIN_KEY@/project</project>
+    <procedure>CreateVirtualDirectory</procedure>
+    <category>Application Server</category>
+	<editor>
+		<label>Application Server - IIS6 CreateVirtualDirectory</label>
+		<version>@PLUGIN_VERSION@</version>
+		<description>This procedure creates a new virtual directory in the specified web site.</description>	
+		<formElement>
+			<type>entry</type>
+			<label>Configuration name:</label>
+			<property>configname</property>
+			<required>1</required>
+			<documentation>Provide the name of the configuration that holds connection information for the IIS server.</documentation>
+		</formElement>			
+		<formElement>
+			<type>entry</type>
+			<label>Absolute path of the script utility:</label>
+			<property>execpath</property>
+			<required>1</required>
+			<documentation>Provide the absolute path of the script utility used to execute this step (i.e: iisvdir or c:/windows/system32/iisvdir.vbs).</documentation>
+		</formElement>		
+		<formElement>
+			<type>entry</type>
+			<label>Absolute path attached to the virtual directory:</label>
+			<property>absolutephysicalpath</property>
+			<required>1</required>
+			<documentation>Provide the absolute physical path assigned to the virtual directory you want to create (i.e: c:/Inetpub/wwwroot/myvirtualdir).</documentation>
+		</formElement>			
+		<formElement>
+			<type>entry</type>
+			<label>Name of the virtual directory:</label>
+			<property>virtualdirname</property>
+			<required>1</required>
+			<documentation>Provide the name for the virtual directory.</documentation>
+		</formElement>		
+		<formElement>
+			<type>entry</type>
+			<label>Path of the virtual directory:</label>
+			<property>virtualpath</property>
+			<required>0</required>
+			<documentation>Provide a path, if necessary, to the virtual directory within the web site.</documentation>
+		</formElement>		
+		<formElement>
+			<type>entry</type>
+			<label>Website name:</label>
+			<property>website</property>
+			<required>1</required>
+			<documentation>Provide the descriptive name, or the metabase path, of the web site for the virtual directory you want to create (i.e: Default Web Site).</documentation>
+		</formElement>		
+	</editor>
+</step>

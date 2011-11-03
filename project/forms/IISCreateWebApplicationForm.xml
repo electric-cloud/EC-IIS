@@ -1,0 +1,40 @@
+<step>
+    <project>/plugins/@PLUGIN_KEY@/project</project>
+    <procedure>CreateWebApplication</procedure>
+    <category>Application Server</category>
+	<editor>
+		<label>Application Server - IIS6 CreateWebApplication</label>
+		<version>@PLUGIN_VERSION@</version>
+		<description>This procedure creates and starts an in-process web application in the given directory. This procedure assumes that the specified application path exists as a virtual directory.</description>	
+		<formElement>
+			<type>entry</type>
+			<label>Application directory:</label>
+			<property>ApplicationDirPath</property>
+			<required>0</required>
+			<documentation>Specify the path within the web site to the application directory (not the physical path). This path must exist on the IIS server.</documentation>
+		</formElement>					
+		<formElement>
+			<type>entry</type>
+			<label>Host name:</label>
+			<property>HostName</property>
+			<required>1</required>
+			<value>localhost</value>
+			<documentation>Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</documentation>
+		</formElement>	
+		<formElement>
+			<type>entry</type>
+			<label>Application name:</label>
+			<property>ApplicationName</property>
+			<required>0</required>
+			<documentation>Provide the name for the application.</documentation>
+		</formElement>			
+		<formElement>
+			<type>entry</type>
+			<label>Internal web site identifier:</label>
+			<property>WebSiteID</property>
+			<required>1</required>
+			<value>1</value>
+			<documentation>Provide the numeric internal identifier of the web site. Default is 1</documentation>
+		</formElement>					
+	</editor>
+</step>

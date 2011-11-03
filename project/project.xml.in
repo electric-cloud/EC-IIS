@@ -22,6 +22,144 @@
                         <expandable>1</expandable>
                         <value/>
                     </property>
+                    <property>
+                        <propertyName>StartServer</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>StopServer</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>CreateAppPool</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>CreateVirtualDirectory</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>CreateVirtualDirectory2</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>CreateWebSite</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>CreateWebSite2</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>StartAppPool</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>CheckServerStatus</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>CreateWebApplication</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>DeleteVirtualDirectory</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>DeleteWebSite</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>DeployCopy</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>GetVirtualDirectories</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>GetWebSiteIDs</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>GetWebSiteStatus</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>PauseWebSite</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>RecycleAppPool</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>ResetServer</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>ResumeWebSite</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>StartWebSite</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>StopAppPool</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
+                    <property>
+                        <propertyName>StopWebSite</propertyName>
+                        <description/>
+                        <expandable>1</expandable>
+                        <value/>
+                    </property>
                 </propertySheet>
             </property>
             <property>
@@ -1377,7 +1515,7 @@
                 <formalParameterName>virtualdirname</formalParameterName>
                 <defaultValue/>
                 <description>Name of the virtual directory</description>
-                <required>0</required>
+                <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
@@ -1398,7 +1536,7 @@
                 <formalParameterName>absolutephysicalpath</formalParameterName>
                 <defaultValue/>
                 <description>Absolute path attached to the virtual directory (i.e: c:/Inetpub/wwwroot/myvirtualdir).</description>
-                <required>0</required>
+                <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <step>

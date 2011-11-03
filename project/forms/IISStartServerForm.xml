@@ -1,0 +1,25 @@
+<step>
+    <project>/plugins/@PLUGIN_KEY@/project</project>
+    <procedure>StartServer</procedure>
+    <category>Application Server</category>
+	<editor>
+		<label>Application Server - IIS6 StartServer</label>
+		<version>@PLUGIN_VERSION@</version>
+		<description>This procedure uses the iisreset utility to start a server.</description>	
+		<formElement>
+			<type>entry</type>
+			<label>Configuration name:</label>
+			<property>configname</property>
+			<required>1</required>
+			<documentation>Provide the name of the configuration that holds connection information for the IIS server.</documentation>
+		</formElement>			
+		<formElement>
+			<type>entry</type>
+			<label>	Absolute location of the iisreset utility:</label>
+			<value>iisreset</value>
+			<property>execpath</property>
+			<required>1</required>
+			<documentation>Provide the absolute path of the script utility used to execute this step (i.e: iisreset or c:/windows/system32/iisreset.exe).</documentation>
+		</formElement>		
+	</editor>
+</step>

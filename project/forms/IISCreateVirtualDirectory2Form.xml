@@ -1,0 +1,54 @@
+<step>
+    <project>/plugins/@PLUGIN_KEY@/project</project>
+    <procedure>CreateVirtualDirectory2</procedure>
+    <category>Application Server</category>
+	<editor>
+		<label>Application Server - IIS6 CreateVirtualDirectory2</label>
+		<version>@PLUGIN_VERSION@</version>
+		<description>This procedure uses the ADSI API to create a new virtual directory in the specified web site.</description>	
+		<formElement>
+			<type>entry</type>
+			<label>Application directory:</label>
+			<property>ApplicationDirPath</property>
+			<required>0</required>
+			<documentation>Specify the path within the web site to the application directory (not the physical path).</documentation>
+		</formElement>			
+		<formElement>
+			<type>entry</type>
+			<label>Host name:</label>
+			<property>HostName</property>
+			<required>1</required>
+			<value>localhost</value>
+			<documentation>Provide the host name of the IIS server (if the procedure is run on the host itself, use "localhost").</documentation>
+		</formElement>		
+		<formElement>
+			<type>entry</type>
+			<label>Absolute physical path of the virtual directory:</label>
+			<property>PhysicalPath</property>
+			<required>1</required>
+			<documentation>Provide the absolute physical path of the virtual directory.</documentation>
+		</formElement>			
+		<formElement>
+			<type>entry</type>
+			<label>Virtual directory ID:</label>
+			<property>VirtualDirectoryID</property>
+			<required>1</required>
+			<documentation>Provide the virtual directory's identifier.</documentation>
+		</formElement>			
+		<formElement>
+			<type>entry</type>
+			<label>Virtual directory name:</label>
+			<property>VirtualDirectoryName</property>
+			<required>1</required>
+			<documentation>Provide the virtual directory's name.</documentation>
+		</formElement>					
+		<formElement>
+			<type>entry</type>
+			<label>Internal web site identifier:</label>
+			<property>WebSiteID</property>
+			<required>1</required>
+			<value>1</value>
+			<documentation>Provide the numeric internal identifier of the web site.</documentation>
+		</formElement>					
+	</editor>
+</step>

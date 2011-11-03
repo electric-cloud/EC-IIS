@@ -1,0 +1,25 @@
+<step>
+    <project>/plugins/@PLUGIN_KEY@/project</project>
+    <procedure>StopServer</procedure>
+    <category>Application Server</category>
+	<editor>
+		<label>Application Server - IIS6 StopServer</label>
+		<version>@PLUGIN_VERSION@</version>
+		<description>This procedure uses the iisreset utility to stop a server.</description>	
+		<formElement>
+			<type>entry</type>
+			<label>Configuration name:</label>
+			<property>configname</property>
+			<required>1</required>
+			<documentation>Provide the name of the configuration that holds connection information for the IIS server.</documentation>
+		</formElement>			
+		<formElement>
+			<type>entry</type>
+			<label>Absolute location of the iisreset utility:</label>
+			<property>execpath</property>
+			<required>1</required>
+			<value>iisreset</value>
+			<documentation>Provide the absolute path of the script utility used to execute this step (i.e: iisreset or c:/windows/system32/iisreset.exe).</documentation>
+		</formElement>		
+	</editor>
+</step>
