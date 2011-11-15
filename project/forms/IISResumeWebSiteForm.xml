@@ -16,8 +16,8 @@
 		</formElement>		
 		<formElement>
 			<type>entry</type>
-			<label>Web server name:</label>
-			<property>WebServerName</property>
+			<label>Web side ID:</label>
+			<property>WebSideId</property>
 			<required>1</required>
 			<value>1</value>
 			<documentation>Provide the site identification number to attach to the site that you want to resume.</documentation>

@@ -48,7 +48,7 @@ use constant {
 
 my $ec = new ElectricCommander();
 my $host = ($ec->getProperty("HostName"))->findvalue("//value");
-my $webServerName = ($ec->getProperty("WebServerName"))->findvalue("//value");
+my $webSideId = ($ec->getProperty("WebSideId"))->findvalue("//value");
 
 
 ########################################################################
@@ -105,7 +105,7 @@ sub main(){
             
             // verify if the temp site obatained iterating 
             // is the one we are looking for
-            if(site.Name == "$webServerName"){
+            if(site.Name == "$webSideId"){
              
                 // Start a Server
                 site.Start();
@@ -122,7 +122,7 @@ sub main(){
         
         if(!siteFound){
             //no site match, logging site wasn't found
-            WScript.Echo("Server $webServerName was not found");
+            WScript.Echo("Server $webSideId was not found");
         }
         
     

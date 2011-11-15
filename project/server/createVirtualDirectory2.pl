@@ -84,15 +84,12 @@ my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
 # is passed to cscript).
 my $jscript = <<"EOSCRIPT";
 
-// Get the virtual directory in question
 var vdirRoot = GetObject("$webappURL");
 
 try {
  
     var newVDir = vdirRoot.Create("IIsWebVirtualDir", "$virtualDirID");
-    
-    // Use the Windows ADSI object "Put" method to set some required properties. 
-    
+        
     newVDir.Put ("Path", "$physicalpath");
     newVDir.Put ("AccessRead", true); 
     newVDir.Put ("AccessScript", true); 
@@ -152,3 +149,4 @@ my $content = `cscript /E:jscript /NoLogo $scriptfilename`;
     }else{
         $ec->setProperty("/myJobStep/outcome", 'error');
     }
+

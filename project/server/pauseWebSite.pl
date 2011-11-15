@@ -48,7 +48,7 @@ use constant {
 my $ec = new ElectricCommander();
   
 my $host = ($ec->getProperty("HostName"))->findvalue("//value");
-my $webServerName = ($ec->getProperty("WebServerName"))->findvalue("//value");
+my $webSideId = ($ec->getProperty("WebSideId"))->findvalue("//value");
 
 
 ########################################################################
@@ -105,7 +105,7 @@ sub main(){
             
             // verify if the temp site obtained iterating 
             // is the one we are looking for
-            if(site.Name == "$webServerName"){
+            if(site.Name == "$webSideId"){
              
                 // Pause a Server
                 site.Pause();
@@ -123,7 +123,7 @@ sub main(){
         if(!siteFound){
             
             //no site match, writing to the log that the site wasn't found
-            WScript.Echo("Server $webServerName was not found");
+            WScript.Echo("Site $webSideId was not found");
             
         }
         
@@ -162,7 +162,7 @@ EOSCRIPT
     }else{
         $ec->setProperty("/myJobStep/outcome", 'error');
     }
-    
+ 
     #foreach my $siteinfo (@siteids) {
     #    ($sitename,$siteid) = split(/:/, $siteinfo);
     #    print "$sitename ($siteid)\n";

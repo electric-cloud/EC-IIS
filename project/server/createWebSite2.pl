@@ -152,8 +152,7 @@ EOSCRIPT
             
             $ec->setProperty("/myJobStep/outcome", 'error');
             
-        }
-        
+        }        
     }else{
         $ec->setProperty("/myJobStep/outcome", 'error');
     }
