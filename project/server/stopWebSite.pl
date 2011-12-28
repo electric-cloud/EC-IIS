@@ -50,7 +50,7 @@ use constant {
 my $ec = new ElectricCommander();
   
 my $host = ($ec->getProperty("HostName"))->findvalue("//value");
-my $webServerName = ($ec->getProperty("WebServerName"))->findvalue("//value");
+my $webServerName = ($ec->getProperty("WebSideId"))->findvalue("//value");
 
 # -------------------------------------------------------------------------
 

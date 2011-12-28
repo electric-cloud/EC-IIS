@@ -22,144 +22,6 @@
                         <expandable>1</expandable>
                         <value/>
                     </property>
-                    <property>
-                        <propertyName>StartServer</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>StopServer</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>CreateAppPool</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>CreateVirtualDirectory</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>CreateVirtualDirectory2</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>CreateWebSite</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>CreateWebSite2</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>StartAppPool</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>CheckServerStatus</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>CreateWebApplication</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>DeleteVirtualDirectory</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>DeleteWebSite</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>DeployCopy</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>GetVirtualDirectories</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>GetWebSiteIDs</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>GetWebSiteStatus</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>PauseWebSite</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>RecycleAppPool</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>ResetServer</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>ResumeWebSite</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>StartWebSite</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>StopAppPool</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
-                    <property>
-                        <propertyName>StopWebSite</propertyName>
-                        <description/>
-                        <expandable>1</expandable>
-                        <value/>
-                    </property>
                 </propertySheet>
             </property>
             <property>
@@ -583,6 +445,11 @@
             <jobNameTemplate>iis-startserver-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -617,14 +484,14 @@
             <formalParameter>
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
-                <description>Configuration name to use</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue>iisreset</defaultValue>
-                <description>Absolute location of the iisreset utility</description>
+                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -670,6 +537,11 @@
             <jobNameTemplate>iis-deploycopy-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -704,28 +576,35 @@
             <formalParameter>
                 <formalParameterName>ExecPath</formalParameterName>
                 <defaultValue>xcopy</defaultValue>
-                <description>Path to the XCOPY utility</description>
+                <description>Provide the relative or absolute path to the XCOPY (or similar) executable. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>SourcePath</formalParameterName>
                 <defaultValue/>
-                <description>Source directory on local or network drive</description>
+                <description>Provide the path to the source directory. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>DestinationPath</formalParameterName>
                 <defaultValue/>
-                <description>Destination directory for IIS</description>
+                <description>Provide the path to the destination directory. This must be a physical directory, but it may have an IIS virtual directory pointing to it. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>AdditionalOptions</formalParameterName>
                 <defaultValue>/E /K /R /H /I /Y</defaultValue>
-                <description>XCOPY options</description>
+                <description>Indicate option switches for the XCOPY executable, excluding source and destination directories. The default options are those recommended by Microsoft for ASP.NET and IIS web site deployment; exercise caution when changing these options. 
+					- /E: Deep copy including empty dirs.
+					- /K: Copy attributes.
+					- /R: Overwrite read-only files.
+					- /H: Copy hidden and system files.
+					- /I: If the destination does not exist and you are copying more than one file, it is assumed that the destination is a directory.
+					- /Y: Suppress prompting for overwrite confirmation.
+				</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
@@ -771,6 +650,11 @@
             <jobNameTemplate>iis-stopserver-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -805,14 +689,14 @@
             <formalParameter>
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
-                <description>Name of the configuration to use</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue>iisreset</defaultValue>
-                <description>Absolute location of the iisreset utility</description>
+                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -859,6 +743,11 @@
             <jobNameTemplate>iis-createwebapp-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -913,28 +802,28 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>WebSiteID</formalParameterName>
                 <defaultValue>1</defaultValue>
-                <description>The numeric internal identifier of the web site.See the plugin Help document for more details.</description>
+                <description>Provide the numeric internal identifier of the web site. The default value is 1. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>ApplicationDirPath</formalParameterName>
                 <defaultValue/>
-                <description>Path within the website to the application directory (not the physical path)</description>
+                <description>Specify the path within the web site to the application directory (not the physical path). This path must exist on the IIS server.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>ApplicationName</formalParameterName>
                 <defaultValue/>
-                <description>The "friendly" name of the application</description>
+                <description>Provide the name for the application.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
@@ -979,6 +868,11 @@
             <jobNameTemplate>iis-createwebsite-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -1068,42 +962,42 @@
             <formalParameter>
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
-                <description>Name of the configuration to use</description>
+                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>appabsolutepath</formalParameterName>
                 <defaultValue/>
-                <description>Absolute path where the Website has to be located</description>
+                <description>Provide the absolute physical path assigned to the web site you want to create. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>sitename</formalParameterName>
                 <defaultValue/>
-                <description>Name of the Website to create</description>
+                <description>Provide the descriptive name, or the metabase path, of the web site you want to create. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>hostheader</formalParameterName>
                 <defaultValue/>
-                <description>Specifies the host header name for the Web site, such as www.microsoft.com. By default, the site does not have a host header name assigned.</description>
+                <description>Provide the host header name for the web site.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>startapp</formalParameterName>
                 <defaultValue/>
-                <description>Starts the Website if checked</description>
+                <description>Indicate if the web site must be started after creation.</description>
                 <required>0</required>
                 <type>checkbox</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue>iisweb</defaultValue>
-                <description>Absolute location of the script utility to use.</description>
+                <description>Provide the absolute path of the script utility used to execute this step. i.e: iisweb or 'c:/windows/system32/iisweb.vbs'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -1150,6 +1044,11 @@
             <jobNameTemplate>iis-createwebsite2-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -1240,42 +1139,42 @@
             <formalParameter>
                 <formalParameterName>ServerComment</formalParameterName>
                 <defaultValue/>
-                <description>Server Comment for the new Web site. In the IIS Manager, this would be the Description field under Web Site Identification in a Web Site property sheet.</description>
+                <description>Provide the server comment for the new web site. In the IIS Manager, this is the Description field under Web Site Identification in a web site property sheet.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description></description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>PhysicalPath</formalParameterName>
                 <defaultValue/>
-                <description>Fully qualified path to a physical directory to which you want the Web site mapped</description>
+                <description>Provide the absolute physical path assigned to the web site you want to create. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>GenerateRandomID</formalParameterName>
                 <defaultValue/>
-                <description>If checked, generates a random WebSite ID. Otherwise, it attempts to create the WebSite with the user-supplied ID.</description>
+                <description>If checked, this generates a random web site ID. Otherwise, it attempts to create the web site with the user-supplied ID.</description>
                 <required>0</required>
                 <type>checkbox</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>ServerID</formalParameterName>
                 <defaultValue/>
-                <description>Site identification number which you want to attach to the site to create.</description>
+                <description>Provide the site identification number to attach to the site that you want to create. If no ID is specified, the site is created with a random ID.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>Bindings</formalParameterName>
                 <defaultValue></defaultValue>
-                <description>Binding string that includes at least one of the host name, port, or IP address. The following format is required: IP:Port:Hostname.</description>
+                <description>Provide the binding string that includes at least one of these: host name, port, or IP address. Use this format: IP:Port:Hostname. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -1322,6 +1221,11 @@
             <jobNameTemplate>iis-deletewebsite-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -1366,21 +1270,21 @@
             <formalParameter>
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
-                <description>Name of the configuration to use</description>
+                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>sitename</formalParameterName>
                 <defaultValue/>
-                <description>Name of the Website to delete</description>
+                <description>Provide the descriptive name, or the metabase path, of the web site you want to delete. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue/>
-                <description>Absolute location of the script utility (such as iisweb).</description>
+                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisweb' is entered, the 'iisweb' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisweb' or 'c:/MyDir/IISFiles/iisweb.vbs'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -1426,6 +1330,11 @@
             <jobNameTemplate>iis-createvirtualdirectory-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -1500,42 +1409,42 @@
             <formalParameter>
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
-                <description>Name of the configuration to use</description>
+                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue/>
-                <description>Absolute path with filename of the script utiliy to use (iisvdir, appcmd, etc.)</description>
+                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisvdir' is entered, the 'iisvdir' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisvdir' 'c:/MyDir/IISFiles/iisvdir.vbs'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>virtualdirname</formalParameterName>
                 <defaultValue/>
-                <description>Name of the virtual directory</description>
+                <description>Provide the name for the virtual directory. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>website</formalParameterName>
                 <defaultValue/>
-                <description>Name of the Website that will host the virtual directory to create (i.e: Default Web Site).</description>
+                <description>Provide the descriptive name, or the metabase path, of the web site for the virtual directory you want to create. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>virtualpath</formalParameterName>
                 <defaultValue/>
-                <description>Path of the Virtual Directory to create</description>
+                <description>Provide a path, if necessary, to the virtual directory within the web site.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>absolutephysicalpath</formalParameterName>
                 <defaultValue/>
-                <description>Absolute path attached to the virtual directory (i.e: c:/Inetpub/wwwroot/myvirtualdir).</description>
+                <description>Provide the absolute physical path assigned to the virtual directory you want to create. i.e: 'c:/Inetpub/wwwroot/myvirtualdir'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -1583,6 +1492,11 @@
             <jobNameTemplate>iis-deletevirtualdirectory-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -1647,35 +1561,35 @@
             <formalParameter>
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
-                <description>Name of the configuration to use</description>
+                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>website</formalParameterName>
                 <defaultValue/>
-                <description>Name of the Website that contains the virtual directory to delete.</description>
+                <description>Provide the descriptive name, or the metabase path, of the web site for the virtual directory you want to delete. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>virtualpath</formalParameterName>
                 <defaultValue/>
-                <description>Path of the Virtual Directory to delete</description>
+                <description>Provide a path to the virtual directory within the web site of the virtual directory you want to delete. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue/>
-                <description>Absolute location of the script utility to use (iisvdir, appcmd, etc.)</description>
+                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisvdir' is entered, the 'iisvdir' tool must be located on the system path  'c:/MyDir/IISFiles/iisvdir.vbs'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>virtualdirname</formalParameterName>
                 <defaultValue/>
-                <description>Name of the virtual directory</description>
+                <description>Provide the name for the virtual directory.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
@@ -1721,6 +1635,11 @@
             <jobNameTemplate>iis-resetserver-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -1755,14 +1674,14 @@
             <formalParameter>
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue>iisreset</defaultValue>
-                <description>Absolute location of the iisreset utility</description>
+                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
-                <description>Name of the configuration to use</description>
+                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -1808,6 +1727,11 @@
             <jobNameTemplate>iis-checkserverstatus-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -1857,14 +1781,14 @@
             <formalParameter>
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
-                <description>Name of the configuration to use</description>
+                <description>Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration if the 'Use Credentials' parameter is checked. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>usecredentials</formalParameterName>
                 <defaultValue/>
-                <description>Enable BASIC credentials usage</description>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>checkbox</type>
             </formalParameter>
@@ -1910,6 +1834,11 @@
             <jobNameTemplate>iis-startiisservices-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -1965,6 +1894,11 @@
             <jobNameTemplate>iis-stopiisservices-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2020,6 +1954,11 @@
             <jobNameTemplate>iis-getwebsiteids-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2044,7 +1983,7 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
@@ -2089,6 +2028,11 @@
             <jobNameTemplate>iis-getwebsitestatus-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2123,14 +2067,14 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>WebSiteID</formalParameterName>
                 <defaultValue>1</defaultValue>
-                <description>The numeric internal identifier of the web site.See the plugin Help document for more details.</description>
+                <description>The WebSiteID parameter must be the numeric internal identifier from the server's MetaBase information. The default value is 1. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2175,6 +2119,11 @@
             <jobNameTemplate>iis-getvirtualdirs-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2209,14 +2158,14 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>WebSiteID</formalParameterName>
                 <defaultValue>1</defaultValue>
-                <description>The numeric internal identifier of the web site.See the plugin Help document for more details.</description>
+                <description>The WebSiteID parameter must be the numeric internal identifier from the server's MetaBase information. The default value is 1. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2262,6 +2211,11 @@
             <jobNameTemplate>iis-startwebsite-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2296,14 +2250,14 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>WebSideId</formalParameterName>
                 <defaultValue>1</defaultValue>
-                <description>The numeric internal identifier of the web site. See the plugin Help document for more details.</description>
+                <description>Provide the site identification number to attach to the site that you want to start. The default value is 1. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2348,6 +2302,11 @@
             <jobNameTemplate>iis-resumewebsite-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2382,14 +2341,14 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>WebSideId</formalParameterName>
                 <defaultValue>1</defaultValue>
-                <description>The numeric internal identifier of the web site. See the plugin Help document for more details.</description>
+                <description>Provide the site identification number to attach to the site that you want to resume. The default value is 1. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2434,6 +2393,11 @@
             <jobNameTemplate>iis-pausewebsite-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2468,14 +2432,14 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>WebSideId</formalParameterName>
                 <defaultValue>1</defaultValue>
-                <description>The numeric internal identifier of the web site. See the plugin Help document for more details.</description>
+                <description>Provide the site identification number to attach to the site that you want to pause. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2521,6 +2485,11 @@
             <jobNameTemplate>iis-stopwebsite-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2538,7 +2507,7 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>WebServerName</propertyName>
+                                    <propertyName>WebSideId</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -2555,14 +2524,14 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
-                <formalParameterName>WebServerName</formalParameterName>
+                <formalParameterName>WebSideId</formalParameterName>
                 <defaultValue>1</defaultValue>
-                <description>The numeric internal identifier of the web site. See the plugin Help document for more details.</description>
+                <description>Provide the site identification number to attach to the site that you want to start. The default value is 1. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2608,6 +2577,11 @@
             <jobNameTemplate>iis-startapppool-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2644,7 +2618,7 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2652,7 +2626,7 @@
             <formalParameter>
                 <formalParameterName>apppoolname</formalParameterName>
                 <defaultValue/>
-                <description>The name of the Application Pool</description>
+                <description>Provide the name of the application pool to start. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2698,6 +2672,11 @@
             <jobNameTemplate>iis-stopapppool-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2734,7 +2713,7 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2742,7 +2721,7 @@
             <formalParameter>
                 <formalParameterName>apppoolname</formalParameterName>
                 <defaultValue/>
-                <description>The name of the Application Pool</description>
+                <description>Provide the name of the application pool to stop. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2788,6 +2767,11 @@
             <jobNameTemplate>iis-createapppool-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2824,7 +2808,7 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2832,7 +2816,7 @@
             <formalParameter>
                 <formalParameterName>apppoolname</formalParameterName>
                 <defaultValue/>
-                <description>The name of the Application Pool</description>
+                <description>Provide the name of the application pool to create. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2878,6 +2862,11 @@
             <jobNameTemplate>iis-recycleapppool-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -2914,7 +2903,7 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2922,7 +2911,7 @@
             <formalParameter>
                 <formalParameterName>apppoolname</formalParameterName>
                 <defaultValue/>
-                <description>The name of the Application Pool</description>
+                <description>Provide the name of the application pool to recycle. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -2969,6 +2958,11 @@
             <jobNameTemplate>iis-createvirtualdir2-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -3049,7 +3043,7 @@
             <formalParameter>
                 <formalParameterName>HostName</formalParameterName>
                 <defaultValue>localhost</defaultValue>
-                <description>The host name of the IIS Server (if the procedure is run on the host itself, use "localhost")</description>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -3057,35 +3051,35 @@
             <formalParameter>
                 <formalParameterName>WebSiteID</formalParameterName>
                 <defaultValue>1</defaultValue>
-                <description>The numeric internal identifier of the web site. See the plugin Help document for more details.</description>
+                <description>Provide the numeric internal identifier of the web site. The default value is 1. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>ApplicationDirPath</formalParameterName>
                 <defaultValue/>
-                <description>Path within the website to the application directory (not the physical path)</description>
+                <description>Specify the path within the web site to the application directory (not the physical path).</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>VirtualDirectoryID</formalParameterName>
                 <defaultValue/>
-                <description>Virtual directory's identifier</description>
+                <description>Provide the virtual directory's identifier. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>VirtualDirectoryName</formalParameterName>
                 <defaultValue/>
-                <description>Virtual directory's name</description>
+                <description>Provide the name for the virtual directory. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>PhysicalPath</formalParameterName>
                 <defaultValue/>
-                <description>The absolute physical path of the virtual directory</description>
+                <description>Provide the absolute physical path assigned to the virtual directory you want to create. i.e: 'c:/Inetpub/wwwroot/myvirtualdir2'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>

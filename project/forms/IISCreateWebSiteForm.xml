@@ -1,56 +1,52 @@
-<step>
-    <project>/plugins/@PLUGIN_KEY@/project</project>
-    <procedure>CreateWebSite</procedure>
-    <category>Application Server</category>
-	<editor>
-		<label>Application Server - IIS6 CreateWebSite</label>
-		<version>@PLUGIN_VERSION@</version>
-		<description>This procedure creates a web site configuration on a local or remote computer.</description>	
-		<formElement>
-			<type>entry</type>
-			<label>Configuration name:</label>
-			<property>configname</property>
-			<required>1</required>
-			<documentation>Provide the absolute physical path assigned to the web site you want to create.</documentation>
-		</formElement>					
-		<formElement>
-			<type>entry</type>
-			<label>Absolute path of the script utility:</label>
-			<property>execpath</property>
-			<value>iisweb</value>
-			<required>1</required>
-			<documentation>Provide the absolute path of the script utility used to execute this step (i.e: iisweb or c:/windows/system32/iisweb.vbs).</documentation>
-		</formElement>		
-		<formElement>
-			<type>entry</type>
-			<label>Absolute path attached to the web site:</label>
-			<property>appabsolutepath</property>
-			<required>1</required>
-			<documentation>Provide the absolute physical path assigned to the web site you want to create.</documentation>
-		</formElement>			
-		<formElement>
-			<type>entry</type>
-			<label>Host header name:</label>
-			<property>hostheader</property>
-			<required>0</required>
-			<documentation>Specifies the host header name for the Web site, such as www.microsoft.com. By default, the site does not have a host header name assigned.</documentation>
-		</formElement>		
-		<formElement>
-			<type>entry</type>
-			<label>Web site name:</label>
-			<property>sitename</property>
-			<required>1</required>
-			<documentation>Provide the descriptive name, or the metabase path, of the web site you want to create.</documentation>
-		</formElement>		
-		<formElement>
-			<type>checkbox</type>
-			<label>Start web site:</label>
-			<property>startapp</property>
-			<checkedValue>1</checkedValue>
-			<uncheckedValue>0</uncheckedValue>
-			<initiallyChecked>0</initiallyChecked>
-			<required>0</required>
-			<documentation>Indicate if the web site must be started after creation.</documentation>
-		</formElement>		
-	</editor>
-</step>
+<editor>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateWebSite</help>
+	<label>Application Server - IIS CreateWebSite</label>
+	<version>@PLUGIN_VERSION@</version>
+	<description>This procedure creates a web site configuration on a local or remote computer.</description>	
+	<formElement>
+		<type>entry</type>
+		<label>Configuration name:</label>
+		<property>configname</property>
+		<required>1</required>
+		<documentation>Provide the name of the configuration that holds connection information for the IIS server. (Required)</documentation>
+	</formElement>					
+	<formElement>
+		<type>entry</type>
+		<label>Absolute path of the script utility:</label>
+		<property>execpath</property>
+		<value>iisweb</value>
+		<required>1</required>
+		<documentation>Provide the absolute path of the script utility used to execute this step. i.e: iisweb or 'c:/windows/system32/iisweb.vbs'. (Required)</documentation>
+	</formElement>		
+	<formElement>
+		<type>entry</type>
+		<label>Absolute path attached to the web site:</label>
+		<property>appabsolutepath</property>
+		<required>1</required>
+		<documentation>Provide the absolute physical path assigned to the web site you want to create. (Required)</documentation>
+	</formElement>			
+	<formElement>
+		<type>entry</type>
+		<label>Host header name:</label>
+		<property>hostheader</property>
+		<required>0</required>
+		<documentation>Provide the host header name for the web site.</documentation>
+	</formElement>		
+	<formElement>
+		<type>entry</type>
+		<label>Web site name:</label>
+		<property>sitename</property>
+		<required>1</required>
+		<documentation>Provide the descriptive name, or the metabase path, of the web site you want to create. (Required)</documentation>
+	</formElement>		
+	<formElement>
+		<type>checkbox</type>
+		<label>Start web site:</label>
+		<property>startapp</property>
+		<checkedValue>1</checkedValue>
+		<uncheckedValue>0</uncheckedValue>
+		<initiallyChecked>0</initiallyChecked>
+		<required>0</required>
+		<documentation>Indicate if the web site must be started after creation.</documentation>
+	</formElement>		
+</editor>

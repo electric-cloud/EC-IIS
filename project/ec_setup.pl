@@ -1,192 +1,3 @@
-if ($promoteAction eq "promote") {
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - StartServer",
-                            {
-                               description => "Uses the iisreset utility to start a server.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/StartServer]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - StopServer",
-                            {
-                               description => "Uses the iisreset utility to stop a server.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/StopServer]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - CreateAppPool",
-                            {
-                               description => "This procedure creates an IIS application pool.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/CreateAppPool]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - CreateVirtualDirectory",
-                            {
-                               description => "This procedure creates a new virtual directory in the specified web site.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/CreateVirtualDirectory]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - CreateWebSite",
-                            {
-                               description => "This procedure creates a web site configuration on a local or remote computer.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/CreateWebSite]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - CreateVirtualDirectory2",
-                            {
-                               description => "Specify the path within the web site to the application directory (not the physical path).",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/CreateVirtualDirectory2]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - CreateWebSite2",
-                            {
-                               description => "This procedure uses the ADSI API to create a web site on an IIS server.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/CreateWebSite2]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - StartAppPool",
-                            {
-                               description => "This procedure starts an IIS application pool.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/StartAppPool]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - CheckServerStatus",
-                            {
-                               description => "This procedure checks the status of the specified server.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/CheckServerStatus]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - CreateWebApplication",
-                            {
-                               description => "This procedure creates and starts an in-process web application in the given directory.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/CreateWebApplication]'
-                            }
-                           
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - DeleteVirtualDirectory",
-                            {
-                               description => "This procedure deletes a virtual directory from the specified web site.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/DeleteVirtualDirectory]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - DeleteWebSite",
-                            {
-                               description => "This procedure deletes a web site.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/DeleteWebSite]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - DeployCopy",
-                            {
-                               description => "This procedure copies the application files recursively to the web site application's physical directory.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/DeployCopy]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - GetVirtualDirectories",
-                            {
-                               description => "This procedure returns basic information for all virtual directories defined for the web site (recursively). This procedure is primarily for gathering information rather than performing specific actions.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/GetVirtualDirectories]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - GetWebSiteIDs",
-                            {
-                               description => "This procedure fetches the numeric internal IIS identifiers of all web sites found on the host server. These IDs are necessary to access internal web site properties in order to perform certain control operations.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/GetWebSiteIDs]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - GetWebSiteStatus",
-                            {
-                               description => "This procedure returns the current state of the web site. The state is also saved in a Job Property under the sitestatus property sheet, with the web site name as the property name and the numeric status code as the value. Possible status values: 1 (starting), 2 (started), 3 (stopping), 4 (stopped), 5 (pausing), 6 (paused), or 7 (continuing).",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/GetWebSiteStatus]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - PauseWebSite",
-                            {
-                               description => "This procedure pauses a web site. This is similar to stopping, except pausing allows existing processes to continue to their conclusion.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/PauseWebSite]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - RecycleAppPool",
-                            {
-                               description => "This procedure recycles an application pool. When recycling occurs, the worker process currently serving the application pool terminates and the WWW service restarts a new worker process to replace it.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/RecycleAppPool]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - ResetServer",
-                            {
-                               description => "This procedure uses the iisreset utility to reset a server.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/ResetServer]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - ResumeWebSite",
-                            {
-                               description => "This procedure continues server operation after it has been paused.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/ResumeWebSite]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - StartWebSite",
-                            {
-                               description => "This procedure starts a web site.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/StartWebSite]'
-                            }
-                           );
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - StopAppPool",
-                            {
-                               description => "This procedure stops an IIS application pool.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/StopAppPool]'
-                            }
-                           );                           
-	$batch->setProperty(
-                            "/server/ec_customEditors/pluginStep/IIS - StopWebSite",
-                            {
-                               description => "This procedure stops a web site.",
-                               value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/StopWebSite]'
-                            }
-                           );
-} elsif ($promoteAction eq "demote") {
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - StartServer");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - StopServer");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - CreateAppPool");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - CreateVirtualDirectory");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - CreateVirtualDirectory2");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - CheckServerStatus");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - CreateWebSite");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - CreateWebSite2");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - StartAppPool");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - CreateWebApplication");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - DeleteVirtualDirectory");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - DeleteWebSite");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - DeployCopy");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - GetVirtualDirectories");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - GetWebSiteIDs");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - GetWebSiteStatus");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - PauseWebSite");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - RecycleAppPool");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - ResetServer");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - ResumeWebSite");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - StartWebSite");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - StopAppPool");
-	$batch->deleteProperty("/server/ec_customEditors/pluginStep/IIS - StopWebSite");
-}
-
 if ($upgradeAction eq "upgrade") {
     my $query = $commander->newBatch();
     my $newcfg = $query->getProperty(
@@ -247,3 +58,170 @@ if ($upgradeAction eq "upgrade") {
         }
     }
 }
+
+# Data that drives the create step picker registration for this plugin.	
+my %startServer = (
+    label       => "IIS - Start Server",
+    procedure   => "StartServer",
+    description => "Uses the iisreset utility to start a server.",
+    category    => "Application Server"
+);
+my %stopServer = (
+    label       => "IIS - Stop Server",
+    procedure   => "StopServer",
+    description => "Uses the iisreset utility to stop a server.",
+    category    => "Application Server"
+);
+my %createAppPool = (
+    label       => "IIS - Create App Pool",
+    procedure   => "CreateAppPool",
+    description => "Creates an IIS application pool.",
+    category    => "Application Server"
+);
+my %createVirtualDirectory = (
+    label       => "IIS - Create Virtual Directory",
+    procedure   => "CreateVirtualDirectory",
+    description => "Creates a new virtual directory in the specified web site.",
+    category    => "Application Server"
+);
+my %createVirtualDirectory2 = (
+    label       => "IIS - Create Virtual Directory 2",
+    procedure   => "CreateVirtualDirectory2",
+    description => "Uses the ADSI API to create a new virtual directory in the specified web site.",
+    category    => "Application Server"
+);
+my %checkServerStatus = (
+    label       => "IIS - Check Server Status",
+    procedure   => "CheckServerStatus",
+    description => "Checks the status of the specified server.",
+    category    => "Application Server"
+); 
+my %createWebSite = ( 
+    label       => "IIS - Create Web Site",
+    procedure   => "CreateWebSite",
+    description => "Creates a web site configuration on a local or remote computer.",
+    category    => "Application Server"
+);
+my %createWebSite2 = (
+    label       => "IIS - Create Web Site 2",
+    procedure   => "CreateWebSite2",
+    description => "Uses the ADSI API to create a web site on an IIS server.",
+    category    => "Application Server"
+);
+my %startAppPool = (
+    label       => "IIS - Start App Pool",
+    procedure   => "StartAppPool",
+    description => "Starts an IIS application pool.",
+    category    => "Application Server"
+);
+my %createWebApplication = (
+    label       => "IIS - Create Web Application",
+    procedure   => "CreateWebApplication",
+    description => "Creates and starts a web application in the given directory.",
+    category    => "Application Server"
+);
+my %deleteVirtualDirectory = (
+    label       => "IIS - Delete Virtual Directory",
+    procedure   => "DeleteVirtualDirectory",
+    description => "Deletes a virtual directory from the specified web site.",
+    category    => "Application Server"
+);
+my %deleteWebSite = (
+    label       => "IIS - Delete Web Site",
+    procedure   => "DeleteWebSite",
+    description => "Deletes a web site.",
+    category    => "Application Server"
+);
+my %deployCopy = ( 
+    label       => "IIS - Deploy Copy",
+    procedure   => "DeployCopy",
+    description => "Copies the application files to the physical directory.",
+    category    => "Application Server"
+);
+my %getVirtualDirectories = (
+    label       => "IIS - Get Virtual Directories",
+    procedure   => "GetVirtualDirectories",
+    description => "Returns information for all virtual directories.",
+    category    => "Application Server"
+);
+my %getWebSiteIDs = (
+    label       => "IIS - Get WebSite IDs",
+    procedure   => "GetWebSiteIDs",
+    description => "Fetches the numeric internal IIS identifiers of all web sites.",
+    category    => "Application Server"
+);
+my %getWebSiteStatus = (
+    label       => "IIS - Get WebSite Status",
+    procedure   => "GetWebSiteStatus",
+    description => "Returns the current state of the web site.",
+    category    => "Application Server"
+);
+my %pauseWebSite = (
+    label       => "IIS - Pause WebSite",
+    procedure   => "PauseWebSite",
+    description => "Pauses a web site.",
+    category    => "Application Server"
+);
+my %recycleAppPool = (
+    label       => "IIS - Recycle App Pool",
+    procedure   => "RecycleAppPool",
+    description => "Recycles an application pool.",
+    category    => "Application Server"
+);
+my %resetServer = (
+    label       => "IIS - Reset Server",
+    procedure   => "ResetServer",
+    description => "Uses the iisreset utility to stop a server.",
+    category    => "Application Server"
+);
+my %resumeWebSite = (
+    label       => "IIS - Resume WebSite",
+    procedure   => "ResumeWebSite",
+    description => "Continues server operation after it has been paused.",
+    category    => "Application Server"
+);
+my %startWebSite = (
+    label       => "IIS - Start WebSite",
+    procedure   => "StartWebSite",
+    description => "Starts a web site.",
+    category    => "Application Server"
+);
+my %stopAppPool = (
+    label       => "IIS - Stop App Pool",
+    procedure   => "StopAppPool",
+    description => "Stops an IIS application pool.",
+    category    => "Application Server"
+);
+my %stopWebSite = (
+    label       => "IIS - Stop WebSite",
+    procedure   => "StopWebSite",
+    description => "Stops a web site.",
+    category    => "Application Server"
+);
+my %startIISServices = (
+    label       => "IIS - Start IIS Services",
+    procedure   => "StartIISServices",
+    description => "Starts the necessary services to initialize the IIS server.",
+    category    => "Application Server"
+);
+my %stopIISServices = (
+    label       => "IIS - Stop IIS Services",
+    procedure   => "StopIISServices",
+    description => "Stops the necessary services to shut down the IIS server.",
+    category    => "Application Server"
+);
+
+                 
+@::createStepPickerSteps = (\%startServer, \%stopServer,
+                            \%createAppPool, \%createVirtualDirectory,
+                            \%createVirtualDirectory2, \%checkServerStatus,
+                            \%createWebSite, \%createWebSite2,
+                            \%startAppPool, \%deleteVirtualDirectory,
+                            \%createWebApplication, \%deleteWebSite,
+                            \%deployCopy, \%getVirtualDirectories,
+                            \%getWebSiteIDs, \%getWebSiteStatus,
+                            \%pauseWebSite, \%recycleAppPool,
+                            \%resetServer, \%resumeWebSite,
+                            \%startWebSite, \%stopAppPool, 
+							\%stopWebSite,
+                            \%startIISServices, \%stopIISServices);

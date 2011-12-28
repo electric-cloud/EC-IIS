@@ -1,27 +1,23 @@
-<step>
-    <project>/plugins/@PLUGIN_KEY@/project</project>
-    <procedure>CheckServerStatus</procedure>
-    <category>Application Server</category>
-	<editor>
-		<label>Application Server - IIS6 CheckServerStatus</label>
-		<version>@PLUGIN_VERSION@</version>
-		<description>This procedure checks the status of the specified server.</description>	
-		<formElement>
-			<type>entry</type>
-			<label>Configuration name:</label>
-			<property>configname</property>
-			<required>1</required>
-			<documentation>Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration.</documentation>
-		</formElement>		
-		<formElement>
-			<type>checkbox</type>
-			<label>Use credentials:</label>
-			<property>usecredentials</property>
-			<checkedValue>1</checkedValue>
-			<uncheckedValue>0</uncheckedValue>
-			<initiallyChecked>0</initiallyChecked>
-			<required>0</required>
-			<documentation>Indicate if credentials must be used.</documentation>
-		</formElement>		
-	</editor>
-</step>
+<editor>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CheckServerStatus</help>
+	<label>Application Server - IIS CheckServerStatus</label>
+	<version>@PLUGIN_VERSION@</version>
+	<description>This procedure checks the status of the specified server.</description>	
+	<formElement>
+		<type>entry</type>
+		<label>Configuration name:</label>
+		<property>configname</property>
+		<required>1</required>
+		<documentation>Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration if the 'Use Credentials' parameter is checked. (Required)</documentation>
+	</formElement>		
+	<formElement>
+		<type>checkbox</type>
+		<label>Use credentials:</label>
+		<property>usecredentials</property>
+		<checkedValue>1</checkedValue>
+		<uncheckedValue>0</uncheckedValue>
+		<initiallyChecked>0</initiallyChecked>
+		<required>0</required>
+		<documentation>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</documentation>
+	</formElement>		
+</editor>
