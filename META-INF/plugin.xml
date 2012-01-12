@@ -5,7 +5,7 @@
     <label>@PLUGIN_KEY@</label>
     <description>Internet Information Services Application Server</description>
     <configure>configurations.xml</configure>
-    <help>EC-IIS6_help.xml</help>
+    <help>EC-IIS_help.xml</help>
     <author>Electric Cloud</author>
     <authorUrl>http://www.electric-cloud.com/support</authorUrl>
     <category>Application Server</category>
