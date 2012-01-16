@@ -2,10 +2,10 @@
 push (@::gMatchers,
   {
    id =>        "siteStarted",
-   pattern =>          q{Server (.+) Started},
+   pattern =>          q{Site (.+) Started},
    action =>           q{
     
-              my $description = "Server $1 Started";
+              my $description = "Site $1 Started";
               setProperty("summary", $description . "\n");
     
    },

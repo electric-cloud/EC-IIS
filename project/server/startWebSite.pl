@@ -111,7 +111,7 @@ sub main(){
                 site.Start();
             
                 //Log start
-                WScript.Echo("Server " + site.Name + " Started");
+                WScript.Echo("Site " + site.Name + " Started");
                 
                 //setting "found" flag
                 siteFound = true;
@@ -122,7 +122,7 @@ sub main(){
         
         if(!siteFound){
             //no site match, logging site wasn't found
-            WScript.Echo("Server $webSideId was not found");
+            WScript.Echo("Site $webSideId was not found");
         }
         
     
@@ -147,7 +147,7 @@ EOSCRIPT
         #set any additional error or warning conditions here
         #there may be cases in which an error occurs and the exit code is 0.
         #we want to set to correct outcome for the running step
-        if($content !~ m/Server (.+) Started/){
+        if($content !~ m/Site (.+) Started/){
             
             $ec->setProperty("/myJobStep/outcome", 'error');
             

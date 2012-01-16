@@ -60,14 +60,14 @@
 
     <h2>IIS6</h2>
     <!-- The tool description should answer these kinds of questions:
-                                                                                        What is the tool itself is used for in the development
-                                                                                        process? Who would use this tool? What is the general use-case or
-                                                                                        problem that this tool solves? Look at the tool's documentation or
-                                                                                        website(s) to get their own descriptions. Look at Wikipedia or other
-                                                                                        outside websites. If there is a Hudson plugin, read their 
-                                                                                        documentation for ideas, examples, etc. It's OK to copy word-for-word
-                                                                                        only if appropriate, such as FOSS - but not commercial software.
-                                                                                        -->
+                                                                                            What is the tool itself is used for in the development
+                                                                                            process? Who would use this tool? What is the general use-case or
+                                                                                            problem that this tool solves? Look at the tool's documentation or
+                                                                                            website(s) to get their own descriptions. Look at Wikipedia or other
+                                                                                            outside websites. If there is a Hudson plugin, read their 
+                                                                                            documentation for ideas, examples, etc. It's OK to copy word-for-word
+                                                                                            only if appropriate, such as FOSS - but not commercial software.
+                                                                                            -->
 
     <p>Internet Information Services (IIS) - formerly called
     Internet Information Server - is a web server application and
@@ -93,10 +93,10 @@
 
     <h2>Electric Commander Integration to IIS6</h2>
     <!-- The integration description should answer the questions:
-                                                                                        How deep does our integration go? Why should I care? What general
-                                                                                        functionality does the plugin include? What functionality does
-                                                                                        the plugin omit?
-                                                                                        -->
+                                                                                            How deep does our integration go? Why should I care? What general
+                                                                                            functionality does the plugin include? What functionality does
+                                                                                            the plugin omit?
+                                                                                            -->
 
     <p>This plugin allows users to interact with the Internet
     Information Services Server 6 (IIS6) and accomplish tasks such
@@ -131,9 +131,9 @@
 
         <h3>Plugin Configuration</h3>
         <!-- If the plugin has separate configurations then include this section,
-                                                                                                                                        otherwise omit this whole section. We don't need to have a configuration
-                                                                                                                                        section that just says "There is no configuration for this plugin."
-                                                                                                                                        -->
+                                                                                                                                                otherwise omit this whole section. We don't need to have a configuration
+                                                                                                                                                section that just says "There is no configuration for this plugin."
+                                                                                                                                                -->
 
         <div class="sectionnote">
             Plugin configurations are sets of parameters that apply
@@ -151,11 +151,11 @@
             will open the Configuration page.
         </div>
         <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
-                                                                                                                                        Parameter Panel, and the first sentence(s) of the description should be
-                                                                                                                                        the same as the tooltip (if there is one). After that, the parameter
-                                                                                                                                        description can go into greater detail about the parameter including
-                                                                                                                                        valid value ranges and examples.
-                                                                                                                                        -->
+                                                                                                                                                Parameter Panel, and the first sentence(s) of the description should be
+                                                                                                                                                the same as the tooltip (if there is one). After that, the parameter
+                                                                                                                                                description can go into greater detail about the parameter including
+                                                                                                                                                valid value ranges and examples.
+                                                                                                                                                -->
 
         <p>To enable Commander to communicate with your IIS server,
         create an IIS configuration, supplying the following
@@ -684,9 +684,9 @@
                 <tr>
                     <td class="required">Binding string</td>
 
-                    <td>Provide the binding string that includes 
-					IP and port. Use this format: "IP:Port:". Take of the ":" at the end.
-                    (Required)</td>
+                    <td>Provide the binding string that includes IP
+                    and port. Use this format: "IP:Port:". Take of
+                    the ":" at the end. (Required)</td>
                 </tr>
 
                 <tr>
@@ -799,8 +799,8 @@
                 <tr>
                     <td>Name of the virtual directory</td>
 
-                    <td>Provide the name for the virtual
-                    directory. (Required)</td>
+                    <td>Provide the name for the virtual directory.
+                    (Required)</td>
                 </tr>
 
                 <tr>
@@ -1084,7 +1084,8 @@
 
                     <td>The WebSiteID parameter must be the numeric
                     internal identifier from the server's MetaBase
-                    information. The default value is 1. (Required)</td>
+                    information. The default value is 1.
+                    (Required)</td>
                 </tr>
             </tbody>
         </table>
@@ -1298,7 +1299,8 @@
         <h3>StartIISServices</h3>
 
         <p>This procedure starts the necessary services to
-        initialize the IIS server. (This procedure has no parameters)</p>
+        initialize the IIS server. (This procedure has no
+        parameters)</p>
     </div>
 
     <div class="procedure"
@@ -1514,13 +1516,48 @@
     </div>
     <hr style="margin-top: 20px; height: 2px; width: 100%;"
         noshade="noshade" />
-
     <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
-                                                                                        Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
-                                                                                        values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
-                                                                                        outline used above where possible.
-                                                                                        -->
+                                                                                            Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
+                                                                                            values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
+                                                                                            outline used above where possible.
+                                                                                            -->
 
+    <h1 class="sectionhead">Examples and Use Cases</h1>
+
+    <h2>Create Web Site</h2>
+    <hr style="margin-top: 20px; height: 2px; width: 100%;"
+        noshade="noshade" />
+
+    <p>This example, shows the way to create a web site from the
+    beginning.</p>
+
+    <p>First, we need to start the IIS
+    Server:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartServer1.png" />
+     
+    <p>Then, verify the server was started
+    successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartServer2.png" />
+    
+    <p>Now, and just to be sure, run the CheckServerStatus with the
+    appropiate parameters to verify the server
+    disponibility:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCheckServer1.png" />
+     
+    <p>Now, check the result of the server staus, it must be
+    running:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCheckServer2.png" />
+     
+    <p>Now that the server is running, the webSite can be created
+    with these
+    parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCreateWebSite1.png" />
+     
+    <p>Check the result of the creation of the
+    site:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCreateWebSite2.png" />
+     
+    <p>If the creation of the site was successfully, the site can
+    be started with these
+    paramters:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartWebSite1.png" />
+     
+    <p>Finally, check that the created application was started
+    successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartWebSite2.png" />
+     
     <h1 class="sectionhead">Release Notes</h1>
 
     <h2>@PLUGIN_KEY@ @PLUGIN_VERSION@</h2>
@@ -1530,7 +1567,7 @@
 
         <li>Added a link directly to the new help document.</li>
     </ul>
-	
+
     <h2>@PLUGIN_KEY@ 2.0.0.0</h2>
 
     <ul>
