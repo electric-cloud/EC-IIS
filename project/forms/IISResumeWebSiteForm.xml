@@ -13,7 +13,7 @@
 	</formElement>		
 	<formElement>
 		<type>entry</type>
-		<label>Web side ID:</label>
+		<label>Web side Id:</label>
 		<property>WebSideId</property>
 		<required>1</required>
 		<value>1</value>

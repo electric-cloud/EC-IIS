@@ -48,8 +48,8 @@ use constant {
 
 my $ec = new ElectricCommander();
 
-my $host = ($ec->getProperty("HostName"))->findvalue("//value");
-my $webSiteId = ($ec->getProperty("WebSiteId"))->findvalue("//value");
+my $host = ( $ec->getProperty("HostName") )->findvalue("//value");
+my $webSiteId = ( $ec->getProperty("WebSideId") )->findvalue("//value");
 
 
 ########################################################################
@@ -64,7 +64,6 @@ my $webSiteId = ($ec->getProperty("WebSiteId"))->findvalue("//value");
 ########################################################################
 sub main(){
  
-
     # Create and open a temp file for the JScript code
     my ($scriptfh, $scriptfilename) = tempfile( DIR => '.', SUFFIX => '.js' );
     

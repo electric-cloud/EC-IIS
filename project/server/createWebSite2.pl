@@ -148,7 +148,7 @@ EOSCRIPT
         #set any additional error or warning conditions here
         #there may be cases in which an error occurs and the exit code is 0.
         #we want to set to correct outcome for the running step
-        if($content !~ m/WebSite (.+) created successfully with ID (.+)/){
+        if($content !~ m/WebSite (.*) created successfully with ID (.+)/){
             
             $ec->setProperty("/myJobStep/outcome", 'error');
             

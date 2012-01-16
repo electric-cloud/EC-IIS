@@ -84,7 +84,6 @@
   
   $::gWebsite = trim(q($[website]));
   $::gConfigName= trim(q($[configname]));
-  $::gVirtualDirName = trim(q($[virtualdirname]));
   $::gVirtualPath = trim(q($[virtualpath]));
   $::gExecPath = trim(q($[execpath]));
   
@@ -163,10 +162,6 @@
             push(@args, '"' . $::gWebsite . '/'. $::gVirtualPath . '"');
         }else{
             push(@args, '"' . $::gWebsite . '"');
-        }
-        
-        if($::gVirtualDirName && $::gVirtualDirName ne ''){
-            push(@args, $::gVirtualDirName);
         }
         
         if($computerName && $computerName ne ''){

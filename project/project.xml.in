@@ -1174,7 +1174,7 @@
             <formalParameter>
                 <formalParameterName>Bindings</formalParameterName>
                 <defaultValue></defaultValue>
-                <description>Provide the binding string that includes at least one of these: host name, port, or IP address. Use this format: IP:Port:Hostname. (Required)</description>
+                <description>Provide the binding string that includes IP and port. Use this format: "IP:Port:". Take of the ":" at the end. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -1543,16 +1543,6 @@
                                         </property>
                                     </propertySheet>
                                 </property>
-                                <property>
-                                    <propertyName>virtualpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -1575,7 +1565,7 @@
             <formalParameter>
                 <formalParameterName>virtualpath</formalParameterName>
                 <defaultValue/>
-                <description>Provide a path to the virtual directory within the web site of the virtual directory you want to delete. (Required)</description>
+                <description>Provide the name for the virtual directory. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -1584,13 +1574,6 @@
                 <defaultValue/>
                 <description>Provide the absolute path of the script utility used to execute this step. If only 'iisvdir' is entered, the 'iisvdir' tool must be located on the system path  'c:/MyDir/IISFiles/iisvdir.vbs'. (Required)</description>
                 <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>virtualdirname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name for the virtual directory.</description>
-                <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <step>

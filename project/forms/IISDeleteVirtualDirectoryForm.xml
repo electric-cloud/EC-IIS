@@ -20,16 +20,9 @@
 	<formElement>
 		<type>entry</type>
 		<label>Name of the virtual directory:</label>
-		<property>virtualdirname</property>
-		<required>0</required>
-		<documentation>Provide the name for the virtual directory.</documentation>
-	</formElement>		
-	<formElement>
-		<type>entry</type>
-		<label>Path of the virtual directory:</label>
 		<property>virtualpath</property>
 		<required>1</required>
-		<documentation>Provide a path to the virtual directory within the web site of the virtual directory you want to delete. (Required)</documentation>
+		<documentation>Provide the name for the virtual directory. (Required)</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>

@@ -684,9 +684,8 @@
                 <tr>
                     <td class="required">Binding string</td>
 
-                    <td>Provide the binding string that includes at
-                    least one of these: host name, port, or IP
-                    address. Use this format: IP:Port:Hostname.
+                    <td>Provide the binding string that includes 
+					IP and port. Use this format: "IP:Port:". Take of the ":" at the end.
                     (Required)</td>
                 </tr>
 
@@ -801,16 +800,7 @@
                     <td>Name of the virtual directory</td>
 
                     <td>Provide the name for the virtual
-                    directory.</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Path of the virtual
-                    directory</td>
-
-                    <td>Provide a path to the virtual directory
-                    within the web site of the virtual directory
-                    you want to delete. (Required)</td>
+                    directory. (Required)</td>
                 </tr>
 
                 <tr>

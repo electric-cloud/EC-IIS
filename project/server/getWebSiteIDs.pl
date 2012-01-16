@@ -57,12 +57,12 @@ var w3svc = GetObject("IIS://$host/w3svc");
 var e = new Enumerator(w3svc);
 for (; !e.atEnd(); e.moveNext()) {
     var site = e.item();
-
+    var indent = "";
     // Don't bother with anything but webservers
     if (site.Class != "IIsWebServer") continue;
-    
+
     // Print the Name and ID
-    WScript.Echo(site.ServerComment + ":" + site.Name);
+    WScript.Echo("--" + site.ServerComment + ":" + site.Name + " ");
 }
 EOSCRIPT
 
@@ -72,9 +72,5 @@ close($scriptfh);
 my @siteids = `cscript /E:jscript /NoLogo $scriptfilename`;
 chomp @siteids;
 
-print "Sites found:\n";
-foreach my $siteinfo (@siteids) {
-    ($sitename,$siteid) = split(/:/, $siteinfo);
-    print "$sitename ($siteid)\n";
-    $ec->setProperty("/myJob/iiswebsites/$sitename", $siteid);
-}
+print "Sites found (WebSite:ID):\n";
+print @siteids;
