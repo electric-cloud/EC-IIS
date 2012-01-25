@@ -9,1571 +9,1554 @@
           http-equiv="content-type" />
 
     <title>Electric Commander Plugin for IIS6</title>
-    <style type="text/css">
-    /*<![CDATA[*/
-                .pluginname {
-                font-size: xx-large;
-                color: #000099;
-                }
-                .sectionhead {
-                font-size: xx-large;
-                color: #687291;
-                }
-                .sectionnote {
-                font-style: italic;
-                }
-                .procedure {
-                margin-left: 40px;
-                }
-                .procedure h3 {
-                margin-left: -20px;
-                }
-                .paramdefs {
-                border-collapse: collapse;
-                width: 100%;
-                }
-                .paramdefs td {
-                border-style: solid;
-                border-width: 1px;
-                padding-right: 10px;
-                padding-left: 5px;
-                }
-                .required {
-                font-weight: bold;
-                font-style: italic;
-                }
-                img {
-                border-style: solid;
-                border-width: 2px;
-                margin-top: 20px;
-                }
-    /*]]>*/
-    </style>
+    <link rel="stylesheet"
+          href="../../plugins/@PLUGIN_KEY@/pluginhelp.css"
+          type="text/css"
+          media="screen" />
 </head>
 
 <body>
-    <h1 class="pluginname">@PLUGIN_KEY@</h1>
-    <hr style="margin-top: 20px; height: 2px; width: 100%;"
-        noshade="noshade" />
-
-    <h1 class="sectionhead">Overview</h1>
-
-    <h2>IIS6</h2>
-    <!-- The tool description should answer these kinds of questions:
-                                                                                            What is the tool itself is used for in the development
-                                                                                            process? Who would use this tool? What is the general use-case or
-                                                                                            problem that this tool solves? Look at the tool's documentation or
-                                                                                            website(s) to get their own descriptions. Look at Wikipedia or other
-                                                                                            outside websites. If there is a Hudson plugin, read their 
-                                                                                            documentation for ideas, examples, etc. It's OK to copy word-for-word
-                                                                                            only if appropriate, such as FOSS - but not commercial software.
-                                                                                            -->
-
-    <p>Internet Information Services (IIS) - formerly called
-    Internet Information Server - is a web server application and
-    set of feature extension modules created by Microsoft for use
-    with Microsoft Windows. It is the most used web server after
-    Apache HTTP Server. IIS 7.5 supports HTTP, HTTPS, FTP, FTPS,
-    SMTP and NNTP. It is an integral part of Windows Server family
-    of products, as well as certain editions of Windows XP, Windows
-    Vista and Windows 7. IIS is not turned on by default when
-    Windows is installed.</p>
-
-    <h3>IIS Links</h3>
-
-    <p>More information can be found at:</p>
-
-    <ul>
-        <li>
-        <a href="http://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/95826e7a-bac4-4e1f-bcb6-c52d49c9d7f4.mspx?mfr=true"
-           target="_blank">Using Command-Line Administration
-           Scripts (IIS 6.0)</a></li>
-    </ul><br />
-     
-
-    <h2>Electric Commander Integration to IIS6</h2>
-    <!-- The integration description should answer the questions:
-                                                                                            How deep does our integration go? Why should I care? What general
-                                                                                            functionality does the plugin include? What functionality does
-                                                                                            the plugin omit?
-                                                                                            -->
-
-    <p>This plugin allows users to interact with the Internet
-    Information Services Server 6 (IIS6) and accomplish tasks such
-    as managing servers, web sites, and virtual directories using
-    the specific tools of IIS6 through command line. Using this
-    plugins the users can configure IIS from scripts or
-    executables, running tasks as create a virtual directory and
-    create a web site. Also, the users can check the status of
-    running processes to see if it ran successfully or if an error
-    existed, and determine what caused the error.</p>
-
-    <h3>Integrated Version</h3>
-
-    <p>This plugin was developed and tested with IIS 6.0.</p>
-    <hr style="margin-top: 20px; height: 2px; width: 100%;"
-        noshade="noshade" />
-
-    <h1 class="sectionhead">Using the Plugin</h1>
-
-    <div class="sectionnote">
-        IMPORTANT: For all parameter descriptions below, required
-        parameters are shown in <span class='required'>bold
-        italics</span>.
-    </div>
-
-    <h2>Plugin Procedures</h2>
-
-    <div class="procedure"
-         id="CreateConfiguration">
-        <a name='CreateConfiguration'
-             id="CreateConfiguration"></a> 
-
-        <h3>Plugin Configuration</h3>
-        <!-- If the plugin has separate configurations then include this section,
-                                                                                                                                                otherwise omit this whole section. We don't need to have a configuration
-                                                                                                                                                section that just says "There is no configuration for this plugin."
-                                                                                                                                                -->
-
-        <div class="sectionnote">
-            Plugin configurations are sets of parameters that apply
-            across some or all of the plugin's procedures. They are
-            intended to reduce repetition of common values, create
-            predefined sets of parameters for end users, and to
-            securely store credentials where needed. Each
-            configuration is given a unique name that is entered in
-            designated parameters on procedures that use
-            them.<br />
-             Plugin configurations are created by going to the
-            Electric Commander "Administration" tab, then to the
-            "Plugins" sub-tab. On the right side of the line for
-            the specific plugin, there is a "Configure" link which
-            will open the Configuration page.
-        </div>
-        <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
-                                                                                                                                                Parameter Panel, and the first sentence(s) of the description should be
-                                                                                                                                                the same as the tooltip (if there is one). After that, the parameter
-                                                                                                                                                description can go into greater detail about the parameter including
-                                                                                                                                                valid value ranges and examples.
-                                                                                                                                                -->
-
-        <p>To enable Commander to communicate with your IIS server,
-        create an IIS configuration, supplying the following
-        information:</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class='required'>Configuration Name</td>
-
-                    <td>Provide a unique name for the
-                    configuration, keeping in mind that you may
-                    need to create additional configurations over
-                    time. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class='required'>IIS IP Address</td>
-
-                    <td>Provide the URL for the IIS server, it must
-                    include the protocol. i.e:
-                    'http://192.168.1.100'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td>IIS Port</td>
-
-                    <td>Provide the port for the IIS server. This
-                    port is used in conjuction with the IP Adress
-                    to conform the URL. If not provided, the
-                    Commander use the default port '80'. i.e:
-                    '8081'.</td>
-                </tr>
-
-                <tr>
-                    <td>Computer Name</td>
-
-                    <td>Provide the computer name or IP address
-                    without backslashes. i.e: 'server01' <i>or</i>
-                    '192.168.1.100'.</td>
-                </tr>
-
-                <tr>
-                    <td>Login as</td>
-
-                    <td><i>Username</i>: Provide the user name
-                    Commander uses to communicate with the IIS
-                    server.<br />
-                     <i>Password</i>: Provide the password for the
-                    specified Username.<br />
-                     <i>Retype Password</i>: Retype the password
-                    specified.</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>Enter this parameters in the configuration
-        panel:</p><img src="../../plugins/@PLUGIN_KEY@/images/Config/EC-IISConfig.png"
-             alt="screenshot" />
-    </div>
-
-    <div class="procedure"
-         id="CheckServerStatus">
-        <a name='CheckServerStatus'
-             id="CheckServerStatus"></a> 
-
-        <h3>CheckServerStatus</h3>
-
-        <p>This procedure checks the status of the specified
-        server.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Configuration name</td>
-
-                    <td>Provide the name of the configuration that
-                    holds connection information for the IIS
-                    server. In this case, only credentials are
-                    taken from the configuration if the <i>Use
-                    Credentials</i> parameter is checked.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td>Use Credentials</td>
-
-                    <td>Indicate if credentials must be used. If
-                    checked, the Commander use the user and
-                    password typed in the configuration.</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="CreateAppPool">
-        <a name="CreateAppPool"
-             id="CreateAppPool"></a> 
-
-        <h3>CreateAppPool</h3>
-
-        <p>This procedure creates an IIS application pool.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Application pool name</td>
-
-                    <td>Provide the name of the application pool to
-                    create. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="CreateVirtualDirectory">
-        <a name="CreateVirtualDirectory"
-             id="CreateVirtualDirectory"></a> 
-
-        <h3>CreateVirtualDirectory</h3>
-
-        <p>This procedure creates a new virtual directory in the
-        specified web site.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Configuration name</td>
-
-                    <td>Provide the name of the configuration that
-                    holds connection information for the IIS
-                    server. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Absolute path of the
-                    script utility</td>
-
-                    <td>Provide the absolute path of the script
-                    utility used to execute this step. If only
-                    'iisvdir' is entered, the 'iisvdir' tool must
-                    be located on the system path
-                    'c:/windows/system32'. i.e: 'iisvdir' <i>or</i>
-                    'c:/MyDir/IISFiles/iisvdir.vbs'.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Absolute path attached to
-                    the virtual directory</td>
-
-                    <td>Provide the absolute physical path assigned
-                    to the virtual directory you want to create.
-                    i.e: 'c:/Inetpub/wwwroot/myvirtualdir'.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Name of the virtual
-                    directory</td>
-
-                    <td>Provide the name for the virtual directory.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td>Path of the virtual directory</td>
-
-                    <td>Provide a path, if necessary, to the
-                    virtual directory within the web site.</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Website name</td>
-
-                    <td>Provide the descriptive name, or the
-                    metabase path, of the web site for the virtual
-                    directory you want to create. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>To create a virtual directory, select the following
-        highlighted
-        step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IISCreateVirtualDirectory-1.png" />
-         
-
-        <p>Then, enter the following
-        parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IISCreateVirtualDirectory-2.png" />
-         
-
-        <p>When the job is executed, you should see the following
-        job detail, note the output indicating the virtual
-        directory was created
-        successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IISCreateVirtualDirectory-3.png" />
-         
-
-        <p>In the <b>CreateVirtualDirectory</b> step, click the Log
-        icon to see the diagnostic info. The output is similar to
-        the following diagnostic
-        report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IISCreateVirtualDirectory-4.png" />
+    <div class="help">
+        <h1>IIS6</h1>
+
+        <p>Plugin Version @PLUGIN_VERSION@</p>
+        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;"
+            noshade="noshade" />
+        <!-- The tool description should answer these kinds of questions:
+                                                                                                                                                                                                        What is the tool itself is used for in the development
+                                                                                                                                                                                                        process? Who would use this tool? What is the general use-case or
+                                                                                                                                                                                                        problem that this tool solves? Look at the tool's documentation or
+                                                                                                                                                                                                        website(s) to get their own descriptions. Look at Wikipedia or other
+                                                                                                                                                                                                        outside websites. If there is a Hudson plugin, read their 
+                                                                                                                                                                                                        documentation for ideas, examples, etc. It's OK to copy word-for-word
+                                                                                                                                                                                                        only if appropriate, such as FOSS - but not commercial software.
+                                                                                                                                                                                                        -->
+
+        <p>Internet Information Services (IIS) - formerly called
+        Internet Information Server - is a web server application
+        and set of feature extension modules created by Microsoft
+        for use with Microsoft Windows. It is the most used web
+        server after Apache HTTP Server. IIS 7.5 supports HTTP,
+        HTTPS, FTP, FTPS, SMTP and NNTP. It is an integral part of
+        Windows Server family of products, as well as certain
+        editions of Windows XP, Windows Vista and Windows 7. IIS is
+        not turned on by default when Windows is installed.</p>
+
+        <h2>IIS Links</h2>
+
+        <p>More information can be found at:</p>
+
+        <ul>
+            <li>
+            <a href="http://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/95826e7a-bac4-4e1f-bcb6-c52d49c9d7f4.mspx?mfr=true"
+               target="_blank">Using Command-Line Administration
+               Scripts (IIS 6.0)</a></li>
+        </ul>
+
+        <h2>Electric Commander Integration to IIS6</h2>
+        <!-- The integration description should answer the questions:
+                                                                                                                                                                                                        How deep does our integration go? Why should I care? What general
+                                                                                                                                                                                                        functionality does the plugin include? What functionality does
+                                                                                                                                                                                                        the plugin omit?
+                                                                                                                                                                                                        -->
+
+        <p>This plugin allows users to interact with the Internet
+        Information Services Server 6 (IIS6) and accomplish tasks
+        such as managing servers, web sites, and virtual
+        directories using the specific tools of IIS6 through
+        command line. Using this plugins the users can configure
+        IIS from scripts or executables, running tasks as create a
+        virtual directory and create a web site. Also, the users
+        can check the status of running processes to see if it ran
+        successfully or if an error existed, and determine what
+        caused the error.</p>
+
+        <h2>Integrated Version</h2>
+
+        <p>This plugin was developed and tested with IIS 6.0.</p>
+
+        <h1>Plugin Procedures</h1>
+
+        <p>IMPORTANT: For all parameter descriptions below,
+        required parameters are shown in
+        <span class='required'>bold italics</span>.</p>
+
+        <div id="CreateConfiguration">
+            <a name='CreateConfiguration'
+                 id="CreateConfiguration"></a> 
+
+            <h3>Plugin Configuration</h3>
+            <!-- If the plugin has separate configurations then include this section,
+                                                                                                                                                                                                                                                                                                                    otherwise omit this whole section. We don't need to have a configuration
+                                                                                                                                                                                                                                                                                                                    section that just says "There is no configuration for this plugin."
+                                                                                                                                                                                                                                                                                                                    -->
+
+            <div>
+                Plugin configurations are sets of parameters that
+                apply across some or all of the plugin's
+                procedures. They are intended to reduce repetition
+                of common values, create predefined sets of
+                parameters for end users, and to securely store
+                credentials where needed. Each configuration is
+                given a unique name that is entered in designated
+                parameters on procedures that use them.<br />
+                 Plugin configurations are created by going to the
+                Electric Commander "Administration" tab, then to
+                the "Plugins" sub-tab. On the right side of the
+                line for the specific plugin, there is a
+                "Configure" link which will open the Configuration
+                page.
+            </div>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+                                                                                                                                                                                                                                                                                                                    Parameter Panel, and the first sentence(s) of the description should be
+                                                                                                                                                                                                                                                                                                                    the same as the tooltip (if there is one). After that, the parameter
+                                                                                                                                                                                                                                                                                                                    description can go into greater detail about the parameter including
+                                                                                                                                                                                                                                                                                                                    valid value ranges and examples.
+                                                                                                                                                                                                                                                                                                                    -->
+
+            <p>To enable Commander to communicate with your IIS
+            server, create an IIS configuration, supplying the
+            following information:</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Configuration
+                        Name</td>
+
+                        <td>Provide a unique name for the
+                        configuration, keeping in mind that you may
+                        need to create additional configurations
+                        over time. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>IIS IP Address</td>
+
+                        <td>Provide the URL for the IIS server, it
+                        must include the protocol. i.e:
+                        'http://192.168.1.100'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>IIS Port</td>
+
+                        <td>Provide the port for the IIS server.
+                        This port is used in conjuction with the IP
+                        Adress to conform the URL. If not provided,
+                        the Commander use the default port '80'.
+                        i.e: '8081'.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Computer Name</td>
+
+                        <td>Provide the computer name or IP address
+                        without backslashes. i.e: 'server01'
+                        <i>or</i> '192.168.1.100'.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Login as</td>
+
+                        <td><i>Username</i>: Provide the user name
+                        Commander uses to communicate with the IIS
+                        server.<br />
+                         <i>Password</i>: Provide the password for
+                        the specified Username.<br />
+                         <i>Retype Password</i>: Retype the
+                        password specified.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Enter this parameters in the configuration
+            panel:</p><img src="../../plugins/@PLUGIN_KEY@/images/Config/EC-IISConfig.png"
+                 alt="screenshot" />
         </div>
 
-    <div class="procedure"
-         id="CreateVirtualDirectory2">
-        <a name="CreateVirtualDirectory2"
-             id="CreateVirtualDirectory2"></a> 
+        <div id="CheckServerStatus">
+            <a name='CheckServerStatus'
+                 id="CheckServerStatus"></a> 
 
-        <h3>CreateVirtualDirectory2</h3>
+            <h3>CheckServerStatus</h3>
 
-        <p>This procedure uses the ADSI API to create a new virtual
-        directory in the specified web site.</p>
+            <p>This procedure checks the status of the specified
+            server.</p>
 
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
 
-                    <th>Description</th>
-                </tr>
-            </thead>
+                        <th>Description</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr>
-                    <td>Application directory</td>
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration
+                        name</td>
 
-                    <td>Specify the path within the web site to the
-                    application directory (not the physical
-                    path).</td>
-                </tr>
+                        <td>Provide the name of the configuration
+                        that holds connection information for the
+                        IIS server. In this case, only credentials
+                        are taken from the configuration if the
+                        <i>Use Credentials</i> parameter is
+                        checked. (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td class="required">Host name</td>
+                    <tr>
+                        <td>Use Credentials</td>
 
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Absolute physical path of
-                    the virtual directory</td>
-
-                    <td>Provide the absolute physical path assigned
-                    to the virtual directory you want to create.
-                    i.e: 'c:/Inetpub/wwwroot/myvirtualdir2'.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Virtual directory ID</td>
-
-                    <td>Provide the virtual directory's identifier.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Virtual directory
-                    name</td>
-
-                    <td>Provide the name for the virtual directory.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Internal web site
-                    identifier</td>
-
-                    <td>Provide the numeric internal identifier of
-                    the web site. The default value is 1.
-                    (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>To create a virtual directory using ADSI, select the
-        following highlighted
-        step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory2/EC-IISCreateVirtualDirectory-1.png" />
-         
-
-        <p>Then, enter the following
-        parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory2/EC-IISCreateVirtualDirectory-2.png" />
-         
-
-        <p>When the job is executed, you should see the following
-        job detail, note the output indicating the virtual
-        directory was created
-        successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory2/EC-IISCreateVirtualDirectory-3.png" />
-         
-
-        <p>In the <b>CreateVirtualDirectory</b> step, click the Log
-        icon to see the diagnostic info. The output is similar to
-        the following diagnostic
-        report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory2/EC-IISCreateVirtualDirectory-4.png" />
+                        <td>Indicate if credentials must be used.
+                        If checked, the Commander use the user and
+                        password typed in the configuration.</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-    <div class="procedure"
-         id="CreateWebApplication">
-        <a name="CreateWebApplication"
-             id="CreateWebApplication"></a> 
+        <div id="CreateAppPool">
+            <a name="CreateAppPool"
+                 id="CreateAppPool"></a> 
 
-        <h3>CreateWebApplication</h3>
+            <h3>CreateAppPool</h3>
 
-        <p>This procedure creates and starts an in-process web
-        application in the given directory. This procedure assumes
-        that the specified application path exists as a virtual
-        directory.</p>
+            <p>This procedure creates an IIS application pool.</p>
 
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
 
-                    <th>Description</th>
-                </tr>
-            </thead>
+                        <th>Description</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr>
-                    <td>Application directory</td>
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
 
-                    <td>Specify the path within the web site to the
-                    application directory (not the physical path).
-                    This path must exist on the IIS server.</td>
-                </tr>
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td class="required">Host name</td>
+                    <tr>
+                        <td class="required">Application pool
+                        name</td>
 
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td>Application name</td>
-
-                    <td>Provide the name for the application.</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Internal web site
-                    identifier</td>
-
-                    <td>Provide the numeric internal identifier of
-                    the web site. The default value is 1.
-                    (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>To create a web application, select the following
-        highlighted
-        step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApp/EC-IISCreateWebApp-1.png" />
-         
-
-        <p>Then, enter the following
-        parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApp/EC-IISCreateWebApp-2.png" />
-         
-
-        <p>When the job is executed, you should see the following
-        job detail, note the output indicating the web application
-        was created
-        successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApp/EC-IISCreateWebApp-3.png" />
-         
-
-        <p>In the <b>CreateWeApplication</b> step, click the Log
-        icon to see the diagnostic info. The output is similar to
-        the following diagnostic
-        report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApp/EC-IISCreateWebApp-4.png" />
+                        <td>Provide the name of the application
+                        pool to create. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-    <div class="procedure"
-         id="CreateWebSite">
-        <a name="CreateWebSite"
-             id="CreateWebSite"></a> 
+        <div id="CreateVirtualDirectory">
+            <a name="CreateVirtualDirectory"
+                 id="CreateVirtualDirectory"></a> 
 
-        <h3>CreateWebSite</h3>
+            <h3>CreateVirtualDirectory</h3>
 
-        <p>This procedure creates a web site configuration on a
-        local or remote computer.</p>
+            <p>This procedure creates a new virtual directory in
+            the specified web site.</p>
 
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
 
-                    <th>Description</th>
-                </tr>
-            </thead>
+                        <th>Description</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr>
-                    <td class="required">Configuration name</td>
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration
+                        name</td>
 
-                    <td>Provide the name of the configuration that
-                    holds connection information for the IIS
-                    server. (Required)</td>
-                </tr>
+                        <td>Provide the name of the configuration
+                        that holds connection information for the
+                        IIS server. (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td class="required">Absolute path of the
-                    script utility</td>
+                    <tr>
+                        <td class="required">Absolute path of the
+                        script utility</td>
 
-                    <td>Provide the absolute path of the script
-                    utility used to execute this step. i.e: iisweb
-                    or 'c:/windows/system32/iisweb.vbs'.
-                    (Required)</td>
-                </tr>
+                        <td>Provide the absolute path of the script
+                        utility used to execute this step. If only
+                        'iisvdir' is entered, the 'iisvdir' tool
+                        must be located on the system path
+                        'c:/windows/system32'. i.e: 'iisvdir'
+                        <i>or</i> 'c:/MyDir/IISFiles/iisvdir.vbs'.
+                        (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td class="required">Absolute path attached to
-                    the web site</td>
+                    <tr>
+                        <td class="required">Absolute path attached
+                        to the virtual directory</td>
 
-                    <td>Provide the absolute physical path assigned
-                    to the web site you want to create.
-                    (Required)</td>
-                </tr>
+                        <td>Provide the absolute physical path
+                        assigned to the virtual directory you want
+                        to create. i.e:
+                        'c:/Inetpub/wwwroot/myvirtualdir'.
+                        (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td>Host header name</td>
+                    <tr>
+                        <td class="required">Name of the virtual
+                        directory</td>
 
-                    <td>Provide the host header name for the web
-                    site.</td>
-                </tr>
+                        <td>Provide the name for the virtual
+                        directory. (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td class="required">Web site name</td>
+                    <tr>
+                        <td>Path of the virtual directory</td>
 
-                    <td>Provide the descriptive name, or the
-                    metabase path, of the web site you want to
-                    create. (Required)</td>
-                </tr>
+                        <td>Provide a path, if necessary, to the
+                        virtual directory within the web site.</td>
+                    </tr>
 
-                <tr>
-                    <td>Start web site</td>
+                    <tr>
+                        <td class="required">Website name</td>
 
-                    <td>Indicate if the web site must be started
-                    after creation.</td>
-                </tr>
-            </tbody>
-        </table>
+                        <td>Provide the descriptive name, or the
+                        metabase path, of the web site for the
+                        virtual directory you want to create.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <p>To create a web site, select the following highlighted
-        step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IISCreateWebSite-1.png" />
-         
+            <p>To create a virtual directory, select the following
+            highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IISCreateVirtualDirectory-1.png" />
+             
 
-        <p>Then, enter the following
-        parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IISCreateWebSite-2.png" />
-         
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IISCreateVirtualDirectory-2.png" />
+             
 
-        <p>When the job is executed, you should see the following
-        job detail, note the output indicating the web site was
-        created
-        successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IISCreateWebSite-3.png" />
-         
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            virtual directory was created
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IISCreateVirtualDirectory-3.png" />
+             
 
-        <p>In the <b>CreateWebSite</b> step, click the Log icon to
-        see the diagnostic info. The output is similar to the
-        following diagnostic
-        report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IISCreateWebSite-4.png" />
+            <p>In the <b>CreateVirtualDirectory</b> step, click the
+            Log icon to see the diagnostic info. The output is
+            similar to the following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IISCreateVirtualDirectory-4.png" />
+            </div>
+
+        <div id="CreateVirtualDirectory2">
+            <a name="CreateVirtualDirectory2"
+                 id="CreateVirtualDirectory2"></a> 
+
+            <h3>CreateVirtualDirectory2</h3>
+
+            <p>This procedure uses the ADSI API to create a new
+            virtual directory in the specified web site.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Application directory</td>
+
+                        <td>Specify the path within the web site to
+                        the application directory (not the physical
+                        path).</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Absolute physical path
+                        of the virtual directory</td>
+
+                        <td>Provide the absolute physical path
+                        assigned to the virtual directory you want
+                        to create. i.e:
+                        'c:/Inetpub/wwwroot/myvirtualdir2'.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Virtual directory
+                        ID</td>
+
+                        <td>Provide the virtual directory's
+                        identifier. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Virtual directory
+                        name</td>
+
+                        <td>Provide the name for the virtual
+                        directory. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Internal web site
+                        identifier</td>
+
+                        <td>Provide the numeric internal identifier
+                        of the web site. The default value is 1.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To create a virtual directory using ADSI, select the
+            following highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory2/EC-IISCreateVirtualDirectory-1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory2/EC-IISCreateVirtualDirectory-2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            virtual directory was created
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory2/EC-IISCreateVirtualDirectory-3.png" />
+             
+
+            <p>In the <b>CreateVirtualDirectory</b> step, click the
+            Log icon to see the diagnostic info. The output is
+            similar to the following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory2/EC-IISCreateVirtualDirectory-4.png" />
+            </div>
+
+        <div id="CreateWebApplication">
+            <a name="CreateWebApplication"
+                 id="CreateWebApplication"></a> 
+
+            <h3>CreateWebApplication</h3>
+
+            <p>This procedure creates and starts an in-process web
+            application in the given directory. This procedure
+            assumes that the specified application path exists as a
+            virtual directory.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Application directory</td>
+
+                        <td>Specify the path within the web site to
+                        the application directory (not the physical
+                        path). This path must exist on the IIS
+                        server.</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Application name</td>
+
+                        <td>Provide the name for the
+                        application.</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Internal web site
+                        identifier</td>
+
+                        <td>Provide the numeric internal identifier
+                        of the web site. The default value is 1.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To create a web application, select the following
+            highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApp/EC-IISCreateWebApp-1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApp/EC-IISCreateWebApp-2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            web application was created
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApp/EC-IISCreateWebApp-3.png" />
+             
+
+            <p>In the <b>CreateWeApplication</b> step, click the
+            Log icon to see the diagnostic info. The output is
+            similar to the following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApp/EC-IISCreateWebApp-4.png" />
+            </div>
+
+        <div id="CreateWebSite">
+            <a name="CreateWebSite"
+                 id="CreateWebSite"></a> 
+
+            <h3>CreateWebSite</h3>
+
+            <p>This procedure creates a web site configuration on a
+            local or remote computer.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration
+                        name</td>
+
+                        <td>Provide the name of the configuration
+                        that holds connection information for the
+                        IIS server. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Absolute path of the
+                        script utility</td>
+
+                        <td>Provide the absolute path of the script
+                        utility used to execute this step. i.e:
+                        iisweb or 'c:/windows/system32/iisweb.vbs'.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Absolute path attached
+                        to the web site</td>
+
+                        <td>Provide the absolute physical path
+                        assigned to the web site you want to
+                        create. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Host header name</td>
+
+                        <td>Provide the host header name for the
+                        web site.</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Web site name</td>
+
+                        <td>Provide the descriptive name, or the
+                        metabase path, of the web site you want to
+                        create. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Start web site</td>
+
+                        <td>Indicate if the web site must be
+                        started after creation.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To create a web site, select the following
+            highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IISCreateWebSite-1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IISCreateWebSite-2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            web site was created
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IISCreateWebSite-3.png" />
+             
+
+            <p>In the <b>CreateWebSite</b> step, click the Log icon
+            to see the diagnostic info. The output is similar to
+            the following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IISCreateWebSite-4.png" />
+            </div>
+
+        <div id="CreateWebSite2">
+            <a name="CreateWebSite2"
+                 id="CreateWebSite2"></a> 
+
+            <h3>CreateWebSite2</h3>
+
+            <p>This procedure uses the ADSI API to create a web
+            site on an IIS server.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Binding string</td>
+
+                        <td>Provide the binding string that
+                        includes IP and port. Use this format:
+                        "IP:Port:". Take of the ":" at the end.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Generate random ID</td>
+
+                        <td>If checked, this generates a random web
+                        site ID. Otherwise, it attempts to create
+                        the web site with the user-supplied
+                        ID.</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Absolute physical path
+                        of the web site</td>
+
+                        <td>Provide the absolute physical path
+                        assigned to the web site you want to
+                        create. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Server comment</td>
+
+                        <td>Provide the server comment for the new
+                        web site. In the IIS Manager, this is the
+                        Description field under Web Site
+                        Identification in a web site property
+                        sheet.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Server ID</td>
+
+                        <td>Provide the site identification number
+                        to attach to the site that you want to
+                        create. If no ID is specified, the site is
+                        created with a random ID.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To create a web site using ADSI, select the
+            following highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite2/EC-IISCreateWebSite2-1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite2/EC-IISCreateWebSite2-2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            web site was created
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite2/EC-IISCreateWebSite2-3.png" />
+             
+
+            <p>In the <b>CreateWebSite</b> step, click the Log icon
+            to see the diagnostic info. The output is similar to
+            the following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite2/EC-IISCreateWebSite2-4.png" />
+            </div>
+
+        <div id="DeleteVirtualDirectory">
+            <a name="DeleteVirtualDirectory"
+                 id="DeleteVirtualDirectory"></a> 
+
+            <h3>DeleteVirtualDirectory</h3>
+
+            <p>This procedure deletes a virtual directory from the
+            specified web site.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration
+                        name</td>
+
+                        <td>Provide the name of the configuration
+                        that holds connection information for the
+                        IIS server. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Absolute path of the
+                        script utility</td>
+
+                        <td>Provide the absolute path of the script
+                        utility used to execute this step. If only
+                        'iisvdir' is entered, the 'iisvdir' tool
+                        must be located on the system path
+                        'c:/windows/system32'. i.e: 'iisvdir' or
+                        'c:/MyDir/IISFiles/iisvdir.vbs'.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Name of the virtual directory</td>
+
+                        <td>Provide the name for the virtual
+                        directory. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Website name</td>
+
+                        <td>Provide the descriptive name, or the
+                        metabase path, of the web site for the
+                        virtual directory you want to delete.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-    <div class="procedure"
-         id="CreateWebSite2">
-        <a name="CreateWebSite2"
-             id="CreateWebSite2"></a> 
+        <div id="DeleteWebSite">
+            <a name="DeleteWebSite"
+                 id="DeleteWebSite"></a> 
 
-        <h3>CreateWebSite2</h3>
+            <h3>DeleteWebSite</h3>
 
-        <p>This procedure uses the ADSI API to create a web site on
-        an IIS server.</p>
+            <p>This procedure deletes a web site.</p>
 
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
 
-                    <th>Description</th>
-                </tr>
-            </thead>
+                        <th>Description</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr>
-                    <td class="required">Binding string</td>
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration
+                        name</td>
 
-                    <td>Provide the binding string that includes IP
-                    and port. Use this format: "IP:Port:". Take of
-                    the ":" at the end. (Required)</td>
-                </tr>
+                        <td>Provide the name of the configuration
+                        that holds connection information for the
+                        IIS server. (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td>Generate random ID</td>
+                    <tr>
+                        <td class="required">Absolute path of the
+                        script utility</td>
 
-                    <td>If checked, this generates a random web
-                    site ID. Otherwise, it attempts to create the
-                    web site with the user-supplied ID.</td>
-                </tr>
+                        <td>Provide the absolute path of the script
+                        utility used to execute this step. If only
+                        'iisweb' is entered, the 'iisweb' tool must
+                        be located on the system path
+                        'c:/windows/system32'. i.e: 'iisweb' or
+                        'c:/MyDir/IISFiles/iisweb.vbs'.
+                        (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td class="required">Host name</td>
+                    <tr>
+                        <td class="required">Website name</td>
 
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Absolute physical path of
-                    the web site</td>
-
-                    <td>Provide the absolute physical path assigned
-                    to the web site you want to create.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td>Server comment</td>
-
-                    <td>Provide the server comment for the new web
-                    site. In the IIS Manager, this is the
-                    Description field under Web Site Identification
-                    in a web site property sheet.</td>
-                </tr>
-
-                <tr>
-                    <td>Server ID</td>
-
-                    <td>Provide the site identification number to
-                    attach to the site that you want to create. If
-                    no ID is specified, the site is created with a
-                    random ID.</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>To create a web site using ADSI, select the following
-        highlighted
-        step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite2/EC-IISCreateWebSite2-1.png" />
-         
-
-        <p>Then, enter the following
-        parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite2/EC-IISCreateWebSite2-2.png" />
-         
-
-        <p>When the job is executed, you should see the following
-        job detail, note the output indicating the web site was
-        created
-        successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite2/EC-IISCreateWebSite2-3.png" />
-         
-
-        <p>In the <b>CreateWebSite</b> step, click the Log icon to
-        see the diagnostic info. The output is similar to the
-        following diagnostic
-        report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite2/EC-IISCreateWebSite2-4.png" />
+                        <td>Provide the descriptive name, or the
+                        metabase path, of the web site you want to
+                        delete. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-    <div class="procedure"
-         id="DeleteVirtualDirectory">
-        <a name="DeleteVirtualDirectory"
-             id="DeleteVirtualDirectory"></a> 
+        <div id="DeployCopy">
+            <a name="DeployCopy"
+                 id="DeployCopy"></a> 
 
-        <h3>DeleteVirtualDirectory</h3>
+            <h3>DeployCopy</h3>
 
-        <p>This procedure deletes a virtual directory from the
-        specified web site.</p>
+            <p>This procedure copies the application files
+            recursively to the web site application's physical
+            directory.</p>
 
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
 
-                    <th>Description</th>
-                </tr>
-            </thead>
+                        <th>Description</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr>
-                    <td class="required">Configuration name</td>
+                <tbody>
+                    <tr>
+                        <td class="required">Destination path</td>
 
-                    <td>Provide the name of the configuration that
-                    holds connection information for the IIS
-                    server. (Required)</td>
-                </tr>
+                        <td>Provide the path to the destination
+                        directory. This must be a physical
+                        directory, but it may have an IIS virtual
+                        directory pointing to it. (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td class="required">Absolute path of the
-                    script utility</td>
+                    <tr>
+                        <td class="required">Path to XCOPY</td>
 
-                    <td>Provide the absolute path of the script
-                    utility used to execute this step. If only
-                    'iisvdir' is entered, the 'iisvdir' tool must
-                    be located on the system path
-                    'c:/windows/system32'. i.e: 'iisvdir' or
-                    'c:/MyDir/IISFiles/iisvdir.vbs'.
-                    (Required)</td>
-                </tr>
+                        <td>Provide the relative or absolute path
+                        to the XCOPY (or similar) executable.
+                        (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td>Name of the virtual directory</td>
+                    <tr>
+                        <td class="required">Source path</td>
 
-                    <td>Provide the name for the virtual directory.
-                    (Required)</td>
-                </tr>
+                        <td>Provide the path to the source
+                        directory. (Required)</td>
+                    </tr>
 
-                <tr>
-                    <td class="required">Website name</td>
+                    <tr>
+                        <td>Additional options</td>
 
-                    <td>Provide the descriptive name, or the
-                    metabase path, of the web site for the virtual
-                    directory you want to delete. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                        <td>
+                            Indicate option switches for the XCOPY
+                            executable, excluding source and
+                            destination directories. The default
+                            options are those recommended by
+                            Microsoft for ASP.NET and IIS web site
+                            deployment; exercise caution when
+                            changing these options. 
 
-    <div class="procedure"
-         id="DeleteWebSite">
-        <a name="DeleteWebSite"
-             id="DeleteWebSite"></a> 
+                            <ul>
+                                <li><b>/E</b> - Deep copy including
+                                empty dirs</li>
 
-        <h3>DeleteWebSite</h3>
+                                <li><b>/K</b> - Copy
+                                attributes</li>
 
-        <p>This procedure deletes a web site.</p>
+                                <li><b>/R</b> - Overwrite read-only
+                                files</li>
 
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
+                                <li><b>/H</b> - Copy hidden and
+                                system files</li>
 
-                    <th>Description</th>
-                </tr>
-            </thead>
+                                <li><b>/I</b> - If the destination
+                                does not exist and you are copying
+                                more than one file, it is assumed
+                                that the destination is a
+                                directory.</li>
 
-            <tbody>
-                <tr>
-                    <td class="required">Configuration name</td>
+                                <li><b>/Y</b> - Suppress prompting
+                                for overwrite confirmation</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-                    <td>Provide the name of the configuration that
-                    holds connection information for the IIS
-                    server. (Required)</td>
-                </tr>
+            <p>To deploy a copy, select the following highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IISDeployCopy-1.png" />
+             
 
-                <tr>
-                    <td class="required">Absolute path of the
-                    script utility</td>
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IISDeployCopy-2.png" />
+             
 
-                    <td>Provide the absolute path of the script
-                    utility used to execute this step. If only
-                    'iisweb' is entered, the 'iisweb' tool must be
-                    located on the system path
-                    'c:/windows/system32'. i.e: 'iisweb' or
-                    'c:/MyDir/IISFiles/iisweb.vbs'. (Required)</td>
-                </tr>
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            deploy copy was executed
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IISDeployCopy-3.png" />
+             
 
-                <tr>
-                    <td class="required">Website name</td>
+            <p>In the <b>Deploy</b> step, click the Log icon to see
+            the diagnostic info. The output is similar to the
+            following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IISDeployCopy-4.png" />
+            </div>
 
-                    <td>Provide the descriptive name, or the
-                    metabase path, of the web site you want to
-                    delete. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <div id="GetVirtualDirectories">
+            <a name="GetVirtualDirectories"
+                 id="GetVirtualDirectories"></a> 
 
-    <div class="procedure"
-         id="DeployCopy">
-        <a name="DeployCopy"
-             id="DeployCopy"></a> 
+            <h3>GetVirtualDirectories</h3>
 
-        <h3>DeployCopy</h3>
+            <p>This procedure returns basic information for all
+            virtual directories defined for the web site
+            (recursively). This procedure is primarily for
+            gathering information rather than performing specific
+            actions.</p>
 
-        <p>This procedure copies the application files recursively
-        to the web site application's physical directory.</p>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
 
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
 
-                    <th>Description</th>
-                </tr>
-            </thead>
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
 
-            <tbody>
-                <tr>
-                    <td class="required">Destination path</td>
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself use 'localhost', the default value.
+                        (Required)</td>
+                    </tr>
 
-                    <td>Provide the path to the destination
-                    directory. This must be a physical directory,
-                    but it may have an IIS virtual directory
-                    pointing to it. (Required)</td>
-                </tr>
+                    <tr>
+                        <td class="required">Web site ID</td>
 
-                <tr>
-                    <td class="required">Path to XCOPY</td>
-
-                    <td>Provide the relative or absolute path to
-                    the XCOPY (or similar) executable.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Source path</td>
-
-                    <td>Provide the path to the source directory.
-                    (Required)</td>
-                </tr>
-
-                <tr>
-                    <td>Additional options</td>
-
-                    <td>
-                        Indicate option switches for the XCOPY
-                        executable, excluding source and
-                        destination directories. The default
-                        options are those recommended by Microsoft
-                        for ASP.NET and IIS web site deployment;
-                        exercise caution when changing these
-                        options. 
-
-                        <ul>
-                            <li><b>/E</b> - Deep copy including
-                            empty dirs</li>
-
-                            <li><b>/K</b> - Copy attributes</li>
-
-                            <li><b>/R</b> - Overwrite read-only
-                            files</li>
-
-                            <li><b>/H</b> - Copy hidden and system
-                            files</li>
-
-                            <li><b>/I</b> - If the destination does
-                            not exist and you are copying more than
-                            one file, it is assumed that the
-                            destination is a directory.</li>
-
-                            <li><b>/Y</b> - Suppress prompting for
-                            overwrite confirmation</li>
-                        </ul>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>To deploy a copy, select the following highlighted
-        step:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IISDeployCopy-1.png" />
-         
-
-        <p>Then, enter the following
-        parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IISDeployCopy-2.png" />
-         
-
-        <p>When the job is executed, you should see the following
-        job detail, note the output indicating the deploy copy was
-        executed
-        successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IISDeployCopy-3.png" />
-         
-
-        <p>In the <b>Deploy</b> step, click the Log icon to see the
-        diagnostic info. The output is similar to the following
-        diagnostic
-        report.</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IISDeployCopy-4.png" />
+                        <td>The WebSiteID parameter must be the
+                        numeric internal identifier from the
+                        server's MetaBase information. The default
+                        value is 1. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-    <div class="procedure"
-         id="GetVirtualDirectories">
-        <a name="GetVirtualDirectories"
-             id="GetVirtualDirectories"></a> 
+        <div id="GetWebSiteIDs">
+            <a name="GetWebSiteIDs"
+                 id="GetWebSiteIDs"></a> 
 
-        <h3>GetVirtualDirectories</h3>
+            <h3>GetWebSiteIDs</h3>
 
-        <p>This procedure returns basic information for all virtual
-        directories defined for the web site (recursively). This
-        procedure is primarily for gathering information rather
-        than performing specific actions.</p>
+            <p>This procedure fetches the numeric internal IIS
+            identifiers of all web sites found on the host server.
+            These IDs are necessary to access internal web site
+            properties in order to perform certain control
+            operations. The IDs are saved in Job Properties under
+            the "iiswebsites" property sheet, with the web site
+            name as the property name and the WebSiteID as the
+            value. If this procedure is run prior to other
+            procedures that require a WebSiteID, you can use the
+            property $[/myJob/iiswebsites/sitename] as the
+            parameter value.</p>
 
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
 
-                    <th>Description</th>
-                </tr>
-            </thead>
+                        <th>Description</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
 
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself use
-                    'localhost', the default value. (Required)</td>
-                </tr>
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself use 'localhost', the default value.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-                <tr>
-                    <td class="required">Web site ID</td>
+        <div id="GetWebSiteStatus">
+            <a name="GetWebSiteStatus"
+                 id="GetWebSiteStatus"></a> 
 
-                    <td>The WebSiteID parameter must be the numeric
-                    internal identifier from the server's MetaBase
-                    information. The default value is 1.
-                    (Required)</td>
-                </tr>
-            </tbody>
-        </table>
+            <h3>GetWebSiteStatus</h3>
+
+            <p>This procedure returns the current state of the web
+            site. The state is also saved in a Job Property under
+            the "sitestatus" property sheet, with the web site name
+            as the property name and the numeric status code as the
+            value. Possible status values: 1 (starting), 2
+            (started), 3 (stopping), 4 (stopped), 5 (pausing), 6
+            (paused), or 7 (continuing).</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself use 'localhost', the default value.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Web site ID</td>
+
+                        <td>The WebSiteID parameter must be the
+                        numeric internal identifier from the
+                        server's MetaBase information. The default
+                        value is 1. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="PauseWebSite">
+            <a name="PauseWebSite"
+                 id="PauseWebSite"></a> 
+
+            <h3>PauseWebSite</h3>
+
+            <p>This procedure pauses a web site. This is similar to
+            stopping, except pausing allows existing processes to
+            continue to their conclusion.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself use 'localhost', the default value.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Web site ID</td>
+
+                        <td>Provide the site identification number
+                        to attach to the site that you want to
+                        pause. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="RecycleAppPool">
+            <a name="RecycleAppPool"
+                 id="RecycleAppPool"></a> 
+
+            <h3>RecycleAppPool</h3>
+
+            <p>This procedure recycles an application pool. When
+            recycling occurs, the worker process currently serving
+            the application pool terminates and the WWW service
+            restarts a new worker process to replace it.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself use 'localhost', the default value.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application pool
+                        name</td>
+
+                        <td>Provide the name of the application
+                        pool to recycle. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="ResetServer">
+            <a name="ResetServer"
+                 id="ResetServer"></a> 
+
+            <h3>ResetServer</h3>
+
+            <p>This procedure uses the iisreset utility to stop a
+            server.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration
+                        name</td>
+
+                        <td>Provide the name of the configuration
+                        that holds connection information for the
+                        IIS server. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Absolute path of the
+                        script utility</td>
+
+                        <td>Provide the absolute path of the script
+                        utility used to execute this step. If only
+                        'iisreset' is entered, the 'iisreset' tool
+                        must be located on the system path
+                        'c:/windows/system32'. i.e: 'iisreset' or
+                        'c:/MyDir/IISFiles/iisreset.exe'.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="ResumeWebSite">
+            <a name="ResumeWebSite"
+                 id="ResumeWebSite"></a> 
+
+            <h3>ResumeWebSite</h3>
+
+            <p>This procedure continues server operation after it
+            has been paused.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Web server name</td>
+
+                        <td>Provide the site identification number
+                        to attach to the site that you want to
+                        resume. The default value is 1.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="StartAppPool">
+            <a name="StartAppPool"
+                 id="StartAppPool"></a> 
+
+            <h3>StartAppPool</h3>
+
+            <p>This procedure starts an IIS application pool.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application pool
+                        name</td>
+
+                        <td>Provide the name of the application
+                        pool to start. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="StartIISServices">
+            <a name="StartIISServices"
+                 id="StartIISServices"></a> 
+
+            <h3>StartIISServices</h3>
+
+            <p>This procedure starts the necessary services to
+            initialize the IIS server. (This procedure has no
+            parameters)</p>
+        </div>
+
+        <div id="StartServer">
+            <a name="StartServer"
+                 id="StartServer"></a> 
+
+            <h3>StartServer</h3>
+
+            <p>This procedure uses the iisreset utility to start a
+            server.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration
+                        name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Absolute location of
+                        the iisreset utility</td>
+
+                        <td>Provide the absolute path of the script
+                        utility used to execute this step. If only
+                        'iisreset' is entered, the 'iisreset' tool
+                        must be located on the system path
+                        'c:/windows/system32'. i.e: 'iisreset' or
+                        'c:/MyDir/IISFiles/iisreset.exe'.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="StartWebSite">
+            <a name="StartWebSite"
+                 id="StartWebSite"></a> 
+
+            <h3>StartWebSite</h3>
+
+            <p>This procedure starts a web site.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Web site Id</td>
+
+                        <td>Provide the site identification number
+                        to attach to the site that you want to
+                        start. The default value is 1.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="StopAppPool">
+            <a name="StopAppPool"
+                 id="StopAppPool"></a> 
+
+            <h3>StopAppPool</h3>
+
+            <p>This procedure stops an IIS application pool.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application pool
+                        name</td>
+
+                        <td>Provide the name of the application
+                        pool to stop. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="StopIISServices">
+            <a name="StopIISServices"
+                 id="StopIISServices"></a> 
+
+            <h3>StopIISServices</h3>
+
+            <p>This procedure stops the necessary services to shut
+            down the IIS server. (This procedure has no
+            parameters)</p>
+        </div>
+
+        <div id="StopServer">
+            <a name="StopServer"
+                 id="StopServer"></a> 
+
+            <h3>StopServer</h3>
+
+            <p>This procedure uses the iisreset utility to stop a
+            server.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration
+                        name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Absolute location of
+                        the iisreset utility</td>
+
+                        <td>Provide the absolute path of the script
+                        utility used to execute this step. If only
+                        'iisreset' is entered, the 'iisreset' tool
+                        must be located on the system path
+                        'c:/windows/system32'. i.e: 'iisreset' or
+                        'c:/MyDir/IISFiles/iisreset.exe'.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="StopWebSite">
+            <a name="StopWebSite"
+                 id="StopWebSite"></a> 
+
+            <h3>StopWebSite</h3>
+
+            <p>This procedure stops a web site.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Host name</td>
+
+                        <td>Provide the host name of the IIS
+                        server. If the procedure is run on the host
+                        itself, use 'localhost'. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Web site Id</td>
+
+                        <td>Provide the site identification number
+                        to attach to the site that you want to
+                        start. The default value is 1.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
+                                                                                                                                                                                                        Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
+                                                                                                                                                                                                        values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
+                                                                                                                                                                                                        outline used above where possible.
+                                                                                                                                                                                                        -->
+
+        <h1>Examples and Use Cases</h1>
+
+        <h2>Create Web Site</h2>
+
+        <p>This example, shows the way to create a web site from
+        the beginning.</p>
+
+        <p>First, we need to start the IIS
+        Server:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartServer1.png" />
+         
+
+        <p>Then, verify the server was started
+        successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartServer2.png" />
+         
+
+        <p>Now, and just to be sure, run the CheckServerStatus with
+        the appropiate parameters to verify the server
+        disponibility:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCheckServer1.png" />
+         
+
+        <p>Now, check the result of the server staus, it must be
+        running:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCheckServer2.png" />
+         
+
+        <p>Now that the server is running, the webSite can be
+        created with these
+        parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCreateWebSite1.png" />
+         
+
+        <p>Check the result of the creation of the
+        site:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCreateWebSite2.png" />
+         
+
+        <p>If the creation of the site was successfully, the site
+        can be started with these
+        paramters:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartWebSite1.png" />
+         
+
+        <p>Finally, check that the created application was started
+        successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartWebSite2.png" />
+         
+
+        <h1>Release Notes</h1>
+
+        <h2>@PLUGIN_KEY@ 2.0.2</h2>
+
+        <ul>
+            <li>Improves to the help page document.</li>
+        </ul>
+
+        <h2>@PLUGIN_KEY@ 2.0.1</h2>
+
+        <ul>
+            <li>Upgrade to use the new Parameter Form XML.</li>
+
+            <li>Added a link directly to the new help
+            document.</li>
+        </ul>
+		
+        <h2>@PLUGIN_KEY@ 2.0.0</h2>
+
+        <ul>
+            <li>Improve xml parameter panels.</li>
+
+            <li>New help page format.</li>
+        </ul>
     </div>
-
-    <div class="procedure"
-         id="GetWebSiteIDs">
-        <a name="GetWebSiteIDs"
-             id="GetWebSiteIDs"></a> 
-
-        <h3>GetWebSiteIDs</h3>
-
-        <p>This procedure fetches the numeric internal IIS
-        identifiers of all web sites found on the host server.
-        These IDs are necessary to access internal web site
-        properties in order to perform certain control operations.
-        The IDs are saved in Job Properties under the "iiswebsites"
-        property sheet, with the web site name as the property name
-        and the WebSiteID as the value. If this procedure is run
-        prior to other procedures that require a WebSiteID, you can
-        use the property $[/myJob/iiswebsites/sitename] as the
-        parameter value.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself use
-                    'localhost', the default value. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="GetWebSiteStatus">
-        <a name="GetWebSiteStatus"
-             id="GetWebSiteStatus"></a> 
-
-        <h3>GetWebSiteStatus</h3>
-
-        <p>This procedure returns the current state of the web
-        site. The state is also saved in a Job Property under the
-        "sitestatus" property sheet, with the web site name as the
-        property name and the numeric status code as the value.
-        Possible status values: 1 (starting), 2 (started), 3
-        (stopping), 4 (stopped), 5 (pausing), 6 (paused), or 7
-        (continuing).</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself use
-                    'localhost', the default value. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Web site ID</td>
-
-                    <td>The WebSiteID parameter must be the numeric
-                    internal identifier from the server's MetaBase
-                    information. The default value is 1.
-                    (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="PauseWebSite">
-        <a name="PauseWebSite"
-             id="PauseWebSite"></a> 
-
-        <h3>PauseWebSite</h3>
-
-        <p>This procedure pauses a web site. This is similar to
-        stopping, except pausing allows existing processes to
-        continue to their conclusion.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself use
-                    'localhost', the default value. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Web site ID</td>
-
-                    <td>Provide the site identification number to
-                    attach to the site that you want to pause.
-                    (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="RecycleAppPool">
-        <a name="RecycleAppPool"
-             id="RecycleAppPool"></a> 
-
-        <h3>RecycleAppPool</h3>
-
-        <p>This procedure recycles an application pool. When
-        recycling occurs, the worker process currently serving the
-        application pool terminates and the WWW service restarts a
-        new worker process to replace it.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself use
-                    'localhost', the default value. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Application pool name</td>
-
-                    <td>Provide the name of the application pool to
-                    recycle. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="ResetServer">
-        <a name="ResetServer"
-             id="ResetServer"></a> 
-
-        <h3>ResetServer</h3>
-
-        <p>This procedure uses the iisreset utility to stop a
-        server.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Configuration name</td>
-
-                    <td>Provide the name of the configuration that
-                    holds connection information for the IIS
-                    server. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Absolute path of the
-                    script utility</td>
-
-                    <td>Provide the absolute path of the script
-                    utility used to execute this step. If only
-                    'iisreset' is entered, the 'iisreset' tool must
-                    be located on the system path
-                    'c:/windows/system32'. i.e: 'iisreset' or
-                    'c:/MyDir/IISFiles/iisreset.exe'.
-                    (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="ResumeWebSite">
-        <a name="ResumeWebSite"
-             id="ResumeWebSite"></a> 
-
-        <h3>ResumeWebSite</h3>
-
-        <p>This procedure continues server operation after it has
-        been paused.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Web server name</td>
-
-                    <td>Provide the site identification number to
-                    attach to the site that you want to resume. The
-                    default value is 1. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="StartAppPool">
-        <a name="StartAppPool"
-             id="StartAppPool"></a> 
-
-        <h3>StartAppPool</h3>
-
-        <p>This procedure starts an IIS application pool.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Application pool name</td>
-
-                    <td>Provide the name of the application pool to
-                    start. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="StartIISServices">
-        <a name="StartIISServices"
-             id="StartIISServices"></a> 
-
-        <h3>StartIISServices</h3>
-
-        <p>This procedure starts the necessary services to
-        initialize the IIS server. (This procedure has no
-        parameters)</p>
-    </div>
-
-    <div class="procedure"
-         id="StartServer">
-        <a name="StartServer"
-             id="StartServer"></a> 
-
-        <h3>StartServer</h3>
-
-        <p>This procedure uses the iisreset utility to start a
-        server.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Configuration name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Absolute location of the
-                    iisreset utility</td>
-
-                    <td>Provide the absolute path of the script
-                    utility used to execute this step. If only
-                    'iisreset' is entered, the 'iisreset' tool must
-                    be located on the system path
-                    'c:/windows/system32'. i.e: 'iisreset' or
-                    'c:/MyDir/IISFiles/iisreset.exe'.
-                    (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="StartWebSite">
-        <a name="StartWebSite"
-             id="StartWebSite"></a> 
-
-        <h3>StartWebSite</h3>
-
-        <p>This procedure starts a web site.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Web site Id</td>
-
-                    <td>Provide the site identification number to
-                    attach to the site that you want to start. The
-                    default value is 1. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="StopAppPool">
-        <a name="StopAppPool"
-             id="StopAppPool"></a> 
-
-        <h3>StopAppPool</h3>
-
-        <p>This procedure stops an IIS application pool.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Application pool name</td>
-
-                    <td>Provide the name of the application pool to
-                    stop. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="StopIISServices">
-        <a name="StopIISServices"
-             id="StopIISServices"></a> 
-
-        <h3>StopIISServices</h3>
-
-        <p>This procedure stops the necessary services to shut down
-        the IIS server. (This procedure has no parameters)</p>
-    </div>
-
-    <div class="procedure"
-         id="StopServer">
-        <a name="StopServer"
-             id="StopServer"></a> 
-
-        <h3>StopServer</h3>
-
-        <p>This procedure uses the iisreset utility to stop a
-        server.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Configuration name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Absolute location of the
-                    iisreset utility</td>
-
-                    <td>Provide the absolute path of the script
-                    utility used to execute this step. If only
-                    'iisreset' is entered, the 'iisreset' tool must
-                    be located on the system path
-                    'c:/windows/system32'. i.e: 'iisreset' or
-                    'c:/MyDir/IISFiles/iisreset.exe'.
-                    (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="procedure"
-         id="StopWebSite">
-        <a name="StopWebSite"
-             id="StopWebSite"></a> 
-
-        <h3>StopWebSite</h3>
-
-        <p>This procedure stops a web site.</p>
-
-        <table class="paramdefs">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td class="required">Host name</td>
-
-                    <td>Provide the host name of the IIS server. If
-                    the procedure is run on the host itself, use
-                    'localhost'. (Required)</td>
-                </tr>
-
-                <tr>
-                    <td class="required">Web site Id</td>
-
-                    <td>Provide the site identification number to
-                    attach to the site that you want to start. The
-                    default value is 1. (Required)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <hr style="margin-top: 20px; height: 2px; width: 100%;"
-        noshade="noshade" />
-    <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
-                                                                                            Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
-                                                                                            values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
-                                                                                            outline used above where possible.
-                                                                                            -->
-
-    <h1 class="sectionhead">Examples and Use Cases</h1>
-
-    <h2>Create Web Site</h2>
-    <hr style="margin-top: 20px; height: 2px; width: 100%;"
-        noshade="noshade" />
-
-    <p>This example, shows the way to create a web site from the
-    beginning.</p>
-
-    <p>First, we need to start the IIS
-    Server:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartServer1.png" />
-     
-    <p>Then, verify the server was started
-    successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartServer2.png" />
-    
-    <p>Now, and just to be sure, run the CheckServerStatus with the
-    appropiate parameters to verify the server
-    disponibility:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCheckServer1.png" />
-     
-    <p>Now, check the result of the server staus, it must be
-    running:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCheckServer2.png" />
-     
-    <p>Now that the server is running, the webSite can be created
-    with these
-    parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCreateWebSite1.png" />
-     
-    <p>Check the result of the creation of the
-    site:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCreateWebSite2.png" />
-     
-    <p>If the creation of the site was successfully, the site can
-    be started with these
-    paramters:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartWebSite1.png" />
-     
-    <p>Finally, check that the created application was started
-    successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartWebSite2.png" />
-     
-    <h1 class="sectionhead">Release Notes</h1>
-
-    <h2>@PLUGIN_KEY@ @PLUGIN_VERSION@</h2>
-
-    <ul>
-        <li>Upgrade to use the new Parameter Form XML.</li>
-
-        <li>Added a link directly to the new help document.</li>
-    </ul>
-
-    <h2>@PLUGIN_KEY@ 2.0.0.0</h2>
-
-    <ul>
-        <li>Improve xml parameter panels.</li>
-
-        <li>New help page format.</li>
-    </ul>
 </body>
 </html>
