@@ -1508,7 +1508,7 @@
 
         <p>Now, and just to be sure, run the CheckServerStatus with
         the appropiate parameters to verify the server
-        disponibility:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCheckServer1.png" />
+        availability:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISCheckServer1.png" />
          
 
         <p>Now, check the result of the server staus, it must be
