@@ -1,4 +1,8 @@
-# Makefile
+#
+# Makefile responsible for building the EC-IIS plugin
+#
+# Copyright (c) 2005-2012 Electric Cloud, Inc.
+# All rights reserved
 
 SRCTOP=..
 
@@ -6,10 +10,8 @@ include $(SRCTOP)/build/vars.mak
 
 PLUGIN_PATCH_LEVEL=2.0.3
 
-gwtmodules := iis/ConfigurationManagement
-
 build: buildJavaPlugin
-unittest: 
+unittest:
 systemtest: systemtest-setup mysystemtest-run
 
 systemtest-setup:
