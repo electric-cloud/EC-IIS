@@ -1535,6 +1535,12 @@
 
         <h1>Release Notes</h1>
 
+		<h2>@PLUGIN_KEY@-2.0.4</h2>
+
+		<ul>
+			<li>Procedure name(s) were changed in the step picker section</li>
+		</ul>
+		
         <h2>@PLUGIN_KEY@ 2.0.3</h2>
 
         <ul>

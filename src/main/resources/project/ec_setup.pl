@@ -211,6 +211,31 @@ my %stopIISServices = (
     category    => "Application Server"
 );
 
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create App Pool");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Virtual Directory");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Virtual Directory 2");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Check Server Status");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Web Site");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Web Site 2");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start App Pool");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Web Application");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Virtual Directory");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Web Site");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Copy");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get Virtual Directories");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get WebSite IDs");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get WebSite Status");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Pause WebSite");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Recycle App Pool");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Reset Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Resume WebSite");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start WebSite");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop App Pool");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop WebSite");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start IIS Services");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop IIS Services");
                  
 @::createStepPickerSteps = (\%startServer, \%stopServer,
                             \%createAppPool, \%createVirtualDirectory,
