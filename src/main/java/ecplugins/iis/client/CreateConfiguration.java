@@ -3,7 +3,7 @@
 //
 // CreateConfiguration.java is part of ElectricCommander.
 //
-// Copyright (c) 2005-2011 Electric Cloud, Inc.
+// Copyright (c) 2005-2012 Electric Cloud, Inc.
 // All rights reserved.
 //
 
@@ -12,6 +12,7 @@ package ecplugins.iis.client;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
@@ -19,24 +20,23 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.ui.Anchor;
 
-import ecinternal.client.InternalFormBase;
-
-import ecinternal.client.ui.CustomEditorLoader;
-
+import com.electriccloud.commander.client.requests.RunProcedureRequest;
+import com.electriccloud.commander.client.responses.DefaultRunProcedureResponseCallback;
+import com.electriccloud.commander.client.responses.RunProcedureResponse;
 import com.electriccloud.commander.gwt.client.requests.CgiRequestProxy;
-import com.electriccloud.commander.gwt.client.requests.RunProcedureRequest;
-import com.electriccloud.commander.gwt.client.responses.DefaultRunProcedureResponseCallback;
-import com.electriccloud.commander.gwt.client.responses.RunProcedureResponse;
 import com.electriccloud.commander.gwt.client.ui.CredentialEditor;
 import com.electriccloud.commander.gwt.client.ui.FormBuilder;
 import com.electriccloud.commander.gwt.client.ui.FormTable;
 import com.electriccloud.commander.gwt.client.ui.SimpleErrorBox;
 import com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder;
 
-import static ecinternal.client.InternalComponentBaseFactory.getPluginName;
+import ecinternal.client.InternalFormBase;
+import ecinternal.client.ui.CustomEditorLoader;
 
 import static com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder.createPageUrl;
 import static com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder.createUrl;
+
+import static ecinternal.client.InternalComponentBaseFactory.getPluginName;
 
 /**
  * Create IIS Configuration.
@@ -49,6 +49,8 @@ public class CreateConfiguration
 
     public CreateConfiguration()
     {
+
+        // noinspection HardCodedStringLiteral
         super("New IIS Configuration", "IIS Configurations");
 
         CommanderUrlBuilder urlBuilder = createPageUrl(getPluginName(),
@@ -68,6 +70,7 @@ public class CreateConfiguration
     {
         FormBuilder fb = (FormBuilder) getFormTable();
 
+        // noinspection HardCodedStringLiteral
         setStatus("Loading...");
 
         CustomEditorLoader loader = new CustomEditorLoader(fb, this);
@@ -80,6 +83,8 @@ public class CreateConfiguration
 
     @Override protected void submit()
     {
+
+        // noinspection HardCodedStringLiteral
         setStatus("Saving...");
         clearAllErrors();
 
@@ -101,16 +106,18 @@ public class CreateConfiguration
         Map<String, String> params           = fb.getValues();
         Collection<String>  credentialParams = fb.getCredentialIds();
 
-        for (String paramName : params.keySet()) {
+        for (Entry<String, String> stringStringEntry : params.entrySet()) {
 
-            if (credentialParams.contains(paramName)) {
-                CredentialEditor credential = fb.getCredential(paramName);
+            if (credentialParams.contains(stringStringEntry.getKey())) {
+                CredentialEditor credential = fb.getCredential(
+                        stringStringEntry.getKey());
 
-                request.addCredentialParameter(paramName,
+                request.addCredentialParameter(stringStringEntry.getKey(),
                     credential.getUsername(), credential.getPassword());
             }
             else {
-                request.addActualParameter(paramName, params.get(paramName));
+                request.addActualParameter(stringStringEntry.getKey(),
+                    stringStringEntry.getValue());
             }
         }
 
@@ -136,6 +143,7 @@ public class CreateConfiguration
         doRequest(request);
     }
 
+    @SuppressWarnings("OverlyComplexAnonymousInnerClass")
     private void waitForJob(final String jobId)
     {
         CgiRequestProxy     cgiRequestProxy = new CgiRequestProxy(
@@ -156,6 +164,8 @@ public class CreateConfiguration
                             Request   request,
                             Throwable exception)
                     {
+
+                        // noinspection HardCodedStringLiteral
                         addErrorMessage("CGI request failed: ", exception);
                     }
 
@@ -176,6 +186,12 @@ public class CreateConfiguration
                             cancel();
                         }
                         else {
+                            @SuppressWarnings(
+                                {
+                                    "HardCodedStringLiteral",
+                                    "StringConcatenation"
+                                }
+                            )
                             SimpleErrorBox      error      = getUIFactory()
                                     .createSimpleErrorBox(
                                         "Error occurred during configuration creation: "
@@ -184,6 +200,7 @@ public class CreateConfiguration
                                     "jobDetails.php").setParameter("jobId",
                                     jobId);
 
+                            // noinspection HardCodedStringLiteral
                             error.add(
                                 new Anchor("(See job for details)",
                                     urlBuilder.buildString()));
@@ -193,6 +210,8 @@ public class CreateConfiguration
                 });
         }
         catch (RequestException e) {
+
+            // noinspection HardCodedStringLiteral
             addErrorMessage("CGI request failed: ", e);
         }
     }

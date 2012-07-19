@@ -3,7 +3,7 @@
 //
 // ConfigurationList.java is part of ElectricCommander.
 //
-// Copyright (c) 2005-2011 Electric Cloud, Inc.
+// Copyright (c) 2005-2012 Electric Cloud, Inc.
 // All rights reserved.
 //
 
@@ -12,6 +12,7 @@ package ecplugins.iis.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
@@ -21,22 +22,23 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-import ecinternal.client.DialogClickHandler;
-import ecinternal.client.ListBase;
-
-import com.electriccloud.commander.gwt.client.ChainedCallback;
+import com.electriccloud.commander.client.ChainedCallback;
+import com.electriccloud.commander.client.requests.RunProcedureRequest;
+import com.electriccloud.commander.client.responses.DefaultRunProcedureResponseCallback;
+import com.electriccloud.commander.client.responses.RunProcedureResponse;
 import com.electriccloud.commander.gwt.client.requests.CgiRequestProxy;
-import com.electriccloud.commander.gwt.client.requests.RunProcedureRequest;
-import com.electriccloud.commander.gwt.client.responses.DefaultRunProcedureResponseCallback;
-import com.electriccloud.commander.gwt.client.responses.RunProcedureResponse;
 import com.electriccloud.commander.gwt.client.ui.ListTable;
 import com.electriccloud.commander.gwt.client.ui.SimpleErrorBox;
 import com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder;
 
-import static ecinternal.client.InternalComponentBaseFactory.getPluginName;
+import ecinternal.client.DialogClickHandler;
+import ecinternal.client.ListBase;
+import ecinternal.client.Loader;
 
 import static com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder.createPageUrl;
 import static com.electriccloud.commander.gwt.client.util.CommanderUrlBuilder.createRedirectUrl;
+
+import static ecinternal.client.InternalComponentBaseFactory.getPluginName;
 
 /**
  * EC-IIS Configuration List.
@@ -47,12 +49,14 @@ public class ConfigurationList
 
     //~ Instance fields --------------------------------------------------------
 
-    private IISConfigList m_configList;
+    private final IISConfigList m_configList;
 
     //~ Constructors -----------------------------------------------------------
 
     public ConfigurationList()
     {
+
+        // noinspection HardCodedStringLiteral
         super("ecgc", "IIS Configurations", "All Configurations");
         m_configList = new IISConfigList();
     }
@@ -67,14 +71,17 @@ public class ConfigurationList
         urlBuilder.setParameter("redirectTo",
             createRedirectUrl().buildString());
 
+        // noinspection HardCodedStringLiteral
         return new Anchor("Create Configuration", urlBuilder.buildString());
     }
 
     @Override protected void load()
     {
+
+        // noinspection HardCodedStringLiteral
         setStatus("Loading...");
 
-        IISConfigListLoader loader = new IISConfigListLoader(m_configList, this,
+        Loader loader = new IISConfigListLoader(m_configList, this,
                 new ChainedCallback() {
                     @Override public void onComplete()
                     {
@@ -87,6 +94,8 @@ public class ConfigurationList
 
     private void deleteConfiguration(String configName)
     {
+
+        // noinspection HardCodedStringLiteral
         setStatus("Deleting...");
         clearErrorMessages();
 
@@ -125,6 +134,8 @@ public class ConfigurationList
         ListTable listTable = getListTable();
 
         if (!m_configList.isEmpty()) {
+
+            // noinspection HardCodedStringLiteral
             listTable.addHeaderRow(true, "Configuration Name", "Url");
         }
 
@@ -145,12 +156,15 @@ public class ConfigurationList
             urlBuilder.setParameter("redirectTo",
                 createRedirectUrl().buildString());
 
+            @SuppressWarnings("HardCodedStringLiteral")
             Anchor editConfigLink = new Anchor("Edit",
                     urlBuilder.buildString());
 
             // "Delete" link
-            Anchor             deleteConfigLink = new Anchor("Delete");
-            DialogClickHandler dch              = new DialogClickHandler(
+            @SuppressWarnings("HardCodedStringLiteral")
+            Anchor       deleteConfigLink = new Anchor("Delete");
+            @SuppressWarnings({"HardCodedStringLiteral", "StringConcatenation"})
+            ClickHandler dch = new DialogClickHandler(
                     new DeleteConfirmationDialog(configName,
                         "Are you sure you want to delete the IIS configuration '"
                             + configName + "'?") {
@@ -163,7 +177,7 @@ public class ConfigurationList
             deleteConfigLink.addClickHandler(dch);
 
             // Add the row
-            Widget actions = this.getUIFactory().constructActionList(editConfigLink,
+            Widget actions = getUIFactory().constructActionList(editConfigLink,
                     deleteConfigLink);
 
             listTable.addRow(configNameLabel, configUrlLabel, actions);
@@ -172,6 +186,7 @@ public class ConfigurationList
         clearStatus();
     }
 
+    @SuppressWarnings("OverlyComplexAnonymousInnerClass")
     private void waitForJob(final String jobId)
     {
         CgiRequestProxy     cgiRequestProxy = new CgiRequestProxy(
@@ -192,7 +207,9 @@ public class ConfigurationList
                             Request   request,
                             Throwable exception)
                     {
-                        addErrorMessage("CGI request failed:: ", exception);
+
+                        // noinspection HardCodedStringLiteral
+                        addErrorMessage("CGI request failed: ", exception);
                     }
 
                     @Override public void onResponseReceived(
@@ -212,6 +229,12 @@ public class ConfigurationList
                             Location.reload();
                         }
                         else {
+                            @SuppressWarnings(
+                                {
+                                    "HardCodedStringLiteral",
+                                    "StringConcatenation"
+                                }
+                            )
                             SimpleErrorBox      error      = getUIFactory()
                                     .createSimpleErrorBox(
                                         "Error occurred during configuration deletion: "
@@ -220,6 +243,7 @@ public class ConfigurationList
                                     .createUrl("jobDetails.php")
                                     .setParameter("jobId", jobId);
 
+                            // noinspection HardCodedStringLiteral
                             error.add(
                                 new Anchor("(See job for details)",
                                     urlBuilder.buildString()));
@@ -229,6 +253,8 @@ public class ConfigurationList
                 });
         }
         catch (RequestException e) {
+
+            // noinspection HardCodedStringLiteral
             addErrorMessage("CGI request failed:: ", e);
         }
     }
