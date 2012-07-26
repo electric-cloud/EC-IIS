@@ -132,7 +132,7 @@ public class CreateConfiguration
                                 + response.getJobId());
                     }
 
-                    waitForJob(response.getJobId());
+                    waitForJob(response.getJobId().toString());
                 }
             });
 
