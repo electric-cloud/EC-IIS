@@ -24,7 +24,7 @@ if ($upgradeAction eq "upgrade") {
     # Copy configuration credentials and attach them to the appropriate steps
     my $nodes = $query->find($creds);
     if ($nodes) {
-        my @nodes = $query->{xpath}->findnodes("credential/credentialName", $nodes);
+        my @nodes = $nodes->findnodes('credential/credentialName');
         for (@nodes) {
             my $cred = $_->string_value;
 
