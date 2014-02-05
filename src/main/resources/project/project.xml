@@ -140,7 +140,7 @@
         <procedure>
             <procedureName>CreateConfiguration</procedureName>
             <description>Create a IIS configuration</description>
-            <jobNameTemplate>iis-cfg-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-cfg-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
                 <property>
@@ -372,7 +372,7 @@
         <procedure>
             <procedureName>DeleteConfiguration</procedureName>
             <description>Delete an IIS configuration</description>
-            <jobNameTemplate>iis-cfg-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-cfg-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
                 <property>
@@ -442,7 +442,7 @@
         <procedure>
             <procedureName>StartServer</procedureName>
             <description>Start an IIS Server</description>
-            <jobNameTemplate>iis-startserver-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-startserver-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -534,7 +534,7 @@
         <procedure>
             <procedureName>DeployCopy</procedureName>
             <description>Use XCOPY to deploy Web Site or ASP.NET Application</description>
-            <jobNameTemplate>iis-deploycopy-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-deploycopy-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -647,7 +647,7 @@
         <procedure>
             <procedureName>StopServer</procedureName>
             <description>Stop an IIS Server</description>
-            <jobNameTemplate>iis-stopserver-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-stopserver-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -740,7 +740,7 @@
         <procedure>
             <procedureName>CreateWebApplication</procedureName>
             <description>Create and start an in-process web application in the given directory</description>
-            <jobNameTemplate>iis-createwebapp-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-createwebapp-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -865,7 +865,7 @@
         <procedure>
             <procedureName>CreateWebSite</procedureName>
             <description>Create a Website into an IIS Server</description>
-            <jobNameTemplate>iis-createwebsite-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-createwebsite-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -1041,7 +1041,7 @@
         <procedure>
             <procedureName>CreateWebSite2</procedureName>
             <description>Create a WebSite into an IIS Server using the ADSI API</description>
-            <jobNameTemplate>iis-createwebsite2-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-createwebsite2-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -1218,7 +1218,7 @@
         <procedure>
             <procedureName>DeleteWebSite</procedureName>
             <description>Delete a Website into an IIS Server</description>
-            <jobNameTemplate>iis-deletewebsite-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-deletewebsite-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -1327,7 +1327,7 @@
         <procedure>
             <procedureName>CreateVirtualDirectory</procedureName>
             <description>Create a Virtual Directory into an IIS Website</description>
-            <jobNameTemplate>iis-createvirtualdirectory-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-createvirtualdirectory-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -1489,7 +1489,7 @@
         <procedure>
             <procedureName>DeleteVirtualDirectory</procedureName>
             <description>Delete a Virtual Directory into an IIS Website</description>
-            <jobNameTemplate>iis-deletevirtualdirectory-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-deletevirtualdirectory-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -1615,7 +1615,7 @@
         <procedure>
             <procedureName>ResetServer</procedureName>
             <description>Reset an IIS Server</description>
-            <jobNameTemplate>iis-resetserver-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-resetserver-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -1707,7 +1707,7 @@
         <procedure>
             <procedureName>CheckServerStatus</procedureName>
             <description>Check the HTTP status of a given URL</description>
-            <jobNameTemplate>iis-checkserverstatus-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-checkserverstatus-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -1814,7 +1814,7 @@
         <procedure>
             <procedureName>StartIISServices</procedureName>
             <description>Start IIS Services</description>
-            <jobNameTemplate>iis-startiisservices-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-startiisservices-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -1874,7 +1874,7 @@
         <procedure>
             <procedureName>StopIISServices</procedureName>
             <description>Stop IIS Services</description>
-            <jobNameTemplate>iis-stopiisservices-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-stopiisservices-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -1934,7 +1934,7 @@
         <procedure>
             <procedureName>GetWebSiteIDs</procedureName>
             <description>Fetches the IDs of all Web Sites found on the host server.</description>
-            <jobNameTemplate>iis-getwebsiteids-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-getwebsiteids-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2008,7 +2008,7 @@
         <procedure>
             <procedureName>GetWebSiteStatus</procedureName>
             <description>Returns some basic information about the web site.</description>
-            <jobNameTemplate>iis-getwebsitestatus-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-getwebsitestatus-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2099,7 +2099,7 @@
         <procedure>
             <procedureName>GetVirtualDirectories</procedureName>
             <description>Show the virtual directories (recursively) for a web site.</description>
-            <jobNameTemplate>iis-getvirtualdirs-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-getvirtualdirs-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2191,7 +2191,7 @@
         <procedure>
             <procedureName>StartWebSite</procedureName>
             <description>Starts the server operation.</description>
-            <jobNameTemplate>iis-startwebsite-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-startwebsite-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2282,7 +2282,7 @@
         <procedure>
             <procedureName>ResumeWebSite</procedureName>
             <description>Continues the server operation after it has been paused.</description>
-            <jobNameTemplate>iis-resumewebsite-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-resumewebsite-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2373,7 +2373,7 @@
         <procedure>
             <procedureName>PauseWebSite</procedureName>
             <description>Pauses the server operation.</description>
-            <jobNameTemplate>iis-pausewebsite-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-pausewebsite-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2465,7 +2465,7 @@
         <procedure>
             <procedureName>StopWebSite</procedureName>
             <description>Stops the server operation.</description>
-            <jobNameTemplate>iis-stopwebsite-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-stopwebsite-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2557,7 +2557,7 @@
         <procedure>
             <procedureName>StartAppPool</procedureName>
             <description>Starts an IIS application pool.</description>
-            <jobNameTemplate>iis-startapppool-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-startapppool-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2652,7 +2652,7 @@
         <procedure>
             <procedureName>StopAppPool</procedureName>
             <description>Stops an IIS application pool.</description>
-            <jobNameTemplate>iis-stopapppool-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-stopapppool-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2747,7 +2747,7 @@
         <procedure>
             <procedureName>CreateAppPool</procedureName>
             <description>Creates an IIS application pool.</description>
-            <jobNameTemplate>iis-createapppool-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-createapppool-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2842,7 +2842,7 @@
         <procedure>
             <procedureName>RecycleAppPool</procedureName>
             <description>Recycles an application pool. When recycling occurs, the worker process currently serving the application pool will terminate and the WWW service will restart a new worker process to replace it.</description>
-            <jobNameTemplate>iis-recycleapppool-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-recycleapppool-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
@@ -2938,7 +2938,7 @@
         <procedure>
             <procedureName>CreateVirtualDirectory2</procedureName>
             <description>Use the Windows ADSI container object "Create" method to create a new virtual directory</description>
-            <jobNameTemplate>iis-createvirtualdir2-$[jobId]</jobNameTemplate>
+            <jobNameTemplate>iis-createvirtualdir2-$[/increment /myJob/project/jobCounter]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
