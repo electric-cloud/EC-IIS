@@ -121,11 +121,6 @@
             </property>
             
             <property>
-                <propertyName>IISServer.pm</propertyName>
-                <expandable>0</expandable>
-                <value/>
-            </property>
-            <property>
                 <propertyName>ec_setup</propertyName>
                 <expandable>0</expandable>
                 <value/>

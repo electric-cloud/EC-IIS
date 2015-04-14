@@ -22,8 +22,6 @@
 	['//property[propertyName="createwebsite2_matchers"]/value', 'matchers/createWebSite2Matchers.pl'],
 	['//property[propertyName="createwebapp_matchers"]/value', 'matchers/createWebApplicationMatchers.pl'],
 
-	['//property[propertyName="IISServer.pm"]/value', 'IISServer.pm'],
-
 	['//procedure[procedureName="StartServer"]/step[stepName="StartServer"]/command' , 'server/startServer.pl'],
 	['//procedure[procedureName="StopServer"]/step[stepName="StopServer"]/command' , 'server/stopServer.pl'],
 	['//procedure[procedureName="CreateWebSite"]/step[stepName="CreateWebSite"]/command' , 'server/createWebSite.pl'],
