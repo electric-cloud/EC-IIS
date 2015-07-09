@@ -8,7 +8,8 @@
 		<label>Configuration name:</label>
 		<property>configname</property>
 		<required>1</required>
-		<documentation>Provide the name of the configuration that holds connection information for the IIS server. (Required)</documentation>
+        <documentation>Provide the name of the configuration that holds connection information for the IIS server. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
+        <htmlDocumentation>Provide the name of the configuration that holds connection information for the IIS server.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>

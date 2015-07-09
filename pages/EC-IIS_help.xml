@@ -1532,7 +1532,10 @@
         successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartWebSite2.png" />
          
 
-        <h1>Release Notes</h1>				<h2>@PLUGIN_KEY@-2.0.6</h2>	<ul>	    <li>Renamed ElectricCommander to ElectricFlow.</li>	</ul>
+        <h1>Release Notes</h1>
+				<h2>@PLUGIN_KEY@-2.0.6</h2>	<ul>	    <li>Renamed ElectricCommander to ElectricFlow.</li>        <li>Added link to plugin Configuration Page in plugin step panels.</li>
+	</ul>
+
 	<h2>@PLUGIN_KEY@-2.0.5</h2>
 	<ul>
 	    <li>Fixed manifest file.</li>
