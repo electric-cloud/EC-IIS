@@ -36,5 +36,5 @@ task wrapper(type: Wrapper) {
 }
 
 gwt {
-	modules 'ecplugins.iis.client.ConfigurationManagementFactory'
+	modules 'ecplugins.iis.ConfigurationManagement'
 }
