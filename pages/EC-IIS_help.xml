@@ -1,26 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta name="generator"
-          content="HTML Tidy for Windows (vers 14 February 2006), see www.w3.org" />
-    <meta content="text/html; charset=us-ascii"
-          http-equiv="content-type" />
+    <meta name="generator" content="HTML Tidy for Windows (vers 14 February 2006), see www.w3.org" />
+    <meta content="text/html; charset=us-ascii" http-equiv="content-type" />
 
     <title>ElectricFlow Plugin for IIS</title>
-    <link rel="stylesheet"
-          href="../../plugins/@PLUGIN_KEY@/pluginhelp.css"
-          type="text/css"
-          media="screen" />
+    <link rel="stylesheet" href="../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media="screen" />
 </head>
 
 <body>
     <div class="help">
-        <h1>IIS</h1>
+        <h1>IIS</h1>
+
         <p>Plugin Version @PLUGIN_VERSION@</p>
-        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;"
-            noshade="noshade" />						<p>Revised on July 1, 2015</p>
+        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
+			
+			<p>Revised on July 1, 2015</p>
         <!-- The tool description should answer these kinds of questions:
                                                                                                                                                                                                                 What is the tool itself is used for in the development
                                                                                                                                                                                                                 process? Who would use this tool? What is the general use-case or
@@ -47,8 +43,7 @@
 
         <ul>
             <li>
-            <a href="http://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/95826e7a-bac4-4e1f-bcb6-c52d49c9d7f4.mspx?mfr=true"
-               target="_blank">Using Command-Line Administration
+            <a href="http://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/95826e7a-bac4-4e1f-bcb6-c52d49c9d7f4.mspx?mfr=true" target="_blank">Using Command-Line Administration
                Scripts (IIS 6.0)</a></li>
         </ul>
 
@@ -75,14 +70,13 @@
         <p>This plugin was developed and tested with IIS 6.0.</p>
 
         <h1>Plugin Procedures</h1>
-		<p>IMPORTANT: In the ElectricFlow UI, from the Home page, open the Main Menu, and click <b>Admin</b> > <b>Plugins</b> to open the Plugin Manager.</p>
+		<p>IMPORTANT: In the ElectricFlow UI, from the Home page, open the Main Menu, and click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</p>
         <p>IMPORTANT: For all parameter descriptions below,
         required parameters are shown in
-        <span class='required'>bold italics</span>.</p>
+        <span class="required">bold italics</span>.</p>
 
         <div id="CreateConfiguration">
-            <a name='CreateConfiguration'
-                 id="CreateConfiguration"></a> 
+            <a name="CreateConfiguration" id="CreateConfiguration"></a> 
 
             <h3>Plugin Configuration</h3>
             <!-- If the plugin has separate configurations then include this section,
@@ -128,7 +122,7 @@
 
                 <tbody>
                     <tr>
-                        <td class='required'>Configuration
+                        <td class="required">Configuration
                         Name</td>
 
                         <td>Provide a unique name for the
@@ -138,7 +132,7 @@
                     </tr>
 
                     <tr>
-                        <td class='required'>IIS IP Address</td>
+                        <td class="required">IIS IP Address</td>
 
                         <td>Provide the URL for the IIS server, it
                         must include the protocol. i.e:
@@ -178,13 +172,11 @@
             </table>
 
             <p>Enter this parameters in the configuration
-            panel:</p><img src="../../plugins/@PLUGIN_KEY@/images/Config/EC-IISConfig.png"
-                 alt="screenshot" />
+            panel:</p><img src="../../plugins/@PLUGIN_KEY@/images/Config/EC-IISConfig.png" alt="screenshot" />
         </div>
 
         <div id="CheckServerStatus">
-            <a name='CheckServerStatus'
-                 id="CheckServerStatus"></a> 
+            <a name="CheckServerStatus" id="CheckServerStatus"></a> 
 
             <h3>CheckServerStatus</h3>
 
@@ -225,8 +217,7 @@
         </div>
 
         <div id="CreateAppPool">
-            <a name="CreateAppPool"
-                 id="CreateAppPool"></a> 
+            <a name="CreateAppPool" id="CreateAppPool"></a> 
 
             <h3>CreateAppPool</h3>
 
@@ -262,8 +253,7 @@
         </div>
 
         <div id="CreateVirtualDirectory">
-            <a name="CreateVirtualDirectory"
-                 id="CreateVirtualDirectory"></a> 
+            <a name="CreateVirtualDirectory" id="CreateVirtualDirectory"></a> 
 
             <h3>CreateVirtualDirectory</h3>
 
@@ -361,8 +351,7 @@
             </div>
 
         <div id="CreateVirtualDirectory2">
-            <a name="CreateVirtualDirectory2"
-                 id="CreateVirtualDirectory2"></a> 
+            <a name="CreateVirtualDirectory2" id="CreateVirtualDirectory2"></a> 
 
             <h3>CreateVirtualDirectory2</h3>
 
@@ -455,8 +444,7 @@
             </div>
 
         <div id="CreateWebApplication">
-            <a name="CreateWebApplication"
-                 id="CreateWebApplication"></a> 
+            <a name="CreateWebApplication" id="CreateWebApplication"></a> 
 
             <h3>CreateWebApplication</h3>
 
@@ -532,8 +520,7 @@
             </div>
 
         <div id="CreateWebSite">
-            <a name="CreateWebSite"
-                 id="CreateWebSite"></a> 
+            <a name="CreateWebSite" id="CreateWebSite"></a> 
 
             <h3>CreateWebSite</h3>
 
@@ -624,8 +611,7 @@
             </div>
 
         <div id="CreateWebSite2">
-            <a name="CreateWebSite2"
-                 id="CreateWebSite2"></a> 
+            <a name="CreateWebSite2" id="CreateWebSite2"></a> 
 
             <h3>CreateWebSite2</h3>
 
@@ -720,8 +706,7 @@
             </div>
 
         <div id="DeleteVirtualDirectory">
-            <a name="DeleteVirtualDirectory"
-                 id="DeleteVirtualDirectory"></a> 
+            <a name="DeleteVirtualDirectory" id="DeleteVirtualDirectory"></a> 
 
             <h3>DeleteVirtualDirectory</h3>
 
@@ -780,8 +765,7 @@
         </div>
 
         <div id="DeleteWebSite">
-            <a name="DeleteWebSite"
-                 id="DeleteWebSite"></a> 
+            <a name="DeleteWebSite" id="DeleteWebSite"></a> 
 
             <h3>DeleteWebSite</h3>
 
@@ -831,8 +815,7 @@
         </div>
 
         <div id="DeployCopy">
-            <a name="DeployCopy"
-                 id="DeployCopy"></a> 
+            <a name="DeployCopy" id="DeployCopy"></a> 
 
             <h3>DeployCopy</h3>
 
@@ -934,8 +917,7 @@
             </div>
 
         <div id="GetVirtualDirectories">
-            <a name="GetVirtualDirectories"
-                 id="GetVirtualDirectories"></a> 
+            <a name="GetVirtualDirectories" id="GetVirtualDirectories"></a> 
 
             <h3>GetVirtualDirectories</h3>
 
@@ -977,8 +959,7 @@
         </div>
 
         <div id="GetWebSiteIDs">
-            <a name="GetWebSiteIDs"
-                 id="GetWebSiteIDs"></a> 
+            <a name="GetWebSiteIDs" id="GetWebSiteIDs"></a> 
 
             <h3>GetWebSiteIDs</h3>
 
@@ -1017,8 +998,7 @@
         </div>
 
         <div id="GetWebSiteStatus">
-            <a name="GetWebSiteStatus"
-                 id="GetWebSiteStatus"></a> 
+            <a name="GetWebSiteStatus" id="GetWebSiteStatus"></a> 
 
             <h3>GetWebSiteStatus</h3>
 
@@ -1062,8 +1042,7 @@
         </div>
 
         <div id="PauseWebSite">
-            <a name="PauseWebSite"
-                 id="PauseWebSite"></a> 
+            <a name="PauseWebSite" id="PauseWebSite"></a> 
 
             <h3>PauseWebSite</h3>
 
@@ -1102,8 +1081,7 @@
         </div>
 
         <div id="RecycleAppPool">
-            <a name="RecycleAppPool"
-                 id="RecycleAppPool"></a> 
+            <a name="RecycleAppPool" id="RecycleAppPool"></a> 
 
             <h3>RecycleAppPool</h3>
 
@@ -1143,8 +1121,7 @@
         </div>
 
         <div id="ResetServer">
-            <a name="ResetServer"
-                 id="ResetServer"></a> 
+            <a name="ResetServer" id="ResetServer"></a> 
 
             <h3>ResetServer</h3>
 
@@ -1187,8 +1164,7 @@
         </div>
 
         <div id="ResumeWebSite">
-            <a name="ResumeWebSite"
-                 id="ResumeWebSite"></a> 
+            <a name="ResumeWebSite" id="ResumeWebSite"></a> 
 
             <h3>ResumeWebSite</h3>
 
@@ -1226,8 +1202,7 @@
         </div>
 
         <div id="StartAppPool">
-            <a name="StartAppPool"
-                 id="StartAppPool"></a> 
+            <a name="StartAppPool" id="StartAppPool"></a> 
 
             <h3>StartAppPool</h3>
 
@@ -1263,8 +1238,7 @@
         </div>
 
         <div id="StartIISServices">
-            <a name="StartIISServices"
-                 id="StartIISServices"></a> 
+            <a name="StartIISServices" id="StartIISServices"></a> 
 
             <h3>StartIISServices</h3>
 
@@ -1274,8 +1248,7 @@
         </div>
 
         <div id="StartServer">
-            <a name="StartServer"
-                 id="StartServer"></a> 
+            <a name="StartServer" id="StartServer"></a> 
 
             <h3>StartServer</h3>
 
@@ -1318,8 +1291,7 @@
         </div>
 
         <div id="StartWebSite">
-            <a name="StartWebSite"
-                 id="StartWebSite"></a> 
+            <a name="StartWebSite" id="StartWebSite"></a> 
 
             <h3>StartWebSite</h3>
 
@@ -1356,8 +1328,7 @@
         </div>
 
         <div id="StopAppPool">
-            <a name="StopAppPool"
-                 id="StopAppPool"></a> 
+            <a name="StopAppPool" id="StopAppPool"></a> 
 
             <h3>StopAppPool</h3>
 
@@ -1393,8 +1364,7 @@
         </div>
 
         <div id="StopIISServices">
-            <a name="StopIISServices"
-                 id="StopIISServices"></a> 
+            <a name="StopIISServices" id="StopIISServices"></a> 
 
             <h3>StopIISServices</h3>
 
@@ -1404,8 +1374,7 @@
         </div>
 
         <div id="StopServer">
-            <a name="StopServer"
-                 id="StopServer"></a> 
+            <a name="StopServer" id="StopServer"></a> 
 
             <h3>StopServer</h3>
 
@@ -1448,8 +1417,7 @@
         </div>
 
         <div id="StopWebSite">
-            <a name="StopWebSite"
-                 id="StopWebSite"></a> 
+            <a name="StopWebSite" id="StopWebSite"></a> 
 
             <h3>StopWebSite</h3>
 
@@ -1532,8 +1500,18 @@
         successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IISStartWebSite2.png" />
          
 
-        <h1>Release Notes</h1>
-				<h2>@PLUGIN_KEY@-2.0.6</h2>	<ul>	    <li>Renamed ElectricCommander to ElectricFlow.</li>        <li>Added link to plugin Configuration Page in plugin step panels.</li>
+        <h1>Release Notes</h1>
+    <h2>@PLUGIN_KEY@ 2.0.7</h2>
+    <ul>
+        <li>Fixed issue with configurations being cached for IE.</li>
+    </ul>
+
+		
+		<h2>@PLUGIN_KEY@-2.0.6</h2>
+
+	<ul>
+	    <li>Renamed ElectricCommander to ElectricFlow.</li>
+        <li>Added link to plugin Configuration Page in plugin step panels.</li>
 	</ul>
 
 	<h2>@PLUGIN_KEY@-2.0.5</h2>
