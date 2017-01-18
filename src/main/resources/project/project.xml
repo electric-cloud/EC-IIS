@@ -25,6 +25,16 @@
                 </propertySheet>
             </property>
             <property>
+                <propertyName>preamble</propertyName>
+                <expandable>0</expandable>
+                <value/>
+            </property>
+            <property>
+                <propertyName>EC::IIS</propertyName>
+                <expandable>0</expandable>
+                <value/>
+            </property>
+            <property>
                 <propertyName>http_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>

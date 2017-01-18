@@ -22,12 +22,13 @@
    # -------------------------------------------------------------------------
    # Includes
    # -------------------------------------------------------------------------
-   use ElectricCommander;
-   use ElectricCommander::PropDB;
-   use LWP::UserAgent;
-   use HTTP::Request;
    use warnings;
    use strict;
+   use LWP::UserAgent;
+   use HTTP::Request;
+
+   use ElectricCommander;
+   use ElectricCommander::PropDB;
    $|=1;
    
    # -------------------------------------------------------------------------

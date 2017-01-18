@@ -9,6 +9,14 @@
     <xpath>//property[propertyName=&quot;ui_forms&quot;]/propertySheet/property[propertyName=&quot;IISEditConfigForm&quot;]/value</xpath>
   </file>
   <file>
+    <path>preamble.pl</path>
+    <xpath>//property[propertyName=&quot;preamble&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>lib/EC/IIS.pm</path>
+    <xpath>//property[propertyName=&quot;EC::IIS&quot;]/value</xpath>
+  </file>
+  <file>
     <path>matchers/httpMatchers.pl</path>
     <xpath>//property[propertyName=&quot;http_matchers&quot;]/value</xpath>
   </file>
