@@ -25,6 +25,11 @@ EC::IIS - Electric Commander Microsoft IIS integration plugin core.
 
 =cut
 
+use Carp;
+
+use ElectricCommander;
+use ElectricCommander::PropDB;
+
 use constant {
     SUCCESS => 0,
     ERROR   => 1,
@@ -38,5 +43,103 @@ use constant {
 
 };
 
+sub new {
+    my ($class, %opt) = @_;
+
+    $opt{ec} ||= ElectricCommander->new;
+    return bless \%opt, $class;
+};
+
+sub get_ec {
+    my $self = shift;
+    return $self->{ec};
+};
+
+sub trim {
+    my ($self, $string) = shift;
+
+    # kill leading & trailing spaces
+    $string =~ s/^\s+//;
+    $string =~ s/\s+$//;
+ 
+    return $string;
+};
+
+sub runcmd {
+    my ($self, @args) = @_;
+
+    croak "No command to execute"
+        unless $args[0];
+
+    print "Executing: ".join " ", map { "'$_'" } @args;
+
+    local $!;
+    my $ret = system @args;
+    if ($!) {
+        croak "Cannot execute '$args[0]': $!";
+    } else {
+        $ret >>= 8;
+    };
+
+    $self->setProperties({cmdLine => join " ", @args});
+
+    return $ret;
+};
+
+########################################################################
+# setProperties - set a group of properties into the Electric Commander
+#
+# Arguments:
+#   -propHash: hash containing the ID and the value of the properties 
+#              to be written into the Electric Commander
+#
+# Returns:
+#   none
+#
+########################################################################
+sub setProperties($) {
+    my ($self, $propHash) = @_;
+
+    # get an EC object
+    my $ec = $self->{ec};
+
+    foreach my $key (keys %$propHash) {
+        my $val = $propHash->{$key};
+        $ec->setProperty("/myCall/$key", $val);
+    };
+}
+
+sub getConfiguration($){
+    my ($self, $configName) = @_;
+
+    # get an EC object
+    my $ec = $self->{ec};
+
+    my %configToUse;
+
+    my $proj = "$[/myProject/projectName]";
+    my $pluginConfigs = new ElectricCommander::PropDB($ec,"/projects/$proj/iis_cfgs");
+
+    my %configRow = $pluginConfigs->getRow($configName);
+
+    # Check if configuration exists
+    unless(keys(%configRow)) {
+        croak "No config for '$proj' named '$configName'";
+    }
+
+    # Get user/password out of credential
+    my $xpath = $ec->getFullCredential($configRow{credential});
+    $configToUse{'user'} = $xpath->findvalue("//userName");
+    $configToUse{'password'} = $xpath->findvalue("//password");
+
+    foreach my $c (keys %configRow) {
+        #getting all values except the credential that was read previously
+        if($c ne CREDENTIAL_ID){
+            $configToUse{$c} = $configRow{$c};
+        }
+    }
+
+    return \%configToUse;
+}
 
 1;

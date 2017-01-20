@@ -1,42 +1,49 @@
 #!/usr/bin/env perl
 # line 3 "preamble.pl"
 
+# Start your perl handler with a
+#      # $[/myProject/preamble]
+#      # line 3 "myfile"
+# for proper module loading & correct errors/warnings
+
 use strict;
 use warnings;
 
-use Carp;
+BEGIN {
+    use Carp;
+    use ElectricCommander;
+    $|=1;
 
-use ElectricCommander;
-use ElectricCommander::PropDB;
-$|=1;
+    # TODO This should be in EC core
+    # Make 'use Foo;' search in properties as well
+    # If property exists, wrap it into a "file" and present to Perl CORE
+    # Also makes errors/warnings show correct filename and line
+    # The local versions of modules are preferred, load from prop as a last
+    #     resort.
+    my $ec = ElectricCommander->new;
+    my $prefix = '/myProject/';
 
-my $ec = ElectricCommander->new;
-my $prefix = '/myProject/';
+    my $load = sub {
+        my ($self, $target) = @_;
 
-# TODO This should be in EC core
-my $load = sub {
-    my $target = shift;
+        # Undo perl'd require transformation
+        my $prop = $target;
+        $prop =~ s#/#::#;
+        $prop =~ s#\.pm$##;
+        $prop = "$prefix$prop";
+        my $code = $ec->getProperty("$prop")->findvalue('//value')->string_value;
+        return unless $code; # let other module paths try ;)
 
-    my $prop = "$prefix$target";
-    my $code = $ec->getProperty("$prop")->findvalue('//value')->string_value;
-    croak "Failed to load $target: property $prop empty"
-        unless $code;
+        # Prepend comment for correct error reporting
+        $code = qq{# line 1 "$prop"\n$code};
 
-    my $ret = do {
-        no strict;
-        no warnings;
-        eval qq{# line 1 "$prop"\n$code};
+        # We must return a file in perl < 5.10, in 5.10+ just return \$code
+        #    would suffice.
+        open my $fd, "<", \$code
+            or die "Redirect failed when loading $target from $prop";
+
+        return $fd;
     };
 
-    croak "Failed to load $target from property $prop: "
-        . ( $@ || "code didn't return a true value" )
-            unless $ret;
-
-    $target =~ s#::#/#g;
-    $target .= ".pm";
-    $INC{$target} = $prop; # avoid reloading
-
-    return $ret;
+    push @INC, $load;
 };
-
-$load->("EC::IIS");
