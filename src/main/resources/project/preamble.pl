@@ -30,17 +30,21 @@ BEGIN {
         my $prop = $target;
         $prop =~ s#/#::#;
         $prop =~ s#\.pm$##;
+        my $display = '@PLUGIN_KEY@-@PLUGIN_VERSION@/'.$prop;
         $prop = "$prefix$prop";
-        my $code = $ec->getProperty("$prop")->findvalue('//value')->string_value;
+        my $code = eval {
+            $ec->getProperty("$prop")->findvalue('//value')->string_value;
+        };
         return unless $code; # let other module paths try ;)
 
+
         # Prepend comment for correct error reporting
-        $code = qq{# line 1 "$prop"\n$code};
+        $code = qq{# line 1 "$display"\n$code};
 
         # We must return a file in perl < 5.10, in 5.10+ just return \$code
         #    would suffice.
         open my $fd, "<", \$code
-            or die "Redirect failed when loading $target from $prop";
+            or die "Redirect failed when loading $target from $display";
 
         return $fd;
     };
