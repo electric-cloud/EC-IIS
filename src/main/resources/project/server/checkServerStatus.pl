@@ -1,3 +1,6 @@
+#!/usr/bin/env perl
+# include $[/myProject/preamble]
+# line 4 "@PLUGIN_KEY@-@PLUGIN_VERSION@/checkServerStatus.pl"
 # -------------------------------------------------------------------------
    # File
    #    checkServerStatus.pl
@@ -30,7 +33,7 @@
    use ElectricCommander;
    use ElectricCommander::PropDB;
    $|=1;
-   
+  
    # -------------------------------------------------------------------------
    # Constants
    # -------------------------------------------------------------------------
