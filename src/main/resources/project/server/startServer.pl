@@ -29,7 +29,6 @@
 # -------------------------------------------------------------------------
 use warnings;
 use strict;
-use diagnostics;
 use Cwd;
 use File::Spec;
 use Data::Dumper;

@@ -28,7 +28,6 @@ use warnings;
 use strict;
 use Cwd;
 use File::Spec;
-use diagnostics;
 
 use ElectricCommander;
 use ElectricCommander::PropDB;

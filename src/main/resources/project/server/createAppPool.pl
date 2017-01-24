@@ -24,10 +24,13 @@
 # -------------------------------------------------------------------------
 # Includes
 # -------------------------------------------------------------------------
-use ElectricCommander;
+use strict;
+use warnings;
 use Data::Dumper;
 use File::Temp qw/tempfile/;
 
+use ElectricCommander;
+use EC::IIS;
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
@@ -94,7 +97,7 @@ EOSCRIPT
     print $content;
 
     #evaluates if exit was successful to mark it as a success or fail the step
-    if ( $? == SUCCESS ) {
+    if ( ! $? ) {
 
         #set any additional error or warning conditions here
         #there may be cases in which an error occurs and the exit code is 0.

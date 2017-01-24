@@ -24,14 +24,16 @@
 # -------------------------------------------------------------------------
 # Includes
 # -------------------------------------------------------------------------
-use ElectricCommander;
 use warnings;
 use strict;
 use Cwd;
 use File::Spec;
 use diagnostics;
 use Data::Dumper;
+
+use ElectricCommander;
 use ElectricCommander::PropDB;
+use EC::IIS;
 $| = 1;
 
 # -------------------------------------------------------------------------

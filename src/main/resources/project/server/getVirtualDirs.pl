@@ -21,9 +21,13 @@
 # All rights reserved
 # -------------------------------------------------------------------------
 
-use ElectricCommander;
+use strict;
+use warnings;
 use Data::Dumper;
 use File::Temp qw/tempfile/;
+
+use ElectricCommander;
+use EC::IIS;
 
 my $ec = new ElectricCommander();
 

@@ -31,6 +31,7 @@ use HTTP::Request;
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
+use EC::IIS;
 $|= 1;
 
 # -------------------------------------------------------------------------
