@@ -26,6 +26,8 @@ EC::IIS - Electric Commander Microsoft IIS integration plugin core.
 =cut
 
 use Carp;
+use base qw(Exporter);
+our @EXPORT_OK = qw(trim);
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
@@ -56,7 +58,7 @@ sub get_ec {
 };
 
 sub trim {
-    my ($self, $string) = shift;
+    my ($string) = shift;
 
     # kill leading & trailing spaces
     $string =~ s/^\s+//;

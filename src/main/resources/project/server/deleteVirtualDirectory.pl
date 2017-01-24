@@ -2,37 +2,39 @@
 # include $[/myProject/preamble]
 # line 4 "@PLUGIN_KEY@-@PLUGIN_VERSION@/deleteVirtualDirectory.pl"
 # -------------------------------------------------------------------------
-   # File
-   #    deleteVirtualDirectory.pl
-   #
-   # Dependencies
-   #    None
-   #
-   # Template Version
-   #    1.0
-   #
-   # Date
-   #    11/05/2010
-   #
-   # Engineer
-   #    Alonso Blanco
-   #
-   # Copyright (c) 2011 Electric Cloud, Inc.
-   # All rights reserved
-   # -------------------------------------------------------------------------
-   
-   
-   # -------------------------------------------------------------------------
-   # Includes
-   # -------------------------------------------------------------------------
-   use ElectricCommander;
-   use warnings;
-   use strict;
-   use Cwd;
-   use File::Spec;
-   use diagnostics;
-   use ElectricCommander::PropDB;
-   $|=1;
+# File
+#    deleteVirtualDirectory.pl
+#
+# Dependencies
+#    None
+#
+# Template Version
+#    1.0
+#
+# Date
+#    11/05/2010
+#
+# Engineer
+#    Alonso Blanco
+#
+# Copyright (c) 2011 Electric Cloud, Inc.
+# All rights reserved
+# -------------------------------------------------------------------------
+
+
+# -------------------------------------------------------------------------
+# Includes
+# -------------------------------------------------------------------------
+use warnings;
+use strict;
+use Cwd;
+use File::Spec;
+use diagnostics;
+
+use ElectricCommander;
+use ElectricCommander::PropDB;
+use EC::IIS qw(trim);
+$|=1;
    
    # -------------------------------------------------------------------------
    # Constants
@@ -54,36 +56,10 @@
        BSLASH => q{\\},
   };
   
-  ########################################################################
-  # trim - deletes blank spaces before and after the entered value in 
-  # the argument
-  #
-  # Arguments:
-  #   -untrimmedString: string that will be trimmed
-  #
-  # Returns:
-  #   trimmed string
-  #
-  ########################################################################  
-  sub trim($) {
-   
-      my ($untrimmedString) = @_;
-      
-      my $string = $untrimmedString;
-      
-      #removes leading spaces
-      $string =~ s/^\s+//;
-      
-      #removes trailing spaces
-      $string =~ s/\s+$//;
-      
-      #returns trimmed string
-      return $string;
-  }
-  
   # -------------------------------------------------------------------------
   # Variables
   # -------------------------------------------------------------------------
+
   
   $::gWebsite = trim(q($[website]));
   $::gConfigName= trim(q($[configname]));
