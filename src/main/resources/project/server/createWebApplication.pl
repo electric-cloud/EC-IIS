@@ -47,10 +47,10 @@ my $websiteid = ( $ec->getProperty("WebSiteID") )->findvalue("//value");
 
 # This needs to be the full path to the application. We need to check if it
 # starts with a slash and/or "ROOT" and prepend as needed.
-my $rawappdirpath = ( $ec->getProperty("ApplicationDirPath") )->findvalue("//value");
+my $rawappdirpath =
+  ( $ec->getProperty("ApplicationDirPath") )->findvalue("//value");
+
 # -------------------------------------------------------------------------
-
-
 
 ########################################################################
 # main - contains the whole process to be done by the plugin
@@ -62,47 +62,48 @@ my $rawappdirpath = ( $ec->getProperty("ApplicationDirPath") )->findvalue("//val
 #   none
 #
 ########################################################################
-sub main(){
- 
+sub main() {
+
     my $appdirpath = "";
-    if ($rawappdirpath =~ /^\/root\//i) {
+    if ( $rawappdirpath =~ /^\/root\//i ) {
         print "Path looks OK...\n";
         $appdirpath = $rawappdirpath;
     }
     else {
-        if ($rawappdirpath =~ /^\//i) {
+        if ( $rawappdirpath =~ /^\//i ) {
             print "Path starts with a slash but needs prepended /ROOT...\n";
             $appdirpath = "/ROOT$rawappdirpath";
         }
-        elsif ($rawappdirpath =~ /^root\//i) {
+        elsif ( $rawappdirpath =~ /^root\//i ) {
             print "Path starts with ROOT but needs a prepended slash...\n";
             $appdirpath = "/ROOT$rawappdirpath";
         }
         else {
-         
+
             print "Path needs prepended /ROOT/...\n";
-            
-            if($rawappdirpath ne ''){
+
+            if ( $rawappdirpath ne '' ) {
                 $appdirpath = "/ROOT/$rawappdirpath";
-            }else{
+            }
+            else {
                 $appdirpath = "/ROOT";
             }
-            
+
         }
     }
-    
+
     my $webappURL = "IIS://$host/W3SVC/$websiteid$appdirpath";
     print "ADSI Web Application URL: $webappURL\n\n";
-    
+
     # Create and open a temp file for the JScript code
     my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
-    
+
     # See "GetWebSiteIDs" for notes about IIS and ADSI.
-    
-    # IMPORTANT: This is JScript code. If you change it to use VBScript or
-    # PowerShell (or whatever) you need to adjust the cscript commndline below and
-    # probably the SUFFIX above (although the suffix will be ignored when a /E argument
-    # is passed to cscript).
+
+# IMPORTANT: This is JScript code. If you change it to use VBScript or
+# PowerShell (or whatever) you need to adjust the cscript commndline below and
+# probably the SUFFIX above (although the suffix will be ignored when a /E argument
+# is passed to cscript).
     my $jscript = <<"EOSCRIPT";
     // Get the virtual directory
     var xvdir = GetObject("$webappURL");
@@ -146,14 +147,14 @@ sub main(){
     }
     
 EOSCRIPT
-    
+
     print $scriptfh $jscript;
     close($scriptfh);
-    
+
     my $webappresult = `cscript /E:jscript /NoLogo $scriptfilename`;
-    
+
     print $webappresult;
- 
+
 }
 
 main();

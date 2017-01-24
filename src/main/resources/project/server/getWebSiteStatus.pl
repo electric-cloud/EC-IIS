@@ -88,6 +88,7 @@ close($scriptfh);
 # There should only be one line, with a name, a numeric value, and a state name.
 my $scriptresult = `cscript /E:jscript /NoLogo $scriptfilename`;
 chomp $scriptresult;
-my ($sitename,$sitestate,$statename) = split(/:/, $scriptresult);
-$ec->setProperty( "/myJob/sitestatus/$sitename", $sitestate, { description => $statename } );
+my ( $sitename, $sitestate, $statename ) = split( /:/, $scriptresult );
+$ec->setProperty( "/myJob/sitestatus/$sitename", $sitestate,
+    { description => $statename } );
 print "Web Site '$sitename': $statename";
