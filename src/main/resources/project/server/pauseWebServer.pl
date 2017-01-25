@@ -32,6 +32,7 @@ use ElectricCommander;
 use Data::Dumper;
 use File::Temp qw/tempfile/;
 use EC::IIS;
+my $ec_iis = EC::IIS->new;
 # -------------------------------------------------------------------------
 # Constants
 # -------------------------------------------------------------------------

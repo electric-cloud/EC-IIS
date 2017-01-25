@@ -32,6 +32,7 @@ use HTTP::Request;
 use ElectricCommander;
 use ElectricCommander::PropDB;
 use EC::IIS;
+my $ec_iis = EC::IIS->new;
 $|= 1;
 
 # -------------------------------------------------------------------------

@@ -29,6 +29,7 @@ use File::Temp qw/tempfile/;
 
 use ElectricCommander;
 use EC::IIS;
+my $ec_iis = EC::IIS->new;
 my $ec = new ElectricCommander();
 
 # Parameters

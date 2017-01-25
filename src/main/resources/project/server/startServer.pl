@@ -34,6 +34,7 @@ use File::Spec;
 use Data::Dumper;
 
 use EC::IIS;
+my $ec_iis = EC::IIS->new;
 
 # -------------------------------------------------------------------------
 # Constants

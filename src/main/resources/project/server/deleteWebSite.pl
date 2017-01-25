@@ -33,6 +33,7 @@ use File::Spec;
 use ElectricCommander::PropDB;
 use ElectricCommander;
 use EC::IIS qw(trim);
+my $ec_iis = EC::IIS->new;
 $| = 1;
 
 # -------------------------------------------------------------------------

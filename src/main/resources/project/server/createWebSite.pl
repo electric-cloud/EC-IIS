@@ -33,6 +33,7 @@ use diagnostics;
 use ElectricCommander;
 use ElectricCommander::PropDB;
 use EC::IIS qw(trim);
+my $ec_iis = EC::IIS->new;
 $| = 1;
 
 # -------------------------------------------------------------------------
