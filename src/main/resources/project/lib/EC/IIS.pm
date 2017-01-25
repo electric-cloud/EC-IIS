@@ -67,7 +67,7 @@ sub trim {
     return $string;
 };
 
-sub runcmd {
+sub run_cmd {
     my ($self, @args) = @_;
 
     croak "No command to execute"
@@ -86,6 +86,22 @@ sub runcmd {
     $self->setProperties({cmdLine => join " ", @args});
 
     return $ret;
+};
+
+sub run_reset {
+    my ($self, @args) = @_;
+
+    my $ret = $self->run_cmd( $self->iisreset, @args );
+
+    if ($ret) {
+        print "iisreset ".$self->iisreset." failed with exit status $ret\n";
+    };
+
+    return $ret;
+};
+
+sub iisreset {
+    return 'iisreset'; #TODO configurable
 };
 
 ########################################################################
