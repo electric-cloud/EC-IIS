@@ -56,7 +56,8 @@ use constant {
 # Variables
 # -------------------------------------------------------------------------
 
-$::gExecPath   = "$[execpath]";
+# TODO merge into module
+# $::gExecPath   = "$[execpath]";
 $::gConfigName = "$[configname]";
 
 # -------------------------------------------------------------------------
@@ -114,91 +115,11 @@ sub main() {
         exit ERROR;
 
     }
-
-    #commands to be executed for version 6
-    push( @args, $::gExecPath );
-
-    #generate command line
-    my $cmdLine = createCommandLine( \@args );
-
-    if ( $cmdLine && $cmdLine ne '' ) {
-
-        #execute command line
-        system($cmdLine);
-
-        #show command line
-        print "Command Line: $cmdLine\n";
-
-        #add masked command line to properties object
-        $props{'cmdLine'} = $cmdLine;
-
-        #set prop's hash to EC properties
-        setProperties( \%props );
-
-    }
-    else {
-
-        print "Error: could not generate command line";
-        exit ERROR;
-
-    }
+    exit $ec_iis->run_iisreset;
 
 }
 
-########################################################################
-# createCommandLine - creates the command line for the invocation
-# of the program to be executed.
-#
-# Arguments:
-#   -arr: array containing the command name (must be the first element)
-#         and the arguments entered by the user in the UI
-#
-# Returns:
-#   -the command line to be executed by the plugin
-#
-########################################################################
-sub createCommandLine($) {
 
-    my ($arr) = @_;
-
-    my $commandName = @$arr[0];
-
-    my $command = $commandName;
-
-    shift(@$arr);
-
-    foreach my $elem (@$arr) {
-        $command .= " $elem";
-    }
-
-    return $command;
-
-}
-
-########################################################################
-# setProperties - set a group of properties into the Electric Commander
-#
-# Arguments:
-#   -propHash: hash containing the ID and the value of the properties
-#              to be written into the Electric Commander
-#
-# Returns:
-#   none
-#
-########################################################################
-sub setProperties($) {
-
-    my ($propHash) = @_;
-
-    # get an EC object
-    my $ec = new ElectricCommander();
-    $ec->abortOnError(0);
-
-    foreach my $key ( keys %$propHash ) {
-        my $val = $propHash->{$key};
-        $ec->setProperty( "/myCall/$key", $val );
-    }
-}
 
 ##########################################################################
 # getConfiguration - get the information of the configuration given
