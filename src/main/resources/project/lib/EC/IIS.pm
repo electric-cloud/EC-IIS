@@ -73,19 +73,43 @@ sub run_cmd {
     croak "No command to execute"
         unless $args[0];
 
-    print "Executing: ".join " ", map { "'$_'" } @args;
+    my $cmd = $self->printable_cmdline(@args);
+    print "Executing: $cmd";
 
     local $!;
-    my $ret = system @args;
+    my $ret = system $cmd;
     if ($!) {
         croak "Cannot execute '$args[0]': $!";
     } else {
         $ret >>= 8;
     };
 
-    $self->setProperties({cmdLine => join " ", @args});
+    $self->setProperties({cmdLine => $cmd}); # TODO what if >1  commands?..
 
     return $ret;
+};
+
+sub read_cmd {
+    my ($self, @args) = @_;
+
+    croak "No command to execute"
+        unless $args[0];
+
+    my $cmd = $self->printable_cmdline(@args);
+    print "Reading output from: $cmd";
+
+    local $!;
+    my $pid = open( my $fd, "-|", $cmd)
+        or croak "Failed to execute '$args[0]': $!";
+
+    local $/;
+    my $data = <$fd>;
+    waitpid($pid, 0);
+    my $status = $? >> 8;
+
+    $self->setProperties({cmdLine => $cmd}); # TODO what if >1  commands?..
+
+    return wantarray ? ($data, $status) : $data;
 };
 
 sub run_reset {
@@ -104,6 +128,26 @@ sub iisreset {
     return 'iisreset'; #TODO configurable
 };
 
+sub printable_cmdline {
+    my ($self, @args) = @_;
+
+    # We know for sure that password (if any) follows the /p flag
+    my $is_password;
+    foreach (@args) {
+        if ($is_password) {
+            $_ = '*****';
+            last;
+        };
+        $is_password++ if $_ eq '/p';
+    };
+
+    return join ' ', map {
+        /[^\w\/\\\.]/ ? qq{"$_"} : $_; # TODO escape \'s?..
+    } @args;
+
+    
+};
+
 ########################################################################
 # setProperties - set a group of properties into the Electric Commander
 #
@@ -115,7 +159,7 @@ sub iisreset {
 #   none
 #
 ########################################################################
-sub setProperties($) {
+sub setProperties {
     my ($self, $propHash) = @_;
 
     # get an EC object

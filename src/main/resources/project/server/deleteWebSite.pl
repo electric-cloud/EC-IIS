@@ -132,75 +132,40 @@ sub main() {
 
     }
 
-    push( @args, '"' . $::gExecPath . '"' );
+    push( @args, $::gExecPath );
 
     #using vbs scripts
     push( @args, DEFAULT_DELETE_COMMAND_OPTION_IIS_6 );
 
-    if ( $::gWebsite && $::gWebsite ne '' ) {
-        push( @args, '"' . $::gWebsite . '"' );
+    if ( $::gWebsite ) {
+        push( @args, $::gWebsite );
     }
 
-    if ( $computerName && $computerName ne '' ) {
-        push( @args, '/s ' . $computerName );
+    if ( $computerName ) {
+        push( @args, '/s' , $computerName );
     }
 
-    if ( $user && $user ne '' ) {
-        push( @args, '/u ' . $user );
+    if ( $user ) {
+        push( @args, '/u' , $user );
     }
 
-    if ( $pass && $pass ne '' ) {
-        push( @args, '/p ' . $pass );
+    if ( defined $pass ) {
+        push( @args, '/p' , $pass );
     }
 
-    #generate command line
-    my $cmdLine = createCommandLine( \@args );
-    my $content = '';
+    my ($content, $ret) = $ec_iis->read_command( @args );
 
-    if ( $cmdLine && $cmdLine ne '' ) {
+    $ec->setProperty( "/myJobStep/outcome", $ret ? 'error' : 'success' );
 
-        #execute command line
-        $content = `$cmdLine`;
+    # FIXME is this true anymore? If so, uncomment
+    # # Set any additional error or warning conditions here.
+    # # There may be cases in which an error occurs and the exit code is 0.
+    # # We want to set to correct outcome for the running step
+    # if ( $content =~ m/The virtual directory (.+) does not exist/ ) {
+    #     $ec->setProperty( "/myJobStep/outcome", 'error' );
+    # }
 
-        print $content;
-
-      #evaluates if exit was successful to mark it as a success or fail the step
-        if ( $? == SUCCESS ) {
-
-            $ec->setProperty( "/myJobStep/outcome", 'success' );
-
-            #set any additional error or warning conditions here
-            #there may be cases in which an error occurs and the exit code is 0.
-            #we want to set to correct outcome for the running step
-            #            if($content =~ m/(E|e)rror/){
-            #                $ec->setProperty("/myJobStep/outcome", 'error');
-            #            }
-
-        }
-        else {
-            $ec->setProperty( "/myJobStep/outcome", 'error' );
-        }
-
-        #mask password
-        $cmdLine =~ s/ \/p (\S+)/ \/p \*\*\*\*/;
-
-        #show masked command line
-        print "Command Line: $cmdLine\n";
-
-        #add masked command line to properties object
-        $props{'cmdLine'} = $cmdLine;
-
-        #set prop's hash to EC properties
-        setProperties( \%props );
-
-    }
-    else {
-
-        print "Error: could not generate command line";
-        exit ERROR;
-
-    }
-
+    exit $ret;
 }
 
 ########################################################################

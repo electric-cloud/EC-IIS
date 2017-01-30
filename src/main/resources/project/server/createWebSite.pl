@@ -155,7 +155,7 @@ sub main() {
 
     }
 
-    push( @args, '"' . $::gExecPath . '"' );
+    push( @args, $::gExecPath );
 
     #using vbs scripts
     push( @args, DEFAULT_CREATE_COMMAND_OPTION_IIS_6 );
@@ -199,114 +199,33 @@ sub main() {
         push( @args, '/d ' . $::gHostHeader );
     }
 
-    #generate command line
-    my $cmdLine = createCommandLine( \@args );
-    my $content = '';
+    my ($content, $ret) = $ec_iis->read_cmd( @args );
 
-    if ( $cmdLine && $cmdLine ne '' ) {
+    print $content;
 
-        #execute command line
-        $content = `$cmdLine`;
+    #evaluates if exit was successful to mark it as a success or fail the step
+    if ( !$ret ) {
 
-        print $content;
-
-      #evaluates if exit was successful to mark it as a success or fail the step
-        if ( $? == SUCCESS ) {
-
-            $ec->setProperty( "/myJobStep/outcome", 'success' );
-
-            #set any additional error or warning conditions here
-            #there may be cases in which an error occurs and the exit code is 0.
-            #we want to set to correct outcome for the running step
-            if ( $content !~
-                m/(Status(\s+)=(\s+)STOPPED|Status(\s+)=(\s+)STARTED)/ )
-            {
-
-                print "Website could not be created.\n";
-                $ec->setProperty( "/myJobStep/outcome", 'error' );
-
-            }
-
-        }
-        else {
+        # FIXME find out if this still holds
+        #set any additional error or warning conditions here
+        #there may be cases in which an error occurs and the exit code is 0.
+        #we want to set to correct outcome for the running step
+        if ( $content !~
+            m/(Status(\s+)=(\s+)STOPPED|Status(\s+)=(\s+)STARTED)/ )
+        {
+            print "Website could not be created.\n";
             $ec->setProperty( "/myJobStep/outcome", 'error' );
+            $ret = 255;
         }
-
-        #mask password
-        $cmdLine =~ s/ \/p (\S+)/ \/p \*\*\*\*/;
-
-        #show masked command line
-        print "Command Line: $cmdLine\n";
-
-        #add masked command line to properties object
-        $props{'cmdLine'} = $cmdLine;
-
-        #set prop's hash to EC properties
-        setProperties( \%props );
-
+        else { 
+            $ec->setProperty( "/myJobStep/outcome", 'success' );
+        }
     }
     else {
-
-        print "Error: could not generate command line";
-        exit ERROR;
-
+        $ec->setProperty( "/myJobStep/outcome", 'error' );
     }
 
-}
-
-########################################################################
-# createCommandLine - creates the command line for the invocation
-# of the program to be executed.
-#
-# Arguments:
-#   -arr: array containing the command name (must be the first element)
-#         and the arguments entered by the user in the UI
-#
-# Returns:
-#   -the command line to be executed by the plugin
-#
-########################################################################
-sub createCommandLine($) {
-
-    my ($arr) = @_;
-
-    my $commandName = @$arr[0];
-
-    my $command = $commandName;
-
-    shift(@$arr);
-
-    foreach my $elem (@$arr) {
-        $command .= " $elem";
-    }
-
-    return $command;
-
-}
-
-########################################################################
-# setProperties - set a group of properties into the Electric Commander
-#
-# Arguments:
-#   -propHash: hash containing the ID and the value of the properties
-#              to be written into the Electric Commander
-#
-# Returns:
-#   none
-#
-########################################################################
-sub setProperties($) {
-
-    my ($propHash) = @_;
-
-    # get an EC object
-    my $ec = new ElectricCommander();
-    $ec->abortOnError(0);
-
-    foreach my $key ( keys %$propHash ) {
-        my $val = $propHash->{$key};
-        $ec->setProperty( "/myCall/$key", $val );
-    }
+    exit $ret;
 }
 
 ##########################################################################
