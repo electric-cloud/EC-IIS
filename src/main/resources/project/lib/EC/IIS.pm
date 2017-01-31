@@ -43,6 +43,9 @@ use constant {
     GENERATE_REPORT => 1,
     DO_NOT_GENERATE_REPORT => 0,
 
+    # IIS7 defaults
+    DEFAULT_APPCMD_PATH => ($ENV{windir} || 'C:\\').'\system32\inetsrv\appcmd',
+
 };
 
 sub new {
@@ -68,46 +71,48 @@ sub trim {
 };
 
 sub run_cmd {
-    my ($self, @args) = @_;
+    my ($self, $args, %opt) = @_;
 
     croak "No command to execute"
-        unless $args[0];
+        unless $args->[0];
 
-    my $cmd = $self->printable_cmdline(@args);
-    print "Executing: $cmd";
+    my $cmd = $self->printable_cmdline($args);
+    my $cmd_show = $self->printable_cmdline($args, %opt);
+    print "Executing: $cmd_show";
 
     local $!;
     my $ret = system $cmd;
     if ($!) {
-        croak "Cannot execute '$args[0]': $!";
+        croak "Cannot execute '$args->[0]': $!";
     } else {
         $ret >>= 8;
     };
 
-    $self->setProperties({cmdLine => $cmd}); # TODO what if >1  commands?..
+    $self->setProperties({cmdLine => $cmd_show}); # TODO what if >1  commands?..
 
     return $ret;
 };
 
 sub read_cmd {
-    my ($self, @args) = @_;
+    my ($self, $args, %opt) = @_;
 
     croak "No command to execute"
-        unless $args[0];
+        unless $args->[0];
 
-    my $cmd = $self->printable_cmdline(@args);
-    print "Reading output from: $cmd";
+    my $cmd = $self->printable_cmdline($args);
+    my $cmd_show = $self->printable_cmdline($args, %opt);
+    print "Reading output from: $cmd_show";
 
     local $!;
     my $pid = open( my $fd, "-|", $cmd)
-        or croak "Failed to execute '$args[0]': $!";
+        or croak "Failed to execute '$args->[0]': $!";
 
     local $/;
     my $data = <$fd>;
     waitpid($pid, 0);
     my $status = $? >> 8;
 
-    $self->setProperties({cmdLine => $cmd}); # TODO what if >1  commands?..
+    $self->setProperties({cmdLine => $cmd_show}); # TODO what if >1  commands?..
 
     return wantarray ? ($data, $status) : $data;
 };
@@ -128,25 +133,36 @@ sub iisreset {
     return 'iisreset'; #TODO configurable
 };
 
+sub cmd_appcmd {
+    return DEFAULT_APPCMD_PATH;
+};
+
 sub printable_cmdline {
-    my ($self, @args) = @_;
+    my ($self, $args, %opt) = @_;
 
     # We know for sure that password (if any) follows the /p flag
     my $is_password;
-    foreach (@args) {
+    my @safe;
+    foreach (@$args) {
         if ($is_password) {
-            $_ = '*****';
-            last;
+            push @safe, '*****';
+            $is_password = 0;
+            next;
         };
-        $is_password++ if $_ eq '/p';
+        $is_password++ if $opt{password_after} and $_ eq $opt{password_after};
+        push @safe, $_;
     };
 
     return join ' ', map {
         /[^\w\/\\\.]/ ? qq{"$_"} : $_; # TODO escape \'s?..
-    } @args;
-
-    
+    } @safe;
 };
+
+sub iis_version {
+    return 7; # FIXME real version from property (or detect?..)
+};
+
+
 
 ########################################################################
 # setProperties - set a group of properties into the Electric Commander

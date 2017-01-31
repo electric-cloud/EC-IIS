@@ -97,6 +97,7 @@ sub main() {
     my $ec = new ElectricCommander();
     $ec->abortOnError(0);
 
+    # Fetch configuration. TODO this should be in the module
     if ( $::gConfigName ne '' ) {
         %configuration = getConfiguration($::gConfigName);
 
@@ -133,39 +134,52 @@ sub main() {
 
     }
 
-    push( @args, $::gExecPath );
+    # create command line
 
-    #using vbs scripts
-    push( @args, DEFAULT_CREATE_COMMAND_OPTION_IIS_6 );
+    if ($ec_iis->iss_version < 7) {
+        push( @args, $::gExecPath );
 
-    if ( $::gVirtualPath && $::gVirtualPath ne '' ) {
-        push( @args, $::gWebsite . '/' . $::gVirtualPath );
-    }
-    else {
-        push( @args, $::gWebsite);
-    }
+        #using vbs scripts
+        push( @args, DEFAULT_CREATE_COMMAND_OPTION_IIS_6 );
 
-    if ( $::gVirtualDirName && $::gVirtualDirName ne '' ) {
-        push( @args, $::gVirtualDirName );
-    }
+        if ( $::gVirtualPath && $::gVirtualPath ne '' ) {
+            push( @args, $::gWebsite . '/' . $::gVirtualPath );
+        }
+        else {
+            push( @args, $::gWebsite);
+        }
 
-    if ( $::gAbsolutePhysicalPath && $::gAbsolutePhysicalPath ne '' ) {
-        push( @args, $::gAbsolutePhysicalPath );
-    }
+        if ( $::gVirtualDirName && $::gVirtualDirName ne '' ) {
+            push( @args, $::gVirtualDirName );
+        }
 
-    if ( $computerName && $computerName ne '' ) {
-        push( @args, '/s' , $computerName );
-    }
+        if ( $::gAbsolutePhysicalPath && $::gAbsolutePhysicalPath ne '' ) {
+            push( @args, $::gAbsolutePhysicalPath );
+        }
 
-    if ( $user && $user ne '' ) {
-        push( @args, '/u' , $user );
-    }
+        if ( $computerName && $computerName ne '' ) {
+            push( @args, '/s' , $computerName );
+        }
 
-    if ( $pass && $pass ne '' ) {
-        push( @args, '/p' , $pass );
-    }
+        if ( $user && $user ne '' ) {
+            push( @args, '/u' , $user );
+        }
 
-    my ($content, $ret) = $ec_iis->read_cmd( @args );
+        if ( $pass && $pass ne '' ) {
+            push( @args, '/p' , $pass );
+        }
+    } else {
+        # IIS 7+ - other rules
+        $::gAppName = ($ec_iis->get_ec->getProperty("appname") )->findvalue("//value");
+        $::gPath = ($ec_iis->get_ec->getProperty("path") )->findvalue("//value");
+        $::gPhysicalPath = ($ec_iis->get_ec->getProperty("physicalpath") )->findvalue("//value");
+
+        push @args, $ec_iis->cmd_appcmd;
+        push @args, 'add', 'vdir', '/app.name:'.$::gAppName
+            , '/path:'.$::gPath, '/physicalPath:'.$::gPhysicalPath;
+    };
+
+    my ($content, $ret) = $ec_iis->read_cmd( \@args, password_after => '/p' );
 
     print $content;
 

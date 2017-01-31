@@ -94,6 +94,7 @@ sub main() {
     my $ec = new ElectricCommander();
     $ec->abortOnError(0);
 
+    # Get config TODO this should be in the module
     if ( $::gConfigName ne '' ) {
         %configuration = getConfiguration($::gConfigName);
 
@@ -130,29 +131,39 @@ sub main() {
 
     }
 
-    push( @args, $::gExecPath );
+    # Create command line
 
-    #using vbs scripts
-    push( @args, DEFAULT_DELETE_COMMAND_OPTION_IIS_6 );
+    if ($ec_iis->version < 7) {
+        push( @args, $::gExecPath );
 
-    if ( $::gVirtualPath && $::gVirtualPath ne '' ) {
-        push( @args, $::gWebsite . '/' . $::gVirtualPath );
+        #using vbs scripts
+        push( @args, DEFAULT_DELETE_COMMAND_OPTION_IIS_6 );
+
+        if ( $::gVirtualPath && $::gVirtualPath ne '' ) {
+            push( @args, $::gWebsite . '/' . $::gVirtualPath );
+        }
+        else {
+            push( @args, $::gWebsite );
+        }
+
+        if ( $computerName && $computerName ne '' ) {
+            push( @args, '/s' , $computerName );
+        }
+
+        if ( $user && $user ne '' ) {
+            push( @args, '/u' , $user );
+        }
+
+        if ( $pass && $pass ne '' ) {
+            push( @args, '/p' , $pass );
+        }
     }
     else {
-        push( @args, $::gWebsite );
-    }
-
-    if ( $computerName && $computerName ne '' ) {
-        push( @args, '/s' , $computerName );
-    }
-
-    if ( $user && $user ne '' ) {
-        push( @args, '/u' , $user );
-    }
-
-    if ( $pass && $pass ne '' ) {
-        push( @args, '/p' , $pass );
-    }
+        # iis 7+ - other cmd
+        $::gAppName = $ec_iis->get_ec->getProperty("appname")->findvalue("//value");
+        push @args, $ec_iis->cmd_appcmd;
+        push @args, 'delete', 'vdir', '/vdir.name:'.$::gAppName;
+    };
 
     my ($content, $ret) = $ec_iis->read_cmd( @args );
 
