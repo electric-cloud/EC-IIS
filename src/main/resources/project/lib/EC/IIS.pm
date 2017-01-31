@@ -118,9 +118,10 @@ sub read_cmd {
 };
 
 sub run_reset {
-    my ($self, @args) = @_;
+    my ($self, $args) = @_;
 
-    my $ret = $self->run_cmd( $self->iisreset, @args );
+    $args = [ $args ] unless ref $args eq 'ARRAY'; # just 1 arg
+    my $ret = $self->run_cmd( [ $self->iisreset, @$args ] );
 
     if ($ret) {
         print "iisreset ".$self->iisreset." failed with exit status $ret\n";

@@ -115,7 +115,7 @@ sub main() {
         exit ERROR;
 
     }
-    exit $ec_iis->run_iisreset;
+    exit $ec_iis->run_reset([]);
 
 }
 
