@@ -155,51 +155,77 @@ sub main() {
 
     }
 
-    push( @args, $::gExecPath );
+    if ($ec_iis->iis_version < 7) {
+        # Version 6
+        push( @args, $::gExecPath );
 
-    #using vbs scripts
-    push( @args, DEFAULT_CREATE_COMMAND_OPTION_IIS_6 );
+        #using vbs scripts
+        push( @args, DEFAULT_CREATE_COMMAND_OPTION_IIS_6 );
 
-    if ( $::gAbsolutePhysicalPath && $::gAbsolutePhysicalPath ne '' ) {
+        if ( $::gAbsolutePhysicalPath && $::gAbsolutePhysicalPath ne '' ) {
 
-        #This parameter MUST USE backslashes!
-        $::gAbsolutePhysicalPath =~ s/\//\\/g;
-        push( @args, '"' . $::gAbsolutePhysicalPath . '"' );
+            #This parameter MUST USE backslashes!
+            $::gAbsolutePhysicalPath =~ s/\//\\/g;
+            push( @args, '"' . $::gAbsolutePhysicalPath . '"' );
+        }
+
+        if ( $::gWebsite && $::gWebsite ne '' ) {
+            push( @args, '"' . $::gWebsite . '"' );
+        }
+
+        if ( $ipAddress && $ipAddress ne '' ) {
+            push( @args, '/i ' . $ipAddress );
+        }
+
+        if ( $port && $port ne '' ) {
+            push( @args, '/b ' . $port );
+        }
+
+        if ( $computerName && $computerName ne '' ) {
+            push( @args, '/s ' . $computerName );
+        }
+
+        if ( $user && $user ne '' ) {
+            push( @args, '/u ' . $user );
+        }
+
+        if ( $pass && $pass ne '' ) {
+            push( @args, '/p ' . $pass );
+        }
+
+        if ( $::gStartSite eq '' ) {
+            push( @args, '/dontstart' );
+        }
+
+        if ( $::gHostHeader && $::gHostHeader ne '' ) {
+            push( @args, '/d ' . $::gHostHeader );
+        }
     }
+    else {
+        # Version 7+
+        push @args, $ec_iis->cmd_appcmd;
+        push @args, qw(add site);
 
-    if ( $::gWebsite && $::gWebsite ne '' ) {
-        push( @args, '"' . $::gWebsite . '"' );
-    }
+        if($::gWebsite){
+            push(@args, '/name:'. $::gWebsite);
+        }
 
-    if ( $ipAddress && $ipAddress ne '' ) {
-        push( @args, '/i ' . $ipAddress );
-    }
+#        if($::gBindings){
+#            push(@args, '/bindings:' , $::gBindings);
+#        }
 
-    if ( $port && $port ne '' ) {
-        push( @args, '/b ' . $port );
-    }
+        if($::gAbsolutePhysicalPath){
+            push(@args, '/physicalPath:' . $::gAbsolutePhysicalPath);
+        }
 
-    if ( $computerName && $computerName ne '' ) {
-        push( @args, '/s ' . $computerName );
-    }
+        # TODO web site id - do something better
+        if(1){
+            push(@args, '/id:' . 1);
+        }
+    };
 
-    if ( $user && $user ne '' ) {
-        push( @args, '/u ' . $user );
-    }
-
-    if ( $pass && $pass ne '' ) {
-        push( @args, '/p ' . $pass );
-    }
-
-    if ( $::gStartSite eq '' ) {
-        push( @args, '/dontstart' );
-    }
-
-    if ( $::gHostHeader && $::gHostHeader ne '' ) {
-        push( @args, '/d ' . $::gHostHeader );
-    }
-
-    my ($content, $ret) = $ec_iis->read_cmd( @args );
+    #### Actually run command
+    my ($content, $ret) = $ec_iis->read_cmd( \@args );
 
     print $content;
 
@@ -214,15 +240,15 @@ sub main() {
             m/(Status(\s+)=(\s+)STOPPED|Status(\s+)=(\s+)STARTED)/ )
         {
             print "Website could not be created.\n";
-            $ec->setProperty( "/myJobStep/outcome", 'error' );
+            $ec_iis->outcome_error(1);
             $ret = 255;
         }
-        else { 
-            $ec->setProperty( "/myJobStep/outcome", 'success' );
+        else {
+            $ec_iis->outcome_error(0);
         }
     }
     else {
-        $ec->setProperty( "/myJobStep/outcome", 'error' );
+        $ec_iis->outcome_error(1);
     }
 
     exit $ret;
