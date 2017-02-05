@@ -96,12 +96,14 @@ sub run_cmd {
 sub read_cmd {
     my ($self, $args, %opt) = @_;
 
-    croak "No command to execute"
+    croak "read_cmd(): First argument MUST be an arrayref"
+        unless ref $args eq 'ARRAY';
+    croak "read_cmd(): No command to execute"
         unless $args->[0];
 
     my $cmd = $self->printable_cmdline($args);
     my $cmd_show = $self->printable_cmdline($args, %opt);
-    print "Reading output from: $cmd_show";
+    print "Reading output from: $cmd_show\n";
 
     local $!;
     my $pid = open( my $fd, "-|", $cmd)
@@ -161,6 +163,13 @@ sub printable_cmdline {
 
 sub iis_version {
     return 7; # FIXME real version from property (or detect?..)
+};
+
+sub outcome_error {
+    my ($self, $fail) = @_;
+
+    # TODO Add error details? do  we need it at all?
+    return $self->{ec}->setProperty( "/myJobStep/outcome", $fail ? 'error' : 'success' );
 };
 
 
