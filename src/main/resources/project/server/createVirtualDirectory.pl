@@ -170,9 +170,9 @@ sub main() {
         }
     } else {
         # IIS 7+ - other rules
-        $::gAppName = ($ec_iis->get_ec->getProperty("appname") )->findvalue("//value");
-        $::gPath = ($ec_iis->get_ec->getProperty("path") )->findvalue("//value");
-        $::gPhysicalPath = ($ec_iis->get_ec->getProperty("physicalpath") )->findvalue("//value");
+        $::gAppName = ($ec_iis->get_ec->getProperty("website") )->findvalue("//value");
+        $::gPath = ($ec_iis->get_ec->getProperty("virtualpath") )->findvalue("//value");
+        $::gPhysicalPath = ($ec_iis->get_ec->getProperty("absolutephysicalpath") )->findvalue("//value");
 
         push @args, $ec_iis->cmd_appcmd;
         push @args, 'add', 'vdir', '/app.name:'.$::gAppName
