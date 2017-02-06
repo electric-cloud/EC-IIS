@@ -219,8 +219,8 @@ sub main() {
         }
 
         # TODO web site id - do something better
-        if(1){
-            push(@args, '/id:' . 1);
+        if(0){
+            push(@args, '/id:' . 42);
         }
     };
 
@@ -236,7 +236,7 @@ sub main() {
         #set any additional error or warning conditions here
         #there may be cases in which an error occurs and the exit code is 0.
         #we want to set to correct outcome for the running step
-        if ( $content !~
+        if ( $ec_iis->iis_version < 6 and $content !~
             m/(Status(\s+)=(\s+)STOPPED|Status(\s+)=(\s+)STARTED)/ )
         {
             print "Website could not be created.\n";

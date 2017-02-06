@@ -132,30 +132,38 @@ sub main() {
 
     }
 
-    push( @args, $::gExecPath );
+    if ($ec_iis->iis_version < 7) {
+        push( @args, $::gExecPath );
 
-    #using vbs scripts
-    push( @args, DEFAULT_DELETE_COMMAND_OPTION_IIS_6 );
+        #using vbs scripts
+        push( @args, DEFAULT_DELETE_COMMAND_OPTION_IIS_6 );
 
-    if ( $::gWebsite ) {
-        push( @args, $::gWebsite );
+        if ( $::gWebsite ) {
+            push( @args, $::gWebsite );
+        }
+
+        if ( $computerName ) {
+            push( @args, '/s' , $computerName );
+        }
+
+        if ( $user ) {
+            push( @args, '/u' , $user );
+        }
+
+        if ( defined $pass ) {
+            push( @args, '/p' , $pass );
+        }
     }
+    else {
+        # version 7+
+        push @args, $ec_iis->cmd_appcmd, qw( delete site );
+        push @args, "/site.name:".$::gWebsite;
+    };
 
-    if ( $computerName ) {
-        push( @args, '/s' , $computerName );
-    }
+    my ($content, $ret) = $ec_iis->read_cmd( \@args );
 
-    if ( $user ) {
-        push( @args, '/u' , $user );
-    }
-
-    if ( defined $pass ) {
-        push( @args, '/p' , $pass );
-    }
-
-    my ($content, $ret) = $ec_iis->read_command( @args );
-
-    $ec->setProperty( "/myJobStep/outcome", $ret ? 'error' : 'success' );
+    print $content;
+    $ec_iis->outcome_error( $ret );
 
     # FIXME is this true anymore? If so, uncomment
     # # Set any additional error or warning conditions here.
@@ -164,6 +172,8 @@ sub main() {
     # if ( $content =~ m/The virtual directory (.+) does not exist/ ) {
     #     $ec->setProperty( "/myJobStep/outcome", 'error' );
     # }
+
+
 
     exit $ret;
 }

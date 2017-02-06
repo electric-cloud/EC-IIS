@@ -66,7 +66,7 @@ sub trim {
     # kill leading & trailing spaces
     $string =~ s/^\s+//;
     $string =~ s/\s+$//;
- 
+
     return $string;
 };
 
@@ -113,6 +113,10 @@ sub read_cmd {
     my $data = <$fd>;
     waitpid($pid, 0);
     my $status = $? >> 8;
+
+    if ($status) {
+        print "Command exited with status $status\n";
+    };
 
     $self->setProperties({cmdLine => $cmd_show}); # TODO what if >1  commands?..
 
@@ -178,7 +182,7 @@ sub outcome_error {
 # setProperties - set a group of properties into the Electric Commander
 #
 # Arguments:
-#   -propHash: hash containing the ID and the value of the properties 
+#   -propHash: hash containing the ID and the value of the properties
 #              to be written into the Electric Commander
 #
 # Returns:
