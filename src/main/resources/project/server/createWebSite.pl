@@ -66,7 +66,8 @@ my $gConfigName           = trim(q($[configname]));
 my $gAbsolutePhysicalPath = trim(q($[appabsolutepath]));
 my $gHostHeader           = trim(q($[hostheader]));
 my $gStartSite            = trim(q($[startapp]));
-my $gBindings             = 'http/*:1337:';
+my $gBindings             = 'http/*:80:';
+    # TODO hardcode - need to add "port" property(++ to host?..)
 
 # -------------------------------------------------------------------------
 # Main functions
