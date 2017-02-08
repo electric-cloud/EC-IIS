@@ -78,7 +78,7 @@ sub run_cmd {
 
     my $cmd = $self->printable_cmdline($args);
     my $cmd_show = $self->printable_cmdline($args, %opt);
-    print "Executing: $cmd_show";
+    print "Executing: $cmd_show\n";
 
     local $!;
     my $ret = system $cmd;
@@ -176,7 +176,21 @@ sub outcome_error {
     return $self->{ec}->setProperty( "/myJobStep/outcome", $fail ? 'error' : 'success' );
 };
 
+sub get_site_id {
+    my ($self, $name) = @_;
 
+    if ($self->iis_version < 7) {
+        croak "get_site_id() unimplemented on IIS v.".$self->iis_version;
+    };
+    my ($content, $ret) = $self->read_cmd(
+        [ $self->cmd_appcmd => list => site => "/name:$name" ] );
+    croak "get_site_id(): Failed to execute ".$self->cmd_appcmd.": ret $ret, output was $content"
+        if $ret;
+
+    print "Got this: $content\n";
+    $content =~ m#id:(\d+)#;
+    return $1;
+};
 
 ########################################################################
 # setProperties - set a group of properties into the Electric Commander

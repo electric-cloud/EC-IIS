@@ -60,12 +60,13 @@ use constant {
 # Variables
 # -------------------------------------------------------------------------
 
-$::gWebsite              = trim(q($[sitename]));
-$::gExecPath             = trim(q($[execpath]));
-$::gConfigName           = trim(q($[configname]));
-$::gAbsolutePhysicalPath = trim(q($[appabsolutepath]));
-$::gHostHeader           = trim(q($[hostheader]));
-$::gStartSite            = trim(q($[startapp]));
+my $gWebsite              = trim(q($[sitename]));
+my $gExecPath             = trim(q($[execpath]));
+my $gConfigName           = trim(q($[configname]));
+my $gAbsolutePhysicalPath = trim(q($[appabsolutepath]));
+my $gHostHeader           = trim(q($[hostheader]));
+my $gStartSite            = trim(q($[startapp]));
+my $gBindings             = 'http/*:1337:';
 
 # -------------------------------------------------------------------------
 # Main functions
@@ -101,9 +102,9 @@ sub main() {
     my $ec = new ElectricCommander();
     $ec->abortOnError(0);
 
-    if ( $::gConfigName ne '' ) {
+    if ( $gConfigName ne '' ) {
 
-        %configuration = getConfiguration($::gConfigName);
+        %configuration = getConfiguration($gConfigName);
 
         if ( $configuration{'iis_url'} && $configuration{'iis_url'} ne '' ) {
 
@@ -119,7 +120,7 @@ sub main() {
         }
         else {
             print 'Error: Could not get URL from configuration '
-              . $::gConfigName;
+              . $gConfigName;
             exit ERROR;
         }
 
@@ -141,7 +142,7 @@ sub main() {
             $user = $configuration{'user'};
         }
         else {
-#            print 'Error: Could not get user from configuration '. $::gConfigName;
+#            print 'Error: Could not get user from configuration '. $gConfigName;
 #            exit ERROR;
         }
 
@@ -149,7 +150,7 @@ sub main() {
             $pass = $configuration{'password'};
         }
         else {
-#            print 'Error: Could not get password from configuration '. $::gConfigName;
+#            print 'Error: Could not get password from configuration '. $gConfigName;
 #            exit ERROR;
         }
 
@@ -157,20 +158,20 @@ sub main() {
 
     if ($ec_iis->iis_version < 7) {
         # Version 6
-        push( @args, $::gExecPath );
+        push( @args, $gExecPath );
 
         #using vbs scripts
         push( @args, DEFAULT_CREATE_COMMAND_OPTION_IIS_6 );
 
-        if ( $::gAbsolutePhysicalPath && $::gAbsolutePhysicalPath ne '' ) {
+        if ( $gAbsolutePhysicalPath && $gAbsolutePhysicalPath ne '' ) {
 
             #This parameter MUST USE backslashes!
-            $::gAbsolutePhysicalPath =~ s/\//\\/g;
-            push( @args, '"' . $::gAbsolutePhysicalPath . '"' );
+            $gAbsolutePhysicalPath =~ s/\//\\/g;
+            push( @args, '"' . $gAbsolutePhysicalPath . '"' );
         }
 
-        if ( $::gWebsite && $::gWebsite ne '' ) {
-            push( @args, '"' . $::gWebsite . '"' );
+        if ( $gWebsite && $gWebsite ne '' ) {
+            push( @args, '"' . $gWebsite . '"' );
         }
 
         if ( $ipAddress && $ipAddress ne '' ) {
@@ -193,12 +194,12 @@ sub main() {
             push( @args, '/p ' . $pass );
         }
 
-        if ( $::gStartSite eq '' ) {
+        if ( !$gStartSite ) {
             push( @args, '/dontstart' );
         }
 
-        if ( $::gHostHeader && $::gHostHeader ne '' ) {
-            push( @args, '/d ' . $::gHostHeader );
+        if ( $gHostHeader && $gHostHeader ne '' ) {
+            push( @args, '/d ' . $gHostHeader );
         }
     }
     else {
@@ -206,16 +207,16 @@ sub main() {
         push @args, $ec_iis->cmd_appcmd;
         push @args, qw(add site);
 
-        if($::gWebsite){
-            push(@args, '/name:'. $::gWebsite);
+        if($gWebsite){
+            push(@args, '/name:'. $gWebsite);
         }
 
-#        if($::gBindings){
-#            push(@args, '/bindings:' , $::gBindings);
-#        }
+        if($gBindings){
+            push(@args, '/bindings:' . $gBindings);
+        }
 
-        if($::gAbsolutePhysicalPath){
-            push(@args, '/physicalPath:' . $::gAbsolutePhysicalPath);
+        if($gAbsolutePhysicalPath){
+            push(@args, '/physicalPath:' . $gAbsolutePhysicalPath);
         }
 
         # TODO web site id - do something better
@@ -226,7 +227,6 @@ sub main() {
 
     #### Actually run command
     my ($content, $ret) = $ec_iis->read_cmd( \@args );
-
     print $content;
 
     #evaluates if exit was successful to mark it as a success or fail the step
@@ -244,7 +244,12 @@ sub main() {
             $ret = 255;
         }
         else {
-            $ec_iis->outcome_error(0);
+            # version 7+
+            if ($gStartSite) {
+                $ret = $ec_iis->run_cmd([$ec_iis->cmd_appcmd
+                    , start => site => $gWebsite])
+            }
+            $ec_iis->outcome_error($ret);
         }
     }
     else {
