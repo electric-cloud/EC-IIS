@@ -211,6 +211,14 @@ my %stopIISServices = (
     category    => "Application Server"
 );
 
+my %addWebSiteBinding = (
+    label       => "IIS - Add Website Binding",
+    procedure   => "AddWebSiteBinding",
+    description => "Adds a binding to the website.",
+    category    => "Application Server"
+);
+
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Add Website Binding");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start Server");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop Server");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create App Pool");
@@ -237,16 +245,19 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop WebSite")
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start IIS Services");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop IIS Services");
                  
-@::createStepPickerSteps = (\%startServer, \%stopServer,
-                            \%createAppPool, \%createVirtualDirectory,
-                            \%createVirtualDirectory2, \%checkServerStatus,
-                            \%createWebSite, \%createWebSite2,
-                            \%startAppPool, \%deleteVirtualDirectory,
-                            \%createWebApplication, \%deleteWebSite,
-                            \%deployCopy, \%getVirtualDirectories,
-                            \%getWebSiteIDs, \%getWebSiteStatus,
-                            \%pauseWebSite, \%recycleAppPool,
-                            \%resetServer, \%resumeWebSite,
-                            \%startWebSite, \%stopAppPool, 
-							\%stopWebSite,
-                            \%startIISServices, \%stopIISServices);
+@::createStepPickerSteps = (
+    \%startServer, \%stopServer,
+    \%createAppPool, \%createVirtualDirectory,
+    \%createVirtualDirectory2, \%checkServerStatus,
+    \%createWebSite, \%createWebSite2,
+    \%startAppPool, \%deleteVirtualDirectory,
+    \%createWebApplication, \%deleteWebSite,
+    \%deployCopy, \%getVirtualDirectories,
+    \%getWebSiteIDs, \%getWebSiteStatus,
+    \%pauseWebSite, \%recycleAppPool,
+    \%resetServer, \%resumeWebSite,
+    \%startWebSite, \%stopAppPool, 
+    \%stopWebSite,
+    \%startIISServices, \%stopIISServices,
+    \%addWebSiteBinding,
+);

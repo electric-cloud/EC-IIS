@@ -3106,6 +3106,122 @@
                 </propertySheet>
             </step>
         </procedure>
-        
+
+
+        <procedure>
+            <procedureName>AddWebSiteBinding</procedureName>
+            <description>Add a binding to a WebSite.</description>
+            <jobNameTemplate>iis-addwebsitebinding-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+                <property>
+                    <propertyName>ec_parameterForm</propertyName>
+                    <expandable>1</expandable>
+                    <value></value>
+                </property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+
+                                <property>
+                                    <propertyName>websitename</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>bindingProtocol</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>bindingInformation</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+
+            <formalParameter>
+                <formalParameterName>websitename</formalParameterName>
+                <defaultValue/>
+                <description>The name of the WebSite to add a binding, i.e: 'Default Web Site'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+
+            <formalParameter>
+                <formalParameterName>bindingProtocol</formalParameterName>
+                <defaultValue/>
+                <description>Protocol of the binding to add, i.e: 'http'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+
+            <formalParameter>
+                <formalParameterName>bindingInformation</formalParameterName>
+                <defaultValue/>
+                <description>Information of the binding to add, including the host and the port, i.e: 'localhost:443', '*:81'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+
+            <step>
+                <stepName>AddWebSiteBinding</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <!--<postProcessor>postp - -loadProperty /myProject/addwebsitebinding_matchers</postProcessor>-->
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <procedureName>AddWebSiteBinding</procedureName>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+
+
     </project>
 </exportedData>

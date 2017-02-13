@@ -93,6 +93,10 @@
     <xpath>//property[propertyName=&quot;createwebapp_matchers&quot;]/value</xpath>
   </file>
   <file>
+    <path>matchers/addWebSiteBindingMatchers.pl</path>
+    <xpath>//property[propertyName=&quot;addwebsitebinding_matchers&quot;]/value</xpath>
+  </file>
+  <file>
     <path>server/startServer.pl</path>
     <xpath>//procedure[procedureName=&quot;StartServer&quot;]/step[stepName=&quot;StartServer&quot;]/command</xpath>
   </file>
@@ -217,6 +221,10 @@
     <xpath>//procedure[procedureName=&quot;StopIISServices&quot;]/step[stepName=&quot;StopIISServices&quot;]/command</xpath>
   </file>
   <file>
+    <path>server/addWebSiteBinding.pl</path>
+    <xpath>//procedure[procedureName=&quot;addWebSiteBinding&quot;]/step[stepName=&quot;addWebSiteBinding&quot;]/command</xpath>
+  </file>
+  <file>
     <path>conf/createcfg.pl</path>
     <xpath>//procedure[procedureName=&quot;CreateConfiguration&quot;]/step[stepName=&quot;CreateConfiguration&quot;]/command</xpath>
   </file>
@@ -231,6 +239,10 @@
   <file>
     <path>ec_setup.pl</path>
     <xpath>//property[propertyName=&quot;ec_setup&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>forms/IISAddWebSiteBindingForm.xml</path>
+    <xpath>//procedure[procedureName=&quot;AddWebSiteBinding&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
     <path>forms/IISStartServerForm.xml</path>

@@ -37,14 +37,20 @@
 # -------------------------------------------------------------------------
 # Includes
 # -------------------------------------------------------------------------
-use ElectricCommander;
 use warnings;
 use strict;
 use Cwd;
 use File::Spec;
-use diagnostics;
+use Carp;
+
+use ElectricCommander;
 use ElectricCommander::PropDB;
+use EC::IIS;
+my $ec_iis = EC::IIS->new;
+
 $| = 1;
+
+print "\n\nHERE I AM\n\n";
 
 # -------------------------------------------------------------------------
 # Constants
@@ -53,39 +59,12 @@ use constant {
     SUCCESS => 0,
     ERROR   => 1,
 
-    PLUGIN_NAME         => 'EC-IIS7',
+    PLUGIN_NAME         => 'EC-IIS',
     WIN_IDENTIFIER      => 'MSWin32',
     DEFAULT_APPCMD_PATH => '%windir%\system32\inetsrv\appcmd',
     CREDENTIAL_ID       => 'credential',
 
 };
-
-########################################################################
-# trim - deletes blank spaces before and after the entered value in
-# the argument
-#
-# Arguments:
-#   -untrimmedString: string that will be trimmed
-#
-# Returns:
-#   trimmed string
-#
-########################################################################
-sub trim($) {
-
-    my ($untrimmedString) = @_;
-
-    my $string = $untrimmedString;
-
-    #removes leading spaces
-    $string =~ s/^\s+//;
-
-    #removes trailing spaces
-    $string =~ s/\s+$//;
-
-    #returns trimmed string
-    return $string;
-}
 
 # -------------------------------------------------------------------------
 # Variables
@@ -123,15 +102,18 @@ sub main() {
     my $iisVersion   = '';
     my $computerName = '';
 
-    my $content = '';
-
     my $appcmdLocation = DEFAULT_APPCMD_PATH;
     my %props;
+
+    die "Unimplemented for IIS < 7"
+        unless $ec_iis->iis_version >= 7;
+
+    Carp::cluck("I'm here");
 
     push( @args, $appcmdLocation . " set site" );
 
     if ( $::gWebSiteName && $::gWebSiteName ne '' ) {
-        push( @args, '/site.name:"' . $::gWebSiteName . '"' );
+        push( @args, '/site.name:' . $::gWebSiteName );
     }
 
     if (   $::gBindingProtocol
@@ -147,86 +129,18 @@ sub main() {
               . ':\']' );
     }
 
-    #generate command line
-    my $cmdLine = createCommandLine( \@args );
-
-    #execute command line that creates the website
-    print "$cmdLine\n";
-    $content = `$cmdLine`;
+    my ($content, $ret) = $ec_iis->read_cmd(\@args);
 
     print $content;
 
     #evaluates if exit was successful to mark it as a success or fail the step
-    if ( $? == SUCCESS ) {
+    if ( !$ret and $content !~ m/SITE object "(.+)" changed/ ) {
+        $ret++;
+    };
 
-        $::gEC->setProperty( "/myJobStep/outcome", 'success' );
+    $ec_iis->outcome_error($ret);
 
-        if ( $content !~ m/SITE object "(.+)" changed/ ) {
-            $::gEC->setProperty( "/myJobStep/outcome", 'error' );
-        }
-
-    }
-    else {
-        $::gEC->setProperty( "/myJobStep/outcome", 'error' );
-    }
-
-    #add masked command line to properties object
-    $props{'cmdLine'} = $cmdLine;
-
-    #set prop's hash to EC properties
-    setProperties( \%props );
-
-}
-
-########################################################################
-# createCommandLine - creates the command line for the invocation
-# of the program to be executed.
-#
-# Arguments:
-#   -arr: array containing the command name (must be the first element)
-#         and the arguments entered by the user in the UI
-#
-# Returns:
-#   -the command line to be executed by the plugin
-#
-########################################################################
-sub createCommandLine($) {
-
-    my ($arr) = @_;
-
-    my $commandName = @$arr[0];
-
-    my $command = $commandName;
-
-    shift(@$arr);
-
-    foreach my $elem (@$arr) {
-        $command .= " $elem";
-    }
-
-    return $command;
-
-}
-
-########################################################################
-# setProperties - set a group of properties into the Electric Commander
-#
-# Arguments:
-#   -propHash: hash containing the ID and the value of the properties
-#              to be written into the Electric Commander
-#
-# Returns:
-#   none
-#
-########################################################################
-sub setProperties($) {
-
-    my ($propHash) = @_;
-
-    foreach my $key ( keys %$propHash ) {
-        my $val = $propHash->{$key};
-        $::gEC->setProperty( "/myCall/$key", $val );
-    }
+    exit $ret;
 }
 
 ##########################################################################
