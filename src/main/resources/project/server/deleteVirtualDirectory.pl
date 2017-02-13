@@ -133,7 +133,7 @@ sub main() {
 
     # Create command line
 
-    if ($ec_iis->version < 7) {
+    if ($ec_iis->iis_version < 7) {
         push( @args, $::gExecPath );
 
         #using vbs scripts
