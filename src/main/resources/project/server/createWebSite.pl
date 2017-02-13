@@ -164,22 +164,22 @@ sub main() {
         #using vbs scripts
         push( @args, DEFAULT_CREATE_COMMAND_OPTION_IIS_6 );
 
-        if ( $gAbsolutePhysicalPath && $gAbsolutePhysicalPath ne '' ) {
+        if ( defined $gAbsolutePhysicalPath && $gAbsolutePhysicalPath ne '' ) {
 
             #This parameter MUST USE backslashes!
             $gAbsolutePhysicalPath =~ s/\//\\/g;
-            push( @args, '"' . $gAbsolutePhysicalPath . '"' );
+            push( @args, $gAbsolutePhysicalPath );
         }
 
-        if ( $gWebsite && $gWebsite ne '' ) {
-            push( @args, '"' . $gWebsite . '"' );
+        if ( defined $gWebsite && $gWebsite ne '' ) {
+            push( @args, $gWebsite );
         }
 
-        if ( $ipAddress && $ipAddress ne '' ) {
+        if ( defined $ipAddress && $ipAddress ne '' ) {
             push( @args, '/i ' . $ipAddress );
         }
 
-        if ( $port && $port ne '' ) {
+        if ( defined $port && $port ne '' ) {
             push( @args, '/b ' . $port );
         }
 
@@ -187,11 +187,11 @@ sub main() {
             push( @args, '/s ' . $computerName );
         }
 
-        if ( $user && $user ne '' ) {
+        if ( defined $user && $user ne '' ) {
             push( @args, '/u ' . $user );
         }
 
-        if ( $pass && $pass ne '' ) {
+        if ( defined $pass && $pass ne '' ) {
             push( @args, '/p ' . $pass );
         }
 
@@ -199,7 +199,7 @@ sub main() {
             push( @args, '/dontstart' );
         }
 
-        if ( $gHostHeader && $gHostHeader ne '' ) {
+        if ( defined $gHostHeader && $gHostHeader ne '' ) {
             push( @args, '/d ' . $gHostHeader );
         }
     }
