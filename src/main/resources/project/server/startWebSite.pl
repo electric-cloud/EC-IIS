@@ -32,7 +32,6 @@ use File::Temp qw/tempfile/;
 
 use ElectricCommander;
 use EC::IIS;
-my $ec_iis = EC::IIS->new;
 
 # -------------------------------------------------------------------------
 # Constants
@@ -53,8 +52,19 @@ use constant {
 # -------------------------------------------------------------------------
 
 my $ec        = new ElectricCommander();
+my $ec_iis    = EC::IIS->new;
 my $host      = ( $ec->getProperty("HostName") )->findvalue("//value");
 my $webSideId = ( $ec->getProperty("WebSideId") )->findvalue("//value");
+
+# -------------------------------------------------------------------------
+
+if ($ec_iis->iis_version < 7) {
+    main6();
+} else {
+    main7();
+};
+
+
 
 ########################################################################
 # main - contains the whole process to be done by the perl file
@@ -66,7 +76,7 @@ my $webSideId = ( $ec->getProperty("WebSideId") )->findvalue("//value");
 #   none
 #
 ########################################################################
-sub main() {
+sub main6 {
 
     # Create and open a temp file for the JScript code
     my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
@@ -176,7 +186,17 @@ EOSCRIPT
 
 }
 
-main();
+sub main7 {
+    my @args = ();
+    
+    my ($content, $ret) = $ec_iis->read_cmd([ $ec_iis->cmd_appcmd,
+        start => site => "/site.name:$webSideId" ]);
 
-1;
+    print $content;
 
+    if (!$ret and $content !~ m/"(.+)" successfully started/) {
+        $ret = 1;
+    };
+    $ec_iis->outcome_error($ret);
+    exit $ret;
+}

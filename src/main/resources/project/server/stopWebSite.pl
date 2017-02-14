@@ -51,11 +51,18 @@ use constant {
 # -------------------------------------------------------------------------
 
 my $ec = new ElectricCommander();
+my $ec_iis = EC::IIS->new;
 
 my $host          = ( $ec->getProperty("HostName") )->findvalue("//value");
 my $webServerName = ( $ec->getProperty("WebSideId") )->findvalue("//value");
 
 # -------------------------------------------------------------------------
+
+if ($ec_iis->iis_version < 7 ) {
+    main6();
+} else {
+    main7();
+};
 
 ########################################################################
 # main - contains the whole process to be done by the perl file
@@ -179,7 +186,14 @@ EOSCRIPT
 
 }
 
-main();
+sub main7 {
+    my @args = ();
 
-1;
+    my ($content, $ret) = $ec_iis->read_cmd( [$ec_iis->cmd_appcmd
+        , stop => site => "/site.name:$webServerName"  ]);
 
+    # TODO should we die if NOT stopped?
+ 
+    print $content;
+    exit $ret;
+}
