@@ -27,6 +27,7 @@ EC::IIS - Electric Commander Microsoft IIS integration plugin core.
 
 use Carp;
 use File::Temp qw(tempfile);
+require Win32 if $^O eq 'MSWin32';
 use base qw(Exporter);
 our @EXPORT_OK = qw(trim);
 
@@ -177,8 +178,38 @@ sub printable_cmdline {
     } @safe;
 };
 
+my @version = ($^O eq 'MSWin32') ? Win32::GetOSVersion() : ();
+
 sub iis_version {
-    return 7; # FIXME real version from property (or detect?..)
+    # TODO add better autodetection
+    # For now, 6/7 division is the most crucial.
+    croak "EC::IIS: Not a Windows system, aborting!"
+        unless @version;
+    return $version[1] > 5 ? 6 : 7;
+
+    # Here's the table:
+
+    # OS                        ID  MAJOR   MINOR   IIS
+    # Win32s                    0   -       -       ?
+    # Windows 95                1   4       0       ?
+    # Windows 98                1   4       10      ?
+    # Windows Me                1   4       90      ?
+    #
+    # Windows NT 3.51           2   3       51      ?
+    # Windows NT 4              2   4       0       ?
+    #
+    # Windows 2000              2   5       0       5
+    # Windows XP                2   5       1       5
+    # Windows Server 2003       2   5       2       6
+    # Windows Server 2003 R2    2   5       2       6
+    # Windows Home Server       2   5       2       ?
+    #
+    # Windows Vista             2   6       0       ?
+    # Windows Server 2008       2   6       0       7
+    # Windows 7                 2   6       1       7
+    # Windows Server 2008 R2    2   6       1       7 || 7.5
+    # Windows 8                 2   6       2       ?
+    # Windows Server 2012       2   6       2       ?
 };
 
 sub outcome_error {
