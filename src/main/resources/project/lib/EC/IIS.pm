@@ -26,6 +26,7 @@ EC::IIS - Electric Commander Microsoft IIS integration plugin core.
 =cut
 
 use Carp;
+use File::Temp qw(tempfile);
 use base qw(Exporter);
 our @EXPORT_OK = qw(trim);
 
@@ -121,6 +122,17 @@ sub read_cmd {
     $self->setProperties({cmdLine => $cmd_show}); # TODO what if >1  commands?..
 
     return wantarray ? ($data, $status) : $data;
+};
+
+sub read_jscript {
+    my ($self, $src) = @_;
+
+    my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
+
+    print $scriptfh $src;
+    close($scriptfh);
+
+    return $self->run_cmd( [ cscript => '/E:jscript', '/NoLogo', $scriptfilename ] );
 };
 
 sub run_reset {
