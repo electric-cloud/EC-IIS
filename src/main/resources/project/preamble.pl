@@ -1,11 +1,6 @@
 #!/usr/bin/env perl
 # line 3 "preamble.pl"
 
-# Start your perl handler with a
-#      # $[/myProject/preamble]
-#      # line 3 "myfile"
-# for proper module loading & correct errors/warnings
-
 use strict;
 use warnings;
 
@@ -28,7 +23,7 @@ BEGIN {
 
         # Undo perl'd require transformation
         my $prop = $target;
-        $prop =~ s#/#::#;
+        $prop =~ s#/#::#g;
         $prop =~ s#\.pm$##;
         my $display = '@PLUGIN_KEY@-@PLUGIN_VERSION@/'.$prop;
         $prop = "$prefix$prop";

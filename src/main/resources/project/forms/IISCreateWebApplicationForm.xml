@@ -29,8 +29,16 @@
 		<type>entry</type>
 		<label>Internal web site identifier:</label>
 		<property>WebSiteID</property>
-		<required>1</required>
+		<required>0</required>
 		<value>1</value>
 		<documentation>Provide the numeric internal identifier of the web site. The default value is 1. (Required)</documentation>
+	</formElement>	
+	<formElement>
+		<type>entry</type>
+		<label>Physical path (IIS7+ only):</label>
+		<property>PhysicalPath</property>
+		<required>0</required>
+		<documentation>The absolute physical path to the application on the server. Required by IIS7+. </documentation>
 	</formElement>					
+    				
 </editor>

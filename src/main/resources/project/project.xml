@@ -780,7 +780,17 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>ApllicationDirPath</propertyName>
+                                    <propertyName>ApplicationDirPath</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>PhysicalPath</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -814,14 +824,21 @@
             <formalParameter>
                 <formalParameterName>WebSiteID</formalParameterName>
                 <defaultValue>1</defaultValue>
-                <description>Provide the numeric internal identifier of the web site. The default value is 1. (Required)</description>
-                <required>1</required>
+                <description>Provide the numeric internal identifier of the web site. The default value is 1. (Required by IIS6 ONLY)</description>
+                <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>ApplicationDirPath</formalParameterName>
                 <defaultValue/>
                 <description>Specify the path within the web site to the application directory (not the physical path). This path must exist on the IIS server.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>PhysicalPath</formalParameterName>
+                <defaultValue/>
+                <description>Specify the absolute physical path on the server. Required by IIS7+</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
