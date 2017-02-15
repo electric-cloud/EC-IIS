@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# include $[/myProject/preamble]
+# line 4 "@PLUGIN_KEY@-@PLUGIN_VERSION@/getVirtualDirs.pl"
 # -------------------------------------------------------------------------
 # File
 #    getVirtualDirs.pl
@@ -19,9 +21,14 @@
 # All rights reserved
 # -------------------------------------------------------------------------
 
-use ElectricCommander;
+use strict;
+use warnings;
 use Data::Dumper;
 use File::Temp qw/tempfile/;
+
+use ElectricCommander;
+use EC::IIS;
+my $ec_iis = EC::IIS->new;
 
 my $ec = new ElectricCommander();
 

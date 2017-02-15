@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# include $[/myProject/preamble]
+# line 4 "@PLUGIN_KEY@-@PLUGIN_VERSION@/getWebSiteIDs.pl"
 
 # -------------------------------------------------------------------------
 # File
@@ -20,17 +22,21 @@
 # All rights reserved
 # -------------------------------------------------------------------------
 
-
-use ElectricCommander;
+use strict;
+use warnings;
 use Data::Dumper;
 use File::Temp qw/tempfile/;
 
+use ElectricCommander;
+use EC::IIS;
+my $ec_iis = EC::IIS->new;
 my $ec = new ElectricCommander();
 
 # Parameters
-my $host = ($ec->getProperty("HostName"))->findvalue("//value");
+my $host = ( $ec->getProperty("HostName") )->findvalue("//value");
+
 # Create and open a temp file for the JScript code
-my ($scriptfh, $scriptfilename) = tempfile( DIR => '.', SUFFIX => '.js' );
+my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
 
 # Some notes about IIS and ADSI terminology:
 # In the IIS manager GUI, entities under the "Web Sites" heading are in

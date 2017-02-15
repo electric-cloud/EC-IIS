@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# include $[/myProject/preamble]
+# line 4 "@PLUGIN_KEY@-@PLUGIN_VERSION@/enableWebApplication.pl"
 # -------------------------------------------------------------------------
 # File
 # enableWebApplication.pl
@@ -22,10 +24,14 @@
 # -------------------------------------------------------------------------
 # Includes
 # -------------------------------------------------------------------------
-use ElectricCommander;
+use strict;
+use warnings;
 use Data::Dumper;
 use File::Temp qw/tempfile/;
 
+use ElectricCommander;
+use EC::IIS;
+my $ec_iis = EC::IIS->new;
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
@@ -35,7 +41,7 @@ my $ec = new ElectricCommander();
 # -------------------------------------------------------------------------
 # Parameters
 # -------------------------------------------------------------------------
-my $host = ( $ec->getProperty("HostName") )->findvalue("//value");
+my $host    = ( $ec->getProperty("HostName") )->findvalue("//value");
 my $appname = ( $ec->getProperty("ApplicationName") )->findvalue("//value");
 
 # If GetWebSiteIDs is used prior to this, then you can use the
@@ -44,21 +50,24 @@ my $websiteid = ( $ec->getProperty("WebSiteID") )->findvalue("//value");
 
 # This needs to be the full path to the application. We need to check if it
 # starts with a slash and/or "ROOT" and prepend as needed.
-my $rawappdirpath = ( $ec->getProperty("ApplicationDirPath") )->findvalue("//value");
-my $enableRecursive = ( $ec->getProperty("enablerecursive") )->findvalue("//value");
+my $rawappdirpath =
+  ( $ec->getProperty("ApplicationDirPath") )->findvalue("//value");
+my $enableRecursive =
+  ( $ec->getProperty("enablerecursive") )->findvalue("//value");
+
 # --------------------------------------------------------------------------
 
 my $appdirpath = "";
-if ($rawappdirpath =~ /^\/root\//i) {
+if ( $rawappdirpath =~ /^\/root\//i ) {
     print "Path looks OK...\n";
     $appdirpath = $rawappdirpath;
 }
 else {
-    if ($rawappdirpath =~ /^\//i) {
+    if ( $rawappdirpath =~ /^\//i ) {
         print "Path starts with a slash but needs prepended /ROOT...\n";
         $appdirpath = "/ROOT$rawappdirpath";
     }
-    elsif ($rawappdirpath =~ /^root\//i) {
+    elsif ( $rawappdirpath =~ /^root\//i ) {
         print "Path starts with ROOT but needs a prepended slash...\n";
         $appdirpath = "/ROOT$rawappdirpath";
     }
