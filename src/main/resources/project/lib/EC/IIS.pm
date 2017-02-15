@@ -105,7 +105,7 @@ sub read_cmd {
 
     my $cmd = $self->printable_cmdline($args);
     my $cmd_show = $self->printable_cmdline($args, %opt);
-    print "Reading output from: $cmd_show\n";
+    print Carp::shortmess("Reading output from: $cmd_show");
 
     local $!;
     my $pid = open( my $fd, "-|", $cmd)
@@ -117,7 +117,7 @@ sub read_cmd {
     my $status = $? >> 8;
 
     if ($status) {
-        print "Command exited with status $status\n";
+        print Carp::shortmess("Command exited with status $status");
     };
 
     $self->setProperties({cmdLine => $cmd_show}); # TODO what if >1  commands?..
@@ -185,7 +185,7 @@ sub iis_version {
     # For now, 6/7 division is the most crucial.
     croak "EC::IIS: Not a Windows system, aborting!"
         unless @version;
-    return $version[1] > 5 ? 6 : 7;
+    return $version[1] >= 6 ? 7 : 6;
 
     # Here's the table:
 
