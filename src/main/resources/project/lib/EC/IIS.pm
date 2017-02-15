@@ -125,7 +125,7 @@ sub read_cmd {
     return wantarray ? ($data, $status) : $data;
 };
 
-sub read_jscript {
+sub run_cscript_js {
     my ($self, $src) = @_;
 
     my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
