@@ -225,6 +225,14 @@
     <xpath>//property[propertyName=&quot;ec_setup&quot;]/value</xpath>
   </file>
   <file>
+    <path>preamble.pl</path>
+    <xpath>//property[propertyName=&quot;preamble&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>lib/EC/Plugin/Core.pm</path>
+    <xpath>//property[propertyName=&quot;EC::Plugin::Core&quot;]/value</xpath>
+  </file>
+  <file>
     <path>forms/IISStartServerForm.xml</path>
     <xpath>//procedure[procedureName=&quot;StartServer&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
