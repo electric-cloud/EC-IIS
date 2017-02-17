@@ -35,7 +35,7 @@ my $ec = new ElectricCommander();
 # -------------------------------------------------------------------------
 # Parameters
 # -------------------------------------------------------------------------
-my $host = ( $ec->getProperty("HostName") )->findvalue("//value");
+my $host    = ( $ec->getProperty("HostName") )->findvalue("//value");
 my $appname = ( $ec->getProperty("ApplicationName") )->findvalue("//value");
 
 # If GetWebSiteIDs is used prior to this, then you can use the
@@ -44,21 +44,24 @@ my $websiteid = ( $ec->getProperty("WebSiteID") )->findvalue("//value");
 
 # This needs to be the full path to the application. We need to check if it
 # starts with a slash and/or "ROOT" and prepend as needed.
-my $rawappdirpath = ( $ec->getProperty("ApplicationDirPath") )->findvalue("//value");
-my $disableRecursive = ( $ec->getProperty("disablerecursive") )->findvalue("//value");
+my $rawappdirpath =
+  ( $ec->getProperty("ApplicationDirPath") )->findvalue("//value");
+my $disableRecursive =
+  ( $ec->getProperty("disablerecursive") )->findvalue("//value");
+
 # --------------------------------------------------------------------------
 
 my $appdirpath = "";
-if ($rawappdirpath =~ /^\/root\//i) {
+if ( $rawappdirpath =~ /^\/root\//i ) {
     print "Path looks OK...\n";
     $appdirpath = $rawappdirpath;
 }
 else {
-    if ($rawappdirpath =~ /^\//i) {
+    if ( $rawappdirpath =~ /^\//i ) {
         print "Path starts with a slash but needs prepended /ROOT...\n";
         $appdirpath = "/ROOT$rawappdirpath";
     }
-    elsif ($rawappdirpath =~ /^root\//i) {
+    elsif ( $rawappdirpath =~ /^root\//i ) {
         print "Path starts with ROOT but needs a prepended slash...\n";
         $appdirpath = "/ROOT$rawappdirpath";
     }

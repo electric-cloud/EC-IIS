@@ -35,7 +35,7 @@ my $ec = new ElectricCommander();
 # -------------------------------------------------------------------------
 # Parameters
 # -------------------------------------------------------------------------
-my $host = ( $ec->getProperty("HostName") )->findvalue("//value");
+my $host    = ( $ec->getProperty("HostName") )->findvalue("//value");
 my $appname = ( $ec->getProperty("ApplicationName") )->findvalue("//value");
 
 # If GetWebSiteIDs is used prior to this, then you can use the
@@ -44,21 +44,24 @@ my $websiteid = ( $ec->getProperty("WebSiteID") )->findvalue("//value");
 
 # This needs to be the full path to the application. We need to check if it
 # starts with a slash and/or "ROOT" and prepend as needed.
-my $rawappdirpath = ( $ec->getProperty("ApplicationDirPath") )->findvalue("//value");
-my $deleteRecursive = ( $ec->getProperty("deleterecursive") )->findvalue("//value");
+my $rawappdirpath =
+  ( $ec->getProperty("ApplicationDirPath") )->findvalue("//value");
+my $deleteRecursive =
+  ( $ec->getProperty("deleterecursive") )->findvalue("//value");
+
 # --------------------------------------------------------------------------
 
 my $appdirpath = "";
-if ($rawappdirpath =~ /^\/root\//i) {
+if ( $rawappdirpath =~ /^\/root\//i ) {
     print "Path looks OK...\n";
     $appdirpath = $rawappdirpath;
 }
 else {
-    if ($rawappdirpath =~ /^\//i) {
+    if ( $rawappdirpath =~ /^\//i ) {
         print "Path starts with a slash but needs prepended /ROOT...\n";
         $appdirpath = "/ROOT$rawappdirpath";
     }
-    elsif ($rawappdirpath =~ /^root\//i) {
+    elsif ( $rawappdirpath =~ /^root\//i ) {
         print "Path starts with ROOT but needs a prepended slash...\n";
         $appdirpath = "/ROOT$rawappdirpath";
     }
@@ -126,25 +129,27 @@ print $scriptfh $jscript;
 close($scriptfh);
 
 my $content = `cscript /E:jscript /NoLogo $scriptfilename`;
-    
-    print $content;
-            
-    #evaluates if exit was successful to mark it as a success or fail the step
-    if($? == SUCCESS){
-     
-        #set any additional error or warning conditions here
-        #there may be cases in which an error occurs and the exit code is 0.
-        #we want to set to correct outcome for the running step
-        if($content =~ m/Application (.+) successfully deleted/){
-            
-            $ec->setProperty("/myJobStep/outcome", 'success');
-            
-        }else{
-         
-            $ec->setProperty("/myJobStep/outcome", 'error');
-            
-        }
-        
-    }else{
-        $ec->setProperty("/myJobStep/outcome", 'error');
+
+print $content;
+
+#evaluates if exit was successful to mark it as a success or fail the step
+if ( $? == SUCCESS ) {
+
+    #set any additional error or warning conditions here
+    #there may be cases in which an error occurs and the exit code is 0.
+    #we want to set to correct outcome for the running step
+    if ( $content =~ m/Application (.+) successfully deleted/ ) {
+
+        $ec->setProperty( "/myJobStep/outcome", 'success' );
+
     }
+    else {
+
+        $ec->setProperty( "/myJobStep/outcome", 'error' );
+
+    }
+
+}
+else {
+    $ec->setProperty( "/myJobStep/outcome", 'error' );
+}
