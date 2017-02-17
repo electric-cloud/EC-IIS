@@ -1,3 +1,6 @@
+#!/usr/bin/env perl
+# include $[/myProject/preamble]
+# line 4 "[EC]/@PLUGIN_KEY@-@PLUGIN_VERSION@/createWebSite.pl"
 # -------------------------------------------------------------------------
 # File
 #    createWebSite.pl
