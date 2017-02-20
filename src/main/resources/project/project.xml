@@ -143,6 +143,12 @@
                 <expandable>0</expandable>
                 <value></value>
             </property>
+            <property>
+                <propertyName>EC::IIS</propertyName>
+                <description/>
+                <expandable>1</expandable>
+                <value></value>
+            </property>
         </propertySheet>
         <procedure>
             <procedureName>CreateConfiguration</procedureName>
