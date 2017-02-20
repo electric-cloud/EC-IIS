@@ -1,4 +1,4 @@
-$[/myProject/preamble]
+# $[/myProject/preamble]
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
