@@ -16,7 +16,7 @@
 
 # -------------------------------------------------------------------------
    # File
-   #    deleteVirtualDirectory.pl
+   #    addWebSiteBinding.pl
    #
    # Dependencies
    #    None
@@ -25,10 +25,10 @@
    #    1.0
    #
    # Date
-   #    08/08/2011
+   #    13/12/2011
    #
    # Engineer
-   #    Alonso Blanco
+   #    Rafael Sanchez
    #
    # Copyright (c) 2011 Electric Cloud, Inc.
    # All rights reserved
@@ -93,8 +93,11 @@
   # -------------------------------------------------------------------------
   
   $::gEC = new ElectricCommander();
-      $::gEC->abortOnError(0);
-  $::gAppName = ($::gEC->getProperty("appname") )->findvalue("//value");
+  $::gEC->abortOnError(0);
+  $::gWebSiteName = ($::gEC->getProperty("websitename") )->findvalue("//value");
+  $::gBindingProtocol = ($::gEC->getProperty("bindingprotocol") )->findvalue("//value");
+  $::gBindingInfo = ($::gEC->getProperty("bindinginformation") )->findvalue("//value");
+  
   
   # -------------------------------------------------------------------------
   # Main functions
@@ -113,37 +116,53 @@
   ########################################################################
   sub main() {
    
-    my $cmdLine = '';
-    my $searchCmdLine = '';
+    my @args = ();
+    my $url = '';
+    my $user = '';
+    my $pass = '';
+    my $iisVersion = '';
+    my $computerName = '';
+    
     my $content = '';
     
     my $appcmdLocation = DEFAULT_APPCMD_PATH;
     my %props;
     
-    $cmdLine = "$appcmdLocation delete vdir /vdir.name:\"$::gAppName\"";
-  
-    #execute command line that creates the app pool
-    print "$cmdLine\n";
-    $content = `$cmdLine`;
- 
-    print $content;
+    push(@args, $appcmdLocation  . " set site");
+	
+	if($::gWebSiteName && $::gWebSiteName ne ''){
+		push(@args, '/site.name:"' . $::gWebSiteName.'"');
+	}
+	
+	if($::gBindingProtocol && $::gBindingProtocol ne '' && $::gBindingInfo && $::gBindingInfo ne ''){
+		push(@args, '/+bindings.[protocol=\'' . $::gBindingProtocol.'\',bindingInformation=\''. $::gBindingInfo.':\']');
+	}
     
-    #evaluates if exit was successful to mark it as a success or fail the step
-    if($? == SUCCESS){
-     
-        $::gEC->setProperty("/myJobStep/outcome", 'success');
-        
-        if($content !~ m/VDIR object "(.+)" deleted/){
-            $::gEC->setProperty("/myJobStep/outcome", 'error');
-        }
-        
-    }else{
-        $::gEC->setProperty("/myJobStep/outcome", 'error');
-    }
+    #generate command line
+    my $cmdLine = createCommandLine(\@args);
+       
+	#execute command line that creates the website
+	print "$cmdLine\n";
+	$content = `$cmdLine`;
 
+	print $content;
+
+	#evaluates if exit was successful to mark it as a success or fail the step
+	if($? == SUCCESS){
+
+	 $::gEC->setProperty("/myJobStep/outcome", 'success');
+	 
+	 if($content !~ m/SITE object "(.+)" changed/){
+		 $::gEC->setProperty("/myJobStep/outcome", 'error');
+	 }
+	 
+	}else{
+	 $::gEC->setProperty("/myJobStep/outcome", 'error');
+	}
+    
     #add masked command line to properties object
     $props{'cmdLine'} = $cmdLine;
-    
+        
     #set prop's hash to EC properties
     setProperties(\%props);
 
