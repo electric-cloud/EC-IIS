@@ -20,7 +20,7 @@ if ($upgradeAction eq "upgrade") {
             });
         }
     }
-    
+
     # Copy configuration credentials and attach them to the appropriate steps
     my $nodes = $query->find($creds);
     if ($nodes) {
@@ -59,7 +59,7 @@ if ($upgradeAction eq "upgrade") {
     }
 }
 
-# Data that drives the create step picker registration for this plugin.	
+# Data that drives the create step picker registration for this plugin.
 my %startServer = (
     label       => "IIS - Start Server",
     procedure   => "StartServer",
@@ -95,8 +95,8 @@ my %checkServerStatus = (
     procedure   => "CheckServerStatus",
     description => "Checks the status of the specified server.",
     category    => "Application Server"
-); 
-my %createWebSite = ( 
+);
+my %createWebSite = (
     label       => "IIS - Create Web Site",
     procedure   => "CreateWebSite",
     description => "Creates a web site configuration on a local or remote computer.",
@@ -132,10 +132,16 @@ my %deleteWebSite = (
     description => "Deletes a web site.",
     category    => "Application Server"
 );
-my %deployCopy = ( 
+my %deployCopy = (
     label       => "IIS - Deploy Copy",
     procedure   => "DeployCopy",
     description => "Copies the application files to the physical directory.",
+    category    => "Application Server"
+);
+my %deployAdvanced = (
+    label       => "IIS - Deploy Advanced",
+    procedure   => "DeployAdvanced",
+    description => "Uses MS Deploy to deploy an application.",
     category    => "Application Server"
 );
 my %getVirtualDirectories = (
@@ -224,6 +230,7 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Web App
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Virtual Directory");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Web Site");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Copy");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Advanced");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get Virtual Directories");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get WebSite IDs");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get WebSite Status");
@@ -236,7 +243,7 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop App Pool"
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop WebSite");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start IIS Services");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop IIS Services");
-                 
+
 @::createStepPickerSteps = (\%startServer, \%stopServer,
                             \%createAppPool, \%createVirtualDirectory,
                             \%createVirtualDirectory2, \%checkServerStatus,
@@ -247,6 +254,7 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop IIS Servi
                             \%getWebSiteIDs, \%getWebSiteStatus,
                             \%pauseWebSite, \%recycleAppPool,
                             \%resetServer, \%resumeWebSite,
-                            \%startWebSite, \%stopAppPool, 
+                            \%startWebSite, \%stopAppPool,
 							\%stopWebSite,
-                            \%startIISServices, \%stopIISServices);
+                            \%startIISServices, \%stopIISServices,
+                            \%deployAdvanced);

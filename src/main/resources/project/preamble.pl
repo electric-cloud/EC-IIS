@@ -23,7 +23,7 @@ BEGIN {
 
         # Undo perl'd require transformation
         my $prop = $target;
-        $prop =~ s#/#::#;
+        $prop =~ s#/#::#g;
         $prop =~ s#\.pm$##g;
         my $display = '[EC]@PLUGIN_KEY@-@PLUGIN_VERSION@/'.$prop;
         $prop = "$prefix$prop";

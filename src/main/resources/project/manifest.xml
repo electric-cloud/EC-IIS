@@ -145,6 +145,10 @@
     <xpath>//procedure[procedureName=&quot;DeployCopy&quot;]/step[stepName=&quot;Deploy&quot;]/command</xpath>
   </file>
   <file>
+    <path>server/deployAdvanced.pl</path>
+    <xpath>//procedure[procedureName=&quot;DeployAdvanced&quot;]/step[stepName=&quot;Deploy&quot;]/command</xpath>
+  </file>
+  <file>
     <path>server/getWebSiteIDs.pl</path>
     <xpath>//procedure[procedureName=&quot;GetWebSiteIDs&quot;]/step[stepName=&quot;GetWebSiteIDs&quot;]/command</xpath>
   </file>
@@ -287,6 +291,10 @@
   <file>
     <path>forms/IISDeployCopyForm.xml</path>
     <xpath>//procedure[procedureName=&quot;DeployCopy&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>forms/IISDeployAdvanced.xml</path>
+    <xpath>//procedure[procedureName=&quot;DeployAdvanced&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
     <path>forms/IISGetVirtualDirectoriesForm.xml</path>

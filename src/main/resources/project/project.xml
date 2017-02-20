@@ -550,11 +550,11 @@
             <jobNameTemplate>iis-deploycopy-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
+                <property>
+                        <propertyName>ec_parameterForm</propertyName>
+                        <expandable>1</expandable>
+                        <value></value>
+                </property>
                 <property>
                     <propertyName>ec_customEditorData</propertyName>
                     <propertySheet>
@@ -611,13 +611,13 @@
                 <formalParameterName>AdditionalOptions</formalParameterName>
                 <defaultValue>/E /K /R /H /I /Y</defaultValue>
                 <description>Indicate option switches for the XCOPY executable, excluding source and destination directories. The default options are those recommended by Microsoft for ASP.NET and IIS web site deployment; exercise caution when changing these options.
-					- /E: Deep copy including empty dirs.
-					- /K: Copy attributes.
-					- /R: Overwrite read-only files.
-					- /H: Copy hidden and system files.
-					- /I: If the destination does not exist and you are copying more than one file, it is assumed that the destination is a directory.
-					- /Y: Suppress prompting for overwrite confirmation.
-				</description>
+                    - /E: Deep copy including empty dirs.
+                    - /K: Copy attributes.
+                    - /R: Overwrite read-only files.
+                    - /H: Copy hidden and system files.
+                    - /I: If the destination does not exist and you are copying more than one file, it is assumed that the destination is a directory.
+                    - /Y: Suppress prompting for overwrite confirmation.
+                </description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
@@ -642,6 +642,162 @@
                 <workingDirectory/>
                 <workspaceName/>
                 <procedureName>DeployCopy</procedureName>
+                <projectName>EC-IIS</projectName>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        <procedure>
+            <procedureName>DeployAdvanced</procedureName>
+            <description>Use MS Deploy to perform any actions with application.</description>
+            <jobNameTemplate>iis-deploy-advanced-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                <property>
+                                    <propertyName>execpath</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            <formalParameter>
+                <formalParameterName>msdeployPath</formalParameterName>
+                <defaultValue>msdeploy</defaultValue>
+                <description>Provide the relative or absolute path to the MSDeploy executable.</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>verb</formalParameterName>
+                <defaultValue>sync</defaultValue>
+                <description>Web Deploy operations enable you to gather information from, move, or delete deployment objects like Web sites and Web applications. Web Deploy operations are specified on the command line with the -verb argument. The Web Deploy operations are dump, sync, delete, getDependencies, and getSystemInfo.</description>
+                <required>1</required>
+                <type>select</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>sourceProvider</formalParameterName>
+                <defaultValue/>
+                <description>Providers process specific source or destination data for Web Deploy. For example, the contentPath provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the -source: or -dest: argument.</description>
+                <required>1</required>
+                <type>select</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>sourceProviderObjectPath</formalParameterName>
+                <defaultValue/>
+                <description>Specifies a path of the provider object. Some providers require a path and some do not. If required, the kind of path depends on the provider.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>sourceProviderSettings</formalParameterName>
+                <defaultValue/>
+                <required>0</required>
+                <type>textarea</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>destProvider</formalParameterName>
+                <defaultValue/>
+                <required>1</required>
+                <type>select</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>destProviderObjectPath</formalParameterName>
+                <defaultValue/>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>destProviderSettings</formalParameterName>
+                <defaultValue/>
+                <required>0</required>
+                <type>textarea</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>allowUntrusted</formalParameterName>
+                <defaultValue/>
+                <required>0</required>
+                <type>checkbox</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>preSync</formalParameterName>
+                <defaultValue/>
+                <required>0</required>
+                <type>textarea</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>postSync</formalParameterName>
+                <defaultValue/>
+                <required>0</required>
+                <type>textarea</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>additionalOptions</formalParameterName>
+                <defaultValue/>
+                <required>0</required>
+                <type>textarea</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>setParamFile</formalParameterName>
+                <defaultValue/>
+                <required>0</required>
+                <type>textarea</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>declareParamFile</formalParameterName>
+                <defaultValue/>
+                <required>0</required>
+                <type>textarea</type>
+            </formalParameter>
+            <step>
+                <stepName>Deploy</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <procedureName>DeployAdvanced</procedureName>
                 <projectName>EC-IIS</projectName>
                 <propertySheet>
                     <property>

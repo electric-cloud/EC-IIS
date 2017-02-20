@@ -35,7 +35,7 @@ use Carp;
 use IPC::Open3;
 use IO::Select;
 use Symbol qw/gensym/;
-
+use File::Spec;
 
 my $DRYRUN = 0;
 
@@ -767,12 +767,12 @@ sub get_params_as_hashref {
     return $retval;
 }
 
-sub  trim_input { 
+sub  trim_input {
     my $s = shift;
 
     #remove leading and trailing spaces
     $s =~ s/^\s+|\s+$//g;
-    return $s 
+    return $s
 }
 
 sub render_template_from_property {
@@ -889,6 +889,13 @@ sub trim {
     $_[0] =~ s/\s+$//s;
 }
 
+
+sub canon_path {
+    my ($path) = @_;
+    return File::Spec->canonpath($path);
+}
+
+
 =back
 
 =cut
@@ -912,7 +919,7 @@ our $ESCAPE = 0;
 Returns rendered template. Accepts as parameters file or handle
 and variables hashref(key=>value).
 
-=back 
+=back
 
 =cut
 
