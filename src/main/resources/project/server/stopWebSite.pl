@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# include $[/myProject/preamble]
+# line 4 "[EC]/@PLUGIN_KEY@-@PLUGIN_VERSION@/stopWebSite.pl"
 
 # -------------------------------------------------------------------------
 # File
@@ -20,7 +22,6 @@
 # All rights reserved
 # -------------------------------------------------------------------------
 
-
 # -------------------------------------------------------------------------
 # Includes
 # -------------------------------------------------------------------------
@@ -34,23 +35,22 @@ use File::Temp qw/tempfile/;
 use constant {
     SUCCESS => 0,
     ERROR   => 1,
-    
-    PLUGIN_NAME => 'EC-IIS',
-    WIN_IDENTIFIER => 'MSWin32',
-    IIS_VERSION_6 => 'iis6',
-    IIS_VERSION_7 => 'iis7',
-    CREDENTIAL_ID => 'credential',
-};
 
+    PLUGIN_NAME    => 'EC-IIS',
+    WIN_IDENTIFIER => 'MSWin32',
+    IIS_VERSION_6  => 'iis6',
+    IIS_VERSION_7  => 'iis7',
+    CREDENTIAL_ID  => 'credential',
+};
 
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
 
 my $ec = new ElectricCommander();
-  
-my $host = ($ec->getProperty("HostName"))->findvalue("//value");
-my $webServerName = ($ec->getProperty("WebSideId"))->findvalue("//value");
+
+my $host          = ( $ec->getProperty("HostName") )->findvalue("//value");
+my $webServerName = ( $ec->getProperty("WebSideId") )->findvalue("//value");
 
 # -------------------------------------------------------------------------
 
@@ -64,30 +64,30 @@ my $webServerName = ($ec->getProperty("WebSideId"))->findvalue("//value");
 #   none
 #
 ########################################################################
-sub main(){
- 
+sub main() {
+
     # Create and open a temp file for the JScript code
-    my ($scriptfh, $scriptfilename) = tempfile( DIR => '.', SUFFIX => '.js' );
-    
-    # Some notes about IIS and ADSI terminology:
-    # In the IIS manager GUI, entities under the "Web Sites" heading are in
-    # the ADSI "IIsWebServer" class. The ServerComment attribute of
-    # that IISWebServer object is what is shown as the name of the entry in the GUI.
-    # The Name attribute is actually an ID number necessary to identify the site in
-    # order to create an application in a virtual directory (objects of the ADSI
-    # class "IIsWebVirtualDir") within the site. In the GUI, applications are
-    # distinguished from regular vdirs by the gear icon instead of a folder icon.
-    
-    # The ID of a Web Site can be found in the manager GUI (sort of). Open the
-    # Properties dialog of a web site and click on the "Properties" button in the
-    # Logging section at the bottom of the dialog. Look at the name of the log
-    # file at the bottom of that Logging Properties dialog: the site ID number
-    # follows the letters "W3SVC". Ouch.
-    
-    # IMPORTANT: This is JScript code. If you change it to use VBScript or
-    # PowerShell (or whatever) you need to adjust the cscript commndline below and
-    # probably the SUFFIX above (although the suffix will be ignored when a /E argument
-    # is passed to cscript).
+    my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
+
+# Some notes about IIS and ADSI terminology:
+# In the IIS manager GUI, entities under the "Web Sites" heading are in
+# the ADSI "IIsWebServer" class. The ServerComment attribute of
+# that IISWebServer object is what is shown as the name of the entry in the GUI.
+# The Name attribute is actually an ID number necessary to identify the site in
+# order to create an application in a virtual directory (objects of the ADSI
+# class "IIsWebVirtualDir") within the site. In the GUI, applications are
+# distinguished from regular vdirs by the gear icon instead of a folder icon.
+
+   # The ID of a Web Site can be found in the manager GUI (sort of). Open the
+   # Properties dialog of a web site and click on the "Properties" button in the
+   # Logging section at the bottom of the dialog. Look at the name of the log
+   # file at the bottom of that Logging Properties dialog: the site ID number
+   # follows the letters "W3SVC". Ouch.
+
+# IMPORTANT: This is JScript code. If you change it to use VBScript or
+# PowerShell (or whatever) you need to adjust the cscript commndline below and
+# probably the SUFFIX above (although the suffix will be ignored when a /E argument
+# is passed to cscript).
     my $jscript = <<"EOSCRIPT";
     // Iterate through all Web sites looking for the given server and then
     // when it is found, it is paused.
@@ -138,45 +138,45 @@ sub main(){
     }
     
 EOSCRIPT
-    
+
     print $scriptfh $jscript;
     close($scriptfh);
-    
+
     my $content = `cscript /E:jscript /NoLogo $scriptfilename`;
-    
+
     print $content;
-            
+
     #evaluates if exit was successful to mark it as a success or fail the step
-    if($? == SUCCESS){
-     
+    if ( $? == SUCCESS ) {
+
         #set any additional error or warning conditions here
         #there may be cases in which an error occurs and the exit code is 0.
         #we want to set to correct outcome for the running step
-        if($content !~ m/Server (.+) Stopped/){
-            
-            $ec->setProperty("/myJobStep/outcome", 'error');
-            
-        }elsif($content =~ m/(Server|Host) (.+) was not found/){
-         
-            $ec->setProperty("/myJobStep/outcome", 'error');
-            
+        if ( $content !~ m/Server (.+) Stopped/ ) {
+
+            $ec->setProperty( "/myJobStep/outcome", 'error' );
+
         }
-        
-    }else{
-        $ec->setProperty("/myJobStep/outcome", 'error');
+        elsif ( $content =~ m/(Server|Host) (.+) was not found/ ) {
+
+            $ec->setProperty( "/myJobStep/outcome", 'error' );
+
+        }
+
     }
-    
+    else {
+        $ec->setProperty( "/myJobStep/outcome", 'error' );
+    }
+
     #foreach my $siteinfo (@siteids) {
     #    ($sitename,$siteid) = split(/:/, $siteinfo);
     #    print "$sitename ($siteid)\n";
     #    $ec->setProperty("/myJob/iiswebsites/$sitename", $siteid);
     #}
-    
- 
+
 }
 
 main();
 
 1;
-
 
