@@ -332,7 +332,7 @@ sub create_msdeploy_command {
             $command .= " -setParamFile:$params->{setParamFile}";
         }
         else {
-            die 'Not implemented';
+            $self->bail_out("The file $params->{setParamFile} is not found");
         }
     }
     if ($params->{declareParamFile}) {
@@ -344,7 +344,7 @@ sub create_msdeploy_command {
             $command .= " -declareParamFile:$params->{declareParamFile}";
         }
         else {
-            die 'Not implemented';
+            $self->bail_out("The file $params->{declareParamFile} is not found");
         }
     }
     if ($params->{additionalOptions}) {
