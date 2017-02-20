@@ -1,3 +1,6 @@
+#!/usr/bin/env perl
+# include $[/myProject/preamble]
+# line 4 "[EC]/@PLUGIN_KEY@-@PLUGIN_VERSION@/addWebSiteBinding.pl"
 #
 #  Copyright 2015 Electric Cloud, Inc.
 #
