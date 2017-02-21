@@ -1,3 +1,19 @@
+#
+#  Copyright 2015 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
 ##########################
 # createAndAttachCredential.pl
 ##########################
@@ -42,18 +58,24 @@ $errors .= $ec->checkAllErrors($xpath);
 
 # Attach credential to steps that will need it
 $xpath = $ec->attachCredential($projName, $credName,
-    {procedureName => 'CreateWebSite',
-     stepName => 'CreateWebSite'});
+    {procedureName => 'AddWebSiteBinding',
+     stepName => 'AddWebSiteBinding'});
+$errors .= $ec->checkAllErrors($xpath);
+
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'AssignAppToAppPool',
+     stepName => 'AssignApp'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
-    {procedureName => 'DeleteWebSite',
-     stepName => 'DeleteWebSite'});
+    {procedureName => 'CheckServerStatus',
+     stepName => 'CheckServerStatus'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
-    {procedureName => 'DeleteVirtualDirectory',
-     stepName => 'DeleteVirtualDirectory'});
+    {procedureName => 'CreateAppPool',
+     stepName => 'CreateAppPool'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
@@ -62,28 +84,68 @@ $xpath = $ec->attachCredential($projName, $credName,
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateWebApplication',
+     stepName => 'CreateWebApplication'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteVirtualDirectory',
+     stepName => 'DeleteVirtualDirectory'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteWebApplication',
+     stepName => 'DeleteWebApplication'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeployCopy',
+     stepName => 'Deploy'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateWebSite',
+     stepName => 'CreateWebSite'});
+$errors .= $ec->checkAllErrors($xpath);
+ 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteWebSite',
+     stepName => 'DeleteWebSite'});
+$errors .= $ec->checkAllErrors($xpath);
+ 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteAppPool',
+     stepName => 'DeleteAppPool'});
+$errors .= $ec->checkAllErrors($xpath);
+ 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'ListSiteApps',
+     stepName => 'ListSiteApps'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'ListSites',
+     stepName => 'ListSites'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'StartAppPool',
+     stepName => 'StartAppPool'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StartWebSite',
      stepName => 'StartWebSite'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'StopAppPool',
+     stepName => 'StopAppPool'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StopWebSite',
      stepName => 'StopWebSite'});
-$errors .= $ec->checkAllErrors($xpath);
-
-$xpath = $ec->attachCredential($projName, $credName,
-    {procedureName => 'PauseWebSite',
-     stepName => 'PauseWebSite'});
-$errors .= $ec->checkAllErrors($xpath);
-
-$xpath = $ec->attachCredential($projName, $credName,
-    {procedureName => 'ResetServer',
-     stepName => 'ResetServer'});
-$errors .= $ec->checkAllErrors($xpath);
-
-$xpath = $ec->attachCredential($projName, $credName,
-    {procedureName => 'CheckServerStatus',
-     stepName => 'CheckServerStatus'});
 $errors .= $ec->checkAllErrors($xpath);
      
 if ($errors ne '') {

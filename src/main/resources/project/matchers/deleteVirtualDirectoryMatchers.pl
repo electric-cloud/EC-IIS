@@ -18,33 +18,11 @@
 push (@::gMatchers,
   
   {
-   id =>        "appPoolExists",
-   pattern =>          q{App Pool (.+) already exists.},
+   id =>        "vdirDeleted",
+   pattern =>          q{VDIR object "(.+)" deleted},
    action =>           q{
     
-              my $description = "Application Pool $1 \n already exists";
-              setProperty("summary", $description . "\n");
-    
-   },
-  },
-  
-  {
-   id =>        "appPoolCreated",
-   pattern =>          q{APPPOOL object "(.+)" added},
-   action =>           q{
-    
-              my $description = "Application Pool $1 \n created successfully";
-              setProperty("summary", $description . "\n");
-    
-   },
-  },
-  
-  {
-   id =>        "appNotFound",
-   pattern =>          q{Cannot find APP object with identifier "(.+)"},
-   action =>           q{
-    
-              my $description = "Cannot find Application \n $1";
+              my $description = "Virtual Directory $1 \n deleted successfully";
               setProperty("summary", $description . "\n");
     
    },
@@ -60,7 +38,6 @@ push (@::gMatchers,
     
    },
   },
-  
   
 );
 

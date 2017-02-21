@@ -16,7 +16,7 @@
 
 # -------------------------------------------------------------------------
    # File
-   #    deleteVirtualDirectory.pl
+   #    listSites.pl
    #
    # Dependencies
    #    None
@@ -25,7 +25,7 @@
    #    1.0
    #
    # Date
-   #    08/08/2011
+   #    08/09/2011
    #
    # Engineer
    #    Alonso Blanco
@@ -94,7 +94,7 @@
   
   $::gEC = new ElectricCommander();
       $::gEC->abortOnError(0);
-  $::gAppName = ($::gEC->getProperty("appname") )->findvalue("//value");
+  $::gSearchCriteria = ($::gEC->getProperty("searchcriteria") )->findvalue("//value");
   
   # -------------------------------------------------------------------------
   # Main functions
@@ -120,22 +120,20 @@
     my $appcmdLocation = DEFAULT_APPCMD_PATH;
     my %props;
     
-    $cmdLine = "$appcmdLocation delete vdir /vdir.name:\"$::gAppName\"";
+    $cmdLine = "$appcmdLocation list site $::gSearchCriteria";
   
     #execute command line that creates the app pool
+    
     print "$cmdLine\n";
     $content = `$cmdLine`;
- 
+    
+    print "===========Site Search Results===========\n";
     print $content;
     
     #evaluates if exit was successful to mark it as a success or fail the step
     if($? == SUCCESS){
      
         $::gEC->setProperty("/myJobStep/outcome", 'success');
-        
-        if($content !~ m/VDIR object "(.+)" deleted/){
-            $::gEC->setProperty("/myJobStep/outcome", 'error');
-        }
         
     }else{
         $::gEC->setProperty("/myJobStep/outcome", 'error');

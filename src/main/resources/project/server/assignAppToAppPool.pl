@@ -16,7 +16,7 @@
 
 # -------------------------------------------------------------------------
    # File
-   #    deleteVirtualDirectory.pl
+   #    assignAppToAppPool.pl
    #
    # Dependencies
    #    None
@@ -25,7 +25,7 @@
    #    1.0
    #
    # Date
-   #    08/08/2011
+   #    08/04/2011
    #
    # Engineer
    #    Alonso Blanco
@@ -94,7 +94,10 @@
   
   $::gEC = new ElectricCommander();
       $::gEC->abortOnError(0);
-  $::gAppName = ($::gEC->getProperty("appname") )->findvalue("//value");
+  $::gAppPoolName = ($::gEC->getProperty("apppoolname"))->findvalue("//value");
+  $::gAppName = ($::gEC->getProperty("appname"))->findvalue("//value");
+  $::gSiteName = ($::gEC->getProperty("sitename"))->findvalue("//value");
+  
   
   # -------------------------------------------------------------------------
   # Main functions
@@ -113,6 +116,13 @@
   ########################################################################
   sub main() {
    
+    my @args = ();
+    my $url = '';
+    my $user = '';
+    my $pass = '';
+    my $iisVersion = '';
+    my $computerName = '';
+    
     my $cmdLine = '';
     my $searchCmdLine = '';
     my $content = '';
@@ -120,8 +130,30 @@
     my $appcmdLocation = DEFAULT_APPCMD_PATH;
     my %props;
     
-    $cmdLine = "$appcmdLocation delete vdir /vdir.name:\"$::gAppName\"";
-  
+    #$cmdLine = "$appcmdLocation set app /app.name:\"$::gAppName\" /applicationPool:\"$::gAppPoolName\"";
+    $cmdLine = "$appcmdLocation set site /site.name:\"$::gSiteName\" /[path='$::gAppName'].applicationPool:\"$::gAppPoolName\"";
+    
+    $searchCmdLine = "$appcmdLocation list apppool \"$::gAppPoolName\"";
+
+
+    #Search for the app pool to determine if proceeding to create a new one 
+    # or to send a message indicating it already exists
+    
+    $content = `$searchCmdLine`;
+    print $content;
+    
+    if($content !~ m/APPPOOL "$::gAppPoolName"/){
+        
+         print "Application Pool $::gAppPoolName doesn't exist.";
+         $props{'cmdLine'} = $cmdLine;
+         $props{'searchCmdLine'} = $searchCmdLine;
+         
+         #set prop's hash to EC properties
+         setProperties(\%props);
+    
+         exit ERROR;
+    }
+    
     #execute command line that creates the app pool
     print "$cmdLine\n";
     $content = `$cmdLine`;
@@ -133,7 +165,9 @@
      
         $::gEC->setProperty("/myJobStep/outcome", 'success');
         
-        if($content !~ m/VDIR object "(.+)" deleted/){
+        if($content =~ m/SITE object "(.+)" changed/){
+            print "Application $::gAppName moved to Application Pool $::gAppPoolName\n";
+        }else{
             $::gEC->setProperty("/myJobStep/outcome", 'error');
         }
         
@@ -146,6 +180,7 @@
     
     #set prop's hash to EC properties
     setProperties(\%props);
+    
 
   }
   

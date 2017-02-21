@@ -1,53 +1,51 @@
+<!--
+
+     Copyright 2015 Electric Cloud, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateWebSite</help>
 	<label>Application Server - IIS CreateWebSite</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>This procedure creates a web site configuration on a local or remote computer.</description>	
+	<description>Creates a website.</description>	
 	<formElement>
 		<type>entry</type>
-		<label>Configuration name:</label>
-		<property>configname</property>
+		<label>Website name:</label>
+		<property>websitename</property>
 		<required>1</required>
-        <documentation>Provide the name of the configuration that holds connection information for the IIS server. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-        <htmlDocumentation>Provide the name of the configuration that holds connection information for the IIS server.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
-	</formElement>					
-	<formElement>
-		<type>entry</type>
-		<label>Absolute path of the script utility:</label>
-		<property>execpath</property>
-		<value>iisweb</value>
-		<required>1</required>
-		<documentation>Provide the absolute path of the script utility used to execute this step. i.e: iisweb or 'c:/windows/system32/iisweb.vbs'. (Required)</documentation>
+		<documentation>The name of the Website to create. (Required)</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
-		<label>Absolute path attached to the web site:</label>
-		<property>appabsolutepath</property>
+		<label>Website path:</label>
+		<property>websitepath</property>
 		<required>1</required>
-		<documentation>Provide the absolute physical path assigned to the web site you want to create. (Required)</documentation>
-	</formElement>			
+		<documentation>If specified, will cause the root application containing a root virtual directory pointing to the specified path to be created for this site. If omitted, the site is created without a root application and will not be startable until one is created. (Required)</documentation>
+	</formElement>		
 	<formElement>
 		<type>entry</type>
-		<label>Host header name:</label>
-		<property>hostheader</property>
+		<label>Website ID:</label>
+		<property>websiteid</property>
 		<required>0</required>
-		<documentation>Provide the host header name for the web site.</documentation>
+		<documentation>The id of the Website.</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
-		<label>Web site name:</label>
-		<property>sitename</property>
+		<label>List of bindings:</label>
+		<property>bindings</property>
 		<required>1</required>
-		<documentation>Provide the descriptive name, or the metabase path, of the web site you want to create. (Required)</documentation>
-	</formElement>		
-	<formElement>
-		<type>checkbox</type>
-		<label>Start web site:</label>
-		<property>startapp</property>
-		<checkedValue>1</checkedValue>
-		<uncheckedValue>0</uncheckedValue>
-		<initiallyChecked>0</initiallyChecked>
-		<required>0</required>
-		<documentation>Indicate if the web site must be started after creation.</documentation>
+		<documentation>List of bindings in the friendly form of 'http://domain:port,...' or raw form of 'protocol/bindingInformation,...' (Required)</documentation>
 	</formElement>		
 </editor>

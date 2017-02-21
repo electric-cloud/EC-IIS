@@ -1,182 +1,257 @@
-#!/usr/bin/env perl
-# include $[/myProject/preamble]
-# line 4 "[EC]/@PLUGIN_KEY@-@PLUGIN_VERSION@/stopWebSite.pl"
-
-# -------------------------------------------------------------------------
-# File
-#    stopWebSite.pl
 #
-# Dependencies
-#    None
+#  Copyright 2015 Electric Cloud, Inc.
 #
-# Template Version
-#    1.0
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
-# Date
-#    07/22/2011
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-# Engineer
-#    Alonso Blanco
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 #
-# Copyright (c) 2011 Electric Cloud, Inc.
-# All rights reserved
-# -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
-# Includes
-# -------------------------------------------------------------------------
-use ElectricCommander;
-use Data::Dumper;
-use File::Temp qw/tempfile/;
-
-# -------------------------------------------------------------------------
-# Constants
-# -------------------------------------------------------------------------
-use constant {
-    SUCCESS => 0,
-    ERROR   => 1,
-
-    PLUGIN_NAME    => 'EC-IIS',
-    WIN_IDENTIFIER => 'MSWin32',
-    IIS_VERSION_6  => 'iis6',
-    IIS_VERSION_7  => 'iis7',
-    CREDENTIAL_ID  => 'credential',
-};
-
-# -------------------------------------------------------------------------
-# Variables
-# -------------------------------------------------------------------------
-
-my $ec = new ElectricCommander();
-
-my $host          = ( $ec->getProperty("HostName") )->findvalue("//value");
-my $webServerName = ( $ec->getProperty("WebSideId") )->findvalue("//value");
-
-# -------------------------------------------------------------------------
-
-########################################################################
-# main - contains the whole process to be done by the perl file
-#
-# Arguments:
-#   none
-#
-# Returns:
-#   none
-#
-########################################################################
-sub main() {
-
-    # Create and open a temp file for the JScript code
-    my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
-
-# Some notes about IIS and ADSI terminology:
-# In the IIS manager GUI, entities under the "Web Sites" heading are in
-# the ADSI "IIsWebServer" class. The ServerComment attribute of
-# that IISWebServer object is what is shown as the name of the entry in the GUI.
-# The Name attribute is actually an ID number necessary to identify the site in
-# order to create an application in a virtual directory (objects of the ADSI
-# class "IIsWebVirtualDir") within the site. In the GUI, applications are
-# distinguished from regular vdirs by the gear icon instead of a folder icon.
-
-   # The ID of a Web Site can be found in the manager GUI (sort of). Open the
-   # Properties dialog of a web site and click on the "Properties" button in the
-   # Logging section at the bottom of the dialog. Look at the name of the log
-   # file at the bottom of that Logging Properties dialog: the site ID number
-   # follows the letters "W3SVC". Ouch.
-
-# IMPORTANT: This is JScript code. If you change it to use VBScript or
-# PowerShell (or whatever) you need to adjust the cscript commndline below and
-# probably the SUFFIX above (although the suffix will be ignored when a /E argument
-# is passed to cscript).
-    my $jscript = <<"EOSCRIPT";
-    // Iterate through all Web sites looking for the given server and then
-    // when it is found, it is paused.
+   # File
+   #    stopWebSite.pl
+   #
+   # Dependencies
+   #    None
+   #
+   # Template Version
+   #    1.0
+   #
+   # Date
+   #    08/03/2011
+   #
+   # Engineer
+   #    Alonso Blanco
+   #
+   # Copyright (c) 2011 Electric Cloud, Inc.
+   # All rights reserved
+   # -------------------------------------------------------------------------
+   
+   
+   # -------------------------------------------------------------------------
+   # Includes
+   # -------------------------------------------------------------------------
+   use ElectricCommander;
+   use warnings;
+   use strict;
+   use Cwd;
+   use File::Spec;
+   use diagnostics;
+   use ElectricCommander::PropDB;
+   $|=1;
+   
+   # -------------------------------------------------------------------------
+   # Constants
+   # -------------------------------------------------------------------------
+   use constant {
+       SUCCESS => 0,
+       ERROR   => 1,
+       
+       PLUGIN_NAME => 'EC-IIS',
+       WIN_IDENTIFIER => 'MSWin32',
+       DEFAULT_APPCMD_PATH => '%windir%\system32\inetsrv\appcmd',
+       CREDENTIAL_ID => 'credential',
+       
+  };
+  
+  ########################################################################
+  # trim - deletes blank spaces before and after the entered value in 
+  # the argument
+  #
+  # Arguments:
+  #   -untrimmedString: string that will be trimmed
+  #
+  # Returns:
+  #   trimmed string
+  #
+  ########################################################################  
+  sub trim($) {
+   
+      my ($untrimmedString) = @_;
+      
+      my $string = $untrimmedString;
+      
+      #removes leading spaces
+      $string =~ s/^\s+//;
+      
+      #removes trailing spaces
+      $string =~ s/\s+$//;
+      
+      #returns trimmed string
+      return $string;
+  }
+  
+  # -------------------------------------------------------------------------
+  # Variables
+  # -------------------------------------------------------------------------
+  
+  $::gEC = new ElectricCommander();
+      $::gEC->abortOnError(0);
+  $::gWebSite = ($::gEC->getProperty("sitename") )->findvalue("//value");
+  
+  
+  # -------------------------------------------------------------------------
+  # Main functions
+  # -------------------------------------------------------------------------
+  
+  ########################################################################
+  # main - contains the whole process to be done by the plugin, it builds 
+  #        the command line, sets the properties and the working directory
+  #
+  # Arguments:
+  #   none
+  #
+  # Returns:
+  #   none
+  #
+  ########################################################################
+  sub main() {
+   
+    my @args = ();
+    my $url = '';
+    my $user = '';
+    my $pass = '';
+    my $iisVersion = '';
+    my $computerName = '';
     
-    var w3svc = GetObject("IIS://$host/w3svc");
-    var e = new Enumerator(w3svc);
-    var siteFound = false;
+    my $cmdLine = '';
+    my $content = '';
     
-    if(!e.atEnd()){
-     
-        for (; !e.atEnd() && !siteFound; e.moveNext()) {
-    
-            //get object from the Enum
-            var site = e.item();
-        
-            // Don't bother with anything but webservers
-            if (site.Class != "IIsWebServer") continue;
-            
-            // verify if the temp site obtained iterating 
-            // is the one we are looking for
-            if(site.Name == "$webServerName"){
-             
-                // Stop a Server
-                site.Stop();
-            
-                //Log pause
-                WScript.Echo("Server " + site.Name + " Stopped");
-                
-                //setting "found" flag
-                siteFound = true;
-                
-            }
-            
-        }
-        
-        if(!siteFound){
-            
-            //no site match, writing to the log that the site wasn't found
-            WScript.Echo("Server $webServerName was not found");
-            
-        }
-        
-    
-    }else{
-     
-        WScript.Echo("Host $host was not found");
-        
-    }
-    
-EOSCRIPT
+    my $appcmdLocation = DEFAULT_APPCMD_PATH;
+    my %props;
 
-    print $scriptfh $jscript;
-    close($scriptfh);
+    $cmdLine = "$appcmdLocation stop site /site.name:\"$::gWebSite\"";
 
-    my $content = `cscript /E:jscript /NoLogo $scriptfilename`;
-
+    #execute command line
+    print "$cmdLine\n";
+    $content = `$cmdLine`;
+ 
     print $content;
-
+    
     #evaluates if exit was successful to mark it as a success or fail the step
-    if ( $? == SUCCESS ) {
-
-        #set any additional error or warning conditions here
-        #there may be cases in which an error occurs and the exit code is 0.
-        #we want to set to correct outcome for the running step
-        if ( $content !~ m/Server (.+) Stopped/ ) {
-
-            $ec->setProperty( "/myJobStep/outcome", 'error' );
-
+    if($? == SUCCESS){
+     
+        $::gEC->setProperty("/myJobStep/outcome", 'success');
+        
+        if($content !~ m/"(.+)" successfully stopped/){
+            $::gEC->setProperty("/myJobStep/outcome", 'error');
         }
-        elsif ( $content =~ m/(Server|Host) (.+) was not found/ ) {
-
-            $ec->setProperty( "/myJobStep/outcome", 'error' );
-
-        }
-
-    }
-    else {
-        $ec->setProperty( "/myJobStep/outcome", 'error' );
+        
+    }else{
+        $::gEC->setProperty("/myJobStep/outcome", 'error');
     }
 
-    #foreach my $siteinfo (@siteids) {
-    #    ($sitename,$siteid) = split(/:/, $siteinfo);
-    #    print "$sitename ($siteid)\n";
-    #    $ec->setProperty("/myJob/iiswebsites/$sitename", $siteid);
-    #}
-
-}
-
-main();
-
-1;
-
+    #add masked command line to properties object
+    $props{'cmdLine'} = $cmdLine;
+    
+    #set prop's hash to EC properties
+    setProperties(\%props);
+   
+  }
+  
+  ########################################################################
+  # createCommandLine - creates the command line for the invocation
+  # of the program to be executed.
+  #
+  # Arguments:
+  #   -arr: array containing the command name (must be the first element) 
+  #         and the arguments entered by the user in the UI
+  #
+  # Returns:
+  #   -the command line to be executed by the plugin
+  #
+  ########################################################################
+  sub createCommandLine($) {
+      
+      my ($arr) = @_;
+      
+      my $commandName = @$arr[0];
+      
+      my $command = $commandName;
+      
+      shift(@$arr);
+      
+      foreach my $elem (@$arr) {
+          $command .= " $elem";
+      }
+      
+      return $command;
+         
+  }
+  
+  ########################################################################
+  # setProperties - set a group of properties into the Electric Commander
+  #
+  # Arguments:
+  #   -propHash: hash containing the ID and the value of the properties 
+  #              to be written into the Electric Commander
+  #
+  # Returns:
+  #   none
+  #
+  ########################################################################
+  sub setProperties($) {
+   
+      my ($propHash) = @_;
+      
+      foreach my $key (keys % $propHash) {
+          my $val = $propHash->{$key};
+          $::gEC->setProperty("/myCall/$key", $val);
+      }
+  }
+  
+  ##########################################################################
+  # getConfiguration - get the information of the configuration given
+  #
+  # Arguments:
+  #   -configName: name of the configuration to retrieve
+  #
+  # Returns:
+  #   -configToUse: hash containing the configuration information
+  #
+  #########################################################################
+  sub getConfiguration($){
+   
+      my ($configName) = @_;
+   
+      my %configToUse;
+      
+      my $proj = "$[/myProject/projectName]";
+      my $pluginConfigs = new ElectricCommander::PropDB($::gEC,"/projects/$proj/iis_cfgs");
+      
+      my %configRow = $pluginConfigs->getRow($configName);
+      
+      # Check if configuration exists
+      unless(keys(%configRow)) {
+          print 'Error: Configuration doesn\'t exist';
+          exit ERROR;
+      }
+      
+      # Get user/password out of credential
+      my $xpath = $::gEC->getFullCredential($configRow{credential});
+      $configToUse{'user'} = $xpath->findvalue("//userName");
+      $configToUse{'password'} = $xpath->findvalue("//password");
+      
+      foreach my $c (keys %configRow) {
+          
+          #getting all values except the credential that was read previously
+          if($c ne CREDENTIAL_ID){
+              $configToUse{$c} = $configRow{$c};
+          }
+          
+      }
+     
+      return %configToUse;
+   
+  }
+  
+  main();
+   
+  1;

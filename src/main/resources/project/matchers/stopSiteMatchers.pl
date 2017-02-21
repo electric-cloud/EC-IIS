@@ -16,41 +16,29 @@
 
 
 push (@::gMatchers,
-  
   {
-   id =>        "appPoolExists",
-   pattern =>          q{App Pool (.+) already exists.},
+   id =>        "siteStarted",
+   pattern =>          q{"(.+)" successfully stopped},
    action =>           q{
     
-              my $description = "Application Pool $1 \n already exists";
+              my $description = "Site $1 \n Stopped";
               setProperty("summary", $description . "\n");
     
    },
   },
   
   {
-   id =>        "appPoolCreated",
-   pattern =>          q{APPPOOL object "(.+)" added},
+   id =>        "appcmdNotFound",
+   pattern =>          q{The system cannot find the path specified},
    action =>           q{
     
-              my $description = "Application Pool $1 \n created successfully";
+              my $description = "AppCmd utility not found";
               setProperty("summary", $description . "\n");
     
    },
   },
   
   {
-   id =>        "appNotFound",
-   pattern =>          q{Cannot find APP object with identifier "(.+)"},
-   action =>           q{
-    
-              my $description = "Cannot find Application \n $1";
-              setProperty("summary", $description . "\n");
-    
-   },
-  },
-  
-    {
    id =>        "error",
    pattern =>          q{ERROR \( message:(.+)\)},
    action =>           q{

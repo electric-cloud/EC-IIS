@@ -16,29 +16,29 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateVirtualDirectory</help>
-	<label>Application Server - IIS CreateVirtualDirectory</label>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#AssignAppToAppPool</help>
+	<label>Application Server - IIS AssignAppToAppPool</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Creates a virtual directory into the specified Website.</description>	
+	<description>Assigns an application to an application pool.</description>	
+	<formElement>
+		<type>entry</type>
+		<label>Application pool name:</label>
+		<property>apppoolname</property>
+		<required>1</required>
+		<documentation>The name of the Application Pool to assign the application. i.e: 'FirstAppPool'. (Required)</documentation>
+	</formElement>		
 	<formElement>
 		<type>entry</type>
 		<label>Application name:</label>
 		<property>appname</property>
 		<required>1</required>
-		<documentation>The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Web Site/myapp02'. (Required)</documentation>
+		<documentation>The name of the application to assign. i.e: '/test'. (Required)</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
-		<label>Virtual path:</label>
-		<property>path</property>
+		<label>Site name:</label>
+		<property>sitename</property>
 		<required>1</required>
-		<documentation>Virtual path of the virtual directory, i.e: '/myvirtualdir'. (Required)</documentation>
-	</formElement>		
-	<formElement>
-		<type>entry</type>
-		<label>Absolute physical path:</label>
-		<property>physicalpath</property>
-		<required>1</required>
-		<documentation>The absolute physical path of the Virtual Directory to create, i.e: 'c:/Inetpub/wwwroot/myvdir'. (Required)</documentation>
+		<documentation>The name of the site that contains the app to assign. i.e: 'Default Web Site'. (Required)</documentation>
 	</formElement>		
 </editor>

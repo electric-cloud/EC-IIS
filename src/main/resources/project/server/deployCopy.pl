@@ -1,25 +1,18 @@
-#!/usr/bin/env perl
-# include $[/myProject/preamble]
-# line 4 "[EC]/@PLUGIN_KEY@-@PLUGIN_VERSION@/deployCopy.pl"
-# -------------------------------------------------------------------------
-# File
-#    deployCopy.pl
 #
-# Dependencies
-#    None
+#  Copyright 2015 Electric Cloud, Inc.
 #
-# Template Version
-#    1.0
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
-# Date
-#    06/27/2011
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-# Engineer
-#    Ed Cardinal
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 #
-# Copyright (c) 2011 Electric Cloud, Inc.
-# All rights reserved
-# -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
 # Includes
@@ -27,7 +20,6 @@
 use ElectricCommander;
 use ElectricCommander::PropDB;
 use strict;
-
 #use warnings;
 use File::Spec;
 use Carp;
@@ -41,8 +33,8 @@ use constant {
     SUCCESS => 0,
     ERROR   => 1,
 
-    PLUGIN_NAME   => 'EC-IIS',
-    CREDENTIAL_ID => 'credential',
+    PLUGIN_NAME    => 'EC-IIS',
+    CREDENTIAL_ID  => 'credential',
 
 };
 
@@ -74,35 +66,28 @@ sub main() {
     # -------------------------------------------------------------------------
 
     # TODO: !!!!!!!!!!!  CANNONICAL PATHS with File::Spec !!!!!!!!!!!
-    my $sourcePath =
-      ( $ec->getProperty("SourcePath") )->findvalue('//value')->string_value;
-    my $execPath =
-      ( $ec->getProperty("ExecPath") )->findvalue('//value')->string_value;
-    my $destinationPath =
-      ( $ec->getProperty("DestinationPath") )->findvalue('//value')
-      ->string_value;
-    my $additionalOptions =
-      ( $ec->getProperty("AdditionalOptions") )->findvalue('//value')
-      ->string_value;
+    my $sourcePath = ($ec->getProperty( "SourcePath" ))->findvalue('//value')->string_value;
+    my $execPath = ($ec->getProperty( "ExecPath" ))->findvalue('//value')->string_value;
+    my $destinationPath = ($ec->getProperty( "DestinationPath" ))->findvalue('//value')->string_value;
+    my $additionalOptions = ($ec->getProperty( "AdditionalOptions" ))->findvalue('//value')->string_value;
 
     my %configuration;
     my %props;
 
     #generate command line from array of executable + arguments
-
+    
     ## xcopy <source> <dest>  /E /K /R /H /I /Y
-#  / E - Deep copy including empty dirs
-#   /K - Copy attributes
-#   /R  - Overwrite read-only files
-#   /H - Copy hidden and system files
-#   /I - If destination does not exist and copying more than one file, assumes that destination must be a directory.
-#   /Y - Supress prompting for overwrite confirmation
+    #  / E - Deep copy including empty dirs
+    #   /K - Copy attributes
+    #   /R  - Overwrite read-only files
+    #   /H - Copy hidden and system files
+    #   /I - If destination does not exist and copying more than one file, assumes that destination must be a directory.
+    #   /Y - Supress prompting for overwrite confirmation
 
     # Put quotes around paths in case of spaces
     push( @commandArgs, qq{"$execPath"} );
     push( @commandArgs, qq{"$sourcePath"} );
     push( @commandArgs, qq{"$destinationPath"} );
-
     # Note: no quotes around option switches
     push( @commandArgs, qq{$additionalOptions} );
 
@@ -123,12 +108,12 @@ sub main() {
 
             $ec->setProperty( "/myJobStep/outcome", 'success' );
 
-           # set any additional error or warning conditions here
-           # there may be cases in which an error occurs and the exit code is 0.
-           # we want to set to correct outcome for the running step
-           #if ( $content !~ m/has been STARTED|is already STARTED/ ) {
-           #    $ec->setProperty( "/myJobStep/outcome", 'error' );
-           #}
+         # set any additional error or warning conditions here
+         # there may be cases in which an error occurs and the exit code is 0.
+         # we want to set to correct outcome for the running step
+         #if ( $content !~ m/has been STARTED|is already STARTED/ ) {
+         #    $ec->setProperty( "/myJobStep/outcome", 'error' );
+         #}
 
         }
         else {

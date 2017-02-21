@@ -46,7 +46,7 @@ use constant {
     GENERATE_REPORT => 1,
     DO_NOT_GENERATE_REPORT => 0,
 
-    # IIS7 defaults
+    # IIS defaults
     DEFAULT_APPCMD_PATH => ($ENV{windir} || 'C:\\').'\system32\inetsrv\appcmd',
 
 };

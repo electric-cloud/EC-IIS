@@ -16,7 +16,7 @@
 
 # -------------------------------------------------------------------------
    # File
-   #    deleteVirtualDirectory.pl
+   #    listSiteApps.pl
    #
    # Dependencies
    #    None
@@ -25,7 +25,7 @@
    #    1.0
    #
    # Date
-   #    08/08/2011
+   #    08/09/2011
    #
    # Engineer
    #    Alonso Blanco
@@ -94,7 +94,7 @@
   
   $::gEC = new ElectricCommander();
       $::gEC->abortOnError(0);
-  $::gAppName = ($::gEC->getProperty("appname") )->findvalue("//value");
+  $::gSiteName = ($::gEC->getProperty("sitename") )->findvalue("//value");
   
   # -------------------------------------------------------------------------
   # Main functions
@@ -120,9 +120,14 @@
     my $appcmdLocation = DEFAULT_APPCMD_PATH;
     my %props;
     
-    $cmdLine = "$appcmdLocation delete vdir /vdir.name:\"$::gAppName\"";
+	if ($::gSiteName && $::gSiteName ne '') {
+		$cmdLine = "$appcmdLocation list app /site.name:\"$::gSiteName\"";
+	} else {
+		$cmdLine = "$appcmdLocation list app";
+	}
   
     #execute command line that creates the app pool
+    print "===========App Search Results===========\n";
     print "$cmdLine\n";
     $content = `$cmdLine`;
  
@@ -132,10 +137,6 @@
     if($? == SUCCESS){
      
         $::gEC->setProperty("/myJobStep/outcome", 'success');
-        
-        if($content !~ m/VDIR object "(.+)" deleted/){
-            $::gEC->setProperty("/myJobStep/outcome", 'error');
-        }
         
     }else{
         $::gEC->setProperty("/myJobStep/outcome", 'error');
