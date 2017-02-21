@@ -147,6 +147,12 @@ my %deployCopy = (
     description => "Copies the application files recursively to the website application's physical directory.",
     category    => "Application Server"
 );
+my %deploy = (
+    label       => "IIS - Deploy",
+    procedure   => "Deploy",
+    description => "Deploys an application using MS Deploy.",
+    category    => "Application Server"
+);
 my %undeploy = (
     label       => "IIS - Undeploy",
     procedure   => "Undeploy",
@@ -225,4 +231,5 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop Website")
                             \%deleteWebSite, \%deployCopy,
                             \%listSiteApps, \%listSites,
                             \%startAppPool, \%startWebSite,
-                            \%stopAppPool, \%stopWebSite, \%deployAdvanced, \%undeploy);
+                            \%stopAppPool, \%stopWebSite, \%deployAdvanced,
+                             \%undeploy, \%deploy);

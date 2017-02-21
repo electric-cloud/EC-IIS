@@ -1,0 +1,58 @@
+<!--
+
+     Copyright 2015 Electric Cloud, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<editor>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#Deploy</help>
+    <label>Application Server - IIS Deploy</label>
+    <version>@PLUGIN_VERSION@</version>
+    <description>Deploys an application using MS Deploy.</description>
+    <formElement>
+        <type>entry</type>
+        <label>MS Deploy path:</label>
+        <property>msdeployPath</property>
+        <required>1</required>
+        <documentation>Provide the relative or absolute path to the MSDeploy executable.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Deploy source path:</label>
+        <property>source</property>
+        <required>1</required>
+        <documentation>A path to package (application.zip) or to directory which contains the content to be deployed.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Destination website:</label>
+        <property>websiteName</property>
+        <required>1</required>
+        <documentation>A name of the web site to be deployed.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Destination application:</label>
+        <property>applicationPath</property>
+        <required>0</required>
+        <documentation>A name of the application to be deployed. If not provided, the content will be placed under the website.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Application pool name:</label>
+        <property>applicationPool</property>
+        <required>0</required>
+        <documentation>Application pool name. If the application pool does not exists, it will be created. If this parameter was not specified, the application will be placed into the default pool, which has the same name as website.</documentation>
+    </formElement>
+</editor>
