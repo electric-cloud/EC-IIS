@@ -289,4 +289,14 @@
     <path>forms/IISListSiteAppsForm.xml</path>
     <xpath>//procedure[procedureName=&quot;ListSiteApps&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
+
+  <file>
+    <path>server/resetServer.pl</path>
+    <xpath>//procedure[procedureName=&quot;ResetServer&quot;]/step[stepName=&quot;ResetServer&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>forms/IISResetServerForm.xml</path>
+    <xpath>//procedure[procedureName=&quot;ResetServer&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+
 </fileset>
