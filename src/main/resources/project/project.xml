@@ -447,7 +447,7 @@
                 <workingDirectory/>
                 <workspaceName/>
                 <procedureName>StartWebSite</procedureName>
-                <projectName>EC-IIS7</projectName>
+                <projectName>EC-IIS</projectName>
                 <propertySheet>
                     <property>
                         <propertyName>ec_customEditorData</propertyName>
@@ -527,7 +527,7 @@
                 <workingDirectory/>
                 <workspaceName/>
                 <procedureName>StopWebSite</procedureName>
-                <projectName>EC-IIS7</projectName>
+                <projectName>EC-IIS</projectName>
                 <propertySheet>
                     <property>
                         <propertyName>ec_customEditorData</propertyName>
@@ -989,7 +989,7 @@
                 <workingDirectory/>
                 <workspaceName/>
                 <procedureName>DeployCopy</procedureName>
-                <projectName>EC-IIS7</projectName>
+                <projectName>EC-IIS</projectName>
                 <propertySheet>
                     <property>
                         <propertyName>ec_customEditorData</propertyName>

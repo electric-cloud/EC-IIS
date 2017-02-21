@@ -27,7 +27,7 @@ repositories {
 
 group = "com.electriccloud"
 description = "Plugins : EC-IIS"
-version = "2.0.7"
+version = "3.0.0"
 
 apply plugin: 'flow-gradle-plugin'
 

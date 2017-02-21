@@ -54,7 +54,7 @@
        SUCCESS => 0,
        ERROR   => 1,
        
-       PLUGIN_NAME => 'EC-IIS7',
+       PLUGIN_NAME => 'EC-IIS',
        WIN_IDENTIFIER => 'MSWin32',
        DEFAULT_APPCMD_PATH => '%windir%\system32\inetsrv\appcmd',
        CREDENTIAL_ID => 'credential',

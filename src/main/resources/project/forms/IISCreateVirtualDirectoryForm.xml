@@ -1,49 +1,44 @@
+<!--
+
+     Copyright 2015 Electric Cloud, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateVirtualDirectory</help>
 	<label>Application Server - IIS CreateVirtualDirectory</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>This procedure creates a new virtual directory in the specified web site.</description>	
+	<description>Creates a virtual directory into the specified Website.</description>	
 	<formElement>
 		<type>entry</type>
-		<label>Configuration name:</label>
-		<property>configname</property>
+		<label>Application name:</label>
+		<property>appname</property>
 		<required>1</required>
-        <documentation>Provide the name of the configuration that holds connection information for the IIS server. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-        <htmlDocumentation>Provide the name of the configuration that holds connection information for the IIS server.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
-	</formElement>			
-	<formElement>
-		<type>entry</type>
-		<label>Absolute path of the script utility:</label>
-		<property>execpath</property>
-		<required>1</required>
-		<documentation>Provide the absolute path of the script utility used to execute this step. If only 'iisvdir' is entered, the 'iisvdir' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisvdir' or 'c:/MyDir/IISFiles/iisvdir.vbs'. (Required)</documentation>
+		<documentation>The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Web Site/myapp02'. (Required)</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
-		<label>Absolute path attached to the virtual directory:</label>
-		<property>absolutephysicalpath</property>
+		<label>Virtual path:</label>
+		<property>path</property>
 		<required>1</required>
-		<documentation>Provide the absolute physical path assigned to the virtual directory you want to create. i.e: 'c:/Inetpub/wwwroot/myvirtualdir'. (Required)</documentation>
-	</formElement>			
-	<formElement>
-		<type>entry</type>
-		<label>Name of the virtual directory:</label>
-		<property>virtualdirname</property>
-		<required>1</required>
-		<documentation>Provide the name for the virtual directory. (Required)</documentation>
+		<documentation>Virtual path of the virtual directory, i.e: '/myvirtualdir'. (Required)</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
-		<label>Path of the virtual directory:</label>
-		<property>virtualpath</property>
-		<required>0</required>
-		<documentation>Provide a path, if necessary, to the virtual directory within the web site.</documentation>
-	</formElement>		
-	<formElement>
-		<type>entry</type>
-		<label>Website name:</label>
-		<property>website</property>
+		<label>Absolute physical path:</label>
+		<property>physicalpath</property>
 		<required>1</required>
-		<documentation>Provide the descriptive name, or the metabase path, of the web site for the virtual directory you want to create. (Required)</documentation>
+		<documentation>The absolute physical path of the Virtual Directory to create, i.e: 'c:/Inetpub/wwwroot/myvdir'. (Required)</documentation>
 	</formElement>		
 </editor>

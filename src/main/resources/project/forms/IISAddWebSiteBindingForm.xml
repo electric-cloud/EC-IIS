@@ -16,29 +16,31 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#AssignAppToAppPool</help>
-	<label>Application Server - IIS7 AssignAppToAppPool</label>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#AddWebSiteBinding</help>
+	<label>Application Server - IIS AddWebSiteBinding</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Assigns an application to an application pool.</description>	
+	<description>Adds a binding to a Website.</description>			
 	<formElement>
 		<type>entry</type>
-		<label>Application pool name:</label>
-		<property>apppoolname</property>
+		<label>Website name:</label>
+		<property>websitename</property>
+		<documentation>The name of the Website to add a binding, i.e: 'Default Web Site'. (Required)</documentation>
 		<required>1</required>
-		<documentation>The name of the Application Pool to assign the application. i.e: 'FirstAppPool'. (Required)</documentation>
-	</formElement>		
+	</formElement>
+	
 	<formElement>
 		<type>entry</type>
-		<label>Application name:</label>
-		<property>appname</property>
+		<label>Binding protocol:</label>
+		<property>bindingProtocol</property>
+		<documentation>Protocol of the binding to add, i.e: 'http'. (Required)</documentation>
 		<required>1</required>
-		<documentation>The name of the application to assign. i.e: '/test'. (Required)</documentation>
-	</formElement>		
+	</formElement>
+	
 	<formElement>
 		<type>entry</type>
-		<label>Site name:</label>
-		<property>sitename</property>
+		<label>Binding information:</label>
+		<property>bindingInformation</property>
+		<documentation>Information of the binding to add, including the host and the port, i.e: 'localhost:443', '*:81'. (Required)</documentation>
 		<required>1</required>
-		<documentation>The name of the site that contains the app to assign. i.e: 'Default Web Site'. (Required)</documentation>
-	</formElement>		
+	</formElement>	
 </editor>

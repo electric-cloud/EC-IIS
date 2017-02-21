@@ -76,132 +76,132 @@ if ($upgradeAction eq "upgrade") {
 }
 
 my %checkServerStatus = (
-    label       => "IIS7 - Check Server Status",
+    label       => "IIS - Check Server Status",
     procedure   => "CheckServerStatus",
     description => "Checks the status of the specified server.",
     category    => "Application Server"
 );
 my %addWebSiteBinding = (
-    label       => "IIS7 - Add Website Binding",
+    label       => "IIS - Add Website Binding",
     procedure   => "AddWebSiteBinding",
     description => "Adds a binding to the website.",
     category    => "Application Server"
 );
 my %assignAppToAppPool = (
-    label       => "IIS7 - Assign App To App Pool",
+    label       => "IIS - Assign App To App Pool",
     procedure   => "AssignAppToAppPool",
     description => "Assigns an application to an application pool.",
     category    => "Application Server"
 );
 my %createAppPool = (
-    label       => "IIS7 - Create App Pool",
+    label       => "IIS - Create App Pool",
     procedure   => "CreateAppPool",
     description => "Creates an IIS application pool.",
     category    => "Application Server"
 );
 my %createVirtualDirectory = (
-    label       => "IIS7 - Create Virtual Directory",
+    label       => "IIS - Create Virtual Directory",
     procedure   => "CreateVirtualDirectory",
     description => "Creates a new virtual directory in the specified website.",
     category    => "Application Server"
 );
 my %createWebApplication = (
-    label       => "IIS7 - Create Web Application",
+    label       => "IIS - Create Web Application",
     procedure   => "CreateWebApplication",
     description => "Creates and starts an in-process web application in the given directory.",
     category    => "Application Server"
 );
 my %createWebSite = (
-    label       => "IIS7 - Create Website",
+    label       => "IIS - Create Website",
     procedure   => "CreateWebSite",
     description => "Creates a website configuration on a local or remote computer.",
     category    => "Application Server"
 );
 my %deleteAppPool = (
-    label       => "IIS7 - Delete App Pool",
+    label       => "IIS - Delete App Pool",
     procedure   => "DeleteAppPool",
     description => "Deletes an application pool.",
     category    => "Application Server"
 );
 my %deleteVirtualDirectory = (
-    label       => "IIS7 - Delete Virtual Directory",
+    label       => "IIS - Delete Virtual Directory",
     procedure   => "DeleteVirtualDirectory",
     description => "Deletes a virtual directory from the specified website.",
     category    => "Application Server"
 );
 my %deleteWebApplication = (
-    label       => "IIS7 - Delete Web Application",
+    label       => "IIS - Delete Web Application",
     procedure   => "DeleteWebApplication",
     description => "Deletes a web application.",
     category    => "Application Server"
 );
 my %deleteWebSite = (
-    label       => "IIS7 - Delete Website",
+    label       => "IIS - Delete Website",
     procedure   => "DeleteWebSite",
     description => "Deletes a website.",
     category    => "Application Server"
 );
 my %deployCopy = (
-    label       => "IIS7 - Deploy Copy",
+    label       => "IIS - Deploy Copy",
     procedure   => "DeployCopy",
     description => "Copies the application files recursively to the website application's physical directory.",
     category    => "Application Server"
 );
 my %listSiteApps = (
-    label       => "IIS7 - List Site Apps",
+    label       => "IIS - List Site Apps",
     procedure   => "ListSiteApps",
     description => "List the apps of a Website.",
     category    => "Application Server"
 );
 my %listSites = (
-    label       => "IIS7 - List Sites",
+    label       => "IIS - List Sites",
     procedure   => "ListSites",
     description => "List the sites on a web server.",
     category    => "Application Server"
 );
 my %startAppPool = (
-    label       => "IIS7 - Start App Pool",
+    label       => "IIS - Start App Pool",
     procedure   => "StartAppPool",
     description => "Starts an IIS application pool.",
     category    => "Application Server"
 );
 my %startWebSite = (
-    label       => "IIS7 - Start Website",
+    label       => "IIS - Start Website",
     procedure   => "StartWebSite",
     description => "Starts a website.",
     category    => "Application Server"
 );
 my %stopAppPool = (
-    label       => "IIS7 - Stop App Pool",
+    label       => "IIS - Stop App Pool",
     procedure   => "StopAppPool",
     description => "Stops an IIS application pool.",
     category    => "Application Server"
 );	
 my %stopWebSite = (
-    label       => "IIS7 - Stop Website",
+    label       => "IIS - Stop Website",
     procedure   => "StopWebSite",
     description => "Stops an IIS Website.",
     category    => "Application Server"
 );
 
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Check Server Status");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Add Website Binding");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Assign App To App Pool");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Create App Pool");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Create Virtual Directory");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Create Web Application");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Create Website");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Delete App Pool");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Delete Virtual Directory");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Delete Web Application");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Delete Website");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Deploy Copy");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - List Site Apps");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - List Sites");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Start App Pool");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Start Website");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Stop App Pool");
-$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS7 - Stop Website");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Check Server Status");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Add Website Binding");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Assign App To App Pool");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create App Pool");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Virtual Directory");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Web Application");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Website");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete App Pool");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Virtual Directory");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Web Application");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Website");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Copy");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Site Apps");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Sites");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start App Pool");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start Website");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop App Pool");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop Website");
 
 @::createStepPickerSteps = (\%checkServerStatus, \%addWebSiteBinding,
                             \%assignAppToAppPool, \%createAppPool,

@@ -194,75 +194,75 @@
     <xpath>//property[propertyName=&quot;EC::IIS&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7AddWebSiteBindingForm.xml</path>
+    <path>forms/IISAddWebSiteBindingForm.xml</path>
     <xpath>//procedure[procedureName=&quot;AddWebSiteBinding&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7StartWebSiteForm.xml</path>
+    <path>forms/IISStartWebSiteForm.xml</path>
     <xpath>//procedure[procedureName=&quot;StartWebSite&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7StopWebSiteForm.xml</path>
+    <path>forms/IISStopWebSiteForm.xml</path>
     <xpath>//procedure[procedureName=&quot;StopWebSite&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7CreateAppPoolForm.xml</path>
+    <path>forms/IISCreateAppPoolForm.xml</path>
     <xpath>//procedure[procedureName=&quot;CreateAppPool&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7DeleteAppPoolForm.xml</path>
+    <path>forms/IISDeleteAppPoolForm.xml</path>
     <xpath>//procedure[procedureName=&quot;DeleteAppPool&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7StartAppPoolForm.xml</path>
+    <path>forms/IISStartAppPoolForm.xml</path>
     <xpath>//procedure[procedureName=&quot;StartAppPool&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7StopAppPoolForm.xml</path>
+    <path>forms/IISStopAppPoolForm.xml</path>
     <xpath>//procedure[procedureName=&quot;StopAppPool&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7CreateWebSiteForm.xml</path>
+    <path>forms/IISCreateWebSiteForm.xml</path>
     <xpath>//procedure[procedureName=&quot;CreateWebSite&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7DeleteWebSiteForm.xml</path>
+    <path>forms/IISDeleteWebSiteForm.xml</path>
     <xpath>//procedure[procedureName=&quot;DeleteWebSite&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7AssignAppToAppPoolForm.xml</path>
+    <path>forms/IISAssignAppToAppPoolForm.xml</path>
     <xpath>//procedure[procedureName=&quot;AssignAppToAppPool&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7DeployCopyForm.xml</path>
+    <path>forms/IISDeployCopyForm.xml</path>
     <xpath>//procedure[procedureName=&quot;DeployCopy&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7CheckServerStatusForm.xml</path>
+    <path>forms/IISCheckServerStatusForm.xml</path>
     <xpath>//procedure[procedureName=&quot;CheckServerStatus&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7CreateVirtualDirectoryForm.xml</path>
+    <path>forms/IISCreateVirtualDirectoryForm.xml</path>
     <xpath>//procedure[procedureName=&quot;CreateVirtualDirectory&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7DeleteVirtualDirectoryForm.xml</path>
+    <path>forms/IISDeleteVirtualDirectoryForm.xml</path>
     <xpath>//procedure[procedureName=&quot;DeleteVirtualDirectory&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7CreateWebApplicationForm.xml</path>
+    <path>forms/IISCreateWebApplicationForm.xml</path>
     <xpath>//procedure[procedureName=&quot;CreateWebApplication&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7DeleteWebApplicationForm.xml</path>
+    <path>forms/IISDeleteWebApplicationForm.xml</path>
     <xpath>//procedure[procedureName=&quot;DeleteWebApplication&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7ListSitesForm.xml</path>
+    <path>forms/IISListSitesForm.xml</path>
     <xpath>//procedure[procedureName=&quot;ListSites&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
-    <path>forms/IIS7ListSiteAppsForm.xml</path>
+    <path>forms/IISListSiteAppsForm.xml</path>
     <xpath>//procedure[procedureName=&quot;ListSiteApps&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
 </fileset>

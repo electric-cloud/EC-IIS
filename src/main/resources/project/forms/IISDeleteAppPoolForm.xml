@@ -16,15 +16,15 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StartAppPool</help>
-	<label>Application Server - IIS7 StartAppPool</label>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteAppPool</help>
+	<label>Application Server - IIS DeleteAppPool</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Starts an application pool.</description>	
+	<description>Deletes an application pool.</description>	
 	<formElement>
 		<type>entry</type>
 		<label>Application pool name:</label>
 		<property>apppoolname</property>
 		<required>1</required>
-		<documentation>The name of the application pool to start. i.e: 'FirstAppPool'. (Required)</documentation>
+		<documentation>The name of the application pool to delete. (Required)</documentation>
 	</formElement>		
 </editor>

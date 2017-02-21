@@ -16,15 +16,15 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StartWebSite</help>
-	<label>Application Server - IIS7 StartWebSite</label>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteWebApplication</help>
+	<label>Application Server - IIS DeleteWebApplication</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Starts a website into an IIS Server.</description>	
+	<description>Deletes a web application into the specified website.</description>	
 	<formElement>
 		<type>entry</type>
-		<label>Website name:</label>
-		<property>sitename</property>
+		<label>Application name:</label>
+		<property>appname</property>
 		<required>1</required>
-		<documentation>Provide the descriptive name of the website you want to start. i.e: 'Default Web Site'. (Required)</documentation>
-	</formElement>			
+		<documentation>The website that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</documentation>
+	</formElement>		
 </editor>
