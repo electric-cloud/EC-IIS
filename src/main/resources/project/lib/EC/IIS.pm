@@ -353,6 +353,68 @@ sub create_msdeploy_command {
     return $command;
 }
 
+sub step_deploy_advanced {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        msdeployPath verb sourceProvider
+        sourceProviderObjectPath sourceProviderSettings destProvider
+        destProviderObjectPath destProviderSettings allowUntrusted
+        preSync postSync
+        additionalOptions
+        setParamFile declareParamFile/
+    );
+
+    my $command = $self->create_msdeploy_command($params);
+    $self->set_cmd_line($command);
+
+    my $result = $self->run_command($command);
+    if ($result->{code} != 0) {
+        $self->bail_out("Error: $result->{stderr}");
+    }
+    else {
+        print $result->{stdout};
+    }
+}
+
+sub step_undeploy {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        msdeployPath websiteName
+        applicationName
+        deleteVirtualDirectories/);
+    my $command = $self->create_undeploy_command($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+    if ($result->{code} != 0) {
+        # This is not an error, just a warning
+        if ($result->{stderr} =~ m/Error: Provider rootWebConfig32 is blocked, by BlockHarmfulDeleteOperations, from performing delete operations to avoid harmful results/) {
+            print $result->{stdout};
+        }
+        else {
+            $self->bail_out("Error: $result->{stderr}");
+        }
+    }
+
+    print $result->{stdout};
+}
+
+sub create_undeploy_command {
+    my ($self, $params) = @_;
+
+    my $provider = $params->{deleteVirtualDirectories} ? 'appHostConfig' : 'iisApp';
+
+    my $exec = EC::Plugin::Core::canon_path($params->{msdeployPath});
+    my $command = qq{"$exec" -verb:delete};
+    my $dest = $params->{websiteName};
+    if ($params->{applicationName}) {
+        $dest .= "/$params->{applicationName}";
+    }
+    $command .= qq{ -dest:$provider="$dest"};
+    return $command;
+}
+
 sub set_cmd_line {
     my ($self, $cmd_line) = @_;
 

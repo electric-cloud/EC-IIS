@@ -142,6 +142,10 @@
     <xpath>//procedure[procedureName=&quot;DeployAdvanced&quot;]/step[stepName=&quot;Deploy&quot;]/command</xpath>
   </file>
   <file>
+    <path>server/undeploy.pl</path>
+    <xpath>//procedure[procedureName=&quot;Undeploy&quot;]/step[stepName=&quot;Undeploy&quot;]/command</xpath>
+  </file>
+  <file>
     <path>server/checkServerStatus.pl</path>
     <xpath>//procedure[procedureName=&quot;CheckServerStatus&quot;]/step[stepName=&quot;CheckServerStatus&quot;]/command</xpath>
   </file>
@@ -204,6 +208,10 @@
   <file>
     <path>forms/IISDeployAdvanced.xml</path>
     <xpath>//procedure[procedureName=&quot;DeployAdvanced&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>forms/IISUndeployForm.xml</path>
+    <xpath>//procedure[procedureName=&quot;Undeploy&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
     <path>forms/IISStartWebSiteForm.xml</path>

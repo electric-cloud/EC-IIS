@@ -147,6 +147,12 @@ my %deployCopy = (
     description => "Copies the application files recursively to the website application's physical directory.",
     category    => "Application Server"
 );
+my %undeploy = (
+    label       => "IIS - Undeploy",
+    procedure   => "Undeploy",
+    description => "Removes previously deployed content",
+    category    => "Application Server"
+);
 my %deployAdvanced = (
     label       => "IIS - Deploy Advanced",
     procedure   => "DeployAdvanced",
@@ -203,6 +209,7 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Web App
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Website");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Copy");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Advanced");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Undeploy");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Site Apps");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Sites");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start App Pool");
@@ -218,4 +225,4 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop Website")
                             \%deleteWebSite, \%deployCopy,
                             \%listSiteApps, \%listSites,
                             \%startAppPool, \%startWebSite,
-                            \%stopAppPool, \%stopWebSite, \%deployAdvanced);
+                            \%stopAppPool, \%stopWebSite, \%deployAdvanced, \%undeploy);
