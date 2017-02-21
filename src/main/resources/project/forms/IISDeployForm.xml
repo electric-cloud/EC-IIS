@@ -53,6 +53,7 @@
         <label>Application pool name:</label>
         <property>applicationPool</property>
         <required>0</required>
+        <value>$[websiteName]</value>
         <documentation>Application pool name. If the application pool does not exists, it will be created. If this parameter was not specified, the application will be placed into the default pool, which has the same name as website.</documentation>
     </formElement>
 </editor>

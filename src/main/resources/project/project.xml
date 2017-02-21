@@ -1264,7 +1264,7 @@
             <propertySheet>
               <property>
                       <propertyName>ec_parameterForm</propertyName>
-                      <expandable>1</expandable>
+                      <expandable>0</expandable>
                       <value></value>
               </property>
                 <property>
@@ -1325,7 +1325,7 @@
             </formalParameter>
             <formalParameter>
                 <formalParameterName>applicationPool</formalParameterName>
-                <defaultValue/>
+                <defaultValue>$[websiteName]</defaultValue>
                 <description>Application pool name. If the application pool does not exists, it will be created.</description>
                 <required>0</required>
                 <type>entry</type>
