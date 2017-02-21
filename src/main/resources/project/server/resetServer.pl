@@ -49,33 +49,6 @@ use constant {
     CREDENTIAL_ID => 'credential',
 };
 
-########################################################################
-# trim - deletes blank spaces before and after the entered value in
-# the argument
-#
-# Arguments:
-#   -untrimmedString: string that will be trimmed
-#
-# Returns:
-#   trimmed string
-#
-########################################################################
-sub trim($) {
-
-    my ($untrimmedString) = @_;
-
-    my $string = $untrimmedString;
-
-    #removes leading spaces
-    $string =~ s/^\s+//;
-
-    #removes trailing spaces
-    $string =~ s/\s+$//;
-
-    #returns trimmed string
-    return $string;
-}
-
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
@@ -115,13 +88,14 @@ sub main() {
     }
 
     #inject config...
+    # TODO Fail LOUDLY
     if (%configuration) {
 
         if ( $configuration{'iis_url'} && $configuration{'iis_url'} ne '' ) {
             $url = $configuration{'iis_url'};
         }
         else {
-            exit ERROR;
+            die "Failed to locate URL in IIS configuration '$::gConfigName'";
         }
 
         if ( $configuration{'user'} ne '' && $configuration{'password'} ne '' )
@@ -134,9 +108,7 @@ sub main() {
 
     }
     else {
-
-        exit ERROR;
-
+        die "Failed to locate IIS configuration '$::gConfigName'";
     }
 
     #commands to be executed for version 6
@@ -161,10 +133,7 @@ sub main() {
 
     }
     else {
-
-        print "Error: could not generate command line";
-        exit ERROR;
-
+        die "Error: could not generate command line";
     }
 
 }
@@ -252,7 +221,7 @@ sub getConfiguration($) {
 
     # Check if configuration exists
     unless ( keys(%configRow) ) {
-        exit ERROR;
+        die "Failed to locate configRow in config '$configName'";
     }
 
     # Get user/password out of credential
