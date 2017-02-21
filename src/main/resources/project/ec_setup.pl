@@ -36,7 +36,7 @@ if ($upgradeAction eq "upgrade") {
             });
         }
     }
-    
+
     # Copy configuration credentials and attach them to the appropriate steps
     my $nodes = $query->find($creds);
     if ($nodes) {
@@ -147,6 +147,12 @@ my %deployCopy = (
     description => "Copies the application files recursively to the website application's physical directory.",
     category    => "Application Server"
 );
+my %deployAdvanced = (
+    label       => "IIS - Deploy Advanced",
+    procedure   => "DeployAdvanced",
+    description => "Uses MS Deploy to deploy an application.",
+    category    => "Application Server"
+);
 my %listSiteApps = (
     label       => "IIS - List Site Apps",
     procedure   => "ListSiteApps",
@@ -176,7 +182,7 @@ my %stopAppPool = (
     procedure   => "StopAppPool",
     description => "Stops an IIS application pool.",
     category    => "Application Server"
-);	
+);
 my %stopWebSite = (
     label       => "IIS - Stop Website",
     procedure   => "StopWebSite",
@@ -196,6 +202,7 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Virtual
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Web Application");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Website");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Copy");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Advanced");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Site Apps");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Sites");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start App Pool");
@@ -211,4 +218,4 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop Website")
                             \%deleteWebSite, \%deployCopy,
                             \%listSiteApps, \%listSites,
                             \%startAppPool, \%startWebSite,
-                            \%stopAppPool, \%stopWebSite);
+                            \%stopAppPool, \%stopWebSite, \%deployAdvanced);

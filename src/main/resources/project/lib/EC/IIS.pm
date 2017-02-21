@@ -28,7 +28,8 @@ EC::IIS - Electric Commander Microsoft IIS integration plugin core.
 use Carp;
 use File::Temp qw(tempfile);
 require Win32 if $^O eq 'MSWin32';
-use base qw(Exporter);
+use EC::Plugin::Core;
+use base qw(Exporter EC::Plugin::Core);
 our @EXPORT_OK = qw(trim);
 
 use ElectricCommander;
@@ -289,6 +290,89 @@ sub getConfiguration($){
     }
 
     return \%configToUse;
+}
+
+sub create_msdeploy_command {
+    my ($self, $params) = @_;
+
+    my $exec = EC::Plugin::Core::canon_path($params->{msdeployPath});
+    my $command = "\"$exec\" -verb:$params->{verb}";
+
+    $command .= " -source:$params->{sourceProvider}";
+    if ($params->{sourceProviderObjectPath}) {
+        my $path = EC::Plugin::Core::canon_path($params->{sourceProviderObjectPath});
+        $command .= qq{="$path"};
+    }
+    if ($params->{sourceProviderSettings}) {
+        $command .= ",$params->{sourceProviderSettings}";
+    }
+    $command .= " -dest:$params->{destProvider}";
+    if ($params->{destProviderObjectPath}) {
+        my $path = EC::Plugin::Core::canon_path($params->{destProviderObjectPath});
+        $command .= qq{="$path"};
+    }
+    if ($params->{destProviderSettings}) {
+        $command .= ",$params->{destProviderSettings}";
+    }
+    if ($params->{allowUntrusted}) {
+        $command .= " -allowUntrusted";
+    }
+    if ($params->{postSync}) {
+        $command .= " -postSync:\"$params->{postSync}\"";
+    }
+    if ($params->{preSync}) {
+        $command .= " -preSync:\"$params->{preSync}\"";
+    }
+    if ($params->{setParamFile}) {
+        if (_is_xml($params->{setParamFile}) && $params->{setParamFile} =~ m/parameters/) {
+            my $filename = _save_params_file($params->{setParamFile});
+            $command .= " -setParamFile:$filename";
+        }
+        elsif (-f $params->{setParamFile}) {
+            $command .= " -setParamFile:$params->{setParamFile}";
+        }
+        else {
+            $self->bail_out("The file $params->{setParamFile} is not found");
+        }
+    }
+    if ($params->{declareParamFile}) {
+        if (_is_xml($params->{declareParamFile}) && $params->{declareParamFile} =~ m/parameters/) {
+            my $filename = _save_params_file($params->{declareParamFile});
+            $command .= " -declareParamFile:$filename";
+        }
+        elsif (-f $params->{declareParamFile}) {
+            $command .= " -declareParamFile:$params->{declareParamFile}";
+        }
+        else {
+            $self->bail_out("The file $params->{declareParamFile} is not found");
+        }
+    }
+    if ($params->{additionalOptions}) {
+        $command .= " $params->{additionalOptions}";
+    }
+    return $command;
+}
+
+sub set_cmd_line {
+    my ($self, $cmd_line) = @_;
+
+    $self->get_ec->setProperty('/myCall/cmdLine', $cmd_line);
+}
+
+sub _is_xml {
+    my ($content) = @_;
+
+    return $content =~ m/[<>]/;
+}
+
+sub _save_params_file {
+    my ($content) = @_;
+
+    my $filename = "param_file_" . EC::Plugin::Core::gen_random_numbers(42) . ".xml";
+    open my $fh, ">" . $filename or die "Cannot open file $filename: $!";
+    print $fh $content;
+    close $fh;
+    return $filename;
 }
 
 1;
