@@ -16,7 +16,7 @@
 
 # -------------------------------------------------------------------------
    # File
-   #    deleteVirtualDirectory.pl
+   #    deleteAppPool.pl
    #
    # Dependencies
    #    None
@@ -25,16 +25,16 @@
    #    1.0
    #
    # Date
-   #    08/08/2011
+   #    16/12/2011
    #
    # Engineer
-   #    Alonso Blanco
+   #    Rafael Sanchez
    #
    # Copyright (c) 2011 Electric Cloud, Inc.
    # All rights reserved
    # -------------------------------------------------------------------------
    
-   
+
    # -------------------------------------------------------------------------
    # Includes
    # -------------------------------------------------------------------------
@@ -94,7 +94,7 @@
   
   $::gEC = new ElectricCommander();
       $::gEC->abortOnError(0);
-  $::gAppName = ($::gEC->getProperty("appname") )->findvalue("//value");
+  $::gAppPoolName = ($::gEC->getProperty("apppoolname") )->findvalue("//value");
   
   # -------------------------------------------------------------------------
   # Main functions
@@ -120,9 +120,9 @@
     my $appcmdLocation = DEFAULT_APPCMD_PATH;
     my %props;
     
-    $cmdLine = "$appcmdLocation delete vdir /vdir.name:\"$::gAppName\"";
+    $cmdLine = "$appcmdLocation delete apppool /apppool.name:\"$::gAppPoolName\"";
   
-    #execute command line that creates the app pool
+    #execute command line that deletes the application pool
     print "$cmdLine\n";
     $content = `$cmdLine`;
  
@@ -133,7 +133,7 @@
      
         $::gEC->setProperty("/myJobStep/outcome", 'success');
         
-        if($content !~ m/VDIR object "(.+)" deleted/){
+        if($content !~ m/APPPOOL object "(.+)" deleted/){
             $::gEC->setProperty("/myJobStep/outcome", 'error');
         }
         

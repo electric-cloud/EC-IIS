@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2007 sp1 (http://www.altova.com) by Edward Cardinal (Scheible Rassieur, Inc.) -->
 <exportedData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="commander.xsd" version="42" buildLabel="build_3.7_34336_OPT_2010.07.26_15:26:49" buildVersion="3.7.0.34336">
     <exportPath>/projects/@PLUGIN_KEY@-@PLUGIN_VERSION@</exportPath>
     <project>
@@ -24,53 +23,24 @@
                     </property>
                 </propertySheet>
             </property>
+            
             <property>
-                <propertyName>http_matchers</propertyName>
+                <propertyName>startsite_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
             <property>
-                <propertyName>iisreset_matchers</propertyName>
+                <propertyName>stopsite_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
             <property>
-                <propertyName>net_matchers</propertyName>
+                <propertyName>createapppool_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
             <property>
-                <propertyName>sitescript_matchers</propertyName>
-                <expandable>0</expandable>
-                <value/>
-            </property>
-            <property>
-                <propertyName>startwebserver_matchers</propertyName>
-                <expandable>0</expandable>
-                <value/>
-            </property>
-            <property>
-                <propertyName>continuewebserver_matchers</propertyName>
-                <expandable>0</expandable>
-                <value/>
-            </property>
-            <property>
-                <propertyName>pausewebserver_matchers</propertyName>
-                <expandable>0</expandable>
-                <value/>
-            </property>
-            <property>
-                <propertyName>stopwebserver_matchers</propertyName>
-                <expandable>0</expandable>
-                <value/>
-            </property>
-            <property>
-                <propertyName>enablewebapp_matchers</propertyName>
-                <expandable>0</expandable>
-                <value/>
-            </property>
-            <property>
-                <propertyName>disablewebapp_matchers</propertyName>
+                <propertyName>assignapptoapppool_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
@@ -85,69 +55,85 @@
                 <value/>
             </property>
             <property>
-                <propertyName>createapppool_matchers</propertyName>
+                <propertyName>createvirtualdirectory_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
             <property>
-                <propertyName>unloadapp_matchers</propertyName>
+                <propertyName>deletevirtualdirectory_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
             <property>
-                <propertyName>recycleapppool_matchers</propertyName>
+                <propertyName>createwebapplication_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
             <property>
-                <propertyName>deletewebapp_matchers</propertyName>
+                <propertyName>createwebsite_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
             <property>
-                <propertyName>createvirtualdirectory2_matchers</propertyName>
+                <propertyName>addwebsitebinding_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
             <property>
-                <propertyName>createwebsite2_matchers</propertyName>
+                <propertyName>deletewebsite_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
             <property>
-                <propertyName>createwebapp_matchers</propertyName>
+                <propertyName>deleteapppool_matchers</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
-
+            <property>
+                <propertyName>deletewebapplication_matchers</propertyName>
+                <expandable>0</expandable>
+                <value/>
+            </property>
+            <property>
+                <propertyName>listsites_matchers</propertyName>
+                <expandable>0</expandable>
+                <value/>
+            </property>
+            <property>
+                <propertyName>listsiteapps_matchers</propertyName>
+                <expandable>0</expandable>
+                <value/>
+            </property>
+            <property>
+                <propertyName>http_matchers</propertyName>
+                <expandable>0</expandable>
+                <value/>
+            </property>
             <property>
                 <propertyName>ec_setup</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
+	    <property>
+	        <propertyName>EC::IIS</propertyName>
+		<expandable>1</expandable>
+		<value />
+	    </property>
+	    <property>
+	        <propertyName>EC::Plugin::Core</propertyName>
+		<expandable>0</expandable>
+		<value />
+	    </property>
+	    <property>
+	        <propertyName>preamble</propertyName>
+		<expandable>1</expandable>
+		<value />
+	    </property>
             <property>
                 <propertyName>ec_visibility</propertyName>
                 <description/>
                 <expandable>1</expandable>
                 <value>pickListOnly</value>
-            </property>
-            <property>
-                <propertyName>preamble</propertyName>
-                <description />
-                <expandable>0</expandable>
-                <value></value>
-            </property>
-            <property>
-                <propertyName>EC::Plugin::Core</propertyName>
-                <description/>
-                <expandable>0</expandable>
-                <value></value>
-            </property>
-            <property>
-                <propertyName>EC::IIS</propertyName>
-                <description/>
-                <expandable>1</expandable>
-                <value></value>
             </property>
         </propertySheet>
         <procedure>
@@ -212,61 +198,7 @@
                                         </property>
                                     </propertySheet>
                                 </property>
-                                <property>
-                                    <propertyName>connectiontype</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>options</propertyName>
-                                            <propertySheet>
-                                                <property>
-                                                    <propertyName>option1</propertyName>
-                                                    <propertySheet>
-                                                        <property>
-                                                            <propertyName>text</propertyName>
-                                                            <expandable>1</expandable>
-                                                            <value>6.0</value>
-                                                        </property>
-                                                        <property>
-                                                            <propertyName>value</propertyName>
-                                                            <expandable>1</expandable>
-                                                            <value>iis6</value>
-                                                        </property>
-                                                    </propertySheet>
-                                                </property>
-                                                <property>
-                                                    <propertyName>option2</propertyName>
-                                                    <propertySheet>
-                                                        <property>
-                                                            <propertyName>text</propertyName>
-                                                            <expandable>1</expandable>
-                                                            <value>7.0</value>
-                                                        </property>
-                                                        <property>
-                                                            <propertyName>value</propertyName>
-                                                            <expandable>1</expandable>
-                                                            <value>iis7</value>
-                                                        </property>
-                                                    </propertySheet>
-                                                </property>
-                                                <property>
-                                                    <propertyName>optionCount</propertyName>
-                                                    <expandable>1</expandable>
-                                                    <value>2</value>
-                                                </property>
-                                                <property>
-                                                    <propertyName>type</propertyName>
-                                                    <expandable>1</expandable>
-                                                    <value>radio</value>
-                                                </property>
-                                            </propertySheet>
-                                        </property>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
+                                
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -307,7 +239,6 @@
                 <required>0</required>
                 <type>credential</type>
             </formalParameter>
-
             <step>
                 <stepName>CreateConfiguration</stepName>
                 <alwaysRun>0</alwaysRun>
@@ -452,14 +383,15 @@
                 </propertySheet>
             </step>
         </procedure>
+                
         <procedure>
-            <procedureName>StartServer</procedureName>
-            <description>Start an IIS Server</description>
-            <jobNameTemplate>iis-startserver-$[jobId]</jobNameTemplate>
+            <procedureName>StartWebSite</procedureName>
+            <description>Start a Website into an IIS Server</description>
+            <jobNameTemplate>iis7-startwebsite-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
-						<propertyName>ec_parameterForm</propertyName>
+						<propertyName>ec_parameterForm</propertyName>    
 						<expandable>1</expandable>
 						<value></value>
 				</property>
@@ -469,18 +401,9 @@
                         <property>
                             <propertyName>parameters</propertyName>
                             <propertySheet>
+                                
                                 <property>
-                                    <propertyName>execpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>configname</propertyName>
+                                    <propertyName>sitename</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -494,22 +417,17 @@
                     </propertySheet>
                 </property>
             </propertySheet>
+            
             <formalParameter>
-                <formalParameterName>configname</formalParameterName>
+                <formalParameterName>sitename</formalParameterName>
                 <defaultValue/>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
+                <description>Provide the descriptive name of the web site you want to start. i.e: 'Default Web Site'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
-            <formalParameter>
-                <formalParameterName>execpath</formalParameterName>
-                <defaultValue>iisreset</defaultValue>
-                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
+            
             <step>
-                <stepName>StartServer</stepName>
+                <stepName>StartWebSite</stepName>
                 <alwaysRun>0</alwaysRun>
                 <broadcast>0</broadcast>
                 <command/>
@@ -519,7 +437,7 @@
                 <exclusive>0</exclusive>
                 <logFileName/>
                 <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/iisreset_matchers</postProcessor>
+                <postProcessor>postp --loadProperty /myProject/startsite_matchers</postProcessor>
                 <releaseExclusive>0</releaseExclusive>
                 <resourceName/>
                 <retries>0</retries>
@@ -528,7 +446,7 @@
                 <timeLimitUnits>minutes</timeLimitUnits>
                 <workingDirectory/>
                 <workspaceName/>
-                <procedureName>StartServer</procedureName>
+                <procedureName>StartWebSite</procedureName>
                 <projectName>EC-IIS</projectName>
                 <propertySheet>
                     <property>
@@ -544,14 +462,443 @@
                 </propertySheet>
             </step>
         </procedure>
+        
         <procedure>
-            <procedureName>DeployCopy</procedureName>
-            <description>Use XCOPY to deploy Web Site or ASP.NET Application</description>
-            <jobNameTemplate>iis-deploycopy-$[jobId]</jobNameTemplate>
+            <procedureName>StopWebSite</procedureName>
+            <description>Stop a Website into an IIS Server</description>
+            <jobNameTemplate>iis7-stopwebsite-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
-						<propertyName>ec_parameterForm</propertyName>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>sitename</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>sitename</formalParameterName>
+                <defaultValue/>
+                <description>Provide the descriptive name of the web site you want to stop. i.e: 'Default Web Site'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>StopWebSite</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/stopsite_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <procedureName>StopWebSite</procedureName>
+                <projectName>EC-IIS</projectName>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>CreateAppPool</procedureName>
+            <description>Verifies if an Application Pool exists and if it doesn't, an IIS application pool is created.</description>
+            <jobNameTemplate>iis-createapppool-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>apppoolname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>apppoolname</formalParameterName>
+                <defaultValue/>
+                <description>The name of the Application Pool to create. i.e: 'FirstAppPool'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>CreateAppPool</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/createapppool_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>StartAppPool</procedureName>
+            <description>Starts an Application Pool.</description>
+            <jobNameTemplate>iis-startapppool-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>apppoolname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>apppoolname</formalParameterName>
+                <defaultValue/>
+                <description>The name of the application pool to start. i.e: 'FirstAppPool'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>StartAppPool</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/startapppool_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>StopAppPool</procedureName>
+            <description>Stops an Application Pool.</description>
+            <jobNameTemplate>iis-stopapppool-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>apppoolname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>apppoolname</formalParameterName>
+                <defaultValue/>
+                <description>The name of the application pool to stop. i.e: 'FirstAppPool'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>StopAppPool</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/stopapppool_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>AssignAppToAppPool</procedureName>
+            <description>Assigns an application to an application pool.</description>
+            <jobNameTemplate>iis-assignapptoapppool-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>apppoolname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>appname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>sitename</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>apppoolname</formalParameterName>
+                <defaultValue/>
+                <description>The name of the Application Pool to assign the application. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <formalParameter>
+                <formalParameterName>appname</formalParameterName>
+                <defaultValue/>
+                <description>The name of the application to assign. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <formalParameter>
+                <formalParameterName>sitename</formalParameterName>
+                <defaultValue/>
+                <description>The name of the site that contains the app to assign. i.e: 'Default Web Site'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>AssignApp</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/assignapptoapppool_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+		<procedure>
+            <procedureName>DeployCopy</procedureName>
+            <description>Use XCOPY to deploy Web Site or ASP.NET Application</description>
+            <jobNameTemplate>iis7-deploycopy-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
 						<expandable>1</expandable>
 						<value></value>
 				</property>
@@ -596,28 +943,28 @@
             <formalParameter>
                 <formalParameterName>SourcePath</formalParameterName>
                 <defaultValue/>
-                <description>Provide the path to the source directory. (Required)</description>
+                <description>Provide the path to the source directory. i.e: 'C:\inetpub\wwwroot\test'.(Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>DestinationPath</formalParameterName>
                 <defaultValue/>
-                <description>Provide the path to the destination directory. This must be a physical directory, but it may have an IIS virtual directory pointing to it. (Required)</description>
+                <description>Provide the path to the destination directory. This must be a physical directory, but it may have an IIS virtual directory pointing to it. i.e: 'C:\inetpub\wwwroot\copyTest'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>AdditionalOptions</formalParameterName>
                 <defaultValue>/E /K /R /H /I /Y</defaultValue>
-                <description>Indicate option switches for the XCOPY executable, excluding source and destination directories. The default options are those recommended by Microsoft for ASP.NET and IIS web site deployment; exercise caution when changing these options.
-					- /E: Deep copy including empty dirs.
-					- /K: Copy attributes.
-					- /R: Overwrite read-only files.
-					- /H: Copy hidden and system files.
-					- /I: If the destination does not exist and you are copying more than one file, it is assumed that the destination is a directory.
-					- /Y: Suppress prompting for overwrite confirmation.
-				</description>
+                <description>Indicate option switches for the XCOPY executable, excluding source and destination directories.
+			The default options are those recommended by Microsoft for ASP.NET and IIS web site deployment; exercise caution when changing these options. &#xA;
+			 /E - Deep copy including empty dirs. &#xA;
+			 /K - Copy attributes. &#xA;
+			 /R - Overwrite read-only files. &#xA;
+			 /H - Copy hidden and system files. &#xA;
+			 /I - If the destination does not exist and you are copying more than one file, it is assumed that the destination is a directory. &#xA;
+			 /Y - Suppress prompting for overwrite confirmation.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
@@ -657,1066 +1004,7 @@
                 </propertySheet>
             </step>
         </procedure>
-        <procedure>
-            <procedureName>StopServer</procedureName>
-            <description>Stop an IIS Server</description>
-            <jobNameTemplate>iis-stopserver-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>execpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>configname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>configname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>execpath</formalParameterName>
-                <defaultValue>iisreset</defaultValue>
-                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>StopServer</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/iisreset_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>StopServer</procedureName>
-                <projectName>EC-IIS</projectName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>CreateWebApplication</procedureName>
-            <description>Create and start an in-process web application in the given directory</description>
-            <jobNameTemplate>iis-createwebapp-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>WebSiteID</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>ApllicationDirPath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>ApplicationName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>WebSiteID</formalParameterName>
-                <defaultValue>1</defaultValue>
-                <description>Provide the numeric internal identifier of the web site. The default value is 1. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>ApplicationDirPath</formalParameterName>
-                <defaultValue/>
-                <description>Specify the path within the web site to the application directory (not the physical path). This path must exist on the IIS server.</description>
-                <required>0</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>ApplicationName</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name for the application.</description>
-                <required>0</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>CreateWebApplication</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/createwebapp_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>CreateWebSite</procedureName>
-            <description>Create a Website into an IIS Server</description>
-            <jobNameTemplate>iis-createwebsite-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>configname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>execpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>appabsolutepath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>sitename</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>hostheader</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>startapp</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>checkedValue</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>1</value>
-                                        </property>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                        <property>
-                                            <propertyName>initiallyChecked</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>0</value>
-                                        </property>
-                                        <property>
-                                            <propertyName>uncheckedValue</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>0</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>configname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>appabsolutepath</formalParameterName>
-                <defaultValue/>
-                <description>Provide the absolute physical path assigned to the web site you want to create. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>sitename</formalParameterName>
-                <defaultValue/>
-                <description>Provide the descriptive name, or the metabase path, of the web site you want to create. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>hostheader</formalParameterName>
-                <defaultValue/>
-                <description>Provide the host header name for the web site.</description>
-                <required>0</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>startapp</formalParameterName>
-                <defaultValue/>
-                <description>Indicate if the web site must be started after creation.</description>
-                <required>0</required>
-                <type>checkbox</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>execpath</formalParameterName>
-                <defaultValue>iisweb</defaultValue>
-                <description>Provide the absolute path of the script utility used to execute this step. i.e: iisweb or 'c:/windows/system32/iisweb.vbs'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>CreateWebSite</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/sitescript_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>CreateWebSite</procedureName>
-                <projectName>EC-IIS</projectName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>CreateWebSite2</procedureName>
-            <description>Create a WebSite into an IIS Server using the ADSI API</description>
-            <jobNameTemplate>iis-createwebsite2-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>Bindings</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>ServerID</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>PhysicalPath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>ServerComment</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                                <property>
-                                    <propertyName>GenerateRandomID</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>checkedValue</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>1</value>
-                                        </property>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                        <property>
-                                            <propertyName>initiallyChecked</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>0</value>
-                                        </property>
-                                        <property>
-                                            <propertyName>uncheckedValue</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>0</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>ServerComment</formalParameterName>
-                <defaultValue/>
-                <description>Provide the server comment for the new web site. In the IIS Manager, this is the Description field under Web Site Identification in a web site property sheet.</description>
-                <required>0</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>PhysicalPath</formalParameterName>
-                <defaultValue/>
-                <description>Provide the absolute physical path assigned to the web site you want to create. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>GenerateRandomID</formalParameterName>
-                <defaultValue/>
-                <description>If checked, this generates a random web site ID. Otherwise, it attempts to create the web site with the user-supplied ID.</description>
-                <required>0</required>
-                <type>checkbox</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>ServerID</formalParameterName>
-                <defaultValue/>
-                <description>Provide the site identification number to attach to the site that you want to create. If no ID is specified, the site is created with a random ID.</description>
-                <required>0</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>Bindings</formalParameterName>
-                <defaultValue></defaultValue>
-                <description>Provide the binding string that includes IP and port. Use this format: "IP:Port:". Take of the ":" at the end. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>CreateWebSite</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/createwebsite2_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>CreateWebSite2</procedureName>
-                <projectName>EC-IIS</projectName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>DeleteWebSite</procedureName>
-            <description>Delete a Website into an IIS Server</description>
-            <jobNameTemplate>iis-deletewebsite-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>configname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>sitename</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>execpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>configname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>sitename</formalParameterName>
-                <defaultValue/>
-                <description>Provide the descriptive name, or the metabase path, of the web site you want to delete. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>execpath</formalParameterName>
-                <defaultValue/>
-                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisweb' is entered, the 'iisweb' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisweb' or 'c:/MyDir/IISFiles/iisweb.vbs'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>DeleteWebSite</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/sitescript_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>DeleteWebSite</procedureName>
-                <projectName>EC-IIS</projectName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-        <procedure>
-            <procedureName>CreateVirtualDirectory</procedureName>
-            <description>Create a Virtual Directory into an IIS Website</description>
-            <jobNameTemplate>iis-createvirtualdirectory-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>configname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>execpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>virtualdirname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>website</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>absolutephysicalpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>virtualpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>configname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>execpath</formalParameterName>
-                <defaultValue/>
-                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisvdir' is entered, the 'iisvdir' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisvdir' 'c:/MyDir/IISFiles/iisvdir.vbs'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>virtualdirname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name for the virtual directory. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>website</formalParameterName>
-                <defaultValue/>
-                <description>Provide the descriptive name, or the metabase path, of the web site for the virtual directory you want to create. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>virtualpath</formalParameterName>
-                <defaultValue/>
-                <description>Provide a path, if necessary, to the virtual directory within the web site.</description>
-                <required>0</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>absolutephysicalpath</formalParameterName>
-                <defaultValue/>
-                <description>Provide the absolute physical path assigned to the virtual directory you want to create. i.e: 'c:/Inetpub/wwwroot/myvirtualdir'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>CreateVirtualDirectory</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/sitescript_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>CreateVirtualDirectory</procedureName>
-                <projectName>EC-IIS</projectName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-
-        <procedure>
-            <procedureName>DeleteVirtualDirectory</procedureName>
-            <description>Delete a Virtual Directory into an IIS Website</description>
-            <jobNameTemplate>iis-deletevirtualdirectory-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>configname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>website</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>execpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>virtualdirname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>configname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>website</formalParameterName>
-                <defaultValue/>
-                <description>Provide the descriptive name, or the metabase path, of the web site for the virtual directory you want to delete. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>virtualpath</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name for the virtual directory. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>execpath</formalParameterName>
-                <defaultValue/>
-                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisvdir' is entered, the 'iisvdir' tool must be located on the system path  'c:/MyDir/IISFiles/iisvdir.vbs'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>DeleteVirtualDirectory</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/sitescript_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>DeleteVirtualDirectory</procedureName>
-                <projectName>EC-IIS</projectName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-        <procedure>
-            <procedureName>ResetServer</procedureName>
-            <description>Reset an IIS Server</description>
-            <jobNameTemplate>iis-resetserver-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>configname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>execpath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>execpath</formalParameterName>
-                <defaultValue>iisreset</defaultValue>
-                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>configname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>ResetServer</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/iisreset_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>ResetServer</procedureName>
-                <projectName>EC-IIS</projectName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
+        
         <procedure>
             <procedureName>CheckServerStatus</procedureName>
             <description>Check the HTTP status of a given URL</description>
@@ -1724,7 +1012,7 @@
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
-						<propertyName>ec_parameterForm</propertyName>
+						<propertyName>ec_parameterForm</propertyName>    
 						<expandable>1</expandable>
 						<value></value>
 				</property>
@@ -1824,14 +1112,15 @@
                 </propertySheet>
             </step>
         </procedure>
+        
         <procedure>
-            <procedureName>StartIISServices</procedureName>
-            <description>Start IIS Services</description>
-            <jobNameTemplate>iis-startiisservices-$[jobId]</jobNameTemplate>
+            <procedureName>CreateVirtualDirectory</procedureName>
+            <description>Creates a virtual directory into the specified WebSite.</description>
+            <jobNameTemplate>iis-createvirtualdir-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
 				<property>
-						<propertyName>ec_parameterForm</propertyName>
+						<propertyName>ec_parameterForm</propertyName>    
 						<expandable>1</expandable>
 						<value></value>
 				</property>
@@ -1841,1152 +1130,7 @@
                         <property>
                             <propertyName>parameters</propertyName>
                             <propertySheet>
-
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-
-            <step>
-                <stepName>StartIISServices</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/net_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>StartIISServices</procedureName>
-                <projectName>EC-IIS</projectName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-        <procedure>
-            <procedureName>StopIISServices</procedureName>
-            <description>Stop IIS Services</description>
-            <jobNameTemplate>iis-stopiisservices-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-
-            <step>
-                <stepName>StopIISServices</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/net_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>StopIISServices</procedureName>
-                <projectName>EC-IIS</projectName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-        <procedure>
-            <procedureName>GetWebSiteIDs</procedureName>
-            <description>Fetches the IDs of all Web Sites found on the host server.</description>
-            <jobNameTemplate>iis-getwebsiteids-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
-                <required>0</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>GetWebSiteIDs</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor/>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <procedureName>FooBarBaz</procedureName>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-        <procedure>
-            <procedureName>GetWebSiteStatus</procedureName>
-            <description>Returns some basic information about the web site.</description>
-            <jobNameTemplate>iis-getwebsitestatus-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>WebSiteID</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>WebSiteID</formalParameterName>
-                <defaultValue>1</defaultValue>
-                <description>The WebSiteID parameter must be the numeric internal identifier from the server's MetaBase information. The default value is 1. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>GetStatus</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor/>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>GetVirtualDirectories</procedureName>
-            <description>Show the virtual directories (recursively) for a web site.</description>
-            <jobNameTemplate>iis-getvirtualdirs-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>WebSiteID</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>WebSiteID</formalParameterName>
-                <defaultValue>1</defaultValue>
-                <description>The WebSiteID parameter must be the numeric internal identifier from the server's MetaBase information. The default value is 1. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>GetVirtualDirectories</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor/>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-
-        <procedure>
-            <procedureName>StartWebSite</procedureName>
-            <description>Starts the server operation.</description>
-            <jobNameTemplate>iis-startwebsite-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>WebSideId</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>WebSideId</formalParameterName>
-                <defaultValue>1</defaultValue>
-                <description>Provide the site identification number to attach to the site that you want to start. The default value is 1. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>StartWebSite</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/startwebserver_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>ResumeWebSite</procedureName>
-            <description>Continues the server operation after it has been paused.</description>
-            <jobNameTemplate>iis-resumewebsite-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>WebSideId</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>WebSideId</formalParameterName>
-                <defaultValue>1</defaultValue>
-                <description>Provide the site identification number to attach to the site that you want to resume. The default value is 1. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>ResumeWebSite</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/continuewebserver_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>PauseWebSite</procedureName>
-            <description>Pauses the server operation.</description>
-            <jobNameTemplate>iis-pausewebsite-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>WebSideId</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>WebSideId</formalParameterName>
-                <defaultValue>1</defaultValue>
-                <description>Provide the site identification number to attach to the site that you want to pause. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>PauseWebSite</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/pausewebserver_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-
-        </procedure>
-
-        <procedure>
-            <procedureName>StopWebSite</procedureName>
-            <description>Stops the server operation.</description>
-            <jobNameTemplate>iis-stopwebsite-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
-                                    <propertyName>WebSideId</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>WebSideId</formalParameterName>
-                <defaultValue>1</defaultValue>
-                <description>Provide the site identification number to attach to the site that you want to start. The default value is 1. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <step>
-                <stepName>StopWebSite</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/stopwebserver_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-
-        </procedure>
-
-        <procedure>
-            <procedureName>StartAppPool</procedureName>
-            <description>Starts an IIS application pool.</description>
-            <jobNameTemplate>iis-startapppool-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                                <property>
-                                    <propertyName>apppoolname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-
-            <formalParameter>
-                <formalParameterName>apppoolname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the application pool to start. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-
-            <step>
-                <stepName>StartAppPool</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/startapppool_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>StopAppPool</procedureName>
-            <description>Stops an IIS application pool.</description>
-            <jobNameTemplate>iis-stopapppool-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                                <property>
-                                    <propertyName>apppoolname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-
-            <formalParameter>
-                <formalParameterName>apppoolname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the application pool to stop. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-
-            <step>
-                <stepName>StopAppPool</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/stopapppool_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>CreateAppPool</procedureName>
-            <description>Creates an IIS application pool.</description>
-            <jobNameTemplate>iis-createapppool-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                                <property>
-                                    <propertyName>apppoolname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-
-            <formalParameter>
-                <formalParameterName>apppoolname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the application pool to create. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-
-            <step>
-                <stepName>CreateAppPool</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/createapppool_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-        <procedure>
-            <procedureName>RecycleAppPool</procedureName>
-            <description>Recycles an application pool. When recycling occurs, the worker process currently serving the application pool will terminate and the WWW service will restart a new worker process to replace it.</description>
-            <jobNameTemplate>iis-recycleapppool-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                                <property>
-                                    <propertyName>apppoolname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                            </propertySheet>
-                        </property>
-                    </propertySheet>
-                </property>
-            </propertySheet>
-            <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-
-            <formalParameter>
-                <formalParameterName>apppoolname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the application pool to recycle. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-
-            <step>
-                <stepName>RecycleAppPool</stepName>
-                <alwaysRun>0</alwaysRun>
-                <broadcast>0</broadcast>
-                <command/>
-                <condition/>
-                <description/>
-                <errorHandling>failProcedure</errorHandling>
-                <exclusive>0</exclusive>
-                <logFileName/>
-                <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/recycleapppool_matchers</postProcessor>
-                <releaseExclusive>0</releaseExclusive>
-                <resourceName/>
-                <retries>0</retries>
-                <shell>ec-perl</shell>
-                <timeLimit/>
-                <timeLimitUnits>minutes</timeLimitUnits>
-                <workingDirectory/>
-                <workspaceName/>
-                <propertySheet>
-                    <property>
-                        <propertyName>ec_customEditorData</propertyName>
-                        <propertySheet>
-                            <property>
-                                <propertyName>formType</propertyName>
-                                <expandable>1</expandable>
-                                <value>command</value>
-                            </property>
-                        </propertySheet>
-                    </property>
-                </propertySheet>
-            </step>
-        </procedure>
-
-
-        <procedure>
-            <procedureName>CreateVirtualDirectory2</procedureName>
-            <description>Use the Windows ADSI container object "Create" method to create a new virtual directory</description>
-            <jobNameTemplate>iis-createvirtualdir2-$[jobId]</jobNameTemplate>
-            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
-            <propertySheet>
-				<property>
-						<propertyName>ec_parameterForm</propertyName>
-						<expandable>1</expandable>
-						<value></value>
-				</property>
-                <property>
-                    <propertyName>ec_customEditorData</propertyName>
-                    <propertySheet>
-                        <property>
-                            <propertyName>parameters</propertyName>
-                            <propertySheet>
-                                <property>
-                                    <propertyName>HostName</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
-                                <property>
-                                    <propertyName>VirtualDirectoryID</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
+                                
                                 <property>
                                     <propertyName>appname</propertyName>
                                     <propertySheet>
@@ -2997,9 +1141,9 @@
                                         </property>
                                     </propertySheet>
                                 </property>
-
+                                
                                 <property>
-                                    <propertyName>PhysicalPath</propertyName>
+                                    <propertyName>physicalpath</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -3008,9 +1152,9 @@
                                         </property>
                                     </propertySheet>
                                 </property>
-
+                                
                                 <property>
-                                    <propertyName>WebSiteID</propertyName>
+                                    <propertyName>path</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -3019,67 +1163,37 @@
                                         </property>
                                     </propertySheet>
                                 </property>
-
-                                <property>
-                                    <propertyName>ApplicationDirPath</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-
+                             
                             </propertySheet>
                         </property>
                     </propertySheet>
                 </property>
             </propertySheet>
+            
             <formalParameter>
-                <formalParameterName>HostName</formalParameterName>
-                <defaultValue>localhost</defaultValue>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-
-            <formalParameter>
-                <formalParameterName>WebSiteID</formalParameterName>
-                <defaultValue>1</defaultValue>
-                <description>Provide the numeric internal identifier of the web site. The default value is 1. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>ApplicationDirPath</formalParameterName>
+                <formalParameterName>appname</formalParameterName>
                 <defaultValue/>
-                <description>Specify the path within the web site to the application directory (not the physical path).</description>
-                <required>0</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>VirtualDirectoryID</formalParameterName>
-                <defaultValue/>
-                <description>Provide the virtual directory's identifier. (Required)</description>
+                <description>The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Web Site/myapp02'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
+            
             <formalParameter>
-                <formalParameterName>VirtualDirectoryName</formalParameterName>
+                <formalParameterName>path</formalParameterName>
                 <defaultValue/>
-                <description>Provide the name for the virtual directory. (Required)</description>
+                <description>Virtual path of the virtual directory, i.e: '/myvirtualdir'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
+            
             <formalParameter>
-                <formalParameterName>PhysicalPath</formalParameterName>
+                <formalParameterName>physicalpath</formalParameterName>
                 <defaultValue/>
-                <description>Provide the absolute physical path assigned to the virtual directory you want to create. i.e: 'c:/Inetpub/wwwroot/myvirtualdir2'. (Required)</description>
+                <description>The absolute physical path of the Virtual Directory to create, i.e: 'c:/Inetpub/wwwroot/myvdir'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
-
+            
             <step>
                 <stepName>CreateVirtualDirectory</stepName>
                 <alwaysRun>0</alwaysRun>
@@ -3091,7 +1205,7 @@
                 <exclusive>0</exclusive>
                 <logFileName/>
                 <parallel>0</parallel>
-                <postProcessor>postp --loadProperty /myProject/createvirtualdirectory2_matchers</postProcessor>
+                <postProcessor>postp --loadProperty /myProject/createvirtualdirectory_matchers</postProcessor>
                 <releaseExclusive>0</releaseExclusive>
                 <resourceName/>
                 <retries>0</retries>
@@ -3114,6 +1228,840 @@
                 </propertySheet>
             </step>
         </procedure>
+        
+        <procedure>
+            <procedureName>DeleteVirtualDirectory</procedureName>
+            <description>Deletes a virtual directory into the specified WebSite.</description>
+            <jobNameTemplate>iis-deletevirtualdir-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>appname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>appname</formalParameterName>
+                <defaultValue/>
+                <description>The WebSite and virtual path that contains the Virtual Directory to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>DeleteVirtualDirectory</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/deletevirtualdirectory_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>CreateWebApplication</procedureName>
+            <description>Creates an application in IIS 7</description>
+            <jobNameTemplate>iis-createwebapp-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>appname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                
+                                <property>
+                                    <propertyName>physicalpath</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                
+                                <property>
+                                    <propertyName>path</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>appname</formalParameterName>
+                <defaultValue/>
+                <description>The name of the webSite to add the application, i.e: 'Default Web Site'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <formalParameter>
+                <formalParameterName>path</formalParameterName>
+                <defaultValue/>
+                <description>Virtual path of the application, i.e: '/myApplication'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <formalParameter>
+                <formalParameterName>physicalpath</formalParameterName>
+                <defaultValue/>
+                <description>The absolute physical path of the application to create, i.e: 'c:/Inetpub/wwwroot/myApp'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>CreateWebApplication</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/createwebapplication_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>DeleteWebApplication</procedureName>
+            <description>Deletes a web application into the specified WebSite.</description>
+            <jobNameTemplate>iis-deletewebapp-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>appname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>appname</formalParameterName>
+                <defaultValue/>
+                <description>The WebSite that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>DeleteWebApplication</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/deletewebapplication_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>ListSites</procedureName>
+            <description>List the sites on a web server.</description>
+            <jobNameTemplate>iis-listsites-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>searchcriteria</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>searchcriteria</formalParameterName>
+                <defaultValue/>
+                <description>The user-defined criterias to search the sites. Blank lists all sites. i.e: '/bindings:http/*:80:'.</description>
+                <required>0</required>
+                <type>textarea</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>ListSites</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/listsites_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>ListSiteApps</procedureName>
+            <description>View the apps of a WebSite</description>
+            <jobNameTemplate>iis-listsiteapps-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>appname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>sitename</formalParameterName>
+                <defaultValue/>
+                <description>The name of the site to look for Applications. Blank lists all apps.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>ListSiteApps</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/listsiteapps_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+  
+        <procedure>
+            <procedureName>CreateWebSite</procedureName>
+            <description>Create a WebSite.</description>
+            <jobNameTemplate>iis-createwebsite-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>websitename</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>bindings</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>websitepath</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>websiteid</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                             
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>websitename</formalParameterName>
+                <defaultValue/>
+                <description>The name of the WebSite to create. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <formalParameter>
+                <formalParameterName>bindings</formalParameterName>
+                <defaultValue/>
+                <description>List of bindings in the friendly form of 'http://domain:port,...' or raw form of 'protocol/bindingInformation,...' (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <formalParameter>
+                <formalParameterName>websitepath</formalParameterName>
+                <defaultValue/>
+                <description>If specified, will cause the root application containing a root virtual directory pointing to the specified path to be created for this site. If omitted, the site is created without a root application and will not be startable until one is created. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <formalParameter>
+                <formalParameterName>websiteid</formalParameterName>
+                <defaultValue/>
+                <description>The id of the WebSite.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+			
+            <step>
+                <stepName>CreateWebSite</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/createwebsite_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <procedureName>CreateWebSite</procedureName>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>DeleteWebSite</procedureName>
+            <description>Delete a WebSite.</description>
+            <jobNameTemplate>iis-deletewebsite-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>websitename</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>websitename</formalParameterName>
+                <defaultValue/>
+                <description>The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            			
+            <step>
+                <stepName>DeleteWebSite</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/deletewebsite_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <procedureName>DeleteWebSite</procedureName>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
 
+        <procedure>
+            <procedureName>AddWebSiteBinding</procedureName>
+            <description>Add a binding to a WebSite.</description>
+            <jobNameTemplate>iis-addwebsitebinding-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>websitename</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>bindingProtocol</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>bindingInformation</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>websitename</formalParameterName>
+                <defaultValue/>
+                <description>The name of the WebSite to add a binding, i.e: 'Default Web Site'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <formalParameter>
+                <formalParameterName>bindingProtocol</formalParameterName>
+                <defaultValue/>
+                <description>Protocol of the binding to add, i.e: 'http'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <formalParameter>
+                <formalParameterName>bindingInformation</formalParameterName>
+                <defaultValue/>
+                <description>Information of the binding to add, including the host and the port, i.e: 'localhost:443', '*:81'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+						
+            <step>
+                <stepName>AddWebSiteBinding</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/addwebsitebinding_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <procedureName>AddWebSiteBinding</procedureName>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        
+        <procedure>
+            <procedureName>DeleteAppPool</procedureName>
+            <description>Delete an Application Pool.</description>
+            <jobNameTemplate>iis-deleteapppool-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>    
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                
+                                <property>
+                                    <propertyName>apppoolname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            
+            <formalParameter>
+                <formalParameterName>apppoolname</formalParameterName>
+                <defaultValue/>
+                <description>The name of the application pool to delete. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            			
+            <step>
+                <stepName>DeleteAppPool</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/deleteapppool_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <procedureName>DeleteAppPool</procedureName>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>                            
     </project>
 </exportedData>

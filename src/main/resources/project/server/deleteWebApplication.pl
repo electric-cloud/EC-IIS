@@ -1,157 +1,237 @@
-#!/usr/bin/env perl
-# include $[/myProject/preamble]
-# line 4 "[EC]/@PLUGIN_KEY@-@PLUGIN_VERSION@/deleteWebApplication.pl"
-# -------------------------------------------------------------------------
-# File
-# deleteWebApplication.pl
 #
-# Dependencies
-# None
+#  Copyright 2015 Electric Cloud, Inc.
 #
-# Template Version
-# 1.0
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
-# Date
-# 07/29/2011
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-# Engineer
-# Alonso Blanco
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 #
-# Copyright (c) 2011 Electric Cloud, Inc.
-# All rights reserved
-# -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
-# Includes
-# -------------------------------------------------------------------------
-use ElectricCommander;
-use Data::Dumper;
-use File::Temp qw/tempfile/;
-
-# -------------------------------------------------------------------------
-# Variables
-# -------------------------------------------------------------------------
-
-my $ec = new ElectricCommander();
-
-# -------------------------------------------------------------------------
-# Parameters
-# -------------------------------------------------------------------------
-my $host    = ( $ec->getProperty("HostName") )->findvalue("//value");
-my $appname = ( $ec->getProperty("ApplicationName") )->findvalue("//value");
-
-# If GetWebSiteIDs is used prior to this, then you can use the
-# property on the job <dollarsign>[/myJob/iiswebsites/<sitename>]
-my $websiteid = ( $ec->getProperty("WebSiteID") )->findvalue("//value");
-
-# This needs to be the full path to the application. We need to check if it
-# starts with a slash and/or "ROOT" and prepend as needed.
-my $rawappdirpath =
-  ( $ec->getProperty("ApplicationDirPath") )->findvalue("//value");
-my $deleteRecursive =
-  ( $ec->getProperty("deleterecursive") )->findvalue("//value");
-
-# --------------------------------------------------------------------------
-
-my $appdirpath = "";
-if ( $rawappdirpath =~ /^\/root\//i ) {
-    print "Path looks OK...\n";
-    $appdirpath = $rawappdirpath;
-}
-else {
-    if ( $rawappdirpath =~ /^\//i ) {
-        print "Path starts with a slash but needs prepended /ROOT...\n";
-        $appdirpath = "/ROOT$rawappdirpath";
-    }
-    elsif ( $rawappdirpath =~ /^root\//i ) {
-        print "Path starts with ROOT but needs a prepended slash...\n";
-        $appdirpath = "/ROOT$rawappdirpath";
-    }
-    else {
-        print "Path needs prepended /ROOT/...\n";
-        $appdirpath = "/ROOT/$rawappdirpath";
-    }
-}
-
-my $webappURL = "IIS://$host/W3SVC/$websiteid$appdirpath";
-print "ADSI Web Application URL: $webappURL\n\n";
-
-# Create and open a temp file for the JScript code
-my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
-
-# See "GetWebSiteIDs" for notes about IIS and ADSI.
-
-# IMPORTANT: This is JScript code. If you change it to use VBScript or
-# PowerShell (or whatever) you need to adjust the cscript commndline below and
-# probably the SUFFIX above (although the suffix will be ignored when a /E argument
-# is passed to cscript).
-my $jscript = <<"EOSCRIPT";
-// Get the virtual directory in question
-var xvdir = GetObject("$webappURL");
-// Create the app
-try {
+   # File
+   #    deleteWebApplication.pl
+   #
+   # Dependencies
+   #    None
+   #
+   # Template Version
+   #    1.0
+   #
+   # Date
+   #    08/09/2011
+   #
+   # Engineer
+   #    Alonso Blanco
+   #
+   # Copyright (c) 2011 Electric Cloud, Inc.
+   # All rights reserved
+   # -------------------------------------------------------------------------
+   
+   
+   # -------------------------------------------------------------------------
+   # Includes
+   # -------------------------------------------------------------------------
+   use ElectricCommander;
+   use warnings;
+   use strict;
+   use Cwd;
+   use File::Spec;
+   use diagnostics;
+   use ElectricCommander::PropDB;
+   $|=1;
+   
+   # -------------------------------------------------------------------------
+   # Constants
+   # -------------------------------------------------------------------------
+   use constant {
+       SUCCESS => 0,
+       ERROR   => 1,
+       
+       PLUGIN_NAME => 'EC-IIS',
+       WIN_IDENTIFIER => 'MSWin32',
+       DEFAULT_APPCMD_PATH => '%windir%\system32\inetsrv\appcmd',
+       CREDENTIAL_ID => 'credential',
+       
+  };
+  
+  ########################################################################
+  # trim - deletes blank spaces before and after the entered value in 
+  # the argument
+  #
+  # Arguments:
+  #   -untrimmedString: string that will be trimmed
+  #
+  # Returns:
+  #   trimmed string
+  #
+  ########################################################################  
+  sub trim($) {
+   
+      my ($untrimmedString) = @_;
+      
+      my $string = $untrimmedString;
+      
+      #removes leading spaces
+      $string =~ s/^\s+//;
+      
+      #removes trailing spaces
+      $string =~ s/\s+$//;
+      
+      #returns trimmed string
+      return $string;
+  }
+  
+  # -------------------------------------------------------------------------
+  # Variables
+  # -------------------------------------------------------------------------
+  
+  $::gEC = new ElectricCommander();
+      $::gEC->abortOnError(0);
+  $::gAppName = ($::gEC->getProperty("appname") )->findvalue("//value");
+  
+  # -------------------------------------------------------------------------
+  # Main functions
+  # -------------------------------------------------------------------------
+  
+  ########################################################################
+  # main - contains the whole process to be done by the plugin, it builds 
+  #        the command line, sets the properties and the working directory
+  #
+  # Arguments:
+  #   none
+  #
+  # Returns:
+  #   none
+  #
+  ########################################################################
+  sub main() {
+   
+    my $cmdLine = '';
+    my $searchCmdLine = '';
+    my $content = '';
+    
+    my $appcmdLocation = DEFAULT_APPCMD_PATH;
+    my %props;
+    
+    $cmdLine = "$appcmdLocation delete app /app.name:\"$::gAppName\"";
+  
+    #execute command line that creates the app pool
+    print "$cmdLine\n";
+    $content = `$cmdLine`;
  
-    if("$deleteRecursive" == "1"){
-        WScript.Echo("Deleting application recursively...");
-        xvdir.AppDeleteRecursive();
-    }else{
-        WScript.Echo("Enabling application...");
-        xvdir.AppDelete(); 
-    }
+    print $content;
     
-    xvdir.Put("AppFriendlyName", "$appname");
-    xvdir.SetInfo();
+    #add masked command line to properties object
+    $props{'cmdLine'} = $cmdLine;
     
-    WScript.Echo("Application $appdirpath successfully deleted");
-    
-}
-catch(e) {
-    WScript.Echo("Error: " + e.number & 0xFFFF);
-}
+    #set prop's hash to EC properties
+    setProperties(\%props);
 
-function stateName(appState) {
-   switch (appState) {
-      case 0:
-         return "Stopped";
-         break;
-      case 1:
-         return "Running";
-         break;
-      case 2:
-         return "NotAnApplication";
-         break;
-      default:
-         return "Unknown";
-    }
-}
-
-EOSCRIPT
-
-print $scriptfh $jscript;
-close($scriptfh);
-
-my $content = `cscript /E:jscript /NoLogo $scriptfilename`;
-
-print $content;
-
-#evaluates if exit was successful to mark it as a success or fail the step
-if ( $? == SUCCESS ) {
-
-    #set any additional error or warning conditions here
-    #there may be cases in which an error occurs and the exit code is 0.
-    #we want to set to correct outcome for the running step
-    if ( $content =~ m/Application (.+) successfully deleted/ ) {
-
-        $ec->setProperty( "/myJobStep/outcome", 'success' );
-
-    }
-    else {
-
-        $ec->setProperty( "/myJobStep/outcome", 'error' );
-
-    }
-
-}
-else {
-    $ec->setProperty( "/myJobStep/outcome", 'error' );
-}
+  }
+  
+  ########################################################################
+  # createCommandLine - creates the command line for the invocation
+  # of the program to be executed.
+  #
+  # Arguments:
+  #   -arr: array containing the command name (must be the first element) 
+  #         and the arguments entered by the user in the UI
+  #
+  # Returns:
+  #   -the command line to be executed by the plugin
+  #
+  ########################################################################
+  sub createCommandLine($) {
+      
+      my ($arr) = @_;
+      
+      my $commandName = @$arr[0];
+      
+      my $command = $commandName;
+      
+      shift(@$arr);
+      
+      foreach my $elem (@$arr) {
+          $command .= " $elem";
+      }
+      
+      return $command;
+         
+  }
+  
+  ########################################################################
+  # setProperties - set a group of properties into the Electric Commander
+  #
+  # Arguments:
+  #   -propHash: hash containing the ID and the value of the properties 
+  #              to be written into the Electric Commander
+  #
+  # Returns:
+  #   none
+  #
+  ########################################################################
+  sub setProperties($) {
+   
+      my ($propHash) = @_;
+      
+      foreach my $key (keys % $propHash) {
+          my $val = $propHash->{$key};
+          $::gEC->setProperty("/myCall/$key", $val);
+      }
+  }
+  
+  ##########################################################################
+  # getConfiguration - get the information of the configuration given
+  #
+  # Arguments:
+  #   -configName: name of the configuration to retrieve
+  #
+  # Returns:
+  #   -configToUse: hash containing the configuration information
+  #
+  #########################################################################
+  sub getConfiguration($){
+   
+      my ($configName) = @_;
+   
+      my %configToUse;
+      
+      my $proj = "$[/myProject/projectName]";
+      my $pluginConfigs = new ElectricCommander::PropDB($::gEC,"/projects/$proj/iis_cfgs");
+      
+      my %configRow = $pluginConfigs->getRow($configName);
+      
+      # Check if configuration exists
+      unless(keys(%configRow)) {
+          print 'Error: Configuration doesn\'t exist';
+          exit ERROR;
+      }
+      
+      # Get user/password out of credential
+      my $xpath = $::gEC->getFullCredential($configRow{credential});
+      $configToUse{'user'} = $xpath->findvalue("//userName");
+      $configToUse{'password'} = $xpath->findvalue("//password");
+      
+      foreach my $c (keys %configRow) {
+          
+          #getting all values except the credential that was read previously
+          if($c ne CREDENTIAL_ID){
+              $configToUse{$c} = $configRow{$c};
+          }
+          
+      }
+     
+      return %configToUse;
+   
+  }
+  
+  main();
+   
+  1;
