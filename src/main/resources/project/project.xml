@@ -1161,6 +1161,102 @@
             </step>
         </procedure>
         <procedure>
+            <procedureName>Undeploy</procedureName>
+            <description>Use MS Deploy to perform undeploy of the application.</description>
+            <jobNameTemplate>iis-undeploy-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+              <property>
+                      <propertyName>ec_parameterForm</propertyName>
+                      <expandable>1</expandable>
+                      <value></value>
+              </property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                <property>
+                                    <propertyName>execpath</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            <formalParameter>
+                <formalParameterName>msdeployPath</formalParameterName>
+                <defaultValue>msdeploy</defaultValue>
+                <description>Provide the relative or absolute path to the MSDeploy executable.</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>websiteName</formalParameterName>
+                <defaultValue></defaultValue>
+                <description>A web site name to undeploy.</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>applicationName</formalParameterName>
+                <defaultValue/>
+                <description>An application name to undeploy. Warning: if not specified, the web site with the name above will be undeployed.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>deleteVirtualDirectories</formalParameterName>
+                <defaultValue/>
+                <description>Deletes the specified Web site or Web application, including any virtual directories and their content.</description>
+                <required>0</required>
+                <type>checkbox</type>
+            </formalParameter>
+            <step>
+                <stepName>Undeploy</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <procedureName>Undeploy</procedureName>
+                <projectName>EC-IIS</projectName>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        <procedure>
             <procedureName>CheckServerStatus</procedureName>
             <description>Check the HTTP status of a given URL</description>
             <jobNameTemplate>iis-checkserverstatus-$[jobId]</jobNameTemplate>
