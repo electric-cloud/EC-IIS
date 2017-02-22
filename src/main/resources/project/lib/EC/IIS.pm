@@ -400,6 +400,118 @@ sub step_undeploy {
     print $result->{stdout};
 }
 
+sub step_deploy {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        msdeployPath
+        websiteName
+        source
+        applicationPath
+        applicationPool
+    /);
+
+    my $source_provider;
+    my $source = $params->{source};
+    if ( -d $source ) {
+        $source_provider = 'contentPath';
+    }
+    else {
+        $source_provider = 'package';
+    }
+    my $destination_object_path = $params->{websiteName};
+    if ($params->{applicationPath}) {
+        $destination_object_path .= "/$params->{applicationPath}";
+    }
+    my $deploy_command = $self->create_msdeploy_command({
+        msdeployPath => $params->{msdeployPath},
+        sourceProvider => $source_provider,
+        sourceProviderObjectPath => $source,
+        destProvider => 'iisApp',
+        destProviderObjectPath => $destination_object_path,
+        verb => 'sync'
+    });
+    $self->set_cmd_line($deploy_command);
+    my $result = $self->run_command($deploy_command);
+    if ($result->{code} != 0) {
+        return $self->bail_out("Cannot deploy the application: $result->{stderr}");
+    }
+
+    my $application = $params->{applicationPath};
+    my $app_pool_name = $params->{applicationPool};
+
+    if ($application && $app_pool_name) {
+        $self->create_or_update_app_pool($params);
+        my $cmd = $self->get_app_cmd(
+            'set',
+            'site',
+            qq{/site.name:"$params->{websiteName}"},
+            qq{/[path='/$application'].applicationPool:"$app_pool_name"}
+        );
+        my $result = $self->run_command($cmd);
+        if ($result->{code} != 0) {
+            return $self->bail_out($result->{stderr});
+        }
+        print $result->{stdout};
+    }
+    elsif ($app_pool_name) {
+        $self->warning("Application pool name is specified, but not application name. Skipping application pool creation.");
+    }
+}
+
+sub create_or_update_app_pool {
+    my ($self, $params) = @_;
+
+    my $name = $params->{applicationPool} || die "No application name";
+    my $check_exists_command = $self->get_app_cmd('list', 'apppools', qq{-name:"$name"});
+    my $result = $self->run_command($check_exists_command);
+
+    if ($result->{stderr} ne '') {
+        return $self->bail_out("Cannot list app pools: $result->{stderr}");
+    }
+
+    if ($result->{stdout}) {
+        print "Application pool $name already exists\n";
+        # Application pool exists
+        # Not implemented - not enough params yet
+        # $self->update_application_pool;
+    }
+    else {
+        print "Application pool $name does not exists, creating application pool\n";
+        $self->create_app_pool($params);
+    }
+}
+
+=head2 create_app_pool
+
+Creates app pool.
+
+    applicationPool - the name of the pool
+
+=cut
+
+sub create_app_pool {
+    my ($self, $params) = @_;
+
+    my $name = $params->{applicationPool};
+    my $command = $self->get_app_cmd('add', 'apppool', qq{/name:"$name"});
+    my $result = $self->run_command($command);
+    if ($result->{stderr} != 0) {
+        return $self->bail_out($result->{stderr});
+    }
+    print $result->{stdout};
+}
+
+sub get_app_cmd {
+    my ($self, $action, $object, @params) = @_;
+
+    my $executable = $self->cmd_appcmd;
+    die 'No action' unless $action;
+    die 'No object' unless $object;
+    my $command = "$executable $action $object " . join(" ", @params);
+    return $command;
+}
+
 sub create_undeploy_command {
     my ($self, $params) = @_;
 
@@ -414,6 +526,7 @@ sub create_undeploy_command {
     $command .= qq{ -dest:$provider="$dest"};
     return $command;
 }
+
 
 sub set_cmd_line {
     my ($self, $cmd_line) = @_;
