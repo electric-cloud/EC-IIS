@@ -56,4 +56,61 @@
         <value>$[websiteName]</value>
         <documentation>Application pool name. If the application pool does not exists, it will be created. If this parameter was not specified, the application will be placed into the default pool, which has the same name as website.</documentation>
     </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>.NET Framework Version:</label>
+        <property>managedRuntimeVersion</property>
+        <required>0</required>
+        <value></value>
+        <documentation>.NET Framework version 3.5 includes all the functionality of earlier versions, and introduces new features for the technologies in versions 2.0 and 3.0 and additional technologies in the form of new assemblies.
+To use version 3.5, install the appropriate version of .NET Framework and use product-specific guidelines.</documentation>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Enable 32-bit Applications:</label>
+        <property>enable32BitAppOnWin64</property>
+        <required>0</required>
+        <value></value>
+        <checkedValue>true</checkedValue>
+        <uncheckedValue>false</uncheckedValue>
+        <documentation>If set to True for an application pool on a 64-bit operating system, the worker process(es) serving the application pool run in WOW64 (Windows on Windows64) mode. In WOW64 mode, 32-bit processes load only 32-bit applications.</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <option>
+            <value>Classic</value>
+            <name>Classic</name>
+        </option>
+        <option>
+            <value>Integrated</value>
+            <name>Integrated</name>
+        </option>
+        <label>Managed Pipeline Mode:</label>
+        <property>managedPipelineMode</property>
+        <required>0</required>
+        <value></value>
+        <documentation>Configures ASP.NET to run in classic mode as an ISAPI extension or in integrated mode where managed code is integrated into the request-processing pipeline.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <property>queueLength</property>
+        <label>Queue Length</label>
+        <documentation>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 “Service Unavailable” response.</documentation>
+        <value></value>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <property>autoStart</property>
+        <label>Start Automatically</label>
+        <documentation>If True, the application pool starts on creation or when IIS starts. Starting an application pool sets this property to True. Stopping an application sets this property to False.</documentation>
+        <checkedValue>true</checkedValue>
+        <uncheckedValue>false</uncheckedValue>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <property>appPoolAdditionalSettings</property>
+        <label>Additional settings for Application pool</label>
+        <htmlDocumentation>Additional settings for application pool configuration, key-value pair one per line. For the list of available settings please refer to <a target="_blank" href="https://technet.microsoft.com/en-us/library/cc745955.aspx">Managing, Tuning, and Configuring Application Pools in IIS 7.0</a></htmlDocumentation>
+        <value></value>
+    </formElement>
 </editor>
