@@ -572,6 +572,34 @@ sub create_app_cmd {
     return $command;
 }
 
+
+sub step_delete_application {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/appname/);
+    my $command = $self->delete_app_cmd({applicationName => $params->{appname}});
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+
+    if ($result->{code} != 0) {
+        my $message = _message_from_result($result);
+        $self->bail_out("Cannot delete application: $message");
+    }
+    print $result->{stdout};
+}
+
+
+sub delete_app_cmd {
+    my ($self, $params) = @_;
+
+    my $app_name = $params->{applicationName};
+    my $command = $self->get_app_cmd(
+        'delete', 'app',
+        qq{/app.name:"$app_name"}
+    );
+    return $command;
+}
+
 sub set_cmd_line {
     my ($self, $cmd_line) = @_;
 
@@ -592,6 +620,12 @@ sub _save_params_file {
     print $fh $content;
     close $fh;
     return $filename;
+}
+
+sub _message_from_result {
+    my ($result) = @_;
+
+    return $result->{stderr} ? $result->{stderr} : $result->{stdout};
 }
 
 1;
