@@ -508,7 +508,7 @@ sub get_app_cmd {
     my $executable = $self->cmd_appcmd;
     die 'No action' unless $action;
     die 'No object' unless $object;
-    my $command = "$executable $action $object " . join(" ", @params);
+    my $command = "\"$executable\" $action $object " . join(" ", @params);
     return $command;
 }
 
@@ -527,6 +527,78 @@ sub create_undeploy_command {
     return $command;
 }
 
+sub step_create_application {
+    my ($self) = @_;
+
+    # TODO rename form fields
+    my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
+    my $command = $self->create_app_cmd({
+        websiteName => $params->{appname},
+        applicationPath => $params->{path},
+        physicalPath => $params->{physicalpath}
+    });
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+
+    if ($result->{code} != 0) {
+        my $message = $result->{stderr} ? $result->{stderr} : $result->{stdout};
+        return $self->bail_out("Cannot create application: $message");
+    }
+    else {
+        print $result->{stdout};
+    }
+}
+
+sub create_app_cmd {
+    my ($self, $params) = @_;
+
+    my $site_name = $params->{websiteName} or die 'No site name';
+    my $path = $params->{applicationPath} or die 'No application path';
+    my $physical_path = $params->{physicalPath} or die 'No physicalPath';
+
+    $physical_path = EC::Plugin::Core::canon_path($physical_path);
+    # TODO create folder if it does not exists
+
+    if ($path !~ m/^\//) {
+        $path = "/$path";
+    }
+
+    my $command = $self->get_app_cmd(
+        'add', 'app',
+        qq{/site.name:"$site_name"},
+        qq{/path:"$path"},
+        qq{/physicalPath:"$physical_path"}
+    );
+    return $command;
+}
+
+
+sub step_delete_application {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/appname/);
+    my $command = $self->delete_app_cmd({applicationName => $params->{appname}});
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+
+    if ($result->{code} != 0) {
+        my $message = _message_from_result($result);
+        $self->bail_out("Cannot delete application: $message");
+    }
+    print $result->{stdout};
+}
+
+
+sub delete_app_cmd {
+    my ($self, $params) = @_;
+
+    my $app_name = $params->{applicationName};
+    my $command = $self->get_app_cmd(
+        'delete', 'app',
+        qq{/app.name:"$app_name"}
+    );
+    return $command;
+}
 
 sub set_cmd_line {
     my ($self, $cmd_line) = @_;
@@ -548,6 +620,12 @@ sub _save_params_file {
     print $fh $content;
     close $fh;
     return $filename;
+}
+
+sub _message_from_result {
+    my ($result) = @_;
+
+    return $result->{stderr} ? $result->{stderr} : $result->{stdout};
 }
 
 1;
