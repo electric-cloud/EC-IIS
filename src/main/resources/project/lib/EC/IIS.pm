@@ -29,8 +29,8 @@ use Carp;
 use File::Temp qw(tempfile);
 require Win32 if $^O eq 'MSWin32';
 use EC::Plugin::Core;
-use base qw(Exporter EC::Plugin::Core);
-our @EXPORT_OK = qw(trim);
+use base qw(EC::Plugin::Core);
+use Data::Dumper;
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
@@ -51,17 +51,11 @@ use constant {
 
 };
 
-sub new {
-    my ($class, %opt) = @_;
 
-    $opt{ec} ||= ElectricCommander->new;
-    return bless \%opt, $class;
-};
-
-sub get_ec {
-    my $self = shift;
-    return $self->{ec};
-};
+sub after_init_hook {
+    my ($self, %params) = @_;
+    # $self->debug_level(0);
+}
 
 sub trim {
     my ($string) = shift;
@@ -178,6 +172,7 @@ sub printable_cmdline {
         /[^\w\/\\\.]/ ? qq{"$_"} : $_; # TODO escape \'s?..
     } @safe;
 };
+
 
 my @version = ($^O eq 'MSWin32') ? Win32::GetOSVersion() : ();
 
@@ -409,6 +404,12 @@ sub step_deploy {
         source
         applicationPath
         applicationPool
+        managedRuntimeVersion
+        enable32BitAppOnWin64
+        managedPipelineMode
+        queueLength
+        autoStart
+        appPoolAdditionalSettings
     /);
 
     my $source_provider;
@@ -440,6 +441,18 @@ sub step_deploy {
     my $application = $params->{applicationPath};
     my $app_pool_name = $params->{applicationPool};
 
+    if(!$app_pool_name && $application) {
+        $app_pool_name = $self->get_app_pool($params->{websiteName}, $application);
+        unless($app_pool_name) {
+            # There is no app pool, so one will be created and it will have the site name
+            $app_pool_name = $params->{websiteName};
+        }
+        else {
+            $self->out(0, "Application $application is in app pool $app_pool_name");
+        }
+        $params->{applicationPool} = $app_pool_name;
+    }
+
     if ($application && $app_pool_name) {
         $self->create_or_update_app_pool($params);
         my $cmd = $self->get_app_cmd(
@@ -459,10 +472,24 @@ sub step_deploy {
     }
 }
 
+sub get_app_pool {
+    my ($self, $website, $application) = @_;
+
+    my $command = $self->get_app_cmd('list', 'apps', qq{/app.name:"$website/$application"});
+    my $result = $self->run_command($command);
+
+    if ($result->{stdout}) {
+        # APP "testsite/app" (applicationPool:mypool)
+        my ($pool) = $result->{stdout} =~ m/APP ".+" \(applicationPool:(.+)\)/;
+        return $pool;
+    }
+    return;
+}
+
 sub create_or_update_app_pool {
     my ($self, $params) = @_;
 
-    my $name = $params->{applicationPool} || die "No application name";
+    my $name = $params->{applicationPool} || die "No application pool name";
     my $check_exists_command = $self->get_app_cmd('list', 'apppools', qq{-name:"$name"});
     my $result = $self->run_command($check_exists_command);
 
@@ -473,8 +500,7 @@ sub create_or_update_app_pool {
     if ($result->{stdout}) {
         print "Application pool $name already exists\n";
         # Application pool exists
-        # Not implemented - not enough params yet
-        # $self->update_application_pool;
+        $self->update_app_pool($params);
     }
     else {
         print "Application pool $name does not exists, creating application pool\n";
@@ -490,13 +516,56 @@ Creates app pool.
 
 =cut
 
+# TODO
+my @app_pool_settings = qw(managedRuntimeVersion enable32BitAppOnWin64 managedPipelineMode queueLength autoStart);
+
 sub create_app_pool {
     my ($self, $params) = @_;
 
     my $name = $params->{applicationPool};
-    my $command = $self->get_app_cmd('add', 'apppool', qq{/name:"$name"});
+    my @settings = ();
+
+    for my $setting ( @app_pool_settings ) {
+        if ($params->{$setting}) {
+            push @settings, qq{/$setting:"$params->{$setting}"};
+        }
+    }
+
+    if ($params->{appPoolAdditionalSettings}) {
+        push @settings, $params->{appPoolAdditionalSettings};
+    }
+
+    my $command = $self->get_app_cmd('add', 'apppool', qq{/name:"$name"}, @settings);
     my $result = $self->run_command($command);
-    if ($result->{stderr} != 0) {
+    $self->dbg(Dumper($result));
+
+    if ($result->{stderr}) {
+        return $self->bail_out($result->{stderr});
+    }
+    print $result->{stdout};
+}
+
+
+sub update_app_pool {
+    my ($self, $params) = @_;
+
+    my $name = $params->{applicationPool};
+    my @settings = ();
+
+    for my $setting ( @app_pool_settings ) {
+        if ($params->{$setting}) {
+            push @settings, qq{/$setting:"$params->{$setting}"};
+        }
+    }
+
+    if ($params->{appPoolAdditionalSettings}) {
+        push @settings, $params->{appPoolAdditionalSettings};
+    }
+
+    my $command = $self->get_app_cmd('set', 'apppool', qq{/apppool.name:"$name"}, @settings);
+    my $result = $self->run_command($command);
+    $self->dbg(Dumper($result));
+    if ($result->{stderr}) {
         return $self->bail_out($result->{stderr});
     }
     print $result->{stdout};
@@ -527,6 +596,78 @@ sub create_undeploy_command {
     return $command;
 }
 
+sub step_create_application {
+    my ($self) = @_;
+
+    # TODO rename form fields
+    my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
+    my $command = $self->create_app_cmd({
+        websiteName => $params->{appname},
+        applicationPath => $params->{path},
+        physicalPath => $params->{physicalpath}
+    });
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+
+    if ($result->{code} != 0) {
+        my $message = $result->{stderr} ? $result->{stderr} : $result->{stdout};
+        return $self->bail_out("Cannot create application: $message");
+    }
+    else {
+        print $result->{stdout};
+    }
+}
+
+sub create_app_cmd {
+    my ($self, $params) = @_;
+
+    my $site_name = $params->{websiteName} or die 'No site name';
+    my $path = $params->{applicationPath} or die 'No application path';
+    my $physical_path = $params->{physicalPath} or die 'No physicalPath';
+
+    $physical_path = EC::Plugin::Core::canon_path($physical_path);
+    # TODO create folder if it does not exists
+
+    if ($path !~ m/^\//) {
+        $path = "/$path";
+    }
+
+    my $command = $self->get_app_cmd(
+        'add', 'app',
+        qq{/site.name:"$site_name"},
+        qq{/path:"$path"},
+        qq{/physicalPath:"$physical_path"}
+    );
+    return $command;
+}
+
+
+sub step_delete_application {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/appname/);
+    my $command = $self->delete_app_cmd({applicationName => $params->{appname}});
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+
+    if ($result->{code} != 0) {
+        my $message = _message_from_result($result);
+        $self->bail_out("Cannot delete application: $message");
+    }
+    print $result->{stdout};
+}
+
+
+sub delete_app_cmd {
+    my ($self, $params) = @_;
+
+    my $app_name = $params->{applicationName};
+    my $command = $self->get_app_cmd(
+        'delete', 'app',
+        qq{/app.name:"$app_name"}
+    );
+    return $command;
+}
 
 sub step_create_application {
     my ($self) = @_;
@@ -604,7 +745,7 @@ sub delete_app_cmd {
 sub set_cmd_line {
     my ($self, $cmd_line) = @_;
 
-    $self->get_ec->setProperty('/myCall/cmdLine', $cmd_line);
+    $self->ec->setProperty('/myCall/cmdLine', $cmd_line);
 }
 
 sub _is_xml {
