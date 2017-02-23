@@ -51,12 +51,6 @@ use constant {
 
 };
 
-sub new {
-    my ($class, %opt) = @_;
-    $opt{ec} ||= ElectricCommander->new;
-    return $class->SUPER::new( %opt );
-};
-
 sub after_init_hook {
     my ($self, %params) = @_;
     # $self->debug_level(0);
