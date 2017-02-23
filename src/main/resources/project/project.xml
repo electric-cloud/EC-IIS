@@ -7,6 +7,27 @@
         <workspaceName/>
         <propertySheet>
             <property>
+                <propertyName>ec_discovery</propertyName>
+                <description>Property sheet for storing discovery metadata</description>
+                <propertySheet>
+                    <property>
+                        <propertyName>displayName</propertyName>
+                        <value>IIS</value>
+                        <description>Display name to use for the plugin in Discovery UI</description>
+                    </property>
+                    <property>
+                        <propertyName>needsConfiguration</propertyName>
+                        <value>false</value>
+                        <description>true since the Discover procedure for the plugin needs the plugin configuration to obtain credentials and connection information in order to run discovery on target resources.</description>
+                    </property>
+<!--                     <property>
+                        <propertyName>configurations</propertyName>
+                        <value>iis_cfgs</value>
+                        <description>Name of the property sheet where the plugin configurations are stored</description>
+                    </property>
+ -->                </propertySheet>
+            </property>
+            <property>
                 <propertyName>ui_forms</propertyName>
                 <description>Property sheet to hold XML specification for forms</description>
                 <propertySheet>
@@ -116,25 +137,30 @@
             </property>
 	    <property>
 	        <propertyName>EC::IIS</propertyName>
-		<expandable>1</expandable>
-		<value />
+    		<expandable>1</expandable>
+    		<value />
 	    </property>
+        <property>
+            <propertyName>EC::Plugin::Core</propertyName>
+            <expandable>0</expandable>
+            <value />
+        </property>
 	    <property>
-	        <propertyName>EC::Plugin::Core</propertyName>
-		<expandable>0</expandable>
-		<value />
+	        <propertyName>EC::IIS::Discovery</propertyName>
+    		<expandable>0</expandable>
+    		<value />
 	    </property>
 	    <property>
 	        <propertyName>preamble</propertyName>
-		<expandable>1</expandable>
-		<value />
+    		<expandable>1</expandable>
+    		<value />
 	    </property>
-            <property>
-                <propertyName>ec_visibility</propertyName>
-                <description/>
-                <expandable>1</expandable>
-                <value>pickListOnly</value>
-            </property>
+        <property>
+            <propertyName>ec_visibility</propertyName>
+            <description/>
+            <expandable>1</expandable>
+            <value>pickListOnly</value>
+        </property>
         </propertySheet>
         <procedure>
             <procedureName>CreateConfiguration</procedureName>
@@ -2407,6 +2433,134 @@
                 <shell>ec-perl</shell>
                 <timeLimit/>
                 <procedureName>DeleteAppPool</procedureName>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        <procedure>
+            <procedureName>Discover</procedureName>
+            <description>Discover IIS instance configuration on a resources or environment</description>
+            <jobNameTemplate>IIS Discover Resources $[jobId]</jobNameTemplate>
+            <resourceName/>
+            <workspaceName/>
+            <propertySheet>
+                <property>
+                    <propertyName>ec_parameterForm</propertyName>
+                    <expandable>1</expandable>
+                    <value></value>
+                </property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                <property>
+                                    <propertyName>resourceNames</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            <formalParameter>
+                <formalParameterName>resourceNames</formalParameterName>
+                <defaultValue/>
+                <description>List of resources, on which discovery procedure should run. Enter multiple values on separate lines.</description>
+                <required>1</required>
+                <type>textarea</type>
+            </formalParameter>
+            <step>
+                <stepName>DiscoverResources</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command></command>
+                <condition/>
+                <description>Discover IIS instance configuration on a resources</description>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit>5</timeLimit>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        <procedure>
+            <procedureName>DiscoverResource</procedureName>
+            <description>Discover IIS instance configuration on a resource</description>
+            <jobNameTemplate>IIS Discover Resource $[jobId]</jobNameTemplate>
+            <resourceName/>
+            <workspaceName/>
+            <propertySheet>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                    </property>
+            </propertySheet>
+
+
+            <step>
+                <stepName>DiscoverResource</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command></command>
+                <condition/>
+                <description>Discover IIS instance configuration on a resource</description>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor></postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit>5</timeLimit>
                 <timeLimitUnits>minutes</timeLimitUnits>
                 <workingDirectory/>
                 <workspaceName/>

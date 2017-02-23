@@ -37,6 +37,22 @@ if ($upgradeAction eq "upgrade") {
         }
     }
 
+
+    my $olddiscovery = $query->getProperty("/plugins/$otherPluginName/project/ec_discovery/discovered_data");
+
+    local $self->{abortOnError} = 0;
+    $query->submit();
+
+
+    # Copy discovered data
+    if ($query->findvalue($olddiscovery, "code") ne "NoSuchProperty") {
+        $batch->clone({
+            path => "/plugins/$otherPluginName/project/ec_discovery/discovered_data",
+            cloneName => "/plugins/$pluginName/project/ec_discovery/discovered_data"
+        });
+    }
+
+
     # Copy configuration credentials and attach them to the appropriate steps
     my $nodes = $query->find($creds);
     if ($nodes) {

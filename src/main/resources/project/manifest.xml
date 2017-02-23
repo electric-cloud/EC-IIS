@@ -98,6 +98,14 @@
     <xpath>//procedure[procedureName=&quot;AddWebSiteBinding&quot;]/step[stepName=&quot;AddWebSiteBinding&quot;]/command</xpath>
   </file>
   <file>
+    <path>server/discoverResources.pl</path>
+    <xpath>//procedure[procedureName=&quot;Discover&quot;]/step[stepName=&quot;DiscoverResources&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>server/discoverResource.pl</path>
+    <xpath>//procedure[procedureName=&quot;DiscoverResource&quot;]/step[stepName=&quot;DiscoverResource&quot;]/command</xpath>
+  </file>
+  <file>
     <path>server/startWebSite.pl</path>
     <xpath>//procedure[procedureName=&quot;StartWebSite&quot;]/step[stepName=&quot;StartWebSite&quot;]/command</xpath>
   </file>
@@ -200,6 +208,10 @@
   <file>
     <path>lib/EC/Plugin/Core.pm</path>
     <xpath>//property[propertyName=&quot;EC::Plugin::Core&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>lib/EC/IIS/Discovery.pm</path>
+    <xpath>//property[propertyName=&quot;EC::IIS::Discovery&quot;]/value</xpath>
   </file>
   <file>
     <path>lib/EC/IIS.pm</path>
