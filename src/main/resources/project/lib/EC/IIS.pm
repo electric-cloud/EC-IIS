@@ -51,6 +51,11 @@ use constant {
 
 };
 
+sub new {
+    my ($class, %opt) = @_;
+    $opt{ec} ||= ElectricCommander->new;
+    return $class->SUPER::new( %opt );
+};
 
 sub after_init_hook {
     my ($self, %params) = @_;
@@ -212,7 +217,7 @@ sub outcome_error {
     my ($self, $fail) = @_;
 
     # TODO Add error details? do  we need it at all?
-    return $self->{ec}->setProperty( "/myJobStep/outcome", $fail ? 'error' : 'success' );
+    return $self->ec->setProperty( "/myJobStep/outcome", $fail ? 'error' : 'success' );
 };
 
 sub get_site_id {
@@ -246,7 +251,7 @@ sub setProperties {
     my ($self, $propHash) = @_;
 
     # get an EC object
-    my $ec = $self->{ec};
+    my $ec = $self->ec;
 
     foreach my $key (keys %$propHash) {
         my $val = $propHash->{$key};
@@ -258,7 +263,7 @@ sub getConfiguration($){
     my ($self, $configName) = @_;
 
     # get an EC object
-    my $ec = $self->{ec};
+    my $ec = $self->ec;
 
     my %configToUse;
 
