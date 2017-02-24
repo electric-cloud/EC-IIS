@@ -113,21 +113,7 @@ sub main() {
     #generate command line
     my $cmdLine = join( " ", @args );
 
-    if ( $cmdLine && $cmdLine ne '' ) {
-
-        #execute command line
-        my $ret = system($cmdLine);
-
-        #show masked command line
-        print "Command Line: $cmdLine\n";
-
-        #set prop's hash to EC properties
-        setProperties( { cmdLine => $cmdLine } );
-    }
-    else {
-        print "Error: failed to find executable at '$::gExecPath'";
-        exit ERROR;
-    }
+    exit $iis->run_reset(START_COMMAND);
 };    # end main
 
 ########################################################################
