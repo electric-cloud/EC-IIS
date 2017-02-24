@@ -206,6 +206,10 @@
     <xpath>//property[propertyName=&quot;EC::IIS&quot;]/value</xpath>
   </file>
   <file>
+    <path>lib/EC/Plugin/IISDriver.pm</path>
+    <xpath>//property[propertyName=&quot;EC::Plugin::IISDriver&quot;]/value</xpath>
+  </file>
+  <file>
     <path>forms/IISAddWebSiteBindingForm.xml</path>
     <xpath>//procedure[procedureName=&quot;AddWebSiteBinding&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
