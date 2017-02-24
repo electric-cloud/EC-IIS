@@ -133,6 +133,7 @@ sub run_cscript_js {
 sub run_reset {
     my ($self, $args) = @_;
 
+    $args = [] unless defined $args;
     $args = [ $args ] unless ref $args eq 'ARRAY'; # just 1 arg
     my $ret = $self->run_cmd( [ $self->iisreset, @$args ] );
 
