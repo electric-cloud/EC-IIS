@@ -113,10 +113,10 @@ sub main() {
     #generate command line
     my $cmdLine = join( " ", @args );
 
-    if ( -f $::gExecPath ) {
+    if ( $cmdLine && $cmdLine ne '' ) {
 
         #execute command line
-        my $ret = system(@args);
+        my $ret = system($cmdLine);
 
         #show masked command line
         print "Command Line: $cmdLine\n";
