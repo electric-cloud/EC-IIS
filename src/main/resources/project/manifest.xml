@@ -30,6 +30,10 @@
     <xpath>//property[propertyName=&quot;http_matchers&quot;]/value</xpath>
   </file>
   <file>
+    <path>matchers/iisresetMatchers.pl</path>
+    <xpath>//property[propertyName=&quot;iisreset_matchers&quot;]/value</xpath>
+  </file>
+  <file>
     <path>matchers/startSiteMatchers.pl</path>
     <xpath>//property[propertyName=&quot;startsite_matchers&quot;]/value</xpath>
   </file>
@@ -301,4 +305,33 @@
     <path>forms/IISListSiteAppsForm.xml</path>
     <xpath>//procedure[procedureName=&quot;ListSiteApps&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
+
+  <file>
+    <path>server/resetServer.pl</path>
+    <xpath>//procedure[procedureName=&quot;ResetServer&quot;]/step[stepName=&quot;ResetServer&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>forms/IISResetServerForm.xml</path>
+    <xpath>//procedure[procedureName=&quot;ResetServer&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+
+
+  <file>
+    <path>server/startServer.pl</path>
+    <xpath>//procedure[procedureName=&quot;StartServer&quot;]/step[stepName=&quot;StartServer&quot;]/command</xpath>
+  </file>
+  <file>
+    <path>server/stopServer.pl</path>
+    <xpath>//procedure[procedureName=&quot;StopServer&quot;]/step[stepName=&quot;StopServer&quot;]/command</xpath>
+  </file>
+
+  <file>
+    <path>forms/IISStartServerForm.xml</path>
+    <xpath>//procedure[procedureName=&quot;StartServer&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>forms/IISStopServerForm.xml</path>
+    <xpath>//procedure[procedureName=&quot;StopServer&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+
 </fileset>
