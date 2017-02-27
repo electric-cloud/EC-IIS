@@ -2783,6 +2783,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>additionalParams</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -2800,6 +2810,13 @@
                 <defaultValue/>
                 <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
                 <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>additionalParams</formalParameterName>
+                <defaultValue/>
+                <description>Additional command line options if needed.</description>
+                <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <step>

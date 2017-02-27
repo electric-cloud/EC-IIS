@@ -30,4 +30,6 @@ use strict;
 use EC::IIS;
 my $iis = EC::IIS->new;
 
-exit $iis->run_reset();
+my $extras = $iis->get_param("additionalParams");
+
+exit $iis->run_reset( defined $extras ? $extras : () );
