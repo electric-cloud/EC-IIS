@@ -23,6 +23,22 @@
                     </property>
                 </propertySheet>
             </property>
+            <property>
+                <propertyName>ec_discovery</propertyName>
+                <description>Property sheet for storing discovery metadata</description>
+                <propertySheet>
+                    <property>
+                        <propertyName>displayName</propertyName>
+                        <value>IIS</value>
+                        <description>Display name to use for the plugin in Discovery UI</description>
+                    </property>
+                    <property>
+                        <propertyName>needsConfiguration</propertyName>
+                        <value>false</value>
+                        <description>true since the Discover procedure for the plugin needs the plugin configuration to obtain credentials and connection information in order to run discovery on target resources.</description>
+                    </property>
+                 </propertySheet>
+            </property>
 
             <property>
                 <propertyName>startsite_matchers</propertyName>
@@ -110,12 +126,17 @@
                 <value/>
             </property>
             <property>
+                <propertyName>iisreset_matchers</propertyName>
+                <expandable>0</expandable>
+                <value/>
+            </property>
+            <property>
                 <propertyName>ec_setup</propertyName>
                 <expandable>0</expandable>
                 <value/>
             </property>
 	    <property>
-            <propertyName>EC::IIS</propertyName>
+	        <propertyName>EC::IIS</propertyName>
     		<expandable>1</expandable>
     		<value />
 	    </property>
@@ -128,11 +149,16 @@
             <propertyName>EC::Plugin::IISDriver</propertyName>
             <expandable>0</expandable>
             <value />
+        </property>
+        <property>
+	        <propertyName>EC::IIS::Discovery</propertyName>
+    		<expandable>0</expandable>
+    		<value />
 	    </property>
 	    <property>
-	        <propertyName>preamble</propertyName>
-		<expandable>1</expandable>
-		<value />
+    	        <propertyName>preamble</propertyName>
+    		<expandable>1</expandable>
+    		<value />
 	    </property>
             <property>
                 <propertyName>ec_visibility</propertyName>
@@ -3322,6 +3348,428 @@
                 <shell>ec-perl</shell>
                 <timeLimit/>
                 <procedureName>DeleteAppPool</procedureName>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+
+        <procedure>
+            <procedureName>ResetServer</procedureName>
+            <description>Reset an IIS Server</description>
+            <jobNameTemplate>iis-resetserver-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                <property>
+                                    <propertyName>configname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>execpath</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>additionalParams</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            <formalParameter>
+                <formalParameterName>execpath</formalParameterName>
+                <defaultValue>iisreset</defaultValue>
+                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>configname</formalParameterName>
+                <defaultValue/>
+                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>additionalParams</formalParameterName>
+                <defaultValue/>
+                <description>Additional command line options if needed.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <step>
+                <stepName>ResetServer</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/iisreset_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <procedureName>ResetServer</procedureName>
+                <projectName>EC-IIS</projectName>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+
+        <procedure>
+            <procedureName>StartServer</procedureName>
+            <description>Start an IIS Server</description>
+            <jobNameTemplate>iis-startserver-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                <property>
+                                    <propertyName>execpath</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>configname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            <formalParameter>
+                <formalParameterName>configname</formalParameterName>
+                <defaultValue/>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>execpath</formalParameterName>
+                <defaultValue>iisreset</defaultValue>
+                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <step>
+                <stepName>StartServer</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/iisreset_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <procedureName>StartServer</procedureName>
+                <projectName>EC-IIS</projectName>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+
+        <procedure>
+            <procedureName>StopServer</procedureName>
+            <description>Stop an IIS Server</description>
+            <jobNameTemplate>iis-stopserver-$[jobId]</jobNameTemplate>
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+				<property>
+						<propertyName>ec_parameterForm</propertyName>
+						<expandable>1</expandable>
+						<value></value>
+				</property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                <property>
+                                    <propertyName>execpath</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>configname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            <formalParameter>
+                <formalParameterName>configname</formalParameterName>
+                <defaultValue/>
+                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>execpath</formalParameterName>
+                <defaultValue>iisreset</defaultValue>
+                <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <step>
+                <stepName>StopServer</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command/>
+                <condition/>
+                <description/>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/iisreset_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit/>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <procedureName>StopServer</procedureName>
+                <projectName>EC-IIS</projectName>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        <procedure>
+            <procedureName>Discover</procedureName>
+            <description>Discover IIS instance configuration on a resources or environment</description>
+            <jobNameTemplate>IIS Discover Resources $[jobId]</jobNameTemplate>
+            <resourceName/>
+            <workspaceName/>
+            <propertySheet>
+                <property>
+                    <propertyName>ec_parameterForm</propertyName>
+                    <expandable>1</expandable>
+                    <value></value>
+                </property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                <property>
+                                    <propertyName>resourceNames</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            <formalParameter>
+                <formalParameterName>resourceNames</formalParameterName>
+                <defaultValue/>
+                <description>List of resources, on which discovery procedure should run. Enter multiple values on separate lines.</description>
+                <required>1</required>
+                <type>textarea</type>
+            </formalParameter>
+            <step>
+                <stepName>DiscoverResources</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command></command>
+                <condition/>
+                <description>Discover IIS instance configuration on a resources</description>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor>postp</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit>5</timeLimit>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
+        <procedure>
+            <procedureName>DiscoverResource</procedureName>
+            <description>Discover IIS instance configuration on a resource</description>
+            <jobNameTemplate>IIS Discover Resource $[jobId]</jobNameTemplate>
+            <resourceName/>
+            <workspaceName/>
+            <propertySheet>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                    </property>
+            </propertySheet>
+            <step>
+                <stepName>DiscoverResource</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command></command>
+                <condition/>
+                <description>Discover IIS instance configuration on a resource</description>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor></postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit>5</timeLimit>
                 <timeLimitUnits>minutes</timeLimitUnits>
                 <workingDirectory/>
                 <workspaceName/>

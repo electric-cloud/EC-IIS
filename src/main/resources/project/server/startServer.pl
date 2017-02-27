@@ -1,6 +1,9 @@
 #!/usr/bin/env perl
 # include $[/myProject/preamble]
-# line 4 "[EC]/@PLUGIN_KEY@-@PLUGIN_VERSION@/startServer.pl"
+# line 4 "@PLUGIN_KEY@-@PLUGIN_VERSION@/startServer.pl"
+# $[/myProject/preamble]
+# line 4 "startServer.pl"
+
 # -------------------------------------------------------------------------
 # File
 #    startServer.pl
@@ -24,15 +27,14 @@
 # -------------------------------------------------------------------------
 # Includes
 # -------------------------------------------------------------------------
-use ElectricCommander;
 use warnings;
 use strict;
 use Cwd;
 use File::Spec;
-use diagnostics;
 use Data::Dumper;
-use ElectricCommander::PropDB;
-$| = 1;
+
+use EC::IIS;
+my $ec_iis = EC::IIS->new;
 
 # -------------------------------------------------------------------------
 # Constants
@@ -50,39 +52,12 @@ use constant {
 
 };
 
-########################################################################
-# trim - deletes blank spaces before and after the entered value in
-# the argument
-#
-# Arguments:
-#   -untrimmedString: string that will be trimmed
-#
-# Returns:
-#   trimmed string
-#
-########################################################################
-sub trim($) {
-
-    my ($untrimmedString) = @_;
-
-    my $string = $untrimmedString;
-
-    #removes leading spaces
-    $string =~ s/^\s+//;
-
-    #removes trailing spaces
-    $string =~ s/\s+$//;
-
-    #returns trimmed string
-    return $string;
-}
-
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
 
-$::gExecPath   = "$[execpath]";
-$::gConfigName = "$[configname]";
+$::gExecPath   = '$[execpath]';
+$::gConfigName = '$[configname]';
 
 # -------------------------------------------------------------------------
 # Main functions
@@ -102,8 +77,7 @@ $::gConfigName = "$[configname]";
 sub main() {
 
     # create args array
-    my @args = ();
-    my %props;
+    my @args;
     my %configuration;
 
     my $iisVersion = '';
@@ -111,96 +85,36 @@ sub main() {
     my $user       = '';
     my $password   = '';
 
-    if ( $::gConfigName ne '' ) {
-        %configuration = getConfiguration($::gConfigName);
+    if ( !defined $::gConfigName || !length $::gConfigName ) {
+        warn "Config not found";
+        exit ERROR;
     }
+    %configuration = getConfiguration($::gConfigName);
 
     #inject config...
-    if (%configuration) {
-
-        if ( $configuration{'iis_url'} && $configuration{'iis_url'} ne '' ) {
-            $url = $configuration{'iis_url'};
-        }
-        else {
-            exit ERROR;
-        }
-
-        if ( $configuration{'user'} ne '' && $configuration{'password'} ne '' )
-        {
-
-            $user     = $configuration{'user'};
-            $password = $configuration{'password'};
-
-        }
-
+    if ( $configuration{'iis_url'} && $configuration{'iis_url'} ne '' ) {
+        $url = $configuration{'iis_url'};
     }
     else {
-
+        warn "no iis_url in config";
         exit ERROR;
+    }
 
+    if ( defined $configuration{'user'} and defined $configuration{'password'} )
+    {
+        $user     = $configuration{'user'};
+        $password = $configuration{'password'};
     }
 
     #commands to be executed for version 6
     push( @args, $::gExecPath );
-
     push( @args, START_COMMAND );
 
     #generate command line
-    my $cmdLine = createCommandLine( \@args );
+    my $cmdLine = join( " ", @args );
 
-    if ( $cmdLine && $cmdLine ne '' ) {
-
-        #execute command line
-        system($cmdLine);
-
-        #show masked command line
-        print "Command Line: $cmdLine\n";
-
-        #add masked command line to properties object
-        $props{'cmdLine'} = $cmdLine;
-
-        #set prop's hash to EC properties
-        setProperties( \%props );
-
-    }
-    else {
-
-        print "Error: could not generate command line";
-        exit ERROR;
-
-    }
-
-}
-
-########################################################################
-# createCommandLine - creates the command line for the invocation
-# of the program to be executed.
-#
-# Arguments:
-#   -arr: array containing the command name (must be the first element)
-#         and the arguments entered by the user in the UI
-#
-# Returns:
-#   -the command line to be executed by the plugin
-#
-########################################################################
-sub createCommandLine($) {
-
-    my ($arr) = @_;
-
-    my $commandName = @$arr[0];
-
-    my $command = $commandName;
-
-    shift(@$arr);
-
-    foreach my $elem (@$arr) {
-        $command .= " $elem";
-    }
-
-    return $command;
-
-}
+    exit $iis->run_reset(START_COMMAND);
+};    # end main
 
 ########################################################################
 # setProperties - set a group of properties into the Electric Commander
@@ -255,7 +169,7 @@ sub getConfiguration($) {
 
     # Check if configuration exists
     unless ( keys(%configRow) ) {
-        exit ERROR;
+        die "No config for '$proj' named '$configName'";
     }
 
     # Get user/password out of credential

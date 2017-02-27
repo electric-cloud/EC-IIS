@@ -577,7 +577,7 @@ Internal function. You should use run_command instead.
 sub _syscall_win32 {
     my ($self, @command) = @_;
 
-    my $command = join '', @command;
+    my $command = join ' ', @command;
 
     my $result_folder = $ENV{COMMANDER_WORKSPACE};
     if (!$result_folder) {

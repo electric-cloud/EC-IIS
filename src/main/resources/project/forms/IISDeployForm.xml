@@ -26,6 +26,7 @@
         <property>msdeployPath</property>
         <required>1</required>
         <documentation>Provide the relative or absolute path to the MSDeploy executable.</documentation>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_discovery/discovered_data/msdeploy_path</propertyReference>
     </formElement>
     <formElement>
         <type>entry</type>

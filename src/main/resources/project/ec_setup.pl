@@ -37,6 +37,22 @@ if ($upgradeAction eq "upgrade") {
         }
     }
 
+
+    my $olddiscovery = $query->getProperty("/plugins/$otherPluginName/project/ec_discovery/discovered_data");
+
+    local $self->{abortOnError} = 0;
+    $query->submit();
+
+
+    # Copy discovered data
+    if ($query->findvalue($olddiscovery, "code") ne "NoSuchProperty") {
+        $batch->clone({
+            path => "/plugins/$otherPluginName/project/ec_discovery/discovered_data",
+            cloneName => "/plugins/$pluginName/project/ec_discovery/discovered_data"
+        });
+    }
+
+
     # Copy configuration credentials and attach them to the appropriate steps
     my $nodes = $query->find($creds);
     if ($nodes) {
@@ -202,6 +218,25 @@ my %stopWebSite = (
     category    => "Application Server"
 );
 
+my %resetServer = (
+    label       => "IIS - Reset Server",
+    procedure   => "ResetServer",
+    description => "Uses the iisreset utility to stop a server.",
+    category    => "Application Server"
+);
+my %startServer = (
+    label       => "IIS - Start Server",
+    procedure   => "StartServer",
+    description => "Uses the iisreset utility to start a server.",
+    category    => "Application Server"
+);
+my %stopServer = (
+    label       => "IIS - Stop Server",
+    procedure   => "StopServer",
+    description => "Uses the iisreset utility to stop a server.",
+    category    => "Application Server"
+);
+
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Check Server Status");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Add Website Binding");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Assign App To App Pool");
@@ -222,6 +257,9 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start App Pool
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start Website");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop App Pool");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop Website");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Reset Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop Server");
 
 @::createStepPickerSteps = (\%checkServerStatus, \%addWebSiteBinding,
                             \%assignAppToAppPool, \%createAppPool,
@@ -232,4 +270,6 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop Website")
                             \%listSiteApps, \%listSites,
                             \%startAppPool, \%startWebSite,
                             \%stopAppPool, \%stopWebSite, \%deployAdvanced,
-                             \%undeploy, \%deploy);
+                            \%undeploy, \%deploy,
+                            \%startServer, \%stopServer, \%resetServer,
+);
