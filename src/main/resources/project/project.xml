@@ -1004,7 +1004,7 @@
             <formalParameter>
                 <formalParameterName>queueLength</formalParameterName>
                 <defaultValue/>
-                <description>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 “Service Unavailable” response.</description>
+                <description>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
@@ -2253,7 +2253,7 @@
             <formalParameter>
                 <formalParameterName>queueLength</formalParameterName>
                 <defaultValue></defaultValue>
-                <description>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 “Service Unavailable” response.</description>
+                <description>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>

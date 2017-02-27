@@ -96,7 +96,7 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
         <type>entry</type>
         <property>queueLength</property>
         <label>Queue Length</label>
-        <documentation>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 “Service Unavailable” response.</documentation>
+        <documentation>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.</documentation>
         <value></value>
     </formElement>
     <formElement>
