@@ -3384,16 +3384,6 @@
                             <propertyName>parameters</propertyName>
                             <propertySheet>
                                 <property>
-                                    <propertyName>configname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
-                                <property>
                                     <propertyName>execpath</propertyName>
                                     <propertySheet>
                                         <property>
@@ -3422,13 +3412,6 @@
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue>iisreset</defaultValue>
                 <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
-            <formalParameter>
-                <formalParameterName>configname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the name of the configuration that holds connection information for the IIS server. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
@@ -3503,28 +3486,11 @@
                                         </property>
                                     </propertySheet>
                                 </property>
-                                <property>
-                                    <propertyName>configname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
                 </property>
             </propertySheet>
-            <formalParameter>
-                <formalParameterName>configname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
             <formalParameter>
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue>iisreset</defaultValue>
@@ -3596,28 +3562,11 @@
                                         </property>
                                     </propertySheet>
                                 </property>
-                                <property>
-                                    <propertyName>configname</propertyName>
-                                    <propertySheet>
-                                        <property>
-                                            <propertyName>formType</propertyName>
-                                            <expandable>1</expandable>
-                                            <value>standard</value>
-                                        </property>
-                                    </propertySheet>
-                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
                 </property>
             </propertySheet>
-            <formalParameter>
-                <formalParameterName>configname</formalParameterName>
-                <defaultValue/>
-                <description>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</description>
-                <required>1</required>
-                <type>entry</type>
-            </formalParameter>
             <formalParameter>
                 <formalParameterName>execpath</formalParameterName>
                 <defaultValue>iisreset</defaultValue>

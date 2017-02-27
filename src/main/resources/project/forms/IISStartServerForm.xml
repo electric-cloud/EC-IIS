@@ -2,15 +2,7 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StartServer</help>
 	<label>Application Server - IIS StartServer</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>This procedure uses the iisreset utility to start a server.</description>	
-	<formElement>
-		<type>entry</type>
-		<label>Configuration name:</label>
-		<property>configname</property>
-		<required>1</required>
-        <documentation>Provide the name of the configuration that holds connection information for the IIS server. If the procedure is run on the host itself, use 'localhost'. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-        <htmlDocumentation>Provide the name of the configuration that holds connection information for the IIS server. If the procedure is run on the host itself, use 'localhost'.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
-	</formElement>			
+	<description>This procedure uses the iisreset utility to start a server.</description>
 	<formElement>
 		<type>entry</type>
 		<label>	Absolute location of the iisreset utility:</label>
@@ -18,5 +10,5 @@
 		<property>execpath</property>
 		<required>1</required>
 		<documentation>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</documentation>
-	</formElement>		
+	</formElement>
 </editor>
