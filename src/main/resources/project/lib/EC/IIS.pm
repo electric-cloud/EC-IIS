@@ -34,6 +34,7 @@ use Data::Dumper;
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
+use EC::Plugin::IISDriver;
 
 use constant {
     SUCCESS => 0,
@@ -53,7 +54,17 @@ use constant {
 
 sub after_init_hook {
     my ($self, %params) = @_;
-    # $self->debug_level(0);
+    $self->debug_level(0);
+}
+
+
+sub driver {
+    my ($self) = @_;
+
+    unless($self->{_iis_driver}) {
+        $self->{_iis_driver} = EC::Plugin::IISDriver->new;
+    }
+    return $self->{_iis_driver};
 }
 
 sub trim {
@@ -442,7 +453,7 @@ sub step_deploy {
     my $app_pool_name = $params->{applicationPool};
 
     if(!$app_pool_name && $application) {
-        $app_pool_name = $self->get_app_pool($params->{websiteName}, $application);
+        $app_pool_name = $self->get_site_app_pool($params->{websiteName}, $application);
         unless($app_pool_name) {
             # There is no app pool, so one will be created and it will have the site name
             $app_pool_name = $params->{websiteName};
@@ -455,7 +466,7 @@ sub step_deploy {
 
     if ($application && $app_pool_name) {
         $self->create_or_update_app_pool($params);
-        my $cmd = $self->get_app_cmd(
+        my $cmd = $self->driver->get_app_cmd(
             'set',
             'site',
             qq{/site.name:"$params->{websiteName}"},
@@ -472,10 +483,10 @@ sub step_deploy {
     }
 }
 
-sub get_app_pool {
+sub get_site_app_pool {
     my ($self, $website, $application) = @_;
 
-    my $command = $self->get_app_cmd('list', 'apps', qq{/app.name:"$website/$application"});
+    my $command = $self->driver->get_app_cmd('list', 'apps', qq{/app.name:"$website/$application"});
     my $result = $self->run_command($command);
 
     if ($result->{stdout}) {
@@ -487,24 +498,17 @@ sub get_app_pool {
 }
 
 sub create_or_update_app_pool {
-    my ($self, $params) = @_;
+    my ($self, $params, $settings) = @_;
 
-    my $name = $params->{applicationPool} || die "No application pool name";
-    my $check_exists_command = $self->get_app_cmd('list', 'apppools', qq{-name:"$name"});
-    my $result = $self->run_command($check_exists_command);
-
-    if ($result->{stderr} ne '') {
-        return $self->bail_out("Cannot list app pools: $result->{stderr}");
-    }
-
-    if ($result->{stdout}) {
-        print "Application pool $name already exists\n";
+    my $name = $params->{applicationPool};
+    if ($self->driver->check_app_pool_exists($name)) {
+        print "Application pool $name already exists, going to update\n";
         # Application pool exists
-        $self->update_app_pool($params);
+        $self->update_app_pool($params, $settings);
     }
     else {
         print "Application pool $name does not exists, creating application pool\n";
-        $self->create_app_pool($params);
+        $self->create_app_pool($params, $settings);
     }
 }
 
@@ -520,66 +524,24 @@ Creates app pool.
 my @app_pool_settings = qw(managedRuntimeVersion enable32BitAppOnWin64 managedPipelineMode queueLength autoStart);
 
 sub create_app_pool {
-    my ($self, $params) = @_;
+    my ($self, $params, $available_settings) = @_;
 
-    my $name = $params->{applicationPool};
-    my @settings = ();
-
-    for my $setting ( @app_pool_settings ) {
-        if ($params->{$setting}) {
-            push @settings, qq{/$setting:"$params->{$setting}"};
-        }
-    }
-
-    if ($params->{appPoolAdditionalSettings}) {
-        push @settings, $params->{appPoolAdditionalSettings};
-    }
-
-    my $command = $self->get_app_cmd('add', 'apppool', qq{/name:"$name"}, @settings);
+    my $command = $self->driver->create_app_pool_cmd($params, $available_settings);
+    $self->set_cmd_line($command);
     my $result = $self->run_command($command);
-    $self->dbg(Dumper($result));
-
-    if ($result->{stderr}) {
-        return $self->bail_out($result->{stderr});
-    }
-    print $result->{stdout};
+    $self->_process_result($result);
 }
 
 
 sub update_app_pool {
-    my ($self, $params) = @_;
+    my ($self, $params, $available_settings) = @_;
 
-    my $name = $params->{applicationPool};
-    my @settings = ();
-
-    for my $setting ( @app_pool_settings ) {
-        if ($params->{$setting}) {
-            push @settings, qq{/$setting:"$params->{$setting}"};
-        }
-    }
-
-    if ($params->{appPoolAdditionalSettings}) {
-        push @settings, $params->{appPoolAdditionalSettings};
-    }
-
-    my $command = $self->get_app_cmd('set', 'apppool', qq{/apppool.name:"$name"}, @settings);
+    my $command = $self->driver->update_app_pool_cmd($params, $available_settings);
+    $self->set_cmd_line($command);
     my $result = $self->run_command($command);
-    $self->dbg(Dumper($result));
-    if ($result->{stderr}) {
-        return $self->bail_out($result->{stderr});
-    }
-    print $result->{stdout};
+    $self->_process_result($result);
 }
 
-sub get_app_cmd {
-    my ($self, $action, $object, @params) = @_;
-
-    my $executable = $self->cmd_appcmd;
-    die 'No action' unless $action;
-    die 'No object' unless $object;
-    my $command = "\"$executable\" $action $object " . join(" ", @params);
-    return $command;
-}
 
 sub create_undeploy_command {
     my ($self, $params) = @_;
@@ -601,7 +563,7 @@ sub step_create_application {
 
     # TODO rename form fields
     my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
-    my $command = $self->create_app_cmd({
+    my $command = $self->driver->create_app_cmd({
         websiteName => $params->{appname},
         applicationPath => $params->{path},
         physicalPath => $params->{physicalpath}
@@ -618,35 +580,11 @@ sub step_create_application {
     }
 }
 
-sub create_app_cmd {
-    my ($self, $params) = @_;
-
-    my $site_name = $params->{websiteName} or die 'No site name';
-    my $path = $params->{applicationPath} or die 'No application path';
-    my $physical_path = $params->{physicalPath} or die 'No physicalPath';
-
-    $physical_path = EC::Plugin::Core::canon_path($physical_path);
-    # TODO create folder if it does not exists
-
-    if ($path !~ m/^\//) {
-        $path = "/$path";
-    }
-
-    my $command = $self->get_app_cmd(
-        'add', 'app',
-        qq{/site.name:"$site_name"},
-        qq{/path:"$path"},
-        qq{/physicalPath:"$physical_path"}
-    );
-    return $command;
-}
-
-
 sub step_delete_application {
     my ($self) = @_;
 
     my $params = $self->get_params_as_hashref(qw/appname/);
-    my $command = $self->delete_app_cmd({applicationName => $params->{appname}});
+    my $command = $self->driver->delete_app_cmd({applicationName => $params->{appname}});
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
 
@@ -658,94 +596,99 @@ sub step_delete_application {
 }
 
 
-sub delete_app_cmd {
-    my ($self, $params) = @_;
-
-    my $app_name = $params->{applicationName};
-    my $command = $self->get_app_cmd(
-        'delete', 'app',
-        qq{/app.name:"$app_name"}
-    );
-    return $command;
-}
-
-sub step_create_application {
+sub step_create_app_pool {
     my ($self) = @_;
 
-    # TODO rename form fields
-    my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
-    my $command = $self->create_app_cmd({
-        websiteName => $params->{appname},
-        applicationPath => $params->{path},
-        physicalPath => $params->{physicalpath}
-    });
-    $self->set_cmd_line($command);
-    my $result = $self->run_command($command);
+    my @settings = qw/
+        queueLength
+        autoStart
+        enable32BitAppOnWin64
+        managedRuntimeVersion
+        managedPipelineMode
+        processModel.identityType
+        processModel.loadUserProfile
+        processModel.idleTimeout
+        processModel.maxProcesses
+        processModel.shutdownTimeLimit
+        processModel.startupTimeLimit
+        processModel.pingingEnabled
+        processModel.pingInterval
+        processModel.pingResponseTime
+        recycling.disallowOverlappingRotation
+        recycling.disallowRotationOnConfigChange
+        recycling.periodicRestart.memory
+        recycling.periodicRestart.privateMemory
+        recycling.periodicRestart.requests
+        recycling.periodicRestart.time
+        failure.loadBalancerCapabilities
+        failure.orphanWorkerProcess
+        failure.orphanActionExe
+        failure.orphanActionParams
+        failure.rapidFailProtection
+        failure.rapidFailProtectionInterval
+        failure.rapidFailProtectionMaxCrashes
+        failure.autoShutdownExe
+        failure.autoShutdownParams
+        cpu.limit
+        cpu.action
+        cpu.resetInterval
+        cpu.smpAffinitized
+        cpu.smpProcessorAffinityMask
+    /;
 
-    if ($result->{code} != 0) {
-        my $message = $result->{stderr} ? $result->{stderr} : $result->{stdout};
-        return $self->bail_out("Cannot create application: $message");
-    }
-    else {
-        print $result->{stdout};
-    }
-}
+    my $params = $self->get_params_as_hashref(
+        'apppoolname',
+        @settings,
+        'recycling.periodicRestart.schedule',
+        'appPoolAdditionalSettings');
+    $params->{applicationPool} = $params->{apppoolname};
+    my $periodic_restart_setting_name = q/recycling.periodicRestart.schedule.[value='timespan'].value/;
+    $params->{$periodic_restart_setting_name} = delete $params->{'recycling.periodicRestart.schedule'};
+    push @settings, $periodic_restart_setting_name;
 
-sub create_app_cmd {
-    my ($self, $params) = @_;
-
-    my $site_name = $params->{websiteName} or die 'No site name';
-    my $path = $params->{applicationPath} or die 'No application path';
-    my $physical_path = $params->{physicalPath} or die 'No physicalPath';
-
-    $physical_path = EC::Plugin::Core::canon_path($physical_path);
-    # TODO create folder if it does not exists
-
-    if ($path !~ m/^\//) {
-        $path = "/$path";
-    }
-
-    my $command = $self->get_app_cmd(
-        'add', 'app',
-        qq{/site.name:"$site_name"},
-        qq{/path:"$path"},
-        qq{/physicalPath:"$physical_path"}
+    my @time_span_parameters = qw(
+        processModel.startupTimeLimit
+        processModel.shutdownTimeLimit
+        processModel.idleTimeout
+        processModel.pingInterval
+        processModel.pingResponseTime
+        recycling.periodicRestart.time
+        cpu.resetInterval
+        failure.rapidFailProtectionInterval
     );
-    return $command;
-}
 
-
-sub step_delete_application {
-    my ($self) = @_;
-
-    my $params = $self->get_params_as_hashref(qw/appname/);
-    my $command = $self->delete_app_cmd({applicationName => $params->{appname}});
-    $self->set_cmd_line($command);
-    my $result = $self->run_command($command);
-
-    if ($result->{code} != 0) {
-        my $message = _message_from_result($result);
-        $self->bail_out("Cannot delete application: $message");
-    }
-    print $result->{stdout};
-}
-
-
-sub delete_app_cmd {
-    my ($self, $params) = @_;
-
-    my $app_name = $params->{applicationName};
-    my $command = $self->get_app_cmd(
-        'delete', 'app',
-        qq{/app.name:"$app_name"}
+    my @minutes_parameters = qw(
+        processModel.idleTimeout
+        cpu.resetInterval
+        recycling.periodicRestart.time
     );
-    return $command;
+
+    # Some parameters require special format
+    for my $time_param (@time_span_parameters) {
+        if (is_int($params->{$time_param})) {
+            my $seconds;
+            if (grep { $time_param eq $_ } @minutes_parameters) {
+                $seconds = $params->{$time_param} * 60;
+            }
+            else {
+                $seconds = $params->{$time_param};
+            }
+
+            my $span = $self->driver->seconds_to_time_span($seconds);
+            $params->{$time_param} = $span;
+        }
+    }
+
+    $self->create_or_update_app_pool($params, \@settings);
 }
+
 
 sub set_cmd_line {
-    my ($self, $cmd_line) = @_;
+    my ($self, $cmd_line, $property) = @_;
 
-    $self->ec->setProperty('/myCall/cmdLine', $cmd_line);
+    $property = 'cmdLine' unless $property;
+    $self->ec->setProperty("/myCall/$property", $cmd_line);
+    print "Wrote command to property $property\n";
 }
 
 sub _is_xml {
@@ -764,10 +707,35 @@ sub _save_params_file {
     return $filename;
 }
 
+
+sub _process_result {
+    my ($self, $result) = @_;
+
+    $self->dbg(Dumper($result));
+    if ($result->{code} || $result->{stderr}) {
+        return $self->bail_out($result->{stderr} || $result->{stdout});
+    }
+    if ($result->{stdout} =~ m/ERROR\s*\(\s*message:(.+)\)/ms) {
+        $self->warning($1);
+    }
+    else {
+        print $result->{stdout};
+        $self->success($result->{stdout});
+    }
+}
+
 sub _message_from_result {
     my ($result) = @_;
 
     return $result->{stderr} ? $result->{stderr} : $result->{stdout};
 }
+
+
+sub is_int {
+    my ($number) = @_;
+
+    return $number && $number =~ m/^\d+$/;
+}
+
 
 1;
