@@ -204,11 +204,19 @@
         <documentation>Parameters for the executable that is run when a worker process is abandoned (orphaned). For example, -g –p %1% is appropriate if the NTSD is the executable invoked for debugging worker process failures.</documentation>
     </formElement>
     <formElement>
-        <type>entry</type>
+        <type>select</type>
         <label>Service Unavailable Response Type:</label>
         <property>failure.loadBalancerCapabilities</property>
         <required>0</required>
         <documentation>If set to HttpLevel and the application pool is stopped, Http.sys returns an HTTP 503 error. If set to TcpLevel, Http.sys resets the connection. This is useful if the load balancer recognizes one of the response types and subsequently redirects it.</documentation>
+        <option>
+            <value>TcpLevel</value>
+            <name>TCP Level</name>
+        </option>
+        <option>
+            <value>HttpLevel</value>
+            <name>HTTP Level</name>
+        </option>
     </formElement>
     <formElement>
         <type>checkbox</type>

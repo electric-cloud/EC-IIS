@@ -14,6 +14,12 @@ sub cmd_appcmd {
 };
 
 
+sub after_init_hook {
+    my ($self, %params) = @_;
+    $self->debug_level(0);
+}
+
+
 sub get_app_pool {
     my ($self, $website, $application) = @_;
 
@@ -135,6 +141,25 @@ sub update_app_pool_cmd {
 
     my $command = $self->get_app_cmd('set', 'apppool', qq{/apppool.name:"$name"}, @settings);
     return $command;
+}
+
+
+sub seconds_to_time_span {
+    my ($self, $seconds) = @_;
+
+    my ($hours, $minutes, $seconds_left);
+
+    ($hours, $seconds_left) = div_mod($seconds, 60 * 60);
+    ($minutes, $seconds_left) = div_mod($seconds_left, 60);
+
+    my $span = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds_left);
+    return $span;
+}
+
+
+sub div_mod {
+    my ($a, $b) = @_;
+    return (int($a/$b), $a % $b);
 }
 
 1;

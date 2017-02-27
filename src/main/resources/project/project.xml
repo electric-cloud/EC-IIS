@@ -1113,7 +1113,7 @@
                 <defaultValue/>
                 <description>Period of time (in seconds) a worker process is given to start up and initialize. If the worker process initialization exceeds the startup time limit, it is terminated.</description>
                 <required>0</required>
-                <type>entry</type>
+                <type>select</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>failure.rapidFailProtection</formalParameterName>

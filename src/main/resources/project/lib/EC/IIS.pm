@@ -55,7 +55,7 @@ use constant {
 
 sub after_init_hook {
     my ($self, %params) = @_;
-    # $self->debug_level(0);
+    $self->debug_level(0);
 }
 
 
@@ -502,7 +502,7 @@ sub create_or_update_app_pool {
 
     my $name = $params->{applicationPool};
     if ($self->driver->check_app_pool_exists($name)) {
-        print "Application pool $name already exists\n";
+        print "Application pool $name already exists, going to update\n";
         # Application pool exists
         $self->update_app_pool($params, $settings);
     }
@@ -645,14 +645,50 @@ sub step_create_app_pool {
     my $periodic_restart_setting_name = q/recycling.periodicRestart.schedule.[value='timespan'].value/;
     $params->{$periodic_restart_setting_name} = delete $params->{'recycling.periodicRestart.schedule'};
     push @settings, $periodic_restart_setting_name;
+
+    my @time_span_parameters = qw(
+        processModel.startupTimeLimit
+        processModel.shutdownTimeLimit
+        processModel.idleTimeout
+        processModel.pingInterval
+        processModel.pingResponseTime
+        recycling.periodicRestart.time
+        cpu.resetInterval
+        failure.rapidFailProtectionInterval
+    );
+
+    my @minutes_parameters = qw(
+        processModel.idleTimeout
+        cpu.resetInterval
+        recycling.periodicRestart.time
+    );
+
+    # Some parameters require special format
+    for my $time_param (@time_span_parameters) {
+        if (is_int($params->{$time_param})) {
+            my $seconds;
+            if (grep { $time_param eq $_ } @minutes_parameters) {
+                $seconds = $params->{$time_param} * 60;
+            }
+            else {
+                $seconds = $params->{$time_param};
+            }
+
+            my $span = $self->driver->seconds_to_time_span($seconds);
+            $params->{$time_param} = $span;
+        }
+    }
+
     $self->create_or_update_app_pool($params, \@settings);
 }
 
 
 sub set_cmd_line {
-    my ($self, $cmd_line) = @_;
+    my ($self, $cmd_line, $property) = @_;
 
-    $self->ec->setProperty('/myCall/cmdLine', $cmd_line);
+    $property = 'cmdLine' unless $property;
+    $self->ec->setProperty("/myCall/$property", $cmd_line);
+    print "Wrote command to property $property\n";
 }
 
 sub _is_xml {
@@ -693,5 +729,13 @@ sub _message_from_result {
 
     return $result->{stderr} ? $result->{stderr} : $result->{stdout};
 }
+
+
+sub is_int {
+    my ($number) = @_;
+
+    return $number && $number =~ m/^\d+$/;
+}
+
 
 1;
