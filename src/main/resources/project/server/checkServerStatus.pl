@@ -1,3 +1,6 @@
+#!/usr/bin/env perl
+# include $[/myProject/preamble]
+# line 4 "[EC]/@PLUGIN_KEY@-@PLUGIN_VERSION@/checkServerStatus.pl"
 #
 #  Copyright 2015 Electric Cloud, Inc.
 #
@@ -37,14 +40,15 @@
 # -------------------------------------------------------------------------
 # Includes
 # -------------------------------------------------------------------------
-use ElectricCommander;
-use ElectricCommander::PropDB;
-use LWP::UserAgent;
-use HTTP::Request;
 use warnings;
 use strict;
+use LWP::UserAgent;
+use HTTP::Request;
 $| = 1;
 
+use ElectricCommander;
+use ElectricCommander::PropDB;
+use EC::IIS;
 # -------------------------------------------------------------------------
 # Constants
 # -------------------------------------------------------------------------
@@ -60,37 +64,11 @@ use constant {
 
 };
 
-########################################################################
-# trim - deletes blank spaces before and after the entered value in
-# the argument
-#
-# Arguments:
-#   -untrimmedString: string that will be trimmed
-#
-# Returns:
-#   trimmed string
-#
-#########################################################################
-sub trim($) {
-
-    my ($untrimmedString) = @_;
-
-    my $string = $untrimmedString;
-
-    #removes leading spaces
-    $string =~ s/^\s+//;
-
-    #removes trailing spaces
-    $string =~ s/\s+$//;
-
-    #returns trimmed string
-    return $string;
-}
-
 # -------------------------------------------------------------------------
 # Variables
 # -------------------------------------------------------------------------
 
+my $iis = EC::IIS->new;
 $::gUseCredentials = "$[usecredentials]";
 $::gConfigName     = "$[configname]";
 
@@ -109,7 +87,7 @@ $::gConfigName     = "$[configname]";
 #   none
 #
 ########################################################################
-sub main() {
+sub main {
 
     # create args array
     my %props;
@@ -171,43 +149,14 @@ sub main() {
 
     # Check the outcome of the response
     if ( $response->is_success ) {
-
         print "URL: $url\n";
         print "Status returned: ", $response->status_line(), "\n";
-
     }
     elsif ( $response->is_error ) {
-
         print "Error: ", $response->status_line(), "\n";
-
     }
     $props{'checkServerStatusLine'} = $url;
-    setProperties( \%props );
-}
-
-########################################################################
-# setProperties - set a group of properties into the Electric Commander
-#
-# Arguments:
-#   -propHash: hash containing the ID and the value of the properties
-#              to be written into the Electric Commander
-#
-# Returns:
-#   none
-#
-########################################################################
-sub setProperties($) {
-
-    my ($propHash) = @_;
-
-    # get an EC object
-    my $ec = new ElectricCommander();
-    $ec->abortOnError(0);
-
-    foreach my $key ( keys %$propHash ) {
-        my $val = $propHash->{$key};
-        $ec->setProperty( "/myCall/$key", $val );
-    }
+    $iis->setProperties( \%props );
 }
 
 ##########################################################################
@@ -220,7 +169,7 @@ sub setProperties($) {
 #   -configToUse: hash containing the configuration information
 #
 #########################################################################
-sub getConfiguration($) {
+sub getConfiguration {
 
     my ($configName) = @_;
 
