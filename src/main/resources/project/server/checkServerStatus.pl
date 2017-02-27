@@ -136,24 +136,22 @@ sub main {
         $url =~ s/(\/*)$/:$port/;
     }
 
-    my $agent =
-      LWP::UserAgent->new( env_proxy => 1, keep_alive => 1, timeout => 30 );
-    my $header = HTTP::Request->new( GET => $url );
-    my $request = HTTP::Request->new( 'GET', $url, $header );
+    warn "Requesting $url...";
 
+    my %opt = ( url => $url );
     if ($::gUseCredentials) {
-        $request->authorization_basic( $user, $pass );
+        $opt{user} = $user;
+        $opt{pass} = $pass;
     }
 
-    my $response = $agent->request($request);
+    my $error = $iis->check_http_status( %opt );
 
     # Check the outcome of the response
-    if ( $response->is_success ) {
-        print "URL: $url\n";
-        print "Status returned: ", $response->status_line(), "\n";
+    if ( !$error ) {
+        print "URL successful: $url\n";
     }
-    elsif ( $response->is_error ) {
-        print "Error: ", $response->status_line(), "\n";
+    else {
+        print "Error: $error\n";
     }
     $props{'checkServerStatusLine'} = $url;
     $iis->setProperties( \%props );

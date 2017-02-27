@@ -31,6 +31,7 @@ require Win32 if $^O eq 'MSWin32';
 use EC::Plugin::Core;
 use base qw(EC::Plugin::Core);
 use Data::Dumper;
+use LWP::UserAgent;
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
@@ -736,6 +737,51 @@ sub is_int {
 
     return $number && $number =~ m/^\d+$/;
 }
+
+
+=head2 check_http_status
+
+    url - what server & path we're interested in
+    outcome - http error code (default 200, but we may be expecting others as well).
+    unavailable [_] - if checked, regard failure to connect at all as expected result (e.g. we just stopped server and want to make sure it is down now).
+    content = regex - if given, check that such text is available on the page
+    timeout - connect timeout
+    tries - try again if timed out
+
+=cut
+
+sub check_http_status {
+    my ($self, %opt) = @_;
+
+    my $url = $opt{url};
+    defined $url or croak "check_http_status(): url parameter is required";
+    $url =~ m#^https?://# or $url = "http://$url";
+    $opt{timeout} ||= 30;
+    $opt{status} ||= 200;
+    if (defined $opt{user} xor defined $opt{pass}) {
+        carp sprintf "check_http_status(): ignoring %s without %s - both must be defined"
+            , (defined $opt{user})?('user', 'pass'):('pass', 'user');
+    };
+
+    my $agent = LWP::UserAgent->new( env_proxy => 1, keep_alive => 1
+        , timeout => $opt{timeout} );
+    my $request = HTTP::Request->new( GET => $url );
+
+    if (defined $opt{user} and defined $opt{pass}) {
+        $request->authorization_basic( $opt{user}, $opt{pass} );
+    };
+
+    # TODO timeout, retry
+    my $response = $agent->request($request);
+
+    $response->status_line =~ /^(\d\d\d)/
+        or croak "check_http_status(): Unexpected status line at $url: "
+            .$response->status_line;
+
+    my $success = ($1 == $opt{status});
+
+    return $success ? '' : "Expected $opt{status}, got ".$response->status_line;        
+};
 
 
 1;
