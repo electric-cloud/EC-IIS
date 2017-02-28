@@ -2359,6 +2359,58 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+
+                                <property>
+                                    <propertyName>checkUrl</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>expectStatus</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>unavailable</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>timeout</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>retries</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -2377,6 +2429,41 @@
                 <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>checkbox</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>checkUrl</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>expectStatus</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>unavailable</formalParameterName>
+                <defaultValue>0</defaultValue>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>checkbox</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>timeout</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>retries</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>entry</type>
             </formalParameter>
             <step>
                 <stepName>CheckServerStatus</stepName>
