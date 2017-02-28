@@ -2446,7 +2446,7 @@
             </formalParameter>
             <formalParameter>
                 <formalParameterName>unavailable</formalParameterName>
-                <defaultValue/>
+                <defaultValue>0</defaultValue>
                 <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>checkbox</type>

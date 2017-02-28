@@ -773,9 +773,9 @@ sub check_http_status {
 
     # check port availability if asked to do so
     if ($opt{unavailable}) {
-        my ($host, $port) = $opt{url} =~ m#https?://([\w\-\.]+)(?::(\d+))?(?:[/?]|$)#;
+        my ($host, $port) = $url =~ m#https?://([\w\-\.]+)(?::(\d+))?(?:[/?]|$)#;
 
-        croak "check_http_status(): malformed URL $opt{url}"
+        croak "check_http_status(): malformed URL $url"
             unless $host;
         $port ||= 80;
 

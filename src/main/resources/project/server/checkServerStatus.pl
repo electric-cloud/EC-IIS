@@ -144,12 +144,12 @@ sub main {
     }
 
     my %opt = (
-        url => $gUrl || $url,
-        status => $gExpectStatus,
-        unavailable => $gUnavailable,
-        timeout => $gTimeout,
-        tries => $gRetries,
-        # content => $gContentRex 
+        url => "$gUrl" || $url,
+        status => "$gExpectStatus",
+        unavailable => "$gUnavailable",
+        timeout => "$gTimeout",
+        tries => "$gRetries",
+        # content => "$gContentRex",
     );
 
     if ($gUseCredentials) {
@@ -157,13 +157,15 @@ sub main {
         $opt{pass} = $pass;
     }
 
+    use Data::Dumper;
+    warn Dumper(\%opt);
 
 
     my $error = $iis->check_http_status( %opt );
 
     # Check the outcome of the response
     if ( !$error ) {
-        print "URL successful: $url\n";
+        print "URL successful (expected $opt{status}): $url\n";
     }
     else {
         print "Error: $error\n";
