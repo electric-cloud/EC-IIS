@@ -42,53 +42,42 @@
 
     <formElement>
         <type>entry</type>
-        <label>TODO checkUrl</label>
+        <label>Link to check for:</label>
         <property>checkUrl</property>
-        <checkedValue>1</checkedValue>
-        <uncheckedValue>0</uncheckedValue>
-        <initiallyChecked>0</initiallyChecked>
         <required>0</required>
-        <documentation>TODO</documentation>
+        <documentation>Url to check. If not given, one will be constructed from IIS conf.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>TODO expectStatus</label>
+        <label>Expected status:</label>
         <property>expectStatus</property>
-        <checkedValue>1</checkedValue>
-        <uncheckedValue>0</uncheckedValue>
-        <initiallyChecked>0</initiallyChecked>
         <required>0</required>
-        <documentation>TODO</documentation>
+        <documentation>3-digit HTTP status to wait for. Default is 200.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>TODO unavailable</label>
+        <label>Check unavailable</label>
         <property>unavailable</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
         <initiallyChecked>0</initiallyChecked>
         <required>0</required>
-        <documentation>TODO</documentation>
+        <documentation>If checked, the server:port will just be checked
+for availability and URL path and status parameters will be ignored.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>TODO timeout</label>
+        <label>Timeout:</label>
         <property>timeout</property>
-        <checkedValue>1</checkedValue>
-        <uncheckedValue>0</uncheckedValue>
-        <initiallyChecked>0</initiallyChecked>
         <required>0</required>
-        <documentation>TODO</documentation>
+        <documentation>Specify connection timeout. Default is 30s.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>TODO retries</label>
+        <label>Retries:</label>
         <property>retries</property>
-        <checkedValue>1</checkedValue>
-        <uncheckedValue>0</uncheckedValue>
-        <initiallyChecked>0</initiallyChecked>
         <required>0</required>
-        <documentation>TODO</documentation>
+        <documentation>Specify number of retries. Default is 1. This only affects connecting to server, NOT the status returned by server.</documentation>
     </formElement>
 
 
