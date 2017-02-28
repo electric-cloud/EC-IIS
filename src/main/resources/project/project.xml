@@ -2224,7 +2224,7 @@
             </formalParameter>
             <formalParameter>
                 <formalParameterName>applicationPool</formalParameterName>
-                <defaultValue>$[websiteName]</defaultValue>
+                <defaultValue></defaultValue>
                 <description>Application pool name. If the application pool does not exists, it will be created.</description>
                 <required>0</required>
                 <type>entry</type>
@@ -2754,8 +2754,6 @@
                                         </property>
                                     </propertySheet>
                                 </property>
-
-
                             </propertySheet>
                         </property>
                     </propertySheet>

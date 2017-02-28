@@ -50,7 +50,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-03-28T20:36:02.228Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>188765</aclId>
         <inheriting>1</inheriting>
@@ -162,7 +162,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T16:42:13.932Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193248</aclId>
         <inheriting>1</inheriting>
@@ -314,7 +314,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T16:02:40.428Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193153</aclId>
         <inheriting>1</inheriting>
@@ -466,7 +466,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T16:53:58.891Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193267</aclId>
         <inheriting>1</inheriting>
@@ -608,7 +608,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T16:38:03.536Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193229</aclId>
         <inheriting>1</inheriting>
@@ -730,7 +730,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T16:23:51.567Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193191</aclId>
         <inheriting>1</inheriting>
@@ -852,7 +852,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T17:05:05.383Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193286</aclId>
         <inheriting>1</inheriting>
@@ -964,7 +964,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T17:39:22.452Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193343</aclId>
         <inheriting>1</inheriting>
@@ -1030,7 +1030,7 @@
             <ownerType>propertySheet</ownerType>
             <parentId>193345</parentId>
           </acl>
-          
+
         </actualParameters>
         <procedureName>startIISServices</procedureName>
         <projectName>IISTestProject</projectName>
@@ -1057,7 +1057,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T17:18:11.166Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193305</aclId>
         <inheriting>1</inheriting>
@@ -1169,7 +1169,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T16:05:42.781Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193172</aclId>
         <inheriting>1</inheriting>
@@ -1291,7 +1291,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T17:55:01.457Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193362</aclId>
         <inheriting>1</inheriting>
@@ -1337,7 +1337,7 @@
         <owner>admin</owner>
         <parallel>0</parallel>
         <releaseExclusive>0</releaseExclusive>
-        <resourceName>local</resourceName>
+        <resourceName>windows</resourceName>
         <retries>0</retries>
         <subprocedure>StopIISServices</subprocedure>
         <subproject>/plugins/EC-IIS/project</subproject>
@@ -1361,7 +1361,7 @@
             <ownerType>propertySheet</ownerType>
             <parentId>193364</parentId>
           </acl>
-          
+
         </actualParameters>
         <procedureName>stopIISServices</procedureName>
         <projectName>IISTestProject</projectName>
@@ -1388,7 +1388,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T17:28:49.194Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193324</aclId>
         <inheriting>1</inheriting>
@@ -1500,7 +1500,7 @@
       <lastModifiedBy>admin</lastModifiedBy>
       <modifyTime>2011-04-01T16:31:35.334Z</modifyTime>
       <owner>admin</owner>
-      <resourceName>local</resourceName>
+      <resourceName>windows</resourceName>
       <acl>
         <aclId>193210</aclId>
         <inheriting>1</inheriting>
