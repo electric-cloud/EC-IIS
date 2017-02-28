@@ -476,7 +476,7 @@ sub step_deploy {
         if ($result->{code} != 0) {
             return $self->bail_out($result->{stderr});
         }
-        print $result->{stdout};
+        $self->logger->info($result->{stdout});
     }
     elsif ($app_pool_name) {
         $self->warning("Application pool name is specified, but not application name. Skipping application pool creation.");

@@ -36,6 +36,7 @@ use IPC::Open3;
 use IO::Select;
 use Symbol qw/gensym/;
 use File::Spec;
+use EC::Plugin::Logger;
 
 my $DRYRUN = 0;
 
@@ -893,6 +894,15 @@ sub trim {
 sub canon_path {
     my ($path) = @_;
     return File::Spec->canonpath($path);
+}
+
+
+sub logger {
+    my ($self) = @_;
+    unless($self->{logger}) {
+        $self->{logger} = EC::Plugin::Logger->new($self->debug_level);
+    }
+    return $self->{logger};
 }
 
 

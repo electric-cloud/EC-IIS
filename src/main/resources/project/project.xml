@@ -145,6 +145,11 @@
             <expandable>0</expandable>
             <value />
         </property>
+        <property>
+            <propertyName>EC::Plugin::Logger</propertyName>
+            <expandable>0</expandable>
+            <value />
+        </property>
 	    <property>
             <propertyName>EC::Plugin::IISDriver</propertyName>
             <expandable>0</expandable>
