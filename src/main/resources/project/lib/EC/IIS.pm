@@ -740,14 +740,20 @@ sub is_int {
 }
 
 
-=head2 check_http_status
+=head2 check_http_status( %options )
 
-    url - what server & path we're interested in
-    status - http status code (default 200, but we may be expecting others as well).
-    unavailable [_] - if checked, regard failure to connect at all as expected result (e.g. we just stopped server and want to make sure it is down now).
-    content = regex - if given, check that such text is available on the page
-    timeout - connect timeout
-    tries - try again if timed out
+%options may include:
+
+=over
+
+=item * url - what server & path we're interested in
+=item * status - http status code (default 200, but we may be expecting others as well).
+=item * unavailable [_] - if checked, regard failure to connect at all as expected result (e.g. we just stopped server and want to make sure it is down now).
+=item * content = regex - if given, check that such text is available on the page
+=item * timeout - connect timeout
+=item * tries - try again if timed out
+
+=back
 
 =cut
 
