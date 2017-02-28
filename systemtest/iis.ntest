@@ -3,7 +3,7 @@
 ###############################
 # iis.ntest
 #
-# Exercise basic components of EC-IIS plugin
+# Exercise basic components of EC-IIS7 plugin
 #
 # Copyright (c) 2005-2010 Electric Cloud, Inc.
 # All rights reserved
@@ -34,7 +34,7 @@ if ($^O eq WINDOWS_OS_ID) {
 }else{
     #this is a windows-only plugin, if not executed in Windows,
     #there is no need to test
-    exit SUCCESS; 
+    # exit SUCCESS;
 }
 
 # from initCommander
@@ -44,13 +44,11 @@ $::gPlugin_name = $xpath->findvalue('//pluginName')->value;
 $::gPlugin_ver = $xpath->findvalue('//pluginVersion')->value;
 $::gCreatePrivateDirs = 1;
 
-
-
 # triggers fake data
 $::gRunTestUseFakeOutput = 1;
 
 $::gProjectImported = 0;
-$::gtestProjectName = 'IISTestProject';
+$::gtestProjectName = 'IIS 7 Testing';
 
 my $outcome = '';
 
@@ -66,71 +64,95 @@ my $outcome = '';
 #
 ########################################################################
 sub importProject() {
- 
+
     #assert project exists and is imported
     assertOK($::N->import(
-             { file =>"$::gTestFileDir/iisSystemTests.xml",
-               path  => "/projects/IISTestProject",
+             { file =>"$::gTestFileDir/iis7SystemTests.xml",
+               path  => "/projects/IIS 7 Testing",
                force => 1
              } ), 'import unsuccessful');
-    
-    #assert all given procedures exist   
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'assignAppToPool'),
+      'assignAppToPool procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'createAndDeleteWebApp'),
+      'createAndDeleteWebApp procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'createAppPool'),
+       'createAppPool procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'createVirtualDir'),
+       'createVirtualDir procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'createWebApp'),
+       'createWebApp procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'deleteVirtualDir'),
+       'deleteVirtualDir procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'listAllSites'),
+       'listAllSites procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'listApps'),
+       'listApps procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'listSitesByBinding'),
+       'listSitesByBinding procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'listSitesUsingIncorrectCommand'),
+       'listSitesUsingIncorrectCommand procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'start&stopDefaultSite'),
+       'start&stopDefaultSite procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'start-Site1'),
+       'start-Site1 procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'startAppPool-FakePool'),
+       'startAppPool-FakePool procedure doesn\'t exist');
+
+        #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'startAppPool-NameWithSpaces'),
+       'startAppPool-NameWithSpaces procedure doesn\'t exist');
+
+        #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'startAppPool-Site1'),
+       'startAppPool-Site1 procedure doesn\'t exist');
+
+       #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'stop-Site1'),
+       'stop-Site1 procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'stopAppPool-FakePool'),
+       'stopAppPool-FakePool procedure doesn\'t exist');
+
+    #assert all given procedures exist
+    assertOK($::N->getProcedure($::gtestProjectName, 'stopAppPool-Site1'),
+       'stopAppPool-Site1 procedure doesn\'t exist');
+
+    #assert all given procedures exist
     assertOK($::N->getProcedure($::gtestProjectName, 'checkServerStatus'),
-      'checkServerStatus procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'deleteVirtualDirectory'),
-      'deleteVirtualDirectory procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'createVirtualDirectory'),
-       'createVirtualDirectory procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'startWebSite'),
-       'startWebSite procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'stopWebSite'),
-       'stopWebSite procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'pauseWebSite'),
-       'pauseWebSite procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'createWebSite'),
-       'createWebSite procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'deleteWebSite'),
-       'deleteWebSite procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'startServer'),
-       'startServer procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'stopServer'),
-       'stopServer procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'resetServer'),
-       'resetServer procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'startIISServices'),
-       'startIISServices procedure doesn\'t exist');
-    
-    #assert all given procedures exist   
-    assertOK($::N->getProcedure($::gtestProjectName, 'stopIISServices'),
-       'stopIISServices procedure doesn\'t exist');
-    
+       'stopAppPool-Site1 procedure doesn\'t exist');
+
     $::gProjectImported = 1;
 }
 
 ########################################################################
-# doSetup - invokes the project import method in case it hasn't been 
+# doSetup - invokes the project import method in case it hasn't been
 #           executed
 #
 # Arguments:
@@ -145,7 +167,7 @@ sub doSetup() {
     if(! $::gProjectImported) {
         importProject();
     }
-    
+
 }
 
 ################################
@@ -159,7 +181,7 @@ sub doSetup() {
 #
 ################################
 ntest "check-components-present", {}, sub {
-    
+
     my $xpath = $::N->getSteps("$::gPlugin_name","CreateConfiguration");
     assertOK($xpath,"CreateConfiguration");
     assertEq("CreateConfiguration", $xpath->findvalue("//step[1]/stepName"), "step 1 is CreateConfiguration");
@@ -178,19 +200,19 @@ ntest "check-components-present", {}, sub {
 #
 ################################
 ntest "setup-create configuration", {}, sub {
-    my $xpath = $::N->runProcedure("$::gPlugin_name", 
+    my $xpath = $::N->runProcedure("$::gPlugin_name",
         { procedureName => "CreateConfiguration",
           pollInterval  => '0.2',
           timeout       => 600,
-          actualParameter => [ 
-            { actualParameterName => 'config', value => "myconfig" }, 
+          actualParameter => [
+            { actualParameterName => 'config', value => "config1" },
             { actualParameterName => 'iis_url', value => "127.0.0.1" },
             { actualParameterName => 'iis_port', value => "8081" },
             { actualParameterName => 'iis_computer', value => "Server1" },
-            { actualParameterName => 'credential', value => "myconfig" }, 
+            { actualParameterName => 'credential', value => "config1" },
           ],
-          credential => [ 
-            { credentialName => 'myconfig', userName => "admin", password => "admin", },
+          credential => [
+            { credentialName => 'config1', userName => "admin", password => "admin", },
           ],
         });
 
@@ -198,13 +220,16 @@ ntest "setup-create configuration", {}, sub {
     # make sure it finished
     my $jobId = 0;
     my $status = '';
+    my $outcome = '';
     assertDef($xpath, 'runProcedure finished without a timeout');
     if ($xpath) {
         $jobId  = $xpath->findvalue("//jobId");
         $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue('//outcome');
 
         assertTrue($jobId && $jobId ne "",'valid job id');
         assertEq('completed',$status,"job $jobId complete");
+        assertEq('success', $outcome, "Job $jobId is successfull");
 
         #abort if job did not finish
         if ($status ne 'completed') {
@@ -218,47 +243,47 @@ ntest "setup-create configuration", {}, sub {
     writeFile("$::gCurrentTestDir/createConfiguration.log","====Job Details====\n$xpath->{_xml}\n");
 
     # check that the config and credential exist
-    $xpath = $::N->getProperty("/projects/$::gPlugin_name/iis_cfgs/myconfig/iis_url");
+    $xpath = $::N->getProperty("/projects/$::gPlugin_name/iis_cfgs/config1/iis_url");
     assertEq('127.0.0.1', $xpath->findvalue("//value")->string_value,"server url");
-    
-    $xpath = $::N->getProperty("/projects/$::gPlugin_name/iis_cfgs/myconfig/iis_port");
+
+    $xpath = $::N->getProperty("/projects/$::gPlugin_name/iis_cfgs/config1/iis_port");
     assertEq('8081', $xpath->findvalue("//value")->string_value,"port");
-    
-    $xpath = $::N->getProperty("/projects/$::gPlugin_name/iis_cfgs/myconfig/iis_computer");
+
+    $xpath = $::N->getProperty("/projects/$::gPlugin_name/iis_cfgs/config1/iis_computer");
     assertEq('Server1', $xpath->findvalue("//value")->string_value,"server name");
-    
-    $xpath = $::N->getCredential("$::gPlugin_name",'myconfig');
+
+    $xpath = $::N->getCredential("$::gPlugin_name",'config1');
     assertEq('admin', $xpath->findvalue("//userName")->string_value, 'Credential user');
 };
 
 ntest "checkServerStatus", {}, sub {
 
       doSetup();
-      
+
       # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
+      my $xpath = $::N->runProcedure($::gtestProjectName,
               {procedureName => "checkServerStatus",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [
-                  
+
                   ]
       });
-          
-       
+
+
       # make sure it finished
       my $jobId = 0;
       my $status = '';
-      
+
       assertOK($xpath, 'runProcedure has errors');
       if ($xpath) {
           $jobId  = $xpath->findvalue("//jobId");
           $status = $xpath->findvalue("//status");
           $outcome = $xpath->findvalue("//outcome");
-  
+
           assertTrue($jobId && $jobId ne "",'valid job id');
           assertEq('completed',$status,"job $jobId complete");
-  
+
           #abort if job did not finish
           if ($status ne 'completed') {
               assertOK($::N->abortJob($jobId, {force => 1}));
@@ -267,41 +292,42 @@ ntest "checkServerStatus", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
-      # get the value of the commands lines
-      #my $commandLine = $xpath->findvalue("//property[propertyName='checkServerStatusLine']/value");
 
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='checkServerStatusLine']/value");
+      assertEq($commandLine, '127.0.0.1:8081');
 };
 
 
 ntest "deleteVirtualDirectory", {}, sub {
 
       doSetup();
-      
+
       # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "deleteVirtualDirectory",
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "deleteVirtualDir",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [
-                  
+
                   ]
       });
-          
-       
+
+
       # make sure it finished
       my $jobId = 0;
       my $status = '';
-      
+
       assertOK($xpath, 'runProcedure has errors');
       if ($xpath) {
           $jobId  = $xpath->findvalue("//jobId");
           $status = $xpath->findvalue("//status");
           $outcome = $xpath->findvalue("//outcome");
-  
+
           assertTrue($jobId && $jobId ne "",'valid job id');
           assertEq('completed',$status,"job $jobId complete");
-  
+          assertEq('success', $outcome, "Job $jobId is successful");
+
           #abort if job did not finish
           if ($status ne 'completed') {
               assertOK($::N->abortJob($jobId, {force => 1}));
@@ -310,38 +336,43 @@ ntest "deleteVirtualDirectory", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd delete vdir /vdir.name:"Default Web Site/mytestvdir2"');
+
 };
 
 
 ntest "createVirtualDirectory", {}, sub {
 
       doSetup();
-      
+
       # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "createVirtualDirectory",
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "createVirtualDir",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [
-                  
+
                   ]
       });
-          
-       
+
+
       # make sure it finished
       my $jobId = 0;
       my $status = '';
-      
+
       assertOK($xpath, 'runProcedure has errors');
       if ($xpath) {
           $jobId  = $xpath->findvalue("//jobId");
           $status = $xpath->findvalue("//status");
           $outcome = $xpath->findvalue("//outcome");
-  
+
           assertTrue($jobId && $jobId ne "",'valid job id');
           assertEq('completed',$status,"job $jobId complete");
-  
+          assertEq('success', $outcome, "Job $jobId is successful");
+
           #abort if job did not finish
           if ($status ne 'completed') {
               assertOK($::N->abortJob($jobId, {force => 1}));
@@ -350,38 +381,85 @@ ntest "createVirtualDirectory", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
-      
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd add vdir /app.name:"Default Web Site/" /path:"/mytestvdir2" /physicalPath:"c:/Inetpub/wwwroot/Sites/myvdir2"');
+};
+
+ntest 'Create Site1', {}, sub {
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Create Site1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('success', $outcome, "Job $jobId is successful");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd add site /name:"Site1" /bindings:"http://localhost:999" /physicalPath:"c:/tmp/site1"');
+
+
 };
 
 ntest "startWebSite", {}, sub {
 
       doSetup();
-      
+
       # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "startWebSite",
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "start-Site1",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [
-                  
+
                   ]
       });
-          
-       
+
+
       # make sure it finished
       my $jobId = 0;
       my $status = '';
-      
+
       assertOK($xpath, 'runProcedure has errors');
       if ($xpath) {
           $jobId  = $xpath->findvalue("//jobId");
           $status = $xpath->findvalue("//status");
           $outcome = $xpath->findvalue("//outcome");
-  
+
           assertTrue($jobId && $jobId ne "",'valid job id');
           assertEq('completed',$status,"job $jobId complete");
-  
+          assertEq('success', $outcome, "Job $jobId is successful");
+
           #abort if job did not finish
           if ($status ne 'completed') {
               assertOK($::N->abortJob($jobId, {force => 1}));
@@ -390,38 +468,79 @@ ntest "startWebSite", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
-      
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd start site /site.name:"Site1"');
+
+
+};
+ntest "Deploy", {}, sub {
+
+      doSetup();
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Deploy simplified",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('success', $outcome, "Site is deployed");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
 };
 
 ntest "stopWebSite", {}, sub {
 
       doSetup();
-      
+
       # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "stopWebSite",
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "stop-Site1",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [
-                  
+
                   ]
       });
-          
-       
+
+
       # make sure it finished
       my $jobId = 0;
       my $status = '';
-      
+
       assertOK($xpath, 'runProcedure has errors');
       if ($xpath) {
           $jobId  = $xpath->findvalue("//jobId");
           $status = $xpath->findvalue("//status");
           $outcome = $xpath->findvalue("//outcome");
-  
+
           assertTrue($jobId && $jobId ne "",'valid job id');
           assertEq('completed',$status,"job $jobId complete");
-  
+          assertEq('success', $outcome, "Stopped web site Site1 successfully");
+
           #abort if job did not finish
           if ($status ne 'completed') {
               assertOK($::N->abortJob($jobId, {force => 1}));
@@ -430,201 +549,44 @@ ntest "stopWebSite", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
-      
-};
 
-ntest "pauseWebSite", {}, sub {
-
-      doSetup();
-      
-      # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "pauseWebSite",
-              pollInterval  => '1',
-              timeout => 600,
-                   actualParameter => [
-                  
-                  ]
-      });
-          
-       
-      # make sure it finished
-      my $jobId = 0;
-      my $status = '';
-      
-      assertOK($xpath, 'runProcedure has errors');
-      if ($xpath) {
-          $jobId  = $xpath->findvalue("//jobId");
-          $status = $xpath->findvalue("//status");
-          $outcome = $xpath->findvalue("//outcome");
-  
-          assertTrue($jobId && $jobId ne "",'valid job id');
-          assertEq('completed',$status,"job $jobId complete");
-  
-          #abort if job did not finish
-          if ($status ne 'completed') {
-              assertOK($::N->abortJob($jobId, {force => 1}));
-          }
-      }
-
-      # get the job details
-      $xpath = $::N->getJobDetails($jobId);
-   
-      
-};
-
-ntest "createWebSite", {}, sub {
-
-      doSetup();
-      
-      # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "createWebSite",
-              pollInterval  => '1',
-              timeout => 600,
-                   actualParameter => [
-                  
-                  ]
-      });
-          
-       
-      # make sure it finished
-      my $jobId = 0;
-      my $status = '';
-      
-      assertOK($xpath, 'runProcedure has errors');
-      if ($xpath) {
-          $jobId  = $xpath->findvalue("//jobId");
-          $status = $xpath->findvalue("//status");
-          $outcome = $xpath->findvalue("//outcome");
-  
-          assertTrue($jobId && $jobId ne "",'valid job id');
-          assertEq('completed',$status,"job $jobId complete");
-  
-          #abort if job did not finish
-          if ($status ne 'completed') {
-              assertOK($::N->abortJob($jobId, {force => 1}));
-          }
-      }
-
-      # get the job details
-      $xpath = $::N->getJobDetails($jobId);
-   
-      
-};
-
-ntest "deleteWebSite", {}, sub {
-
-      doSetup();
-      
-      # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "deleteWebSite",
-              pollInterval  => '1',
-              timeout => 600,
-                   actualParameter => [
-                  
-                  ]
-      });
-          
-       
-      # make sure it finished
-      my $jobId = 0;
-      my $status = '';
-      
-      assertOK($xpath, 'runProcedure has errors');
-      if ($xpath) {
-          $jobId  = $xpath->findvalue("//jobId");
-          $status = $xpath->findvalue("//status");
-          $outcome = $xpath->findvalue("//outcome");
-  
-          assertTrue($jobId && $jobId ne "",'valid job id');
-          assertEq('completed',$status,"job $jobId complete");
-  
-          #abort if job did not finish
-          if ($status ne 'completed') {
-              assertOK($::N->abortJob($jobId, {force => 1}));
-          }
-      }
-
-      # get the job details
-      $xpath = $::N->getJobDetails($jobId);
-      
-};
-
-ntest "resetServer", {}, sub {
-
-      doSetup();
-      
-      # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "resetServer",
-              pollInterval  => '1',
-              timeout => 600,
-                   actualParameter => [
-                  
-                  ]
-      });
-          
-       
-      # make sure it finished
-      my $jobId = 0;
-      my $status = '';
-      
-      assertOK($xpath, 'runProcedure has errors');
-      if ($xpath) {
-          $jobId  = $xpath->findvalue("//jobId");
-          $status = $xpath->findvalue("//status");
-          $outcome = $xpath->findvalue("//outcome");
-  
-          assertTrue($jobId && $jobId ne "",'valid job id');
-          assertEq('completed',$status,"job $jobId complete");
-  
-          #abort if job did not finish
-          if ($status ne 'completed') {
-              assertOK($::N->abortJob($jobId, {force => 1}));
-          }
-      }
-
-      # get the job details
-      $xpath = $::N->getJobDetails($jobId);
-   
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
-      assertEq($commandLine, 'iisreset');
-      
-      
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd stop site /site.name:"Site1"');
+
+
 };
 
-ntest "startServer", {}, sub {
+
+ntest "delete web site", {}, sub {
 
       doSetup();
-      
+
       # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "startServer",
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Delete Site1",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [
-                  
+
                   ]
       });
-          
-       
+
+
       # make sure it finished
       my $jobId = 0;
       my $status = '';
-      
+
       assertOK($xpath, 'runProcedure has errors');
       if ($xpath) {
           $jobId  = $xpath->findvalue("//jobId");
           $status = $xpath->findvalue("//status");
           $outcome = $xpath->findvalue("//outcome");
-  
+
           assertTrue($jobId && $jobId ne "",'valid job id');
           assertEq('completed',$status,"job $jobId complete");
-  
+          assertEq('success', $outcome, "Job $jobId is successful");
+
           #abort if job did not finish
           if ($status ne 'completed') {
               assertOK($::N->abortJob($jobId, {force => 1}));
@@ -633,42 +595,44 @@ ntest "startServer", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
+
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
-      assertEq($commandLine, 'iisreset /start');
-      
-      
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd delete site /site.name:"Site1"');
+
+
 };
 
-ntest "stopServer", {}, sub {
+
+ntest "createAppPool", {}, sub {
 
       doSetup();
-      
+
       # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "stopServer",
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "createAppPool",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [
-                  
+
                   ]
       });
-          
-       
+
+
       # make sure it finished
       my $jobId = 0;
       my $status = '';
-      
+
       assertOK($xpath, 'runProcedure has errors');
       if ($xpath) {
           $jobId  = $xpath->findvalue("//jobId");
           $status = $xpath->findvalue("//status");
           $outcome = $xpath->findvalue("//outcome");
-  
+
           assertTrue($jobId && $jobId ne "",'valid job id');
           assertEq('completed',$status,"job $jobId complete");
-  
+          assertEq('success', $outcome, "Job $jobId is successful");
+
           #abort if job did not finish
           if ($status ne 'completed') {
               assertOK($::N->abortJob($jobId, {force => 1}));
@@ -677,43 +641,46 @@ ntest "stopServer", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
+
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
-      assertEq($commandLine, 'iisreset /stop');
-      
-      
+      assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" add apppool /name:"My App Pool"');
+
+      # my $searchCommandLine = $xpath->findvalue("//property[propertyName='searchCmdLine']/value");
+      # assertEq($searchCommandLine, '%windir%\system32\inetsrv\appcmd list apppool "My App Pool 1"');
+
 };
 
 
-ntest "startIISServices", {}, sub {
+ntest "createWebApp", {}, sub {
 
       doSetup();
-      
+
       # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "startIISServices",
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "createWebApp",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [
-                  
+
                   ]
       });
-          
-       
+
+
       # make sure it finished
       my $jobId = 0;
       my $status = '';
-      
+
       assertOK($xpath, 'runProcedure has errors');
       if ($xpath) {
           $jobId  = $xpath->findvalue("//jobId");
           $status = $xpath->findvalue("//status");
           $outcome = $xpath->findvalue("//outcome");
-  
+
           assertTrue($jobId && $jobId ne "",'valid job id');
           assertEq('completed',$status,"job $jobId complete");
-  
+          assertEq('success', $outcome, "App has been created");
+
           #abort if job did not finish
           if ($status ne 'completed') {
               assertOK($::N->abortJob($jobId, {force => 1}));
@@ -722,52 +689,40 @@ ntest "startIISServices", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
-      # get the value of the commands lines   
-      my $w3svcLine = $xpath->findvalue("//property[propertyName='w3svcLine']/value");
-      my $smtpsvcLine = $xpath->findvalue("//property[propertyName='smtpsvcLine']/value");
-      my $httpFilterLine = $xpath->findvalue("//property[propertyName='httpFilterLine']/value");
-      my $msftpLine = $xpath->findvalue("//property[propertyName='msftpLine']/value");
-      my $nntpsvcLine = $xpath->findvalue("//property[propertyName='nntpsvcLine']/value");
-      my $adminLine = $xpath->findvalue("//property[propertyName='adminLine']/value");
-      
-      assertEq($w3svcLine, 'net start w3svc');
-      assertEq($smtpsvcLine, 'net start Smtpsvc');
-      assertEq($httpFilterLine, 'net start HTTPFilter');
-      assertEq($msftpLine, 'net start Msftpsvc');
-      assertEq($nntpsvcLine, 'net start Nntpsvc');
-      assertEq($adminLine, 'net start iisadmin');
-      
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" add app /site.name:"Default Web Site" /path:"/app1" /physicalPath:"C:\Inetpub\wwwroot\Sites\app1"');
 };
 
-ntest "stopIISServices", {}, sub {
+ntest "deploy", {}, sub {
 
       doSetup();
-      
+
       # run test job
-      my $xpath = $::N->runProcedure($::gtestProjectName, 
-              {procedureName => "stopIISServices",
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "deploy",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [
-                  
+
                   ]
       });
-          
-       
+
+
       # make sure it finished
       my $jobId = 0;
       my $status = '';
-      
+
       assertOK($xpath, 'runProcedure has errors');
       if ($xpath) {
           $jobId  = $xpath->findvalue("//jobId");
           $status = $xpath->findvalue("//status");
           $outcome = $xpath->findvalue("//outcome");
-  
+
           assertTrue($jobId && $jobId ne "",'valid job id');
           assertEq('completed',$status,"job $jobId complete");
-  
+
           #abort if job did not finish
           if ($status ne 'completed') {
               assertOK($::N->abortJob($jobId, {force => 1}));
@@ -776,22 +731,273 @@ ntest "stopIISServices", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
-      # get the value of the commands lines 
-      my $w3svcLine = $xpath->findvalue("//property[propertyName='w3svcLine']/value");
-      my $smtpsvcLine = $xpath->findvalue("//property[propertyName='smtpsvcLine']/value");
-      my $httpFilterLine = $xpath->findvalue("//property[propertyName='httpFilterLine']/value");
-      my $msftpLine = $xpath->findvalue("//property[propertyName='msftpLine']/value");
-      my $nntpsvcLine = $xpath->findvalue("//property[propertyName='nntpsvcLine']/value");
-      my $adminLine = $xpath->findvalue("//property[propertyName='adminLine']/value");
-      
-      assertEq($w3svcLine, 'net stop w3svc');
-      assertEq($smtpsvcLine, 'net stop Smtpsvc');
-      assertEq($httpFilterLine, 'net stop HTTPFilter');
-      assertEq($msftpLine, 'net stop Msftpsvc');
-      assertEq($nntpsvcLine, 'net stop Nntpsvc');
-      assertEq($adminLine, 'net stop iisadmin');
-      
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '"xcopy" "C:\Documents and Settings\ablanco\My Documents\shared\test1\*" "c:/Inetpub/wwwroot/Sites/myvdir1" /E /K /R /H /I /Y');
+
+
 };
 
+
+
+ntest "assignAppToPool", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "assignAppToPool",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('success', $outcome, "App assigned to app pool");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd set site /site.name:"Default Web Site" /[path=\'/app1\'].applicationPool:"My App Pool"');
+};
+
+
+ntest "listSitesByBinding", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "listSitesByBinding",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd list site /bindings:http/*:80:');
+
+
+};
+
+ntest "startAppPool-NameWithSpaces", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "startAppPool-NameWithSpaces",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd start apppool /apppool.name:"My App Pool"');
+
+
+};
+
+
+ntest "stopAppPool-FakePool", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "stopAppPool-FakePool",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $cmdLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+
+      assertEq($cmdLine, '%windir%\system32\inetsrv\appcmd stop apppool /apppool.name:"Fake App Pool #1@"');
+
+};
+
+
+ntest "Delete Web App", {}, sub {
+      doSetup();
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Delete Web App",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('success', $outcome, "App has been deleted");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" delete app /app.name:"Default Web Site/app1"');
+};
+
+ntest "Delete App Pool", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "deleteAppPool",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('success', $outcome, "Job $jobId is successful");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd delete apppool /apppool.name:"My App Pool"');
+};
 

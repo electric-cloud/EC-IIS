@@ -426,7 +426,7 @@ sub step_deploy {
     my $source_provider;
     my $source = $params->{source};
     if ( -d $source ) {
-        $source_provider = 'contentPath';
+        $source_provider = 'iisApp';
     }
     else {
         $source_provider = 'package';
