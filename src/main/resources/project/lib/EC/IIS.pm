@@ -32,6 +32,7 @@ use EC::Plugin::Core;
 use base qw(EC::Plugin::Core);
 use Data::Dumper;
 use LWP::UserAgent;
+use IO::Socket::INET;
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
@@ -742,7 +743,7 @@ sub is_int {
 =head2 check_http_status
 
     url - what server & path we're interested in
-    outcome - http error code (default 200, but we may be expecting others as well).
+    status - http status code (default 200, but we may be expecting others as well).
     unavailable [_] - if checked, regard failure to connect at all as expected result (e.g. we just stopped server and want to make sure it is down now).
     content = regex - if given, check that such text is available on the page
     timeout - connect timeout
@@ -757,12 +758,45 @@ sub check_http_status {
     defined $url or croak "check_http_status(): url parameter is required";
     $url =~ m#^https?://# or $url = "http://$url";
     $opt{timeout} ||= 30;
-    $opt{status} ||= 200;
+    $opt{tries}   ||= 1;
+    $opt{status}  ||= 200;
     if (defined $opt{user} xor defined $opt{pass}) {
         carp sprintf "check_http_status(): ignoring %s without %s - both must be defined"
             , (defined $opt{user})?('user', 'pass'):('pass', 'user');
     };
 
+    # TODO self->out, but we have debug_level 0
+    warn "check_http_status(): "
+        .join ", ", map { "$_: '$opt{$_}'" } sort keys %opt;
+
+    # TODO check that server resolves first and DIE if not
+
+    # check port availability if asked to do so
+    if ($opt{unavailable}) {
+        my ($host, $port) = $opt{url} =~ m#https?://([\w\-\.]+)(?::(\d+))?(?:[/?]|$)#;
+
+        croak "check_http_status(): malformed URL $opt{url}"
+            unless $host;
+        $port ||= 80;
+
+        my $outcome;
+        for (1 .. $opt{tries}) {
+            local $SIG{ALRM} = sub { die "timeout" };
+            eval {
+                alarm $opt{timeout};
+                my $sock = IO::Socket::INET->new(
+                    Proto => 'tcp', PeerHost => $host, PeerPort => $port );
+                $sock and $outcome = "Server available at $host:$port";
+                close $sock if $sock;
+            };
+            alarm 0;
+            return $outcome if $outcome;
+        };
+
+        return '';
+    };
+
+    # Finally, go for HTTP request
     my $agent = LWP::UserAgent->new( env_proxy => 1, keep_alive => 1
         , timeout => $opt{timeout} );
     my $request = HTTP::Request->new( GET => $url );
@@ -771,14 +805,17 @@ sub check_http_status {
         $request->authorization_basic( $opt{user}, $opt{pass} );
     };
 
-    # TODO timeout, retry
-    my $response = $agent->request($request);
+    # If timeout, retry
+    # TODO Heard rumors that timeout isn't handled properly on https
+    # but this is unlikely to disrupt us here
+    # TODO Don't rely on human-readable message
+    $opt{tries}--;
+    my $response;
+    do {
+        $response = $agent->request($request);
+    } while ($response->message =~ /Can't connect/ and $opt{tries}-->0 );
 
-    $response->status_line =~ /^(\d\d\d)/
-        or croak "check_http_status(): Unexpected status line at $url: "
-            .$response->status_line;
-
-    my $success = ($1 == $opt{status});
+    my $success = ($response->code == $opt{status});
 
     return $success ? '' : "Expected $opt{status}, got ".$response->status_line;        
 };

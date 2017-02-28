@@ -69,8 +69,15 @@ use constant {
 # -------------------------------------------------------------------------
 
 my $iis = EC::IIS->new;
-$::gUseCredentials = "$[usecredentials]";
-$::gConfigName     = "$[configname]";
+my $ec  = ElectricCommander->new;
+my $gUseCredentials = $ec->getProperty("usecredentials")->findvalue("//value");
+my $gConfigName     = $ec->getProperty("configname")->findvalue("//value");
+my $gUrl            = $ec->getProperty("checkUrl")->findvalue("//value");
+my $gExpectStatus   = $ec->getProperty("expectStatus")->findvalue("//value");
+my $gUnavailable    = $ec->getProperty("unavailable")->findvalue("//value");
+my $gTimeout        = $ec->getProperty("timeout")->findvalue("//value");
+my $gRetries        = $ec->getProperty("retries")->findvalue("//value");
+# my $gContentRex     = $ec->getProperty("contentRex")->findvalue("//value");
 
 # -------------------------------------------------------------------------
 # Main functions
@@ -98,26 +105,26 @@ sub main {
     my $pass = '';
     my %configuration;
 
-    if ( $::gConfigName ne '' ) {
-        %configuration = getConfiguration($::gConfigName);
+    if ( $gConfigName ne '' ) {
+        %configuration = getConfiguration($gConfigName);
 
         if ( $configuration{'iis_url'} && $configuration{'iis_url'} ne '' ) {
             $url = $configuration{'iis_url'};
         }
         else {
-            print 'Could not get URL from configuration ' . $::gConfigName;
+            print 'Could not get URL from configuration ' . $gConfigName;
             exit ERROR;
         }
 
         if ( $configuration{'iis_port'} && $configuration{'iis_port'} ne '' ) {
             $port = $configuration{'iis_port'};
         }
-        if ($::gUseCredentials) {
+        if ($gUseCredentials) {
             if ( $configuration{'user'} && $configuration{'user'} ne '' ) {
                 $user = $configuration{'user'};
             }
             else {
-                #print 'Could not get user from configuration '. $::gConfigName;
+                #print 'Could not get user from configuration '. $gConfigName;
                 #exit ERROR;
             }
         }
@@ -125,7 +132,7 @@ sub main {
             $pass = $configuration{'password'};
         }
         else {
-            #print 'Could not get password from configuration '. $::gConfigName;
+            #print 'Could not get password from configuration '. $gConfigName;
             #exit ERROR;
         }
 
@@ -136,13 +143,21 @@ sub main {
         $url =~ s/(\/*)$/:$port/;
     }
 
-    warn "Requesting $url...";
+    my %opt = (
+        url => $gUrl || $url,
+        status => $gExpectStatus,
+        unavailable => $gUnavailable,
+        timeout => $gTimeout,
+        tries => $gRetries,
+        # content => $gContentRex 
+    );
 
-    my %opt = ( url => $url );
-    if ($::gUseCredentials) {
+    if ($gUseCredentials) {
         $opt{user} = $user;
         $opt{pass} = $pass;
     }
+
+
 
     my $error = $iis->check_http_status( %opt );
 
@@ -154,6 +169,7 @@ sub main {
         print "Error: $error\n";
     }
     $props{'checkServerStatusLine'} = $url;
+    $props{'checkServerStatusError'} = $error;
     $iis->setProperties( \%props );
 }
 

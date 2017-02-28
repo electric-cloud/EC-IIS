@@ -19,7 +19,7 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CheckServerStatus</help>
 	<label>Application Server - IIS CheckServerStatus</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Checks the status of the specified server.</description>	
+	<description>Checks the status of the specified server.</description>
 	<formElement>
 		<type>entry</type>
 		<label>Configuration name:</label>
@@ -27,7 +27,7 @@
 		<required>1</required>
         <documentation>Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration if the 'Use Credentials' parameter is checked. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
         <htmlDocumentation>Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration if the 'Use Credentials' parameter is checked.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
-	</formElement>		
+	</formElement>
 	<formElement>
 		<type>checkbox</type>
 		<label>Use credentials:</label>
@@ -37,5 +37,59 @@
 		<initiallyChecked>0</initiallyChecked>
 		<required>0</required>
 		<documentation>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</documentation>
-	</formElement>		
+	</formElement>
+
+
+    <formElement>
+        <type>entry</type>
+        <label>TODO checkUrl</label>
+        <property>checkUrl</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <required>0</required>
+        <documentation>TODO</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>TODO expectStatus</label>
+        <property>expectStatus</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <required>0</required>
+        <documentation>TODO</documentation>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>TODO unavailable</label>
+        <property>unavailable</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <required>0</required>
+        <documentation>TODO</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>TODO timeout</label>
+        <property>timeout</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <required>0</required>
+        <documentation>TODO</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>TODO retries</label>
+        <property>retries</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <required>0</required>
+        <documentation>TODO</documentation>
+    </formElement>
+
+
 </editor>
