@@ -385,6 +385,47 @@ sub step_deploy_advanced {
     }
 }
 
+
+sub step_create_or_update_site {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw(websitename bindings websitepath websiteid additionalParameters));
+    my $website_name = $params->{websitename};
+    $params = {
+        websiteName => $params->{websitename},
+        bindings => $params->{bindings},
+        physicalPath => EC::Plugin::Core::canon_path($params->{websitepath}),
+        websiteId => $params->{websiteid},
+    };
+    if ($self->driver->site_exists($params->{websiteName})) {
+        $self->logger->info("Site $params->{websiteName} already exists.");
+
+        if ($params->{bindings} || $params->{websiteId}) {
+            $self->logger->info("Going to update site bindings for $website_name");
+            my $command = $self->driver->update_site_cmd($params);
+            $self->set_cmd_line($command, 'updateSite');
+            my $result = $self->run_command($command);
+            $self->_process_result($result);
+        }
+
+        if ($params->{physicalPath}) {
+            $self->logger->info("Going to update virtual directory $website_name");
+            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => $website_name});
+            $self->set_cmd_line($command, 'updateVdir');
+            my $result = $self->run_command($command);
+            $self->_process_result($result);
+        }
+
+    }
+    else {
+        $self->logger->info("Site $params->{websiteName} does not exist");
+        my $command = $self->driver->create_site_cmd($params);
+        $self->set_cmd_line($command);
+        my $result = $self->run_command($command);
+        $self->_process_result($result);
+    }
+}
+
 sub step_undeploy {
     my ($self) = @_;
 
@@ -713,7 +754,7 @@ sub _save_params_file {
 sub _process_result {
     my ($self, $result) = @_;
 
-    $self->dbg(Dumper($result));
+    $self->logger->debug($result);
     if ($result->{code} || $result->{stderr}) {
         return $self->bail_out($result->{stderr} || $result->{stdout});
     }
@@ -721,7 +762,7 @@ sub _process_result {
         $self->warning($1);
     }
     else {
-        print $result->{stdout};
+        $self->logger->info($result->{stdout});
         $self->success($result->{stdout});
     }
 }
@@ -823,7 +864,7 @@ sub check_http_status {
 
     my $success = ($response->code == $opt{status});
 
-    return $success ? '' : "Expected $opt{status}, got ".$response->status_line;        
+    return $success ? '' : "Expected $opt{status}, got ".$response->status_line;
 };
 
 
