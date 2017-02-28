@@ -46,7 +46,6 @@ sub log {
     for my $message (@messages) {
         if (ref $message) {
             print Dumper($message);
-            print "\n";
         }
         else {
             print "$message\n";
