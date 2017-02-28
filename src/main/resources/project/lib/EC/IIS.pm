@@ -507,7 +507,7 @@ sub create_or_update_app_pool {
         $self->update_app_pool($params, $settings);
     }
     else {
-        print "Application pool $name does not exists, creating application pool\n";
+        print "Application pool $name has not been created yet. Proceeding to adding it.\n";
         $self->create_app_pool($params, $settings);
     }
 }
