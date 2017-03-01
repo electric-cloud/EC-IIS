@@ -160,7 +160,7 @@ my %deleteWebSite = (
 my %deployCopy = (
     label       => "IIS - Deploy Copy",
     procedure   => "DeployCopy",
-    description => "Copies the application files recursively to the website application's physical directory.",
+    description => "Copies the application files recursively to the website application's physical directory (DEPRECATED).",
     category    => "Application Server"
 );
 my %deploy = (

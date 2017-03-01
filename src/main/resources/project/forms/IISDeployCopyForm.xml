@@ -19,14 +19,14 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeployCopy</help>
 	<label>Application Server - IIS DeployCopy</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Copies the application files recursively to the web site application's physical directory.</description>	
+	<description>Copies the application files recursively to the web site application's physical directory. (DEPRECATED).</description>
 	<formElement>
 		<type>entry</type>
 		<label>Destination path:</label>
 		<property>DestinationPath</property>
 		<required>1</required>
 		<documentation>Provide the path to the destination directory. This must be a physical directory, but it may have an IIS virtual directory pointing to it. i.e: 'C:\inetpub\wwwroot\copyTest'. (Required)</documentation>
-	</formElement>		
+	</formElement>
 	<formElement>
 		<type>entry</type>
 		<label>Path to XCOPY:</label>
@@ -34,14 +34,14 @@
 		<required>1</required>
 		<value>xcopy</value>
 		<documentation>Provide the relative or absolute path to the XCOPY (or similar) executable. (Required)</documentation>
-	</formElement>		
+	</formElement>
 	<formElement>
 		<type>entry</type>
 		<label>Source path:</label>
 		<property>SourcePath</property>
 		<required>1</required>
 		<documentation>Provide the path to the source directory. i.e: 'C:\inetpub\wwwroot\test'.(Required)</documentation>
-	</formElement>		
+	</formElement>
 	<formElement>
 		<type>entry</type>
 		<label>Additional options:</label>
@@ -57,5 +57,5 @@
 		 /I - If the destination does not exist and you are copying more than one file, it is assumed that the destination is a directory. &#xA;
 		 /Y - Suppress prompting for overwrite confirmation.
 		</documentation>
-	</formElement>					
+	</formElement>
 </editor>

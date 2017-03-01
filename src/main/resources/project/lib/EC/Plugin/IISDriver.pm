@@ -162,4 +162,72 @@ sub div_mod {
     return (int($a/$b), $a % $b);
 }
 
+sub site_exists {
+    my ($self, $site) = @_;
+
+    my $command = $self->get_app_cmd('list', 'sites', qq{/name:"$site"});
+    my $result = $self->run_command($command);
+    return $result->{stdout} ? 1 : 0;
+}
+
+sub create_site_cmd {
+    my ($self, $params) = @_;
+
+    my @command_parts = qw/add site/;
+    if ($params->{websiteName}) {
+        push @command_parts, $params->{websiteName};
+        push @command_parts, qq{/site.name:"$params->{websiteName}"};
+    }
+    else {
+        return $self->bail_out("Cannot create a site without site name");
+    }
+    if ($params->{bindings}) {
+        push @command_parts, qq{/bindings:"$params->{bindings}"};
+    }
+
+    if ($params->{physicalPath}) {
+        push @command_parts, qq{/physicalPath:"$params->{physicalPath}"};
+    }
+    if ($params->{websiteId}) {
+        push @command_parts, qq{/id:"$params->{websiteId}"};
+    }
+    return $self->get_app_cmd(@command_parts);
+}
+
+sub update_site_cmd {
+    my ($self, $params) = @_;
+
+    my @command_parts = qw/set site/;
+    if ($params->{websiteName}) {
+        push @command_parts, $params->{websiteName};
+        push @command_parts, qq{/name:"$params->{websiteName}"};
+    }
+    else {
+        return $self->bail_out("Cannot create a site without site name");
+    }
+    if ($params->{bindings}) {
+        push @command_parts, qq{/bindings:"$params->{bindings}"};
+    }
+    if ($params->{websiteId}) {
+        push @command_parts, qq{/id:$params->{websiteId}};
+    }
+    return $self->get_app_cmd(@command_parts);
+}
+
+sub update_vdir_cmd {
+    my ($self, $params) = @_;
+
+    my $name = $params->{vdirName};
+    my @command_parts = qw/set vdir/;
+    unless($name) {
+        $self->bail_out("No virtual directory name is provided");
+    }
+    $name .= '/' unless $name =~ m/\/$/;
+    push @command_parts, $name;
+    if ($params->{physicalPath}) {
+        push @command_parts, qq{/physicalPath:"$params->{physicalPath}"};
+    }
+    return $self->get_app_cmd(@command_parts);
+}
+
 1;

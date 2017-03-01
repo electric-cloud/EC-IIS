@@ -31,6 +31,8 @@ require Win32 if $^O eq 'MSWin32';
 use EC::Plugin::Core;
 use base qw(EC::Plugin::Core);
 use Data::Dumper;
+use LWP::UserAgent;
+use IO::Socket::INET;
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
@@ -383,6 +385,47 @@ sub step_deploy_advanced {
     }
 }
 
+
+sub step_create_or_update_site {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw(websitename bindings websitepath websiteid additionalParameters));
+    my $website_name = $params->{websitename};
+    $params = {
+        websiteName => $params->{websitename},
+        bindings => $params->{bindings},
+        physicalPath => EC::Plugin::Core::canon_path($params->{websitepath}),
+        websiteId => $params->{websiteid},
+    };
+    if ($self->driver->site_exists($params->{websiteName})) {
+        $self->logger->info("Site $params->{websiteName} already exists.");
+
+        if ($params->{bindings} || $params->{websiteId}) {
+            $self->logger->info("Going to update site bindings for $website_name");
+            my $command = $self->driver->update_site_cmd($params);
+            $self->set_cmd_line($command, 'updateSite');
+            my $result = $self->run_command($command);
+            $self->_process_result($result);
+        }
+
+        if ($params->{physicalPath}) {
+            $self->logger->info("Going to update virtual directory $website_name");
+            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => $website_name});
+            $self->set_cmd_line($command, 'updateVdir');
+            my $result = $self->run_command($command);
+            $self->_process_result($result);
+        }
+
+    }
+    else {
+        $self->logger->info("Site $params->{websiteName} does not exist");
+        my $command = $self->driver->create_site_cmd($params);
+        $self->set_cmd_line($command);
+        my $result = $self->run_command($command);
+        $self->_process_result($result);
+    }
+}
+
 sub step_undeploy {
     my ($self) = @_;
 
@@ -426,7 +469,7 @@ sub step_deploy {
     my $source_provider;
     my $source = $params->{source};
     if ( -d $source ) {
-        $source_provider = 'contentPath';
+        $source_provider = 'iisApp';
     }
     else {
         $source_provider = 'package';
@@ -476,7 +519,7 @@ sub step_deploy {
         if ($result->{code} != 0) {
             return $self->bail_out($result->{stderr});
         }
-        print $result->{stdout};
+        $self->logger->info($result->{stdout});
     }
     elsif ($app_pool_name) {
         $self->warning("Application pool name is specified, but not application name. Skipping application pool creation.");
@@ -507,7 +550,7 @@ sub create_or_update_app_pool {
         $self->update_app_pool($params, $settings);
     }
     else {
-        print "Application pool $name does not exists, creating application pool\n";
+        print "Application pool $name has not been created yet. Proceeding to adding it.\n";
         $self->create_app_pool($params, $settings);
     }
 }
@@ -711,7 +754,7 @@ sub _save_params_file {
 sub _process_result {
     my ($self, $result) = @_;
 
-    $self->dbg(Dumper($result));
+    $self->logger->debug($result);
     if ($result->{code} || $result->{stderr}) {
         return $self->bail_out($result->{stderr} || $result->{stdout});
     }
@@ -719,7 +762,7 @@ sub _process_result {
         $self->warning($1);
     }
     else {
-        print $result->{stdout};
+        $self->logger->info($result->{stdout});
         $self->success($result->{stdout});
     }
 }
@@ -736,6 +779,93 @@ sub is_int {
 
     return $number && $number =~ m/^\d+$/;
 }
+
+
+=head2 check_http_status( %options )
+
+%options may include:
+
+=over
+
+=item * url - what server & path we're interested in
+=item * status - http status code (default 200, but we may be expecting others as well).
+=item * unavailable [_] - if checked, regard failure to connect at all as expected result (e.g. we just stopped server and want to make sure it is down now).
+=item * content = regex - if given, check that such text is available on the page
+=item * timeout - connect timeout
+=item * tries - try again if timed out
+
+=back
+
+=cut
+
+sub check_http_status {
+    my ($self, %opt) = @_;
+
+    my $url = $opt{url};
+    defined $url or croak "check_http_status(): url parameter is required";
+    $url =~ m#^https?://# or $url = "http://$url";
+    $opt{timeout} ||= 30;
+    $opt{tries}   ||= 1;
+    $opt{status}  ||= 200;
+    if (defined $opt{user} xor defined $opt{pass}) {
+        carp sprintf "check_http_status(): ignoring %s without %s - both must be defined"
+            , (defined $opt{user})?('user', 'pass'):('pass', 'user');
+    };
+
+    # TODO self->out, but we have debug_level 0
+    warn "check_http_status(): "
+        .join ", ", map { "$_: '$opt{$_}'" } sort keys %opt;
+
+    # TODO check that server resolves first and DIE if not
+
+    # check port availability if asked to do so
+    if ($opt{unavailable}) {
+        my ($host, $port) = $url =~ m#https?://([\w\-\.]+)(?::(\d+))?(?:[/?]|$)#;
+
+        croak "check_http_status(): malformed URL $url"
+            unless $host;
+        $port ||= 80;
+
+        my $outcome;
+        for (1 .. $opt{tries}) {
+            local $SIG{ALRM} = sub { die "timeout" };
+            eval {
+                alarm $opt{timeout};
+                my $sock = IO::Socket::INET->new(
+                    Proto => 'tcp', PeerHost => $host, PeerPort => $port );
+                $sock and $outcome = "Server available at $host:$port";
+                close $sock if $sock;
+            };
+            alarm 0;
+            return $outcome if $outcome;
+        };
+
+        return '';
+    };
+
+    # Finally, go for HTTP request
+    my $agent = LWP::UserAgent->new( env_proxy => 1, keep_alive => 1
+        , timeout => $opt{timeout} );
+    my $request = HTTP::Request->new( GET => $url );
+
+    if (defined $opt{user} and defined $opt{pass}) {
+        $request->authorization_basic( $opt{user}, $opt{pass} );
+    };
+
+    # If timeout, retry
+    # TODO Heard rumors that timeout isn't handled properly on https
+    # but this is unlikely to disrupt us here
+    # TODO Don't rely on human-readable message
+    $opt{tries}--;
+    my $response;
+    do {
+        $response = $agent->request($request);
+    } while ($response->message =~ /Can't connect/ and $opt{tries}-->0 );
+
+    my $success = ($response->code == $opt{status});
+
+    return $success ? '' : "Expected $opt{status}, got ".$response->status_line;
+};
 
 
 1;

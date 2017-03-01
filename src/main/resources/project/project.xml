@@ -145,6 +145,11 @@
             <expandable>0</expandable>
             <value />
         </property>
+        <property>
+            <propertyName>EC::Plugin::Logger</propertyName>
+            <expandable>0</expandable>
+            <value />
+        </property>
 	    <property>
             <propertyName>EC::Plugin::IISDriver</propertyName>
             <expandable>0</expandable>
@@ -1004,7 +1009,7 @@
             <formalParameter>
                 <formalParameterName>queueLength</formalParameterName>
                 <defaultValue/>
-                <description>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 “Service Unavailable” response.</description>
+                <description>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
@@ -1539,7 +1544,7 @@
 
 		<procedure>
             <procedureName>DeployCopy</procedureName>
-            <description>Use XCOPY to deploy Web Site or ASP.NET Application</description>
+            <description>Use XCOPY to deploy Web Site or ASP.NET Application (DEPRECATED).</description>
             <jobNameTemplate>iis7-deploycopy-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
@@ -2224,7 +2229,7 @@
             </formalParameter>
             <formalParameter>
                 <formalParameterName>applicationPool</formalParameterName>
-                <defaultValue>$[websiteName]</defaultValue>
+                <defaultValue></defaultValue>
                 <description>Application pool name. If the application pool does not exists, it will be created.</description>
                 <required>0</required>
                 <type>entry</type>
@@ -2253,7 +2258,7 @@
             <formalParameter>
                 <formalParameterName>queueLength</formalParameterName>
                 <defaultValue></defaultValue>
-                <description>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 “Service Unavailable” response.</description>
+                <description>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
@@ -2359,6 +2364,58 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+
+                                <property>
+                                    <propertyName>checkUrl</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>expectStatus</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>unavailable</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>timeout</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>retries</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -2377,6 +2434,41 @@
                 <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>checkbox</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>checkUrl</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>expectStatus</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>unavailable</formalParameterName>
+                <defaultValue>0</defaultValue>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>checkbox</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>timeout</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>retries</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>entry</type>
             </formalParameter>
             <step>
                 <stepName>CheckServerStatus</stepName>
@@ -2754,8 +2846,6 @@
                                         </property>
                                     </propertySheet>
                                 </property>
-
-
                             </propertySheet>
                         </property>
                     </propertySheet>
