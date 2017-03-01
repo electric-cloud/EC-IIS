@@ -30,3 +30,4 @@ use strict;
 use EC::IIS;
 my $ec_iis = EC::IIS->new;
 exit $ec_iis->run_reset( '/start' );
+
