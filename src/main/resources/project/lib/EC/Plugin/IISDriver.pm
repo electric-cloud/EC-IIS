@@ -16,7 +16,7 @@ sub cmd_appcmd {
 
 sub after_init_hook {
     my ($self, %params) = @_;
-    # $self->debug_level(0);
+    $self->debug_level(0);
 }
 
 
