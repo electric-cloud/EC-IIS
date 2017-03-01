@@ -186,7 +186,6 @@ sub create_site_cmd {
 
     my @command_parts = qw/add site/;
     if ($params->{websiteName}) {
-        push @command_parts, $params->{websiteName};
         push @command_parts, qq{/site.name:"$params->{websiteName}"};
     }
     else {
