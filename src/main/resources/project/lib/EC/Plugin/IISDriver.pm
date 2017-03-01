@@ -34,6 +34,16 @@ sub get_app_pool {
     return;
 }
 
+sub recycle_app_pool_cmd {
+    my ($self, $params) = @_;
+
+    my $name = $params->{applicationPool};
+    unless($name) {
+        $self->bail_out("No application pool name is provided");
+    }
+    return $self->get_app_cmd('recycle', 'apppool', qq{/apppool.name:"$name"});
+}
+
 sub check_app_pool_exists {
     my ($self, $name) = @_;
 
