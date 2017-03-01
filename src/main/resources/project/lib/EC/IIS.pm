@@ -606,20 +606,28 @@ sub step_create_application {
 
     # TODO rename form fields
     my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
-    my $command = $self->driver->create_app_cmd({
+    $params = {
         websiteName => $params->{appname},
         applicationPath => $params->{path},
-        physicalPath => $params->{physicalpath}
-    });
-    $self->set_cmd_line($command);
-    my $result = $self->run_command($command);
+        physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
+    };
 
-    if ($result->{code} != 0) {
-        my $message = $result->{stderr} ? $result->{stderr} : $result->{stdout};
-        return $self->bail_out("Cannot create application: $message");
+    my $application_name = "$params->{websiteName}/$params->{applicationPath}";
+
+    if ($self->driver->check_application_exists($application_name)) {
+        if ($params->{physicalPath}) {
+            $self->logger->info("Going to update virtual directory $application_name");
+            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => $application_name});
+            $self->set_cmd_line($command, 'updateVdir');
+            my $result = $self->run_command($command);
+            $self->_process_result($result);
+        }
     }
     else {
-        print $result->{stdout};
+        my $command = $self->driver->create_app_cmd($params);
+        $self->set_cmd_line($command);
+        my $result = $self->run_command($command);
+        $self->_process_result($result);
     }
 }
 
