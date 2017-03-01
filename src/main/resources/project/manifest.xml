@@ -332,6 +332,10 @@
     <path>server/stopServer.pl</path>
     <xpath>//procedure[procedureName=&quot;StopServer&quot;]/step[stepName=&quot;StopServer&quot;]/command</xpath>
   </file>
+  <file>
+    <path>server/recycleAppPool.pl</path>
+    <xpath>//procedure[procedureName=&quot;RecycleAppPool&quot;]/step[stepName=&quot;RecycleAppPool&quot;]/command</xpath>
+  </file>
 
   <file>
     <path>forms/IISStartServerForm.xml</path>
@@ -340,6 +344,10 @@
   <file>
     <path>forms/IISStopServerForm.xml</path>
     <xpath>//procedure[procedureName=&quot;StopServer&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>forms/IISRecycleAppPoolForm.xml</path>
+    <xpath>//procedure[procedureName=&quot;RecycleAppPool&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
 
 </fileset>

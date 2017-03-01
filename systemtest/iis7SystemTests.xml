@@ -1671,6 +1671,37 @@
       </step>
     </procedure>
     <procedure>
+      <procedureName>Recycle App Pool</procedureName>
+      <resourceName>windows</resourceName>
+      <step>
+        <stepName>RecycleAppPool</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <lastModifiedBy>admin</lastModifiedBy>
+        <owner>admin</owner>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <subprocedure>RecycleAppPool</subprocedure>
+        <subproject>/plugins/EC-IIS/project</subproject>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>seconds</timeLimitUnits>
+        <workspaceName></workspaceName>
+        <actualParameters>
+          <property>
+            <propertyName>applicationPool</propertyName>
+            <expandable>1</expandable>
+            <value>My App Pool</value>
+          </property>
+        </actualParameters>
+      </step>
+    </procedure>
+    <procedure>
       <procedureName>Deploy simplified</procedureName>
       <resourceName>windows</resourceName>
       <step>

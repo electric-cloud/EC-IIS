@@ -3860,5 +3860,80 @@
                 </propertySheet>
             </step>
         </procedure>
+        <procedure>
+            <procedureName>RecycleAppPool</procedureName>
+            <description>This procedure recycles an application pool. When recycling occurs, the worker process currently serving the application pool terminates and the WWW service restarts a new worker process to replace it.</description>
+            <jobNameTemplate>IIS Recycle Application Pool $[jobId]</jobNameTemplate>
+            <resourceName/>
+            <workspaceName/>
+
+            <propertySheet>
+                <property>
+                    <propertyName>ec_parameterForm</propertyName>
+                    <expandable>1</expandable>
+                    <value></value>
+                </property>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                <property>
+                                    <propertyName>applicationPool</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                    </property>
+            </propertySheet>
+            <formalParameter>
+                <formalParameterName>applicationPool</formalParameterName>
+                <defaultValue></defaultValue>
+                <description>Provide the name of the application pool to recycle. (Required)</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <step>
+                <stepName>RecycleAppPool</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command></command>
+                <condition/>
+                <description></description>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName/>
+                <parallel>0</parallel>
+                <postProcessor></postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName/>
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit>5</timeLimit>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory/>
+                <workspaceName/>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </step>
+        </procedure>
     </project>
 </exportedData>

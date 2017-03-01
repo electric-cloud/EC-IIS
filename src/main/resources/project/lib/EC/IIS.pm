@@ -742,6 +742,16 @@ sub set_cmd_line {
     print "Wrote command to property $property\n";
 }
 
+sub step_recycle_app_pool {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/applicationPool/);
+    my $command = $self->driver->recycle_app_pool_cmd($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+    $self->_process_result($result);
+}
+
 sub _is_xml {
     my ($content) = @_;
 
@@ -764,6 +774,7 @@ sub _process_result {
 
     $self->logger->debug($result);
     if ($result->{code} || $result->{stderr}) {
+        $self->logger->error($result->{stderr});
         return $self->bail_out($result->{stderr} || $result->{stdout});
     }
     if ($result->{stdout} =~ m/ERROR\s*\(\s*message:(.+)\)/ms) {

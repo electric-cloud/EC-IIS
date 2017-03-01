@@ -651,6 +651,49 @@ ntest "createAppPool", {}, sub {
 
 };
 
+ntest "Recycle app pool", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Recycle App Pool",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('success', $outcome, "App pool is recycled");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
+      assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" recycle apppool /apppool.name:"My App Pool"');
+};
+
 
 ntest "createWebApp", {}, sub {
 

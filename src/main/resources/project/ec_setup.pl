@@ -236,6 +236,12 @@ my %stopServer = (
     description => "Uses the iisreset utility to stop a server.",
     category    => "Application Server"
 );
+my %recycleAppPool = (
+    label       => "IIS - Recycle App Pool",
+    procedure   => "RecycleAppPool",
+    description => "Uses the appcmd utility to recycle an app pool.",
+    category    => "Application Server"
+);
 
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Check Server Status");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Add Website Binding");
@@ -282,4 +288,5 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get WebSite St
                             \%stopAppPool, \%stopWebSite, \%deployAdvanced,
                             \%undeploy, \%deploy,
                             \%startServer, \%stopServer, \%resetServer,
+                            \%recycleAppPool
 );
