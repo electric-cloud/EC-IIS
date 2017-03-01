@@ -1544,7 +1544,7 @@
 
 		<procedure>
             <procedureName>DeployCopy</procedureName>
-            <description>Use XCOPY to deploy Web Site or ASP.NET Application</description>
+            <description>Use XCOPY to deploy Web Site or ASP.NET Application (DEPRECATED).</description>
             <jobNameTemplate>iis7-deploycopy-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
