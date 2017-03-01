@@ -426,7 +426,7 @@ ntest 'Create Site1', {}, sub {
 
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
-      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd add site /name:"Site1" /bindings:"http://localhost:999" /physicalPath:"c:/tmp/site1"');
+      assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" add site /site.name:"Site1" /bindings:"http://localhost:999" /physicalPath:"C:\tmp\site1"');
 
 
 };

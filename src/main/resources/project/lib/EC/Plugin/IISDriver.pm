@@ -69,6 +69,17 @@ sub create_app_cmd {
     return $command;
 }
 
+
+sub check_application_exists {
+    my ($self, $appname) =  @_;
+
+    my $command = $self->get_app_cmd('list', 'apps', qq{/app.name:"$appname"});
+    $self->logger->debug($command);
+    my $result = $self->run_command($command);
+    $self->logger->debug($result);
+    return $result->{stdout} && $result->{stdout} =~ m/APP "$appname"/;
+}
+
 my @app_pool_settings = qw(managedRuntimeVersion enable32BitAppOnWin64 managedPipelineMode queueLength autoStart);
 
 sub create_app_pool_cmd {
@@ -175,7 +186,6 @@ sub create_site_cmd {
 
     my @command_parts = qw/add site/;
     if ($params->{websiteName}) {
-        push @command_parts, $params->{websiteName};
         push @command_parts, qq{/site.name:"$params->{websiteName}"};
     }
     else {
@@ -199,7 +209,7 @@ sub update_site_cmd {
 
     my @command_parts = qw/set site/;
     if ($params->{websiteName}) {
-        push @command_parts, $params->{websiteName};
+        push @command_parts, qq{"$params->{websiteName}"};
         push @command_parts, qq{/name:"$params->{websiteName}"};
     }
     else {
@@ -223,7 +233,7 @@ sub update_vdir_cmd {
         $self->bail_out("No virtual directory name is provided");
     }
     $name .= '/' unless $name =~ m/\/$/;
-    push @command_parts, $name;
+    push @command_parts, qq{"$name"};
     if ($params->{physicalPath}) {
         push @command_parts, qq{/physicalPath:"$params->{physicalPath}"};
     }
