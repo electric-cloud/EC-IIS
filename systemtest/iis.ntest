@@ -384,7 +384,7 @@ ntest "createVirtualDirectory", {}, sub {
 
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
-      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd add vdir /app.name:"Default Web Site/" /path:"/mytestvdir2" /physicalPath:"c:/Inetpub/wwwroot/Sites/myvdir2"');
+      assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" add vdir /app.name:"Default Web Site/" /path:"/mytestvdir2" /physicalPath:"C:\Inetpub\wwwroot\Sites\myvdir2"');
 };
 
 ntest 'Create Site1', {}, sub {

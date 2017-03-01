@@ -410,7 +410,7 @@ sub step_create_or_update_site {
 
         if ($params->{physicalPath}) {
             $self->logger->info("Going to update virtual directory $website_name");
-            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => $website_name});
+            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => "$website_name/"});
             $self->set_cmd_line($command, 'updateVdir');
             my $result = $self->run_command($command);
             $self->_process_result($result);
@@ -617,7 +617,7 @@ sub step_create_application {
     if ($self->driver->check_application_exists($application_name)) {
         if ($params->{physicalPath}) {
             $self->logger->info("Going to update virtual directory $application_name");
-            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => $application_name});
+            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => "$application_name/"});
             $self->set_cmd_line($command, 'updateVdir');
             my $result = $self->run_command($command);
             $self->_process_result($result);
@@ -747,6 +747,34 @@ sub step_recycle_app_pool {
 
     my $params = $self->get_params_as_hashref(qw/applicationPool/);
     my $command = $self->driver->recycle_app_pool_cmd($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+    $self->_process_result($result);
+}
+
+sub step_create_or_update_vdir {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
+    $params = {
+        applicationName => $params->{appname},
+        path => $params->{path},
+        physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
+    };
+    $params->{path} = '/' . $params->{path} unless $params->{path} =~ m/^\//;
+
+    my $vdir = "$params->{applicationName}$params->{path}";
+    $vdir =~ s/\/+/\//g;
+    $params->{vdirName} = $vdir;
+    my $command;
+    if ($self->driver->check_vdir_exists($vdir)) {
+        $self->logger->info("Virtual directory $vdir already exists, going to update it");
+        $command = $self->driver->update_vdir_cmd($params);
+    }
+    else {
+        $self->logger->info("Virtual directory $vdir does not exists, proceeding to creating it");
+        $command = $self->driver->create_vdir_cmd($params);
+    }
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
     $self->_process_result($result);

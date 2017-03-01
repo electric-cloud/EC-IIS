@@ -16,7 +16,7 @@ sub cmd_appcmd {
 
 sub after_init_hook {
     my ($self, %params) = @_;
-    $self->debug_level(0);
+    $self->debug_level(1);
 }
 
 
@@ -53,6 +53,16 @@ sub check_app_pool_exists {
         return $self->bail_out("Cannot list app pools: $result->{stderr}");
     }
     return $result->{stdout} ? 1 : 0;
+}
+
+sub check_vdir_exists {
+    my ($self, $name) = @_;
+
+    my $command = $self->get_app_cmd('list', 'vdirs', qq{"$name"});
+    my $result = $self->run_command($command);
+    $self->logger->debug($command);
+    $self->logger->debug($result);
+    return $result->{stdout} && $result->{stdout} =~ m/VDIR "$name"/;
 }
 
 
@@ -242,12 +252,24 @@ sub update_vdir_cmd {
     unless($name) {
         $self->bail_out("No virtual directory name is provided");
     }
-    $name .= '/' unless $name =~ m/\/$/;
+
     push @command_parts, qq{"$name"};
+    push @command_parts, qq{/vdir.name:"$name"};
     if ($params->{physicalPath}) {
         push @command_parts, qq{/physicalPath:"$params->{physicalPath}"};
     }
     return $self->get_app_cmd(@command_parts);
+}
+
+sub create_vdir_cmd {
+    my ($self, $params) = @_;
+
+    my $cmd = $self->get_app_cmd('add', 'vdir',
+        qq{/app.name:"$params->{applicationName}"},
+        qq{/path:"$params->{path}"},
+        qq{/physicalPath:"$params->{physicalPath}"}
+    );
+    return $cmd;
 }
 
 1;
