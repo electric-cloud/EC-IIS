@@ -3576,6 +3576,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>additionalParameters</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -3587,6 +3597,13 @@
                 <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>additionalParams</formalParameterName>
+                <defaultValue></defaultValue>
+                <description>Additional parameters to pass to iisreset utility.</description>
+                <required>0</required>
+                <type>textarea</type>
             </formalParameter>
             <step>
                 <stepName>StartServer</stepName>
@@ -3652,6 +3669,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>additionalParams</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -3663,6 +3690,13 @@
                 <description>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>additionalParams</formalParameterName>
+                <defaultValue></defaultValue>
+                <description>Additional parameters to pass to iisreset utility.</description>
+                <required>0</required>
+                <type>textarea</type>
             </formalParameter>
             <step>
                 <stepName>StopServer</stepName>

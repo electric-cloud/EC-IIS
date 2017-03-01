@@ -29,5 +29,8 @@ use strict;
 
 use EC::IIS;
 my $ec_iis = EC::IIS->new;
-exit $ec_iis->run_reset( '/start' );
+my $extras = $ec_iis->get_param("additionalParams");
+
+my $command = $extras ? "/start $extras" : '/start';
+exit $ec_iis->run_reset($command);
 

@@ -12,11 +12,11 @@
 		<documentation>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</documentation>
 	</formElement>
 	<formElement>
-		<type>entry</type>
+		<type>textarea</type>
 		<label>Additional parameters</label>
 		<property>additionalParams</property>
 		<required>0</required>
 		<value></value>
-		<documentation>Additional command line parameters, if needed</documentation>
+		<documentation>Additional parameters to pass to iisreset utility.</documentation>
 	</formElement>
 </editor>
