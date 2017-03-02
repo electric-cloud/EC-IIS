@@ -314,4 +314,22 @@ sub list_sites_cmd {
     return $self->get_app_cmd('list', 'site', $criteria);
 }
 
+sub list_pools_cmd {
+    my ($self, $params) = @_;
+
+    my $criteria = $params->{criteria} || '';
+    return $self->get_app_cmd('list', 'apppool', $criteria);
+}
+
+sub list_apps_cmd {
+    my ($self, $params) = @_;
+
+    my $site = $params->{websiteName} || '';
+    my $extra = '';
+    if ($site) {
+        $extra = qq{/site.name:"$site"};
+    }
+    return $self->get_app_cmd('list', 'apps', $extra);
+}
+
 1;

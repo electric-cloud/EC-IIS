@@ -897,7 +897,7 @@ sub step_list_sites {
 
     my $stdout = $result->{stdout};
     $self->logger->info($stdout);
-    my @lines = split /\n/ => $stdout;
+    my @lines = split /[\n\r]/ => $stdout;
 
     my %data = map { /SITE\s"(.+)"\s\(id:(\d+),bindings:(.+),state:(\w+)\)/; $1 => {
         id => $2,
@@ -920,7 +920,91 @@ sub step_list_sites {
     }
     $self->logger->info("Site list was written to $property");
     $self->success("Site list was written to $property");
+}
 
+sub step_list_pools {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName expandPropertySheet/);
+    my $command = $self->driver->list_pools_cmd($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+
+    if ($result->{code}) {
+        return $self->bail_out("Cannot list pools: " . ($result->{stderr} || $result->{stdout}));
+    }
+
+    # APPPOOL "site" (MgdVersion:v4.0,MgdMode:Integrated,state:Started)
+    my $stdout = $result->{stdout};
+    my @lines = split /[\n\r]/ => $stdout;
+    my %data = map {
+        m/APPPOOL\s"(.+)"\s\(MgdVersion:(.+),MgdMode:(\w+),state:(\w+)\)/;
+        $1 => {
+            managedVersion => $2,
+            managedPipelineMode => $3,
+            state => $4,
+        }
+    } @lines;
+
+    $params->{propertyName} ||= '/myJob/IISSiteList';
+
+    $self->save_data_to_property_sheet(
+        data => \%data,
+        property => $params->{propertyName},
+        expand => $params->{expandPropertySheet}
+    );
+}
+
+sub step_list_apps {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/sitename propertyName expandPropertySheet/);
+    $params->{websiteName} = $params->{sitename};
+    my $command = $self->driver->list_apps_cmd($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+
+    if ($result->{code}) {
+        return $self->bail_out("Cannot list apps: " . ($result->{stderr} || $result->{stdout}));
+    }
+
+    my $stdout = $result->{stdout};
+    my @lines = split /[\n\r]/ => $stdout;
+
+    my %data = map {
+        m/APP\s"(.+)"\s\(applicationPool:(.+)\)/;
+        $1 => {applicationPool => $2}
+    } @lines;
+
+    $params->{propertyName} ||= '/myJob/IISApps';
+
+    $self->save_data_to_property_sheet(
+        data => \%data,
+        property => $params->{propertyName},
+        expand => $params->{expandPropertySheet}
+    );
+}
+
+sub save_data_to_property_sheet {
+    my ($self, %params) = @_;
+
+    my $data = $params{data};
+    my $property = $params{property};
+    my $expand = $params{expand};
+
+    $self->logger->debug($data);
+    if ($expand) {
+        my $flat_map = _flatten_map($data, $property);
+        for my $key ( sort keys %$flat_map) {
+            $self->ec->setProperty($key, $flat_map->{$key});
+        }
+    }
+    else {
+        my $json = JSON::encode_json($data);
+        $self->ec->setProperty($property, $json);
+    }
+    $self->logger->info("Retrieved data was written to $property");
+    $self->success("Retrieved data was written to $property");
 }
 
 sub _process_result {
