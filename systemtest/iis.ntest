@@ -384,6 +384,44 @@ ntest "deleteVirtualDirectory (with failure)", {}, sub {
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
 };
+ntest "deleteVirtualDirectory (no failure)", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Delete Vdir (nonexistent) no failure",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('warning', $outcome, "Job $jobId is failed");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+};
 
 
 ntest "createVirtualDirectory", {}, sub {
@@ -640,9 +678,86 @@ ntest "delete web site", {}, sub {
 
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
-      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd delete site /site.name:"Site1"');
+      assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" delete site /site.name:"Site1"');
+};
+
+ntest "delete web site (nonexistent)", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Delete Site (nonexistent)",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
 
 
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('warning', $outcome, "Job $jobId is successful");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+};
+
+
+ntest "delete web site (nonexistent) failure", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Delete Site (nonexistent) failure",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('error', $outcome, "Job $jobId is successful");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
 };
 
 
@@ -1093,6 +1208,164 @@ ntest "Delete App Pool (with failure)", {}, sub {
       # run test job
       my $xpath = $::N->runProcedure($::gtestProjectName,
               {procedureName => "Delete App Pool (nonexistent)",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('error', $outcome, "Job $jobId has failed");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+};
+
+ntest "Delete App Pool (no failure)", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Delete App Pool (nonexistent) no failure",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('warning', $outcome, "Job $jobId has failed");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+};
+
+
+ntest "Delete web app (with failure)", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Delete Web App (nonexistent)",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('error', $outcome, "Job $jobId has failed");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+};
+
+ntest "Delete web app (no failure)", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Delete Web App (nonexistent) - no failure",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('warning', $outcome, "Job $jobId has failed");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+};
+
+
+ntest "Undeploy nonexistent site", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Undeploy (no site)",
               pollInterval  => '1',
               timeout => 600,
                    actualParameter => [

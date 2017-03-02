@@ -19,12 +19,22 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteWebApplication</help>
 	<label>Application Server - IIS DeleteWebApplication</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Deletes a web application into the specified website.</description>	
+	<description>Deletes a web application into the specified website.</description>
 	<formElement>
 		<type>entry</type>
 		<label>Application name:</label>
 		<property>appname</property>
 		<required>1</required>
 		<documentation>The website that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</documentation>
-	</formElement>		
+	</formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Strict mode:</label>
+        <property>strictMode</property>
+        <required>0</required>
+        <value>0</value>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <documentation>If checked, the procedure will fail in case the specified application does not exist.</documentation>
+    </formElement>
 </editor>

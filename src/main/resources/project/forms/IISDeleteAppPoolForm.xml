@@ -32,6 +32,7 @@
 		<label>Strict mode:</label>
 		<property>strictMode</property>
 		<required>0</required>
+        <value>0</value>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
 		<documentation>If checked, the procedure will fail in case the specified application pool does not exist.</documentation>

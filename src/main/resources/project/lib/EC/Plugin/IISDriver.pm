@@ -193,11 +193,12 @@ sub div_mod {
     return (int($a/$b), $a % $b);
 }
 
-sub site_exists {
+sub check_site_exists {
     my ($self, $site) = @_;
 
     my $command = $self->get_app_cmd('list', 'sites', qq{/name:"$site"});
     my $result = $self->run_command($command);
+    $self->logger->debug($result);
     return $result->{stdout} ? 1 : 0;
 }
 
@@ -293,6 +294,17 @@ sub delete_vdir_cmd {
     }
 
     return $self->get_app_cmd('delete', 'vdir', qq{/vdir.name:"$name"});
+}
+
+
+sub delete_site_cmd {
+    my ($self, $params) = @_;
+
+    my $name = $params->{websiteName};
+    unless($name) {
+        $self->bail_out("No website name was specified");
+    }
+    return $self->get_app_cmd('delete', 'site', qq{/site.name:"$name"});
 }
 
 1;

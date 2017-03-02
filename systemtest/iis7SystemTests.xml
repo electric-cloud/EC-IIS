@@ -1636,6 +1636,88 @@
       </step>
     </procedure>
     <procedure>
+      <procedureName>Delete Site (nonexistent)</procedureName>
+      <description></description>
+      <lastModifiedBy>admin</lastModifiedBy>
+      <owner>admin</owner>
+      <resourceName>windows</resourceName>
+      <workspaceName></workspaceName>
+      <step>
+        <stepName>DeleteWebSite</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <lastModifiedBy>admin</lastModifiedBy>
+        <owner>admin</owner>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <subprocedure>DeleteWebSite</subprocedure>
+        <subproject>/plugins/EC-IIS/project</subproject>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>seconds</timeLimitUnits>
+        <workspaceName></workspaceName>
+        <actualParameters>
+          <lastModifiedBy>admin</lastModifiedBy>
+          <property>
+            <propertyName>websitename</propertyName>
+            <expandable>1</expandable>
+            <value>no such site</value>
+          </property>
+          <property>
+            <propertyName>strictMode</propertyName>
+            <expandable>1</expandable>
+            <value>0</value>
+          </property>
+        </actualParameters>
+      </step>
+    </procedure>
+    <procedure>
+      <procedureName>Delete Site (nonexistent) failure</procedureName>
+      <description></description>
+      <lastModifiedBy>admin</lastModifiedBy>
+      <owner>admin</owner>
+      <resourceName>windows</resourceName>
+      <workspaceName></workspaceName>
+      <step>
+        <stepName>DeleteWebSite</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <lastModifiedBy>admin</lastModifiedBy>
+        <owner>admin</owner>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <subprocedure>DeleteWebSite</subprocedure>
+        <subproject>/plugins/EC-IIS/project</subproject>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>seconds</timeLimitUnits>
+        <workspaceName></workspaceName>
+        <actualParameters>
+          <lastModifiedBy>admin</lastModifiedBy>
+          <property>
+            <propertyName>websitename</propertyName>
+            <expandable>1</expandable>
+            <value>no such site</value>
+          </property>
+          <property>
+            <propertyName>strictMode</propertyName>
+            <expandable>1</expandable>
+            <value>1</value>
+          </property>
+        </actualParameters>
+      </step>
+    </procedure>
+    <procedure>
       <procedureName>Delete Web App</procedureName>
       <lastModifiedBy>admin</lastModifiedBy>
       <owner>admin</owner>
@@ -1666,6 +1748,78 @@
             <lastModifiedBy>admin</lastModifiedBy>
             <owner>admin</owner>
             <value>Default Web Site/app1</value>
+          </property>
+        </actualParameters>
+      </step>
+    </procedure>
+    <procedure>
+      <procedureName>Delete Web App (nonexistent)</procedureName>
+      <resourceName>windows</resourceName>
+      <step>
+        <stepName>DeleteApp</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <lastModifiedBy>admin</lastModifiedBy>
+        <owner>admin</owner>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <subprocedure>DeleteWebApplication</subprocedure>
+        <subproject>/plugins/EC-IIS/project</subproject>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>seconds</timeLimitUnits>
+        <workspaceName></workspaceName>
+        <actualParameters>
+          <property>
+            <propertyName>appname</propertyName>
+            <expandable>1</expandable>
+            <value>No such app</value>
+          </property>
+          <property>
+            <propertyName>strictMode</propertyName>
+            <expandable>1</expandable>
+            <value>1</value>
+          </property>
+        </actualParameters>
+      </step>
+    </procedure>
+    <procedure>
+      <procedureName>Delete Web App (nonexistent) - no failure</procedureName>
+      <resourceName>windows</resourceName>
+      <step>
+        <stepName>DeleteApp</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <lastModifiedBy>admin</lastModifiedBy>
+        <owner>admin</owner>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <subprocedure>DeleteWebApplication</subprocedure>
+        <subproject>/plugins/EC-IIS/project</subproject>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>seconds</timeLimitUnits>
+        <workspaceName></workspaceName>
+        <actualParameters>
+          <property>
+            <propertyName>appname</propertyName>
+            <expandable>1</expandable>
+            <value>No such app</value>
+          </property>
+          <property>
+            <propertyName>strictMode</propertyName>
+            <expandable>0</expandable>
+            <value>0</value>
           </property>
         </actualParameters>
       </step>
@@ -1738,6 +1892,42 @@
       </step>
     </procedure>
     <procedure>
+      <procedureName>Delete App Pool (nonexistent) no failure</procedureName>
+      <resourceName>windows</resourceName>
+      <step>
+        <stepName>DeleteAppPool</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <lastModifiedBy>admin</lastModifiedBy>
+        <owner>admin</owner>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <subprocedure>DeleteAppPool</subprocedure>
+        <subproject>/plugins/EC-IIS/project</subproject>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>seconds</timeLimitUnits>
+        <workspaceName></workspaceName>
+        <actualParameters>
+          <property>
+            <propertyName>apppoolname</propertyName>
+            <expandable>1</expandable>
+            <value>My App Pool (no such pool)</value>
+          </property>
+          <property>
+            <propertyName>strictMode</propertyName>
+            <expandable>1</expandable>
+            <value>0</value>
+          </property>
+        </actualParameters>
+      </step>
+    </procedure>
+    <procedure>
       <procedureName>Delete Vdir (nonexistent)</procedureName>
       <resourceName>windows</resourceName>
       <step>
@@ -1764,6 +1954,83 @@
             <propertyName>appname</propertyName>
             <expandable>1</expandable>
             <value>My Vdir</value>
+          </property>
+          <property>
+            <propertyName>strictMode</propertyName>
+            <expandable>1</expandable>
+            <value>1</value>
+          </property>
+        </actualParameters>
+      </step>
+    </procedure>
+    <procedure>
+      <procedureName>Delete Vdir (nonexistent) no failure</procedureName>
+      <resourceName>windows</resourceName>
+      <step>
+        <stepName>DeleteVirtualDirectory</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <lastModifiedBy>admin</lastModifiedBy>
+        <owner>admin</owner>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <subprocedure>DeleteVirtualDirectory</subprocedure>
+        <subproject>/plugins/EC-IIS/project</subproject>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>seconds</timeLimitUnits>
+        <workspaceName></workspaceName>
+        <actualParameters>
+          <property>
+            <propertyName>appname</propertyName>
+            <expandable>1</expandable>
+            <value>My Vdir</value>
+          </property>
+          <property>
+            <propertyName>strictMode</propertyName>
+            <expandable>0</expandable>
+            <value>0</value>
+          </property>
+        </actualParameters>
+      </step>
+    </procedure>
+    <procedure>
+      <procedureName>Undeploy (no site)</procedureName>
+      <resourceName>windows</resourceName>
+      <step>
+        <stepName>Undeploy</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <lastModifiedBy>admin</lastModifiedBy>
+        <owner>admin</owner>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <subprocedure>Undeploy</subprocedure>
+        <subproject>/plugins/EC-IIS/project</subproject>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>seconds</timeLimitUnits>
+        <workspaceName></workspaceName>
+        <actualParameters>
+          <property>
+            <propertyName>msdeployPath</propertyName>
+            <expandable>1</expandable>
+            <value>c:/msdeploy</value>
+          </property>
+          <property>
+            <propertyName>websiteName</propertyName>
+            <expandable>0</expandable>
+            <value>no such site</value>
           </property>
           <property>
             <propertyName>strictMode</propertyName>
