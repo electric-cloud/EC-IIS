@@ -430,9 +430,22 @@ sub step_undeploy {
     my ($self) = @_;
 
     my $params = $self->get_params_as_hashref(qw/
-        msdeployPath websiteName
+        msdeployPath
+        websiteName
+        strictMode
         applicationName
         deleteVirtualDirectories/);
+
+    my $website_name = $params->{websiteName};
+    unless ($self->driver->check_site_exists($website_name)) {
+        if ($params->{strictMode}) {
+            return $self->bail_out("Website $website_name does not exist");
+        }
+        else {
+            return $self->warning("Website $website_name does not exist");
+        }
+    }
+
     my $command = $self->create_undeploy_command($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);

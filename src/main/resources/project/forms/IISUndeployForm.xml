@@ -51,5 +51,14 @@
         <uncheckedValue>0</uncheckedValue>
         <documentation>Deletes the specified Web site or Web application, including any virtual directories and their content.</documentation>
     </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Strict mode:</label>
+        <property>strictMode</property>
+        <required>0</required>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <documentation>If checked, the procedure will fail in case the specified web site does not exist.</documentation>
+    </formElement>
 
 </editor>

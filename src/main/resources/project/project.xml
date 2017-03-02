@@ -1998,6 +1998,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>strictMode</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -2028,6 +2038,13 @@
                 <formalParameterName>deleteVirtualDirectories</formalParameterName>
                 <defaultValue/>
                 <description>Deletes the specified Web site or Web application, including any virtual directories and their content.</description>
+                <required>0</required>
+                <type>checkbox</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>strictMode</formalParameterName>
+                <defaultValue>0</defaultValue>
+                <description></description>
                 <required>0</required>
                 <type>checkbox</type>
             </formalParameter>
