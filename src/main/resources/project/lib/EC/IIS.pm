@@ -397,7 +397,7 @@ sub step_create_or_update_site {
         physicalPath => EC::Plugin::Core::canon_path($params->{websitepath}),
         websiteId => $params->{websiteid},
     };
-    if ($self->driver->site_exists($params->{websiteName})) {
+    if ($self->driver->check_site_exists($params->{websiteName})) {
         $self->logger->info("Site $params->{websiteName} already exists.");
 
         if ($params->{bindings} || $params->{websiteId}) {
@@ -634,7 +634,17 @@ sub step_create_application {
 sub step_delete_application {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/appname/);
+    my $params = $self->get_params_as_hashref(qw/appname strictMode/);
+
+    unless ($self->driver->check_application_exists($params->{appname})) {
+        if ($params->{strictMode}) {
+            return $self->bail_out("Application $params->{appname} does not exist");
+        }
+        else {
+            return $self->warning("Application $params->{appname} does not exist");
+        }
+    }
+
     my $command = $self->driver->delete_app_cmd({applicationName => $params->{appname}});
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
@@ -803,10 +813,36 @@ sub step_delete_app_pool {
     $params->{applicationPool} = $params->{apppoolname};
     my $name = $params->{applicationPool};
 
-    if ($params->{strictMode} && !$self->driver->check_app_pool_exists($name)) {
-        return $self->bail_out("Application pool $name does not exist");
+    unless($self->driver->check_app_pool_exists($name)) {
+        if ($params->{strictMode}) {
+            return $self->bail_out("Application pool $name does not exist");
+        }
+        else {
+            return $self->warning("Application pool $name does not exist");
+        }
     }
     my $command = $self->driver->delete_app_pool_cmd($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+    $self->_process_result($result);
+}
+
+sub step_delete_web_site {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/websitename strictMode/);
+    $params->{websiteName} = $params->{websitename};
+    my $name = $params->{websiteName};
+
+    unless($self->driver->check_site_exists($name)) {
+        if ($params->{strictMode}) {
+            return $self->bail_out("Website $name does not exist");
+        }
+        else {
+            return $self->warning("Website $name does not exist");
+        }
+    }
+    my $command = $self->driver->delete_site_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
     $self->_process_result($result);
@@ -819,8 +855,13 @@ sub step_delete_vdir {
     $params->{vdirName} = $params->{appname};
     my $name = $params->{vdirName};
 
-    if ($params->{strictMode} && !$self->driver->check_vdir_exists($name)) {
-        return $self->bail_out("Virtual directory $name does not exist");
+    unless ($self->driver->check_vdir_exists($name)) {
+        if ($params->{strictMode}) {
+            return $self->bail_out("Virtual directory $name does not exist");
+        }
+        else {
+            return $self->warning("Virtual directory $name does not exist");
+        }
     }
     my $command = $self->driver->delete_vdir_cmd($params);
     $self->set_cmd_line($command);

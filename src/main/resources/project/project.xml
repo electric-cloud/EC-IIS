@@ -2864,6 +2864,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>strictMode</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -2876,6 +2886,13 @@
                 <description>The WebSite that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>strictMode</formalParameterName>
+                <defaultValue>0</defaultValue>
+                <description>If checked, the procedure will fail in case the specified application does not exist.</description>
+                <required>0</required>
+                <type>checkbox</type>
             </formalParameter>
 
             <step>
@@ -3232,6 +3249,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>strictMode</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -3244,6 +3271,14 @@
                 <description>The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
+            </formalParameter>
+
+            <formalParameter>
+                <formalParameterName>strictMode</formalParameterName>
+                <defaultValue>0</defaultValue>
+                <description>If checked, the procedure will fail in case the specified application does not exist.</description>
+                <required>0</required>
+                <type>checkbox</type>
             </formalParameter>
 
             <step>
@@ -3449,7 +3484,7 @@
             </formalParameter>
             <formalParameter>
                 <formalParameterName>strictMode</formalParameterName>
-                <defaultValue/>
+                <defaultValue>0</defaultValue>
                 <description>If checked, the procedure will fail in case the specified application pool does not exist.</description>
                 <required>0</required>
                 <type>checkbox</type>
