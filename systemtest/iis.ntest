@@ -342,8 +342,47 @@ ntest "deleteVirtualDirectory", {}, sub {
 
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
-      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd delete vdir /vdir.name:"Default Web Site/mytestvdir2"');
+      assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" delete vdir /vdir.name:"Default Web Site/mytestvdir2"');
 
+};
+
+ntest "deleteVirtualDirectory (with failure)", {}, sub {
+
+      doSetup();
+
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName,
+              {procedureName => "Delete Vdir (nonexistent)",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+
+                  ]
+      });
+
+
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+
+          assertTrue($jobId && $jobId ne "",'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+          assertEq('error', $outcome, "Job $jobId is failed");
+
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
 };
 
 

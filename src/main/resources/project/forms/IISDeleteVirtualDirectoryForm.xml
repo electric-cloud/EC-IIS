@@ -19,12 +19,21 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteVirtualDirectory</help>
 	<label>Application Server - IIS DeleteVirtualDirectory</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Deletes a virtual directory.</description>	
-	<formElement>
-		<type>entry</type>
-		<label>Virtual directory name:</label>
-		<property>appname</property>
-		<required>1</required>
-		<documentation>The website and virtual path that contains the Virtual Directory to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</documentation>
-	</formElement>		
+	<description>Deletes a virtual directory.</description>
+    <formElement>
+        <type>entry</type>
+        <label>Virtual directory name:</label>
+        <property>appname</property>
+        <required>1</required>
+        <documentation>The website and virtual path that contains the Virtual Directory to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</documentation>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Strict mode:</label>
+        <property>strictMode</property>
+        <required>0</required>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <documentation>If checked, the procedure will fail in case the specified virtual directory does not exist.</documentation>
+    </formElement>
 </editor>
