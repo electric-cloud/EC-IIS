@@ -1702,6 +1702,42 @@
       </step>
     </procedure>
     <procedure>
+      <procedureName>Delete App Pool (nonexistent)</procedureName>
+      <resourceName>windows</resourceName>
+      <step>
+        <stepName>DeleteAppPool</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <lastModifiedBy>admin</lastModifiedBy>
+        <owner>admin</owner>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <subprocedure>DeleteAppPool</subprocedure>
+        <subproject>/plugins/EC-IIS/project</subproject>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>seconds</timeLimitUnits>
+        <workspaceName></workspaceName>
+        <actualParameters>
+          <property>
+            <propertyName>apppoolname</propertyName>
+            <expandable>1</expandable>
+            <value>My App Pool (no such pool)</value>
+          </property>
+          <property>
+            <propertyName>strictMode</propertyName>
+            <expandable>1</expandable>
+            <value>1</value>
+          </property>
+        </actualParameters>
+      </step>
+    </procedure>
+    <procedure>
       <procedureName>Deploy simplified</procedureName>
       <resourceName>windows</resourceName>
       <step>

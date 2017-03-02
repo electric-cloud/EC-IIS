@@ -796,6 +796,21 @@ sub _save_params_file {
     return $filename;
 }
 
+sub step_delete_app_pool {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/apppoolname strictMode/);
+    $params->{applicationPool} = $params->{apppoolname};
+    my $name = $params->{applicationPool};
+
+    if ($params->{strictMode} && !$self->driver->check_app_pool_exists($name)) {
+        return $self->bail_out("Application pool $name does not exist");
+    }
+    my $command = $self->driver->delete_app_pool_cmd($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+    $self->_process_result($result);
+}
 
 sub _process_result {
     my ($self, $result) = @_;
