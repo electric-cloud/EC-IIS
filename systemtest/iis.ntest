@@ -34,7 +34,10 @@ if ($^O eq WINDOWS_OS_ID) {
 }else{
     #this is a windows-only plugin, if not executed in Windows,
     #there is no need to test
-    # exit SUCCESS;
+    # The test needs a resource named windows, which has installed IIS7+ and msdeploy
+    unless($ENV{TEST_IIS_ON_LINUX}) {
+      exit SUCCESS;
+    }
 }
 
 # from initCommander
