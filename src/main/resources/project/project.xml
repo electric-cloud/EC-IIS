@@ -2975,6 +2975,26 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>propertyName</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>expandPropertySheet</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
 
 
                             </propertySheet>
@@ -2989,6 +3009,20 @@
                 <description>The user-defined criterias to search the sites. Blank lists all sites. i.e: '/bindings:http/*:80:'.</description>
                 <required>0</required>
                 <type>textarea</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>propertyName</formalParameterName>
+                <defaultValue>/myJob/IISSiteList</defaultValue>
+                <description>Property to write retrieved data.</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>expandPropertySheet</formalParameterName>
+                <defaultValue/>
+                <description>If checked, will expand retrieved data to the specified property sheet, othrwise will write data as JSON.</description>
+                <required>0</required>
+                <type>checkbox</type>
             </formalParameter>
 
             <step>

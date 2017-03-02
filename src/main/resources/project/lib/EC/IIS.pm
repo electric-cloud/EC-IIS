@@ -33,6 +33,7 @@ use base qw(EC::Plugin::Core);
 use Data::Dumper;
 use LWP::UserAgent;
 use IO::Socket::INET;
+use JSON;
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
@@ -56,7 +57,7 @@ use constant {
 
 sub after_init_hook {
     my ($self, %params) = @_;
-    $self->debug_level(0);
+    $self->debug_level(1);
 }
 
 
@@ -882,6 +883,46 @@ sub step_delete_vdir {
     $self->_process_result($result);
 }
 
+sub step_list_sites {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName expandPropertySheet/);
+    my $command = $self->driver->list_sites_cmd($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+
+    if ($result->{code}) {
+        return $self->bail_out("Cannot list sites: " . ($result->{stderr} || $result->{stdout}));
+    }
+
+    my $stdout = $result->{stdout};
+    $self->logger->info($stdout);
+    my @lines = split /\n/ => $stdout;
+
+    my %data = map { /SITE\s"(.+)"\s\(id:(\d+),bindings:(.+),state:(\w+)\)/; $1 => {
+        id => $2,
+        bindings => [ split ',' => $3 ],
+        state => $4,
+    }} @lines;
+
+    $self->logger->debug(\%data);
+    my $property = $params->{propertyName} || '/myJob/IISSiteList';
+    my $expand = $params->{expandPropertySheet};
+    if ($expand) {
+        my $flat_map = _flatten_map(\%data, $property);
+        for my $key ( sort keys %$flat_map) {
+            $self->ec->setProperty($key, $flat_map->{$key});
+        }
+    }
+    else {
+        my $json = JSON::encode_json(\%data);
+        $self->ec->setProperty($property, $json);
+    }
+    $self->logger->info("Site list was written to $property");
+    $self->success("Site list was written to $property");
+
+}
+
 sub _process_result {
     my ($self, $result) = @_;
 
@@ -999,5 +1040,25 @@ sub check_http_status {
     return $success ? '' : "Expected $opt{status}, got ".$response->status_line;
 };
 
+sub _flatten_map {
+    my ($map, $prefix) = @_;
+
+    my %retval = ();
+    for my $key (keys %$map) {
+        my $value = $map->{$key};
+        if (ref $value eq 'ARRAY') {
+            my $counter = 1;
+            my %copy = map { my $key = ref $_ ? $counter ++ : $_; $key => $_ } @$value;
+            $value = \%copy;
+        }
+        if (ref $value) {
+            %retval = (%retval, %{_flatten_map($value, "$prefix/$key")});
+        }
+        else {
+            $retval{"$prefix/$key"} = $value;
+        }
+    }
+    return \%retval;
+}
 
 1;
