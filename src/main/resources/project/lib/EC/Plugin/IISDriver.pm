@@ -307,4 +307,11 @@ sub delete_site_cmd {
     return $self->get_app_cmd('delete', 'site', qq{/site.name:"$name"});
 }
 
+sub list_sites_cmd {
+    my ($self, $params) = @_;
+
+    my $criteria = $params->{criteria} || '';
+    return $self->get_app_cmd('list', 'site', $criteria);
+}
+
 1;

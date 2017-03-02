@@ -19,12 +19,30 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#ListSites</help>
 	<label>Application Server - IIS ListSites</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>List the sites on a web server.</description>	
+	<description>List the sites on a web server.</description>
+    <formElement>
+        <type>textarea</type>
+        <label>User-defined criterias:</label>
+        <property>searchcriteria</property>
+        <required>0</required>
+        <documentation>The user-defined criterias to search the sites. Blank lists all sites. i.e: '/bindings:http/*:80:'.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Property name:</label>
+        <property>propertyName</property>
+        <required>0</required>
+        <value>/myJob/IISSiteList</value>
+        <documentation>Property to write retrieved data.</documentation>
+    </formElement>
 	<formElement>
-		<type>textarea</type>
-		<label>User-defined criterias:</label>
- 		<property>searchcriteria</property>
+		<type>checkbox</type>
+		<label>Expand property sheet:</label>
+ 		<property>expandPropertySheet</property>
 		<required>0</required>
-		<documentation>The user-defined criterias to search the sites. Blank lists all sites. i.e: '/bindings:http/*:80:'.</documentation>
-	</formElement>			
+        <value>1</value>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+		<documentation>If checked, the procedure will expand retrieved data to the specified property sheet, otherwise it will write data as JSON.</documentation>
+	</formElement>
 </editor>
