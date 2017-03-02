@@ -272,4 +272,15 @@ sub create_vdir_cmd {
     return $cmd;
 }
 
+sub delete_app_pool_cmd {
+    my ($self, $params) = @_;
+
+    my $name = $params->{applicationPool};
+    unless($name) {
+        return $self->bail_out("No application pool name is provided");
+    }
+
+    return $self->get_app_cmd('delete', 'apppool', qq{/apppool.name:"$name"});
+}
+
 1;

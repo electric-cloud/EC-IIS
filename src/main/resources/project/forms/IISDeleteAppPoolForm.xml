@@ -19,12 +19,21 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteAppPool</help>
 	<label>Application Server - IIS DeleteAppPool</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Deletes an application pool.</description>	
+	<description>Deletes an application pool.</description>
+    <formElement>
+        <type>entry</type>
+        <label>Application pool name:</label>
+        <property>apppoolname</property>
+        <required>1</required>
+        <documentation>The name of the application pool to delete. (Required)</documentation>
+    </formElement>
 	<formElement>
-		<type>entry</type>
-		<label>Application pool name:</label>
-		<property>apppoolname</property>
-		<required>1</required>
-		<documentation>The name of the application pool to delete. (Required)</documentation>
-	</formElement>		
+		<type>checkbox</type>
+		<label>Strict mode:</label>
+		<property>strict</property>
+		<required>0</required>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+		<documentation>If checked, the procedure will fail in case the specified application pool does not exist.</documentation>
+	</formElement>
 </editor>
