@@ -30,7 +30,7 @@
 	<formElement>
 		<type>checkbox</type>
 		<label>Strict mode:</label>
-		<property>strict</property>
+		<property>strictMode</property>
 		<required>0</required>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>

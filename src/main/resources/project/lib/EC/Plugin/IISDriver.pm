@@ -283,4 +283,16 @@ sub delete_app_pool_cmd {
     return $self->get_app_cmd('delete', 'apppool', qq{/apppool.name:"$name"});
 }
 
+
+sub delete_vdir_cmd {
+    my ($self, $params) = @_;
+
+    my $name = $params->{vdirName};
+    unless($name) {
+        return $self->bail_out("No virtual directory name is provided");
+    }
+
+    return $self->get_app_cmd('delete', 'vdir', qq{/vdir.name:"$name"});
+}
+
 1;

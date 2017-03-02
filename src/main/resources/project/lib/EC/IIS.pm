@@ -812,6 +812,22 @@ sub step_delete_app_pool {
     $self->_process_result($result);
 }
 
+sub step_delete_vdir {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/appname strictMode/);
+    $params->{vdirName} = $params->{appname};
+    my $name = $params->{vdirName};
+
+    if ($params->{strictMode} && !$self->driver->check_vdir_exists($name)) {
+        return $self->bail_out("Virtual directory $name does not exist");
+    }
+    my $command = $self->driver->delete_vdir_cmd($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+    $self->_process_result($result);
+}
+
 sub _process_result {
     my ($self, $result) = @_;
 
