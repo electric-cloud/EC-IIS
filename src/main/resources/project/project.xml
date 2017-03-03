@@ -3321,7 +3321,7 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>expandPropertySheet</propertyName>
+                                    <propertyName>dumpFormat</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -3353,7 +3353,7 @@
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
-                <formalParameterName>expandPropertySheet</formalParameterName>
+                <formalParameterName>dumpFormat</formalParameterName>
                 <defaultValue/>
                 <description></description>
                 <required>0</required>

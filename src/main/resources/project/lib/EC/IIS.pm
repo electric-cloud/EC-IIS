@@ -998,7 +998,7 @@ sub step_list_pools {
 sub step_list_apps {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/sitename propertyName expandPropertySheet/);
+    my $params = $self->get_params_as_hashref(qw/sitename propertyName dumpFormat/);
     $params->{websiteName} = $params->{sitename};
     my $command = $self->driver->list_apps_cmd($params);
     $self->set_cmd_line($command);
@@ -1012,16 +1012,31 @@ sub step_list_apps {
     my @lines = split /[\n\r]/ => $stdout;
 
     my %data = map {
-        m/APP\s"(.+)"\s\(applicationPool:(.+)\)/;
+        m/APP\s"(.*)"\s\(applicationPool:(.*)\)/;
         $1 => {applicationPool => $2}
     } @lines;
 
     $params->{propertyName} ||= '/myJob/IISApps';
 
-    $self->save_data_to_property_sheet(
+    my $xml_handler = sub {
+        my ($hashref) = @_;
+
+        my @list = ();
+        for my $name (keys %$hashref) {
+            my $v = $hashref->{$name};
+            $v->{name} = $name;
+            push @list, $v;
+        }
+        return {application => \@list};
+    };
+
+
+    $self->save_retrieved_data(
         data => \%data,
         property => $params->{propertyName},
-        expand => $params->{expandPropertySheet}
+        format => $params->{dumpFormat},
+        raw => $stdout,
+        xml_handler => $xml_handler,
     );
 
     my $total = scalar keys %data;
@@ -1112,7 +1127,7 @@ sub save_retrieved_data {
         $self->ec->setProperty($property, $xml);
     }
     elsif ($format eq 'propertySheet') {
-        my $flat = _flatten_map($property, $data);
+        my $flat = _flatten_map($data, $property);
         for my $key ( sort keys %$flat ) {
             $self->ec->setProperty($key, $flat->{$key});
             $self->logger->info("Wrote property: $key -> $flat->{$key}");
