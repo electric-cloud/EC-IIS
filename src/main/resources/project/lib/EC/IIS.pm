@@ -934,7 +934,7 @@ sub step_list_sites {
 sub step_list_pools {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName expandPropertySheet/);
+    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName dumpFormat/);
     my $command = $self->driver->list_pools_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
@@ -947,7 +947,7 @@ sub step_list_pools {
     my $stdout = $result->{stdout};
     my @lines = split /[\n\r]/ => $stdout;
     my %data = map {
-        m/APPPOOL\s"(.+)"\s\(MgdVersion:(.+),MgdMode:(\w+),state:(\w+)\)/;
+        m/APPPOOL\s"(.*)"\s\(MgdVersion:(.+),MgdMode:(\w+),state:(\w+)\)/;
         $1 => {
             managedVersion => $2,
             managedPipelineMode => $3,
@@ -974,10 +974,24 @@ sub step_list_pools {
     my $summary = "Pools: $total detected\nStarted: $started detected\nStopped: $stopped detected\nOther: $other detected";
     $self->ec->setProperty('/myJobStep/summary', $summary);
 
-    $self->save_data_to_property_sheet(
+    my $xml_handler = sub {
+        my ($hashref) = @_;
+
+        my @list = ();
+        for my $name (keys %$hashref) {
+            my $v = $hashref->{$name};
+            $v->{name} = $name;
+            push @list, $v;
+        }
+        return {applicationPool => \@list};
+    };
+
+    $self->save_retrieved_data(
         data => \%data,
+        raw => $stdout,
         property => $params->{propertyName},
-        expand => $params->{expandPropertySheet}
+        format => $params->{dumpFormat},
+        xml_handler => $xml_handler
     );
 }
 

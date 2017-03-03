@@ -3096,7 +3096,7 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>expandPropertySheet</propertyName>
+                                    <propertyName>dumpFormat</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -3128,11 +3128,11 @@
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
-                <formalParameterName>expandPropertySheet</formalParameterName>
+                <formalParameterName>dumpFormat</formalParameterName>
                 <defaultValue/>
-                <description>If checked, will expand retrieved data to the specified property sheet, othrwise will write data as JSON.</description>
+                <description></description>
                 <required>0</required>
-                <type>checkbox</type>
+                <type>select</type>
             </formalParameter>
 
             <step>
