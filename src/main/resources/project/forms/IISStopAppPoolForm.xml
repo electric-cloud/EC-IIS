@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopAppPool</help>
-	<label>Application Server - IIS StopAppPool</label>
+	<label>Application server - IIS stopapppool</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Stops an application pool.</description>	
 	<formElement>
@@ -25,6 +25,6 @@
 		<label>Application pool name:</label>
 		<property>apppoolname</property>
 		<required>1</required>
-		<documentation>The name of the application pool to stop. i.e: 'FirstAppPool'. (Required)</documentation>
+		<documentation>The name of the application pool to stop. i.e: 'FirstAppPool'.</documentation>
 	</formElement>		
 </editor>

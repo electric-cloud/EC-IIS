@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteVirtualDirectory</help>
-	<label>Application Server - IIS DeleteVirtualDirectory</label>
+	<label>Application server - IIS deletevirtualdirectory</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Deletes a virtual directory.</description>
     <formElement>
@@ -25,7 +25,7 @@
         <label>Virtual directory name:</label>
         <property>appname</property>
         <required>1</required>
-        <documentation>The website and virtual path that contains the Virtual Directory to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</documentation>
+        <documentation>The website and virtual path that contains the Virtual Directory to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>

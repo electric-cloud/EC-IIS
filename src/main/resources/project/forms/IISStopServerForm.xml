@@ -1,6 +1,6 @@
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopServer</help>
-	<label>Application Server - IIS StopServer</label>
+	<label>Application server - IIS stopserver</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure uses the iisreset utility to stop a server.</description>
 	<formElement>
@@ -9,7 +9,7 @@
 		<property>execpath</property>
 		<required>1</required>
 		<value>iisreset</value>
-		<documentation>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'. (Required)</documentation>
+		<documentation>Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'.</documentation>
 	</formElement>
 	<formElement>
 		<type>textarea</type>

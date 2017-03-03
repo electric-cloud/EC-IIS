@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteWebSite</help>
-	<label>Application Server - IIS DeleteWebSite</label>
+	<label>Application server - IIS deletewebsite</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Deletes a website.</description>
 	<formElement>
@@ -25,7 +25,7 @@
 		<label>Website name:</label>
 		<property>websitename</property>
 		<required>1</required>
-		<documentation>The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</documentation>
+		<documentation>The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.</documentation>
 	</formElement>
     <formElement>
         <type>checkbox</type>

@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#AssignAppToAppPool</help>
-	<label>Application Server - IIS AssignAppToAppPool</label>
+	<label>Application server - IIS assignapptoapppool</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Assigns an application to an application pool.</description>	
 	<formElement>
@@ -25,20 +25,20 @@
 		<label>Application pool name:</label>
 		<property>apppoolname</property>
 		<required>1</required>
-		<documentation>The name of the Application Pool to assign the application. i.e: 'FirstAppPool'. (Required)</documentation>
+		<documentation>The name of the Application Pool to assign the application. i.e: 'FirstAppPool'.</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
 		<label>Application name:</label>
 		<property>appname</property>
 		<required>1</required>
-		<documentation>The name of the application to assign. i.e: '/test'. (Required)</documentation>
+		<documentation>The name of the application to assign. i.e: '/test'.</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
 		<label>Site name:</label>
 		<property>sitename</property>
 		<required>1</required>
-		<documentation>The name of the site that contains the app to assign. i.e: 'Default Web Site'. (Required)</documentation>
+		<documentation>The name of the site that contains the app to assign. i.e: 'Default Web Site'.</documentation>
 	</formElement>		
 </editor>

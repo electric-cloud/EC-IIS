@@ -1,6 +1,6 @@
 <editor>
     <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeployAdvanced</help>
-    <label>Application Server - IIS DeployAdvanced</label>
+    <label>Application server - IIS deployadvanced</label>
     <version>@PLUGIN_VERSION@</version>
     <description>This procedure uses MS Deploy to perform different actions with the IIS application.</description>
     <formElement>
@@ -192,7 +192,7 @@
         <required>0</required>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
-        <documentation>If checked, allows untrusted server certificate when using SSL.  </documentation>
+        <documentation>If checked, allows untrusted server certificate when using SSL.  .</documentation>
     </formElement>
     <formElement>
         <property>preSync</property>
@@ -216,7 +216,7 @@
         <type>textarea</type>
         <default/>
         <required>0</required>
-        <documentation>Additional options to be passed to msdeploy.exe. E.g. -retryAttempts=5</documentation>
+        <documentation>Additional options to be passed to msdeploy.exe. E.g. -retryAttempts=5.</documentation>
     </formElement>
     <formElement>
         <property>setParamFile</property>

@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateWebSite</help>
-	<label>Application Server - IIS CreateWebSite</label>
+	<label>Application server - IIS createwebsite</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Creates a website.</description>
 	<formElement>
@@ -25,14 +25,14 @@
 		<label>Website name:</label>
 		<property>websitename</property>
 		<required>1</required>
-		<documentation>The name of the Website to create. (Required)</documentation>
+		<documentation>The name of the Website to create.</documentation>
 	</formElement>
 	<formElement>
 		<type>entry</type>
 		<label>Website path:</label>
 		<property>websitepath</property>
 		<required>1</required>
-		<documentation>If specified, will cause the root application containing a root virtual directory pointing to the specified path to be created for this site. If omitted, the site is created without a root application and will not be startable until one is created. (Required)</documentation>
+		<documentation>If specified, will cause the root application containing a root virtual directory pointing to the specified path to be created for this site. If omitted, the site is created without a root application and will not be startable until one is created.</documentation>
 	</formElement>
 	<formElement>
 		<type>entry</type>
@@ -46,6 +46,6 @@
         <label>List of bindings:</label>
         <property>bindings</property>
         <required>1</required>
-        <documentation>List of bindings in the friendly form of 'http://domain:port,...' or raw form of 'protocol/bindingInformation,...' (Required)</documentation>
+        <documentation>List of bindings in the friendly form of 'http://domain:port,...' or raw form of 'protocol/bindingInformation,...'.</documentation>
     </formElement>
 </editor>

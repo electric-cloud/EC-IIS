@@ -1,6 +1,6 @@
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateWebSite2</help>
-	<label>Application Server - IIS CreateWebSite2</label>
+	<label>Application server - IIS createwebsite2</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure uses the ADSI API to create a web site on an IIS server.</description>	
 	<formElement>
@@ -8,7 +8,7 @@
 		<label>Binding string:</label>
 		<property>Bindings</property>
 		<required>1</required>
-		<documentation>Provide the binding string that includes IP and port. Use this format: "IP:Port:". Take of the ":" at the end. (Required)</documentation>
+		<documentation>Provide the binding string that includes IP and port. Use this format: "IP:Port:". Take of the ":" at the end.</documentation>
 	</formElement>						
 	<formElement>
 		<type>checkbox</type>
@@ -26,14 +26,14 @@
 		<property>HostName</property>
 		<required>1</required>
 		<value>localhost</value>
-		<documentation>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'. (Required)</documentation>
+		<documentation>Provide the host name of the IIS server. If the procedure is run on the host itself, use 'localhost'.</documentation>
 	</formElement>	
 	<formElement>
 		<type>entry</type>
 		<label>Absolute physical path of the web site:</label>
 		<property>PhysicalPath</property>
 		<required>1</required>
-		<documentation>Provide the absolute physical path assigned to the web site you want to create. (Required)</documentation>
+		<documentation>Provide the absolute physical path assigned to the web site you want to create.</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>

@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#ListVirtualDirectories</help>
-	<label>Application Server - IIS ListVirtualDirectories</label>
+	<label>Application server - IIS listvirtualdirectories</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>List the virtual directories on a web server.</description>
     <formElement>

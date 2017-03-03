@@ -17,12 +17,12 @@
 -->
 <editor>
     <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#Undeploy</help>
-    <label>Application Server - IIS DeployCopy</label>
+    <label>Application server - IIS deploycopy</label>
     <version>@PLUGIN_VERSION@</version>
     <description>Removes previously deployed content.</description>
     <formElement>
         <type>entry</type>
-        <label>MS Deploy path:</label>
+        <label>MS deploy path:</label>
         <property>msdeployPath</property>
         <required>1</required>
         <documentation>A path to MsDeploy.exe.</documentation>

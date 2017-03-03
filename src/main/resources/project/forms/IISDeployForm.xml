@@ -17,12 +17,12 @@
 -->
 <editor>
     <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#Deploy</help>
-    <label>Application Server - IIS Deploy</label>
+    <label>Application server - IIS deploy</label>
     <version>@PLUGIN_VERSION@</version>
     <description>Deploys an application using MS Deploy.</description>
     <formElement>
         <type>entry</type>
-        <label>MS Deploy path:</label>
+        <label>MS deploy path:</label>
         <property>msdeployPath</property>
         <required>1</required>
         <documentation>Provide the relative or absolute path to the MSDeploy executable.</documentation>
@@ -59,7 +59,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>.NET Framework Version:</label>
+        <label>.NET framework version:</label>
         <property>managedRuntimeVersion</property>
         <required>0</required>
         <value></value>
@@ -68,7 +68,7 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Enable 32-bit Applications:</label>
+        <label>Enable 32-bit applications:</label>
         <property>enable32BitAppOnWin64</property>
         <required>0</required>
         <value></value>
@@ -86,7 +86,7 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
             <value>Integrated</value>
             <name>Integrated</name>
         </option>
-        <label>Managed Pipeline Mode:</label>
+        <label>Managed pipeline mode:</label>
         <property>managedPipelineMode</property>
         <required>0</required>
         <value></value>
@@ -95,14 +95,14 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
     <formElement>
         <type>entry</type>
         <property>queueLength</property>
-        <label>Queue Length</label>
+        <label>Queue length</label>
         <documentation>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.</documentation>
         <value></value>
     </formElement>
     <formElement>
         <type>checkbox</type>
         <property>autoStart</property>
-        <label>Start Automatically</label>
+        <label>Start automatically</label>
         <documentation>If True, the application pool starts on creation or when IIS starts. Starting an application pool sets this property to True. Stopping an application sets this property to False.</documentation>
         <checkedValue>true</checkedValue>
         <uncheckedValue>false</uncheckedValue>
@@ -110,7 +110,7 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
     <formElement>
         <type>textarea</type>
         <property>appPoolAdditionalSettings</property>
-        <label>Additional settings for Application pool</label>
+        <label>Additional settings for application pool</label>
         <htmlDocumentation>Additional settings for application pool configuration, key-value pair one per line. For the list of available settings please refer to <a target="_blank" href="https://technet.microsoft.com/en-us/library/cc745955.aspx">Managing, Tuning, and Configuring Application Pools in IIS 7.0</a></htmlDocumentation>
         <value></value>
     </formElement>

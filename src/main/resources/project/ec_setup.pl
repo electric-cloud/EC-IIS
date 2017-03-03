@@ -262,10 +262,12 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create App Poo
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Virtual Directory");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Web Application");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Website");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Create Web site");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete App Pool");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Virtual Directory");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Web Application");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Website");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Delete Web site");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Copy");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Deploy Advanced");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Undeploy");

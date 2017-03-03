@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateAppPool</help>
-	<label>Application Server - IIS CreateAppPool</label>
+	<label>Application server - IIS createapppool</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Verifies if an Application Pool exists and if it doesn't, an IIS application pool is created.</description>
 	<formElement>
@@ -25,18 +25,18 @@
 		<label>Application pool name:</label>
 		<property>apppoolname</property>
 		<required>1</required>
-		<documentation>The name of the Application Pool to create. i.e: 'FirstAppPool'. (Required)</documentation>
+		<documentation>The name of the Application Pool to create. i.e: 'FirstAppPool'.</documentation>
 	</formElement>
     <formElement>
         <type>entry</type>
-        <label>.NET Framework Version:</label>
+        <label>.NET framework version:</label>
         <property>managedRuntimeVersion</property>
         <required>0</required>
         <documentation>Configures the application pool to load a specific version of the .NET Framework. Selecting No Managed Code causes all ASP.NET requests to fail.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Enable 32-bit Applications:</label>
+        <label>Enable 32-bit applications:</label>
         <property>enable32BitAppOnWin64</property>
         <required>0</required>
         <checkedValue>True</checkedValue>
@@ -45,7 +45,7 @@
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Managed Pipeline Mode:</label>
+        <label>Managed pipeline mode:</label>
         <property>managedPipelineMode</property>
         <required>0</required>
         <option>
@@ -60,14 +60,14 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Queue Length:</label>
+        <label>Queue length:</label>
         <property>queueLength</property>
         <required>0</required>
         <documentation>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Start Automatically:</label>
+        <label>Start automatically:</label>
         <property>autoStart</property>
         <required>0</required>
         <checkedValue>True</checkedValue>
@@ -84,21 +84,21 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Limit Action:</label>
+        <label>Limit action:</label>
         <property>cpu.action</property>
         <required>0</required>
         <documentation>If set to NoAction, an event log entry is generated. If set to KillW3WP, the application pool is shut down for the duration of the reset interval and an event log entry is generated.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Limit Interval (minutes):</label>
+        <label>Limit interval (minutes):</label>
         <property>cpu.resetInterval</property>
         <required>0</required>
         <documentation>Specifies the reset period (in minutes) for CPU monitoring and throttling limits on the application pool. When the number of minutes elapsed since the last process accounting reset equals the number specified by this property, IIS resets the CPU timers for both the logging and limit intervals. Setting the value of Limit Interval to 0 disables CPU monitoring.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Processor Affinity Enabled:</label>
+        <label>Processor affinity enabled:</label>
         <property>cpu.smpAffinitized</property>
         <required>0</required>
         <checkedValue>True</checkedValue>
@@ -107,7 +107,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Processor Affinity Mask:</label>
+        <label>Processor affinity mask:</label>
         <property>cpu.smpProcessorAffinityMask</property>
         <required>0</required>
         <documentation>Hexadecimal mask that forces the worker process(es) for this application pool to run on a specific CPU. If processor affinity is enabled, a value of 0 causes an error condition.</documentation>
@@ -121,14 +121,14 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Idle Timeout (minutes):</label>
+        <label>Idle timeout (minutes):</label>
         <property>processModel.idleTimeout</property>
         <required>0</required>
         <documentation>Amount of time (in minutes) a worker process remains idle before it shuts down. A worker process is idle if it is not processing requests and no new requests are received.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Load User Profile:</label>
+        <label>Load user profile:</label>
         <property>processModel.loadUserProfile</property>
         <required>0</required>
         <checkedValue>True</checkedValue>
@@ -137,14 +137,14 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Maximum Worker Processes:</label>
+        <label>Maximum worker processes:</label>
         <property>processModel.maxProcesses</property>
         <required>0</required>
         <documentation>Maximum number of worker processes permitted to service requests for the application pool. If this number is greater than 1, the application pool is called a Web garden.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Ping Enabled:</label>
+        <label>Ping enabled:</label>
         <property>processModel.pingingEnabled</property>
         <required>0</required>
         <checkedValue>True</checkedValue>
@@ -154,28 +154,28 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Ping Maximum Response Time (seconds):</label>
+        <label>Ping maximum response time (seconds):</label>
         <property>processModel.pingResponseTime</property>
         <required>0</required>
         <documentation>Maximum time (in seconds) that a worker process is given to respond to a health monitoring ping. If the worker process does not respond, it is terminated.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Ping Period (seconds):</label>
+        <label>Ping period (seconds):</label>
         <property>processModel.pingInterval</property>
         <required>0</required>
         <documentation>Period of time (in seconds) between health monitoring pings sent to the worker process(es) serving this application pool.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Shutdown Time Limit (seconds):</label>
+        <label>Shutdown time limit (seconds):</label>
         <property>processModel.shutdownTimeLimit</property>
         <required>0</required>
         <documentation>Period of time (in seconds) a worker process is given to finish processing requests and shut down. If the worker process exceeds the shutdown time limit, it is terminated.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Startup Time Limit (seconds):</label>
+        <label>Startup time limit (seconds):</label>
         <property>processModel.startupTimeLimit</property>
         <required>0</required>
         <documentation>Period of time (in seconds) a worker process is given to start up and initialize. If the worker process initialization exceeds the startup time limit, it is terminated.</documentation>
@@ -194,18 +194,18 @@
         <label>Orphan action executable:</label>
         <property>failure.orphanActionExe</property>
         <required>0</required>
-        <documentation>Executable to run when a worker process is abandoned (orphaned). For example, “C:\dbgtools\ntsd.exe would invoke NTSD to debug a worker process failure.</documentation>
+        <documentation>Executable to run when a worker process is abandoned (orphaned). For example, "C:\dbgtools\ntsd.exe" would invoke NTSD to debug a worker process failure.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Orphan action executable Parameters:</label>
+        <label>Orphan action executable parameters:</label>
         <property>failure.orphanActionParams</property>
         <required>0</required>
         <documentation>Parameters for the executable that is run when a worker process is abandoned (orphaned). For example, -g –p %1% is appropriate if the NTSD is the executable invoked for debugging worker process failures.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Service Unavailable Response Type:</label>
+        <label>Service unavailable response type:</label>
         <property>failure.loadBalancerCapabilities</property>
         <required>0</required>
         <documentation>If set to HttpLevel and the application pool is stopped, Http.sys returns an HTTP 503 error. If set to TcpLevel, Http.sys resets the connection. This is useful if the load balancer recognizes one of the response types and subsequently redirects it.</documentation>
@@ -230,35 +230,35 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Failure Interval (minutes):</label>
+        <label>Failure interval (minutes):</label>
         <property>failure.rapidFailProtectionInterval</property>
         <required>0</required>
         <documentation>The time interval (in minutes) during which the specified number of worker process failures (Maximum Failures) must occur before the application pool is shut down by Rapid Fail Protection.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Maximum Failures:</label>
+        <label>Maximum failures:</label>
         <property>failure.rapidFailProtectionMaxCrashes</property>
         <required>0</required>
         <documentation>Maximum number of worker process failures permitted before the application pool is shut down by Rapid Fail Protection.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Shutdown Executable:</label>
+        <label>Shutdown executable:</label>
         <property>failure.autoShutdownExe</property>
         <required>0</required>
         <documentation>Executable to run when an application pool is shut down by Rapid Fail Protection. This can be used to configure a load balancer to redirect traffic for this application to another server.</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Shutdown Executable Parameters:</label>
+        <label>Shutdown executable parameters:</label>
         <property>failure.autoShutdownParams</property>
         <required>0</required>
-        <documentation>Parameters for the executable to run when an application pool is shut down by Rapid Fail Protection. </documentation>
+        <documentation>Parameters for the executable to run when an application pool is shut down by Rapid Fail Protection. .</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Disable Overlapped Recycle:</label>
+        <label>Disable overlapped recycle:</label>
         <property>recycling.disallowOverlappingRotation</property>
         <required>0</required>
         <checkedValue>True</checkedValue>
@@ -267,7 +267,7 @@
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Disable Recycling for Configuration Changes:</label>
+        <label>Disable recycling for configuration changes:</label>
         <property>recycling.disallowRotationOnConfigChange</property>
         <required>0</required>
         <checkedValue>True</checkedValue>
@@ -276,35 +276,35 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Private Memory Limit (KB):</label>
+        <label>Private memory limit (KB):</label>
         <property>recycling.periodicRestart.privateMemory</property>
         <required>0</required>
         <documentation>Maximum amount of private memory (in KB) a worker process can consume before causing the application pool to recycle. A value of 0 means there is no limit.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Regular Time Interval (minutes):</label>
+        <label>Regular time interval (minutes):</label>
         <property>recycling.periodicRestart.time</property>
         <required>0</required>
         <documentation>Period of time (in minutes) after which an application pool recycles. A value of 0 means the application pool does not recycle at a regular interval.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Request Limit:</label>
+        <label>Request limit:</label>
         <property>recycling.periodicRestart.requests</property>
         <required>0</required>
         <documentation>Maximum number of requests an application pool can process before it is recycled. A value of 0 means the application pool can process an unlimited number of requests.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Specific Times:</label>
+        <label>Specific times:</label>
         <property>recycling.periodicRestart.schedule</property>
         <required>0</required>
         <documentation>A set of specific local times, in 24 hour format, when the application pool is recycled.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Virtual Memory Limit (KB):</label>
+        <label>Virtual memory limit (KB):</label>
         <property>recycling.periodicRestart.memory</property>
         <required>0</required>
         <documentation>Maximum amount of virtual memory (in KB) a worker process can consume before causing the application pool to recycle. A value of 0 means there is no limit.</documentation>

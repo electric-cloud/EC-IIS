@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#ListApplicationPools</help>
-	<label>Application Server - IIS ListAppPools</label>
+	<label>Application server - IIS listapppools</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>List the application pools on a web server.</description>
     <formElement>

@@ -1,6 +1,6 @@
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#GetWebSiteIDs</help>
-	<label>Application Server - IIS GetWebSiteIDs</label>
+	<label>Application server - IIS getwebsiteids</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure fetches the numeric internal IIS identifiers of all web sites found on the host server. These IDs are necessary to access internal web site properties in order to perform certain control operations.</description>	
 	<formElement>
@@ -8,6 +8,6 @@
 		<label>Host name:</label>
 		<property>HostName</property>
 		<value>localhost</value>
-		<documentation>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</documentation>
+		<documentation>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value.</documentation>
 	</formElement>		
 </editor>

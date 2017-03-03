@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#ListSiteApps</help>
-	<label>Application Server - IIS ListSiteApps</label>
+	<label>Application server - IIS listsiteapps</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>List the apps of a Website</description>
 	<formElement>

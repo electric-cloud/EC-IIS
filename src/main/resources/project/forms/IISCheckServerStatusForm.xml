@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CheckServerStatus</help>
-	<label>Application Server - IIS CheckServerStatus</label>
+	<label>Application server - IIS checkserverstatus</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Checks the status of the specified server.</description>
 	<formElement>

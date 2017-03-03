@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteWebApplication</help>
-	<label>Application Server - IIS DeleteWebApplication</label>
+	<label>Application server - IIS deletewebapplication</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Deletes a web application into the specified website.</description>
 	<formElement>
@@ -25,7 +25,7 @@
 		<label>Application name:</label>
 		<property>appname</property>
 		<required>1</required>
-		<documentation>The website that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'. (Required)</documentation>
+		<documentation>The website that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.</documentation>
 	</formElement>
     <formElement>
         <type>checkbox</type>

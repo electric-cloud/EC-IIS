@@ -1,6 +1,6 @@
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#PauseWebSite</help>
-	<label>Application Server - IIS PauseWebSite</label>
+	<label>Application server - IIS pausewebsite</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure pauses a web site. This is similar to stopping, except pausing allows existing processes to continue to their conclusion.</description>	
 	<formElement>
@@ -9,7 +9,7 @@
 		<property>HostName</property>
 		<required>1</required>
 		<value>localhost</value>
-		<documentation>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value. (Required)</documentation>
+		<documentation>Provide the host name of the IIS server. If the procedure is run on the host itself use 'localhost', the default value.</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
@@ -17,6 +17,6 @@
 		<property>WebSideId</property>
 		<required>1</required>
 		<value>1</value>
-		<documentation>Provide the site identification number to attach to the site that you want to pause. (Required)</documentation>
+		<documentation>Provide the site identification number to attach to the site that you want to pause.</documentation>
 	</formElement>		
 </editor>

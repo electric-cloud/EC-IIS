@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateWebApplication</help>
-	<label>Application Server - IIS CreateWebApplication</label>
+	<label>Application server - IIS createwebapplication</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Creates a web application.</description>	
 	<formElement>
@@ -25,20 +25,20 @@
 		<label>Application name:</label>
 		<property>appname</property>
 		<required>1</required>
-		<documentation>The name of the website to add the application, i.e: 'Default Web Site'. (Required)</documentation>
+		<documentation>The name of the website to add the application, i.e: 'Default Web Site'.</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
 		<label>Virtual path:</label>
 		<property>path</property>
 		<required>1</required>
-		<documentation>Virtual path of the application, i.e: '/myApplication'. (Required)</documentation>
+		<documentation>Virtual path of the application, i.e: '/myApplication'.</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
 		<label>Absolute physical path:</label>
 		<property>physicalpath</property>
 		<required>1</required>
-		<documentation>The absolute physical path of the application to create, i.e: 'c:/Inetpub/wwwroot/myApp'. (Required)</documentation>
+		<documentation>The absolute physical path of the application to create, i.e: 'c:/Inetpub/wwwroot/myApp'.</documentation>
 	</formElement>		
 </editor>

@@ -1,6 +1,6 @@
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopIISServices</help>
-	<label>Application Server - IIS StopIISServices</label>
+	<label>Application server - IIS stopiisservices</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure stops the necessary services to shut down the IIS server.</description>	
 </editor>

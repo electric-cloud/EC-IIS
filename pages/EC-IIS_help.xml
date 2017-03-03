@@ -25,6 +25,36 @@
         editions of Windows XP, Windows Vista, Windows 7 and Windows 10. IIS is
         not turned on by default when Windows is installed.</p>
 
+
+        <h1>Contents</h1>
+        <ul>
+            <li><a href="#CreateConfiguration">Setting up the plugin configuration</a></li>
+            <li><a href="#procedures">Plugin procedures</a></li>
+            <ul>
+                <li><a href="#CheckServerStatus">Check Server Status</a></li>
+                <li><a href="#CreateAppPool">Create Application Pool</a></li>
+                <li><a href="#CreateVirtualDirectory">Create Virtual Directory</a></li>
+                <li><a href="#CreateWebApplication">Create Web Application</a></li>
+                <li><a href="#CreateWebSite">Create Web Site</a></li>
+                <li><a href="#DeleteWebApplication">Delete Web Application</a></li>
+                <li><a href="#DeleteVirtualDirectory">Delete Virtual Directory</a></li>
+                <li><a href="#DeleteWebSite">Delete Web Site</a></li>
+                <li><a href="#DeleteAppPool">Delete Application Pool</a></li>
+                <li><a href="#DeployCopy">Deploy Copy (Deprecated)</a></li>
+                <li><a href="#Deploy">Deploy</a></li>
+                <li><a href="#DeployAdvanced">Deploy Advanced</a></li>
+                <li><a href="#StartAppPool">Start Application Pool</a></li>
+                <li><a href="#StartWebSite">Start Web Site</a></li>
+                <li><a href="#StopAppPool">Stop Application Pool</a></li>
+                <li><a href="#StopWebSite">Stop Website Site</a></li>
+                <li><a href="#AssignAppToAppPool">Assign Application to Application Pool</a></li>
+                <li><a href="#ListSites">List Site</a></li>
+                <li><a href="#ListSiteApps">List Applications</a></li>
+                <li><a href="#AddWebSiteBinding">Add Web Site Binding</a></li>
+            </ul>
+        </ul>
+
+
         <h2>IIS Links</h2>
 
         <p>More information can be found at:</p>
@@ -91,13 +121,12 @@
 
                 <tbody>
                     <tr>
-                        <td class="required">Configuration
-                        Name</td>
+                        <td class="required">Configuration Name</td>
 
                         <td>Provide a unique name for the
                         configuration, keeping in mind that you may
                         need to create additional configurations
-                        over time. (Required)</td>
+                        over time. </td>
                     </tr>
 
                     <tr>
@@ -105,7 +134,7 @@
 
                         <td>Provide the URL for the IIS server, it
                         must include the protocol. i.e:
-                        'http://192.168.1.100'. (Required)</td>
+                        'http://192.168.1.100'. </td>
                     </tr>
 
                     <tr>
@@ -144,6 +173,9 @@
             panel:</p><img src="../../plugins/@PLUGIN_KEY@/images/Config/EC-IIS7Config.png" alt="screenshot" />
         </div>
 
+
+        <a name="procedures"></a>
+
         <div id="CheckServerStatus">
             <a name="CreateConfiguration" id="CreateConfiguration"></a>
 
@@ -170,7 +202,7 @@
                         IIS server. In this case, only credentials
                         are taken from the configuration if the
                         <i>Use Credentials</i> parameter is
-                        checked. (Required)</td>
+                        checked. </td>
                     </tr>
 
                     <tr>
@@ -209,7 +241,7 @@
 
             <h3>CreateAppPool</h3>
 
-            <p>Creates an IIS application pool.</p>
+            <p>Creates an IIS application pool or updates the existed one.</p>
 
             <table class="grid">
                 <thead>
@@ -220,12 +252,338 @@
                 </thead>
 
                 <tbody>
+
                     <tr>
-                        <td class="required">Application pool
-                        name</td>
-                        <td>The name of the Application Pool to
-                        create. i.e: 'FirstAppPool'.
-                        (Required)</td>
+                        <td class="required">
+                            Application pool name
+                        </td>
+                        <td>
+                            The name of the Application Pool to create. i.e: 'FirstAppPool'.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            .NET framework version
+                        </td>
+                        <td>
+                            Configures the application pool to load a specific version of the .NET Framework. Selecting No Managed Code causes all ASP.NET requests to fail.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Enable 32-bit applications
+                        </td>
+                        <td>
+                            If set to True for an application pool on a 64-bit operating system, the worker process(es) serving the application pool run in WOW64 (Windows on Windows64) mode. In WOW64 mode, 32-bit processes load only 32-bit applications.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Managed pipeline mode
+                        </td>
+                        <td>
+                            Configures ASP.NET to run in classic mode as an ISAPI extension or in integrated mode where managed code is integrated into the request-processing pipeline.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Queue length
+                        </td>
+                        <td>
+                            Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Start automatically
+                        </td>
+                        <td>
+                            If True, the application pool starts on creation or when IIS starts. Starting an application pool sets this property to True. Stopping an application sets this property to False.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Limit
+                        </td>
+                        <td>
+                            Configures the maximum percentage of CPU time (in 1/1000ths of a percent) that the worker processes in an application pool are allowed to consume over a period of time as indicated by the Limit Interval setting (resetInterval property). If the limit set by Limit (limit property) is exceeded, the event is written to the event log and an optional set of events can be triggered or determined by the Limit Action setting (action property). Setting the value of Limit to 0 disables limiting the worker processes to a percentage of CPU time.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Limit action
+                        </td>
+                        <td>
+                            If set to NoAction, an event log entry is generated. If set to KillW3WP, the application pool is shut down for the duration of the reset interval and an event log entry is generated.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Limit interval (minutes)
+                        </td>
+                        <td>
+                            Specifies the reset period (in minutes) for CPU monitoring and throttling limits on the application pool. When the number of minutes elapsed since the last process accounting reset equals the number specified by this property, IIS resets the CPU timers for both the logging and limit intervals. Setting the value of Limit Interval to 0 disables CPU monitoring.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Processor affinity enabled
+                        </td>
+                        <td>
+                            If True, Processor Affinity Enabled forces the worker process(es) serving this application pool to run on specific CPUs. This enables sufficient use of CPU caches on multiprocessor servers.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Processor affinity mask
+                        </td>
+                        <td>
+                            Hexadecimal mask that forces the worker process(es) for this application pool to run on a specific CPU. If processor affinity is enabled, a value of 0 causes an error condition.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Identity
+                        </td>
+                        <td>
+                            Configures the application pool to run as a built-in account, such as Network Service (recommended), Local Service, or as a specific user identity.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Idle timeout (minutes)
+                        </td>
+                        <td>
+                            Amount of time (in minutes) a worker process remains idle before it shuts down. A worker process is idle if it is not processing requests and no new requests are received.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Load user profile
+                        </td>
+                        <td>
+                            Specifies whether IIS loads the user profile for an application pool identity. When set to True, IIS loads the user profile for the application pool identity. Set to False when you require IIS 6.0 behavior.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Maximum worker processes
+                        </td>
+                        <td>
+                            Maximum number of worker processes permitted to service requests for the application pool. If this number is greater than 1, the application pool is called a Web garden.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Ping enabled
+                        </td>
+                        <td>
+                            If True, the worker process(es) serving this application pool are pinged periodically to ensure that they are still responsive. This process is called health monitoring.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Ping maximum response time (seconds)
+                        </td>
+                        <td>
+                            Maximum time (in seconds) that a worker process is given to respond to a health monitoring ping. If the worker process does not respond, it is terminated.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Ping period (seconds)
+                        </td>
+                        <td>
+                            Period of time (in seconds) between health monitoring pings sent to the worker process(es) serving this application pool.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Shutdown time limit (seconds)
+                        </td>
+                        <td>
+                            Period of time (in seconds) a worker process is given to finish processing requests and shut down. If the worker process exceeds the shutdown time limit, it is terminated.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Startup time limit (seconds)
+                        </td>
+                        <td>
+                            Period of time (in seconds) a worker process is given to start up and initialize. If the worker process initialization exceeds the startup time limit, it is terminated.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Application pool process orphaning enabled
+                        </td>
+                        <td>
+                            If True, an unresponsive worker process is abandoned (orphaned) instead of terminated. This feature can be used to debug a worker process failure.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Orphan action executable
+                        </td>
+                        <td>
+                            Executable to run when a worker process is abandoned (orphaned). For example, "C:\dbgtools\ntsd.exe" would invoke NTSD to debug a worker process failure.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Orphan action executable parameters
+                        </td>
+                        <td>
+                            Parameters for the executable that is run when a worker process is abandoned (orphaned). For example, -g –p %1% is appropriate if the NTSD is the executable invoked for debugging worker process failures.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Service unavailable response type
+                        </td>
+                        <td>
+                            If set to HttpLevel and the application pool is stopped, Http.sys returns an HTTP 503 error. If set to TcpLevel, Http.sys resets the connection. This is useful if the load balancer recognizes one of the response types and subsequently redirects it.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Rapid fail protection enabled
+                        </td>
+                        <td>
+                            If True, the application pool is shut down if there are a specified number of worker process failures (Maximum Failures) within a specified period (Failure Interval). By default, an application pool is shut down if there are five failures in a five minute period.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Failure interval (minutes)
+                        </td>
+                        <td>
+                            The time interval (in minutes) during which the specified number of worker process failures (Maximum Failures) must occur before the application pool is shut down by Rapid Fail Protection.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Maximum failures
+                        </td>
+                        <td>
+                            Maximum number of worker process failures permitted before the application pool is shut down by Rapid Fail Protection.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Shutdown executable
+                        </td>
+                        <td>
+                            Executable to run when an application pool is shut down by Rapid Fail Protection. This can be used to configure a load balancer to redirect traffic for this application to another server.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Shutdown executable parameters
+                        </td>
+                        <td>
+                            Parameters for the executable to run when an application pool is shut down by Rapid Fail Protection.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Disable overlapped recycle
+                        </td>
+                        <td>
+                            If True, when the application pool recycles, the existing worker process exits before another worker process is created. Set to True if the worker process loads an application that does not support multiple instances.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Disable recycling for configuration changes
+                        </td>
+                        <td>
+                            If True, the application pool does not recycle when its configuration is changed.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Private memory limit (KB)
+                        </td>
+                        <td>
+                            Maximum amount of private memory (in KB) a worker process can consume before causing the application pool to recycle. A value of 0 means there is no limit.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Regular time interval (minutes)
+                        </td>
+                        <td>
+                            Period of time (in minutes) after which an application pool recycles. A value of 0 means the application pool does not recycle at a regular interval.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Request limit
+                        </td>
+                        <td>
+                            Maximum number of requests an application pool can process before it is recycled. A value of 0 means the application pool can process an unlimited number of requests.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Specific times
+                        </td>
+                        <td>
+                            A set of specific local times, in 24 hour format, when the application pool is recycled.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Virtual memory limit (KB)
+                        </td>
+                        <td>
+                            Maximum amount of virtual memory (in KB) a worker process can consume before causing the application pool to recycle. A value of 0 means there is no limit.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Additional parameters
+                        </td>
+                        <td>
+                            Additional parameters to pass to appcmd.exe.
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -256,32 +614,28 @@
 
             <h3>CreateVirtualDirectory</h3>
 
-            <p>Creates a new virtual directory in the specified
-            website.</p>
+            <p>Creates a new virtual directory in the specified website or updates the existed one.</p>
 
             <table class="grid">
                 <thead>
                     <tr>
                         <th>Parameter</th>
-
                         <th>Description</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <tr>
                         <td class="required">Application name</td>
-
                         <td>The website and virtual path to contain
                         the Virtual Directory to create, i.e:
-                        'Default Web Site/myapp02'. (Required)</td>
+                        'Default Web Site/myapp02'. </td>
                     </tr>
 
                     <tr>
                         <td class="required">Virtual path</td>
 
                         <td>Virtual path of the virtual directory,
-                        i.e: '/myvirtualdir'. (Required)</td>
+                        i.e: '/myvirtualdir'. </td>
                     </tr>
 
                     <tr>
@@ -291,7 +645,7 @@
                         <td>The absolute physical path of the
                         Virtual Directory to create, i.e:
                         'c:/Inetpub/wwwroot/myvdir'.
-                        (Required)</td>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -322,7 +676,7 @@
 
             <h3>CreateWebApplication</h3>
 
-            <p>Creates and starts an in-process web application in
+            <p>Creates or updates and starts an in-process web application in
             the given directory. This procedure assumes that the
             specified application path exists as a virtual
             directory.</p>
@@ -331,7 +685,6 @@
                 <thead>
                     <tr>
                         <th>Parameter</th>
-
                         <th>Description</th>
                     </tr>
                 </thead>
@@ -342,14 +695,14 @@
 
                         <td>The name of the website to add the
                         application, i.e: 'Default Web Site'.
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
                         <td class="required">Virtual path</td>
 
                         <td>Virtual path of the application, i.e:
-                        '/myApplication'. (Required)</td>
+                        '/myApplication'. </td>
                     </tr>
 
                     <tr>
@@ -358,7 +711,7 @@
 
                         <td>The absolute physical path of the
                         application to create, i.e:
-                        'c:/Inetpub/wwwroot/myApp'. (Required)</td>
+                        'c:/Inetpub/wwwroot/myApp'. </td>
                     </tr>
                 </tbody>
             </table>
@@ -389,7 +742,7 @@
 
             <h3>CreateWebSite</h3>
 
-            <p>Creates a website configuration on a local or remote
+            <p>Creates or updates a website configuration on a local or remote
             computer.</p>
 
             <table class="grid">
@@ -406,7 +759,7 @@
                         <td class="required">Website name</td>
 
                         <td>The name of the Website to create.
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -418,7 +771,7 @@
                         be created for this site. If omitted, the
                         site is created without a root application
                         and will not be startable until one is
-                        created. (Required)</td>
+                        created. </td>
                     </tr>
 
                     <tr>
@@ -433,7 +786,7 @@
                         <td>List of bindings in the friendly form
                         of 'http://domain:port,...' or raw form of
                         'protocol/bindingInformation,...'
-                        (Required)</td>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -464,7 +817,7 @@
 
             <h3>DeleteWebApplication</h3>
 
-            <p>Deletes a web application into the specified
+            <p>Deletes a web application from the specified
             Website.</p>
 
             <table class="grid">
@@ -482,7 +835,14 @@
 
                         <td>The Website that contains the
                         Application to delete. i.e: 'Default Web
-                        Site/' or 'Site1/myapp'. (Required)</td>
+                        Site/' or 'Site1/myapp'. </td>
+                    </tr>
+                    <tr>
+                        <td>Strict mode</td>
+                        <td>
+                            If checked, the procedure will fail in case the
+                            specified application does not exist.
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -533,7 +893,14 @@
                         <td>The Website and virtual path that
                         contains the Virtual Directory to delete.
                         i.e: 'Default Web Site/' or 'Site1/myapp'.
-                        (Required)</td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Strict mode</td>
+                        <td>
+                            If checked, the procedure will fail in case the
+                            specified virtual directory does not exist.
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -581,7 +948,14 @@
 
                         <td>The name of the website to delete. i.e:
                         'Default Web Site/' or 'Site1/myapp'.
-                        (Required)</td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Strict mode</td>
+                        <td>
+                            If checked, the procedure will fail in case the
+                            specified website does not exist.
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -630,7 +1004,14 @@
 
                         <td>The name of the website to delete. i.e:
                         'Default Web Site/' or 'Site1/myapp'.
-                        (Required)</td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Strict mode</td>
+                        <td>
+                            If checked, the procedure will fail in case the
+                            specified application pool does not exist.
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -660,6 +1041,7 @@
             <a name="DeployCopy" id="DeployCopy"></a>
 
             <h3>DeployCopy</h3>
+            <h2>Deprecated</h2>
 
             <p>Copies the application files recursively to the
             website application's physical directory.</p>
@@ -758,7 +1140,311 @@
             see the diagnostic info. The output is similar to the
             following diagnostic
             report.</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IIS7DeployCopy4.png" />
-            </div>
+        </div>
+        <div id="Deploy">
+            <a name="Deploy" id="Deploy"></a>
+
+            <h3>Deploy</h3>
+
+            <p>Uses MsDeploy to deploy a package or a site from directory into the specified destination. Also allows to configure application pool.</p>
+            <p>MsDeploy is required for this procedure.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">
+                            MS deploy path
+                        </td>
+                        <td>
+                            Provide the relative or absolute path to the MSDeploy executable.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">
+                            Deploy source path
+                        </td>
+                        <td>
+                            A path to package (application.zip) or to directory which contains the content to be deployed.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">
+                            Destination website
+                        </td>
+                        <td>
+                            A name of the web site to be deployed.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Destination application
+                        </td>
+                        <td>
+                            A name of the application to be deployed. If not provided, the content will be placed under the website.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Application pool name
+                        </td>
+                        <td>
+                            Application pool name. If the application pool does not exists, it will be created. If this parameter was not specified, the application will be placed into the default pool, which has the same name as website.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            .NET framework version
+                        </td>
+                        <td>
+                            .NET Framework version 3.5 includes all the functionality of earlier versions, and introduces new features for the technologies in versions 2.0 and 3.0 and additional technologies in the form of new assemblies.
+            To use version 3.5, install the appropriate version of .NET Framework and use product-specific guidelines.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Enable 32-bit applications
+                        </td>
+                        <td>
+                            If set to True for an application pool on a 64-bit operating system, the worker process(es) serving the application pool run in WOW64 (Windows on Windows64) mode. In WOW64 mode, 32-bit processes load only 32-bit applications.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Managed pipeline mode
+                        </td>
+                        <td>
+                            Configures ASP.NET to run in classic mode as an ISAPI extension or in integrated mode where managed code is integrated into the request-processing pipeline.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Queue length
+                        </td>
+                        <td>
+                            Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Start automatically
+                        </td>
+                        <td>
+                            If True, the application pool starts on creation or when IIS starts. Starting an application pool sets this property to True. Stopping an application sets this property to False.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Additional settings for application pool
+                        </td>
+                        <td>
+                            Additonal parameters to pass to appcmd.exe for application pool configuration.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To deploy, select the following highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/Deploy/EC-IIS7Deploy1.png" />
+
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/Deploy/EC-IIS7Deploy2.png" />
+
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            copy was
+            success:</p><img src="../../plugins/@PLUGIN_KEY@/images/Deploy/EC-IIS7Deploy3.png" />
+
+
+            <p>In the <b>Deploy</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/Deploy/EC-IIS7Deploy4.png" />
+        </div>
+        <div id="DeployAdvanced">
+            <a name="DeployAdvanced" id="DeployAdvanced"></a>
+
+            <h3>Deploy Advanced</h3>
+
+            <p>An interface to msdeploy.exe utility.</p>
+            <p>MsDeploy is required for this procedure.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td class="required">
+                            MSDeploy path
+                        </td>
+                        <td>
+                            Provide the relative or absolute path to the MSDeploy executable.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">
+                            Verb
+                        </td>
+                        <td>
+                            Web Deploy operations enable you to gather information from, move, or delete deployment objects like Web sites and Web applications. Web Deploy operations are specified on the command line with the -verb argument. The Web Deploy operations are dump, sync, delete, getDependencies, and getSystemInfo.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">
+                            Source provider
+                        </td>
+                        <td>
+                            Providers process specific source or destination data for Web Deploy. For example, the contentPath provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the -source: or -dest: argument.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Source provider object path
+                        </td>
+                        <td>
+                            Specifies a path of the provider object. Some providers require a path and some do not. If required, the kind of path depends on the provider.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Source provider settings
+                        </td>
+                        <td>
+Providers can be optionally modified by using provider settings. Provider settings can be added to either a source or a destination by using the general syntax
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">
+                            Destination provider
+                        </td>
+                        <td>
+                            Providers process specific source or destination data for Web Deploy. For example, the contentPath provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the -source: or -dest: argument.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Destination provider object path
+                        </td>
+                        <td>
+                            Specifies a path of the provider object. Some providers require a path and some do not. If required, the kind of path depends on the provider.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Destination provider settings
+                        </td>
+                        <td>
+Providers can be optionally modified by using provider settings. Provider settings can be added to either a source or a destination by using the general syntax
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Allow untrusted?
+                        </td>
+                        <td>
+                            If checked, allows untrusted server certificate when using SSL.  .
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Pre-sync command
+                        </td>
+                        <td>
+                            A command to execute before the synchronization on the destination. For instance, net stop a service.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Post-sync command
+                        </td>
+                        <td>
+                            A command to execute after the synchronization on the destination.  For instance, net start a service.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Additional options
+                        </td>
+                        <td>
+                            Additional options to be passed to msdeploy.exe. E.g. -retryAttempts=5.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Set param file
+                        </td>
+                        <td>
+                            Applies parameter settings from an XML file. Can be set to file path or file content.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Declare param file
+                        </td>
+                        <td>
+                            Includes parameter declarations from an XML file. Can be set to file path or file content.
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <p>To deploy, select the following highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployAdvanced/EC-IIS7DeployAdvanced1.png" />
+
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployAdvanced/EC-IIS7DeployAdvanced2.png" />
+
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            copy was
+            success:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployAdvanced/EC-IIS7DeployAdvanced3.png" />
+
+
+            <p>In the <b>Deploy</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployAdvanced/EC-IIS7DeployAdvanced4.png" />
+        </div>
 
         <div id="StartAppPool">
             <a name="StartAppPool" id="StartAppPool"></a>
@@ -782,7 +1468,7 @@
                         name</td>
 
                         <td>The name of the application pool to
-                        start. i.e: 'FirstAppPool'. (Required)</td>
+                        start. i.e: 'FirstAppPool'. </td>
                     </tr>
                 </tbody>
             </table>
@@ -830,7 +1516,7 @@
 
                         <td>Provide the descriptive name of the
                         website you want to start. i.e: 'Default
-                        Web Site'. (Required)</td>
+                        Web Site'. </td>
                     </tr>
                 </tbody>
             </table>
@@ -877,7 +1563,7 @@
                         name</td>
 
                         <td>The name of the application pool to
-                        stop. i.e: 'FirstAppPool'. (Required)</td>
+                        stop. i.e: 'FirstAppPool'. </td>
                     </tr>
                 </tbody>
             </table>
@@ -925,7 +1611,7 @@
 
                         <td>Provide the descriptive name of the
                         website you want to stop. i.e: 'Default Web
-                        Site'. (Required)</td>
+                        Site'. </td>
                     </tr>
                 </tbody>
             </table>
@@ -973,14 +1659,14 @@
 
                         <td>The name of the Application Pool to
                         assign the application. i.e:
-                        'FirstAppPool'. (Required)</td>
+                        'FirstAppPool'. </td>
                     </tr>
 
                     <tr>
                         <td class="required">Application name</td>
 
                         <td>The name of the application to assign.
-                        i.e: '/test'. (Required)</td>
+                        i.e: '/test'. </td>
                     </tr>
 
                     <tr>
@@ -988,7 +1674,7 @@
 
                         <td>The name of the site that contains the
                         app to assign. i.e: 'Default Web Site'.
-                        (Required)</td>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -1131,14 +1817,14 @@
 
                         <td>The name of the Website to add a
                         binding, i.e: 'Default Web Site'.
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
                         <td class="required">Binding protocol</td>
 
                         <td>Protocol of the binding to add, i.e:
-                        'http'. (Required)</td>
+                        'http'. </td>
                     </tr>
 
                     <tr>
@@ -1147,7 +1833,7 @@
 
                         <td>Information of the binding to add,
                         including the host and the port, i.e:
-                        'localhost:443', '*:81'. (Required)</td>
+                        'localhost:443', '*:81'. </td>
                     </tr>
                 </tbody>
             </table>

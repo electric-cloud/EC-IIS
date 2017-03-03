@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateVirtualDirectory</help>
-	<label>Application Server - IIS CreateVirtualDirectory</label>
+	<label>Application server - IIS createvirtualdirectory</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Creates a virtual directory into the specified Website.</description>	
 	<formElement>
@@ -25,20 +25,20 @@
 		<label>Application name:</label>
 		<property>appname</property>
 		<required>1</required>
-		<documentation>The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Web Site/myapp02'. (Required)</documentation>
+		<documentation>The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Web Site/myapp02'.</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
 		<label>Virtual path:</label>
 		<property>path</property>
 		<required>1</required>
-		<documentation>Virtual path of the virtual directory, i.e: '/myvirtualdir'. (Required)</documentation>
+		<documentation>Virtual path of the virtual directory, i.e: '/myvirtualdir'.</documentation>
 	</formElement>		
 	<formElement>
 		<type>entry</type>
 		<label>Absolute physical path:</label>
 		<property>physicalpath</property>
 		<required>1</required>
-		<documentation>The absolute physical path of the Virtual Directory to create, i.e: 'c:/Inetpub/wwwroot/myvdir'. (Required)</documentation>
+		<documentation>The absolute physical path of the Virtual Directory to create, i.e: 'c:/Inetpub/wwwroot/myvdir'.</documentation>
 	</formElement>		
 </editor>
