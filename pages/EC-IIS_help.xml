@@ -52,6 +52,7 @@
                 <li><a href="#ListSites">List Sites</a></li>
                 <li><a href="#ListSiteApps">List Applications</a></li>
                 <li><a href="#ListAppPools">List Application Pools</a></li>
+                <li><a href="#ListVirtualDirectories">List Virtual Directories</a></li>
                 <li><a href="#AddWebSiteBinding">Add Web Site Binding</a></li>
             </ul>
         </ul>
@@ -1944,6 +1945,66 @@ Providers can be optionally modified by using provider settings. Provider settin
             the following diagnostic
             report.</p><img src="../../plugins/@PLUGIN_KEY@/images/ListAppPools/EC-IIS7ListAppPools4.png" />
         </div>
+        <div id="ListVirtualDirectories">
+            <a name="ListVirtualDirectories" id="ListVirtualDirectories"></a>
+
+            <h3>ListVirtualDirectories</h3>
+
+            <p>List the virtual directories.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Virtual directory name</td>
+                        <td>Virtual directory name to retrieve. If not provided, will retrieve all the virtual directories.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Property name
+                        </td>
+                        <td>
+                            Property to write retrieved data.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Dump format
+                        </td>
+                        <td>
+                            Choose the format to represent retrieved data.
+                            Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To list the virtual directories, select the
+            following highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListVirtualDirectories/EC-IIS7ListVirtualDirectories1.png" />
+
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListVirtualDirectories/EC-IIS7ListVirtualDirectories2.png" />
+
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            applications
+            detected:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListVirtualDirectories/EC-IIS7ListVirtualDirectories3.png" />
+
+
+            <p>In the <b>ListVirtualDirectories</b> step, click the Log icon
+            to see the diagnostic info. The output is similar to
+            the following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/ListVirtualDirectories/EC-IIS7ListVirtualDirectories4.png" />
+        </div>
 
         <div id="AddWebSiteBinding">
             <a name="AddWebSiteBinding" id="AddWebSiteBinding"></a>
@@ -2044,6 +2105,14 @@ Providers can be optionally modified by using provider settings. Provider settin
 
 
         <h1>Release Notes</h1>
+    <h2>@PLUGIN_KEY@ 3.0.0</h2>
+    <ul>
+        <li>
+            Full plugin redesign, IIS from version 7 is now supported.
+        </li>
+    </ul>
+
+
     <h2>@PLUGIN_KEY@ 2.0.7</h2>
     <ul>
         <li>Fixed issue with configurations being cached for IE.</li>
