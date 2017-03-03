@@ -46,9 +46,10 @@
                 <li><a href="#StartAppPool">Start Application Pool</a></li>
                 <li><a href="#StartWebSite">Start Web Site</a></li>
                 <li><a href="#StopAppPool">Stop Application Pool</a></li>
-                <li><a href="#StopWebSite">Stop Website Site</a></li>
+                <li><a href="#StopWebSite">Stop Web site</a></li>
+                <li><a href="#RecycleAppPool">Recycle Application Pool</a></li>
                 <li><a href="#AssignAppToAppPool">Assign Application to Application Pool</a></li>
-                <li><a href="#ListSites">List Site</a></li>
+                <li><a href="#ListSites">List Sites</a></li>
                 <li><a href="#ListSiteApps">List Applications</a></li>
                 <li><a href="#AddWebSiteBinding">Add Web Site Binding</a></li>
             </ul>
@@ -1634,7 +1635,51 @@ Providers can be optionally modified by using provider settings. Provider settin
             to see the diagnostic info. The output is similar to
             the following diagnostic
             report.</p><img src="../../plugins/@PLUGIN_KEY@/images/StopWebSite/EC-IIS7StopWebSite4.png" />
-            </div>
+        </div>
+        <div id="RecycleAppPool">
+            <a name="RecycleAppPool" id="RecycleAppPool"></a>
+
+            <h3>RecycleAppPool</h3>
+
+            <p>Recycles the specified application pool.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Application pool name</td>
+
+                        <td>Provide the name of the application pool to be recycled.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To recycle an application pool, select the following highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/RecycleAppPool/EC-IIS7RecycleAppPool1.png" />
+
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/RecycleAppPool/EC-IIS7RecycleAppPool2.png" />
+
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            website was stoped
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/RecycleAppPool/EC-IIS7RecycleAppPool3.png" />
+
+
+            <p>In the <b>RecycleAppPool</b> step, click the Log icon
+            to see the diagnostic info. The output is similar to
+            the following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/RecycleAppPool/EC-IIS7RecycleAppPool4.png" />
+        </div>
 
         <div id="AssignAppToAppPool">
             <a name="AssignAppToAppPool" id="AssignAppToAppPool"></a>
@@ -1705,24 +1750,44 @@ Providers can be optionally modified by using provider settings. Provider settin
 
             <h3>ListSites</h3>
 
-            <p>List the sites on a web server.</p>
+            <p>List the sites on a web server and writes the retrived data under the specified property.</p>
 
             <table class="grid">
                 <thead>
                     <tr>
                         <th>Parameter</th>
-
                         <th>Description</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>User-defined criterias</td>
 
-                        <td>The user-defined criterias to search
-                        the sites. Blank lists all sites. i.e:
-                        '/bindings:http/*:80:'.</td>
+                    <tr>
+                        <td>
+                            User-defined criterias
+                        </td>
+                        <td>
+                            The user-defined criterias to search the sites. Blank lists all sites. i.e: '/bindings:http/*:80:'.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Property name
+                        </td>
+                        <td>
+                            Property to write retrieved data.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Dump format
+                        </td>
+                        <td>
+                            Choose the format to represent retrieved data.
+                            Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -1746,7 +1811,12 @@ Providers can be optionally modified by using provider settings. Provider settin
             see the diagnostic info. The output is similar to the
             following diagnostic
             report.</p><img src="../../plugins/@PLUGIN_KEY@/images/ListSites/EC-IIS7ListSites4.png" />
-            </div>
+
+            <p>
+                Under the specified property you will see extracted sites data.
+            </p>
+            <img src="../../plugins/@PLUGIN_KEY@/images/ListSites/EC-IIS7ListSites5.png"/>
+        </div>
 
         <div id="ListSiteApps">
             <a name="ListSiteApps" id="ListSiteApps"></a>
@@ -1770,6 +1840,24 @@ Providers can be optionally modified by using provider settings. Provider settin
 
                         <td>The name of the site to look for
                         Applications. Blank lists all apps.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Property name
+                        </td>
+                        <td>
+                            Property to write retrieved data.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Dump format
+                        </td>
+                        <td>
+                            Choose the format to represent retrieved data.
+                            Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
+                        </td>
                     </tr>
                 </tbody>
             </table>
