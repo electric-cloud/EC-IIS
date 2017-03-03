@@ -34,6 +34,7 @@ use Data::Dumper;
 use LWP::UserAgent;
 use IO::Socket::INET;
 use JSON;
+use XML::Simple qw(XMLout);
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
@@ -886,7 +887,7 @@ sub step_delete_vdir {
 sub step_list_sites {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName expandPropertySheet/);
+    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName dumpFormat/);
     $params->{criteria} = $params->{searchcriteria};
     my $command = $self->driver->list_sites_cmd($params);
     $self->set_cmd_line($command);
@@ -900,33 +901,40 @@ sub step_list_sites {
     $self->logger->info($stdout);
     my @lines = split /[\n\r]/ => $stdout;
 
-    my %data = map { /SITE\s"(.+)"\s\(id:(\d+),bindings:(.+),state:(\w+)\)/; $1 => {
+    my %data = map { /SITE\s"(.*)"\s\(id:(\d+),bindings:(.+),state:(\w+)\)/; $1 => {
         id => $2,
-        bindings => [ split ',' => $3 ],
+        bindings => [ split ',' => ($3 || '') ],
         state => $4,
     }} @lines;
 
     $self->logger->debug(\%data);
-    my $property = $params->{propertyName} || '/myJob/IISSiteList';
-    my $expand = $params->{expandPropertySheet};
-    if ($expand) {
-        my $flat_map = _flatten_map(\%data, $property);
-        for my $key ( sort keys %$flat_map) {
-            $self->ec->setProperty($key, $flat_map->{$key});
+    $params->{propertyName} ||= '/myJob/IISSiteList';
+
+    my $xml_handler = sub {
+        my ($hashref) = @_;
+
+        my @list = ();
+        for my $sitename (keys %$hashref) {
+            my $v = $hashref->{$sitename};
+            $v->{name} = $sitename;
+            push @list, $v;
         }
-    }
-    else {
-        my $json = JSON::encode_json(\%data);
-        $self->ec->setProperty($property, $json);
-    }
-    $self->logger->info("Site list was written to $property");
-    $self->success("Site list was written to $property");
+        return {site => \@list};
+    };
+
+    $self->save_retrieved_data(
+        data => \%data,
+        raw => $stdout,
+        format => $params->{dumpFormat},
+        property => $params->{propertyName},
+        xml_handler => $xml_handler
+    );
 }
 
 sub step_list_pools {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName expandPropertySheet/);
+    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName dumpFormat/);
     my $command = $self->driver->list_pools_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
@@ -939,7 +947,7 @@ sub step_list_pools {
     my $stdout = $result->{stdout};
     my @lines = split /[\n\r]/ => $stdout;
     my %data = map {
-        m/APPPOOL\s"(.+)"\s\(MgdVersion:(.+),MgdMode:(\w+),state:(\w+)\)/;
+        m/APPPOOL\s"(.*)"\s\(MgdVersion:(.+),MgdMode:(\w+),state:(\w+)\)/;
         $1 => {
             managedVersion => $2,
             managedPipelineMode => $3,
@@ -966,17 +974,31 @@ sub step_list_pools {
     my $summary = "Pools: $total detected\nStarted: $started detected\nStopped: $stopped detected\nOther: $other detected";
     $self->ec->setProperty('/myJobStep/summary', $summary);
 
-    $self->save_data_to_property_sheet(
+    my $xml_handler = sub {
+        my ($hashref) = @_;
+
+        my @list = ();
+        for my $name (keys %$hashref) {
+            my $v = $hashref->{$name};
+            $v->{name} = $name;
+            push @list, $v;
+        }
+        return {applicationPool => \@list};
+    };
+
+    $self->save_retrieved_data(
         data => \%data,
+        raw => $stdout,
         property => $params->{propertyName},
-        expand => $params->{expandPropertySheet}
+        format => $params->{dumpFormat},
+        xml_handler => $xml_handler
     );
 }
 
 sub step_list_apps {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/sitename propertyName expandPropertySheet/);
+    my $params = $self->get_params_as_hashref(qw/sitename propertyName dumpFormat/);
     $params->{websiteName} = $params->{sitename};
     my $command = $self->driver->list_apps_cmd($params);
     $self->set_cmd_line($command);
@@ -990,16 +1012,31 @@ sub step_list_apps {
     my @lines = split /[\n\r]/ => $stdout;
 
     my %data = map {
-        m/APP\s"(.+)"\s\(applicationPool:(.+)\)/;
+        m/APP\s"(.*)"\s\(applicationPool:(.*)\)/;
         $1 => {applicationPool => $2}
     } @lines;
 
     $params->{propertyName} ||= '/myJob/IISApps';
 
-    $self->save_data_to_property_sheet(
+    my $xml_handler = sub {
+        my ($hashref) = @_;
+
+        my @list = ();
+        for my $name (keys %$hashref) {
+            my $v = $hashref->{$name};
+            $v->{name} = $name;
+            push @list, $v;
+        }
+        return {application => \@list};
+    };
+
+
+    $self->save_retrieved_data(
         data => \%data,
         property => $params->{propertyName},
-        expand => $params->{expandPropertySheet}
+        format => $params->{dumpFormat},
+        raw => $stdout,
+        xml_handler => $xml_handler,
     );
 
     my $total = scalar keys %data;
@@ -1010,7 +1047,7 @@ sub step_list_apps {
 sub step_list_vdirs {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/vdirName propertyName expandPropertySheet/);
+    my $params = $self->get_params_as_hashref(qw/vdirName propertyName dumpFormat/);
     my $command = $self->driver->list_vdirs_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
@@ -1029,10 +1066,23 @@ sub step_list_vdirs {
 
     $params->{propertyName} ||= '/myJob/IISVirtualDirectories';
 
-    $self->save_data_to_property_sheet(
+    my $xml_handler = sub {
+        my ($hashref) = @_;
+        my @list = ();
+        for my $name (keys %$hashref) {
+            my $v = $hashref->{$name};
+            $v->{name} = $name;
+            push @list, $v;
+        }
+        return {vdirs => \@list};
+    };
+
+    $self->save_retrieved_data(
         data => \%data,
+        raw => $stdout,
+        format => $params->{dumpFormat},
         property => $params->{propertyName},
-        expand => $params->{expandPropertySheet}
+        xml_handle => $xml_handler,
     );
 
     my $found = scalar keys %data;
@@ -1061,6 +1111,47 @@ sub save_data_to_property_sheet {
     }
     $self->logger->info("Retrieved data was written to $property");
     $self->success("Retrieved data was written to $property");
+}
+
+
+sub save_retrieved_data {
+    my ($self, %param) = @_;
+
+    my $format = $param{format};
+    my $property = $param{property};
+
+    my $data = $param{data};
+    my $raw = $param{raw};
+
+    my $xml_handler = $param{xml_handler};
+
+    my $message;
+    if ($format eq 'json') {
+        my $json = JSON::encode_json($data);
+        $message = "Data has been saved as JSON under $property";
+        $self->logger->info("JSON to save", JSON->new->pretty->encode($data));
+        $self->ec->setProperty($property, $json);
+    }
+    elsif ($format eq 'xml') {
+        my $refined = $xml_handler->($data);
+        my $xml = XMLout($refined, NoAttr => 1, RootName => 'data', XMLDecl => 1);
+        $message = "Data has been saved as XML under $property";
+        $self->logger->info("XML to save", $xml);
+        $self->ec->setProperty($property, $xml);
+    }
+    elsif ($format eq 'propertySheet') {
+        my $flat = _flatten_map($data, $property);
+        for my $key ( sort keys %$flat ) {
+            $self->ec->setProperty($key, $flat->{$key});
+            $self->logger->info("Wrote property: $key -> $flat->{$key}");
+        }
+        $message = "Data has been saved as property sheet under $property";
+    }
+    else {
+        $self->ec->setProperty($property, $raw);
+        $message = "Raw data has been saved under property $property"
+    }
+    $self->success($message);
 }
 
 sub _process_result {

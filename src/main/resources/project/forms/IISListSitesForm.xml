@@ -36,13 +36,27 @@
         <documentation>Property to write retrieved data.</documentation>
     </formElement>
 	<formElement>
-		<type>checkbox</type>
-		<label>Expand property sheet:</label>
- 		<property>expandPropertySheet</property>
+		<type>select</type>
+		<label>Dump format:</label>
+ 		<property>dumpFormat</property>
 		<required>0</required>
-        <value>1</value>
-        <checkedValue>1</checkedValue>
-        <uncheckedValue>0</uncheckedValue>
-		<documentation>If checked, the procedure will expand retrieved data to the specified property sheet, otherwise it will write data as JSON.</documentation>
+        <option>
+            <value>xml</value>
+            <name>XML</name>
+        </option>
+        <option>
+            <value>json</value>
+            <name>JSON</name>
+        </option>
+        <option>
+            <value>propertySheet</value>
+            <name>Property sheet</name>
+        </option>
+        <option>
+            <value>raw</value>
+            <name>Raw</name>
+        </option>
+        <value>propertySheet</value>
+		<documentation>Choose the format to represent retrieved data.</documentation>
 	</formElement>
 </editor>
