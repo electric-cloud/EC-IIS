@@ -16,7 +16,7 @@ sub cmd_appcmd {
 
 sub after_init_hook {
     my ($self, %params) = @_;
-    $self->debug_level(1);
+    $self->debug_level(0);
 }
 
 
@@ -312,6 +312,35 @@ sub list_sites_cmd {
 
     my $criteria = $params->{criteria} || '';
     return $self->get_app_cmd('list', 'site', $criteria);
+}
+
+sub list_pools_cmd {
+    my ($self, $params) = @_;
+
+    my $criteria = $params->{criteria} || '';
+    return $self->get_app_cmd('list', 'apppool', $criteria);
+}
+
+sub list_apps_cmd {
+    my ($self, $params) = @_;
+
+    my $site = $params->{websiteName} || '';
+    my $extra = '';
+    if ($site) {
+        $extra = qq{/site.name:"$site"};
+    }
+    return $self->get_app_cmd('list', 'apps', $extra);
+}
+
+sub list_vdirs_cmd {
+    my ($self, $params) = @_;
+
+    my $vdir = $params->{vdirName} || '';
+    my $extra = '';
+    if ($vdir) {
+        $extra = qq{/vdir.name:"$vdir"};
+    }
+    return $self->get_app_cmd('list', 'vdirs', $extra);
 }
 
 1;

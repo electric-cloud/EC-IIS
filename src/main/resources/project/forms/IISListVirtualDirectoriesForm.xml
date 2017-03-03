@@ -16,33 +16,33 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#ListSiteApps</help>
-	<label>Application Server - IIS ListSiteApps</label>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#ListVirtualDirectories</help>
+	<label>Application Server - IIS ListVirtualDirectories</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>List the apps of a Website</description>
-	<formElement>
-		<type>entry</type>
-		<label>Site name:</label>
-		<property>sitename</property>
-		<required>0</required>
-		<documentation>The name of the site to look for Applications. Blank lists all apps.</documentation>
-	</formElement>
+	<description>List the virtual directories on a web server.</description>
+    <formElement>
+        <type>entry</type>
+        <label>Virtual directory name:</label>
+        <property>vdirName</property>
+        <required>0</required>
+        <documentation>Virtual directory name to retrieve. If not provided, will retrieve all the virtual directories.</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Property name:</label>
         <property>propertyName</property>
         <required>0</required>
-        <value>/myJob/IISApps</value>
+        <value>/myJob/IISVirtualDirectories</value>
         <documentation>Property to write retrieved data.</documentation>
     </formElement>
-    <formElement>
-        <type>checkbox</type>
-        <label>Expand property sheet:</label>
-        <property>expandPropertySheet</property>
-        <required>0</required>
+	<formElement>
+		<type>checkbox</type>
+		<label>Expand property sheet:</label>
+ 		<property>expandPropertySheet</property>
+		<required>0</required>
         <value>1</value>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
-        <documentation>If checked, the procedure will expand retrieved data to the specified property sheet, otherwise it will write data as JSON.</documentation>
-    </formElement>
+		<documentation>If checked, the procedure will expand retrieved data to the specified property sheet, otherwise it will write data as JSON.</documentation>
+	</formElement>
 </editor>

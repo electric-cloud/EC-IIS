@@ -193,6 +193,12 @@ my %listSites = (
     description => "List the sites on a web server.",
     category    => "Application Server"
 );
+my %listApplicationPools = (
+    label       => "IIS - List Application Pools",
+    procedure   => "ListApplicationPools",
+    description => "List the application pools on a web server.",
+    category    => "Application Server"
+);
 my %startAppPool = (
     label       => "IIS - Start App Pool",
     procedure   => "StartAppPool",
@@ -242,6 +248,12 @@ my %recycleAppPool = (
     description => "Uses the appcmd utility to recycle an app pool.",
     category    => "Application Server"
 );
+my %listVdirs = (
+    label       => "IIS - List Virtual Directories",
+    procedure   => "RecycleAppPool",
+    description => "List the virtual directories on a web server.",
+    category    => "Application Server"
+);
 
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Check Server Status");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Add Website Binding");
@@ -276,6 +288,8 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Stop IIS Servi
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start IIS Services");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Pause WebSite");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get WebSite Status");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Application Pools");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Virtual Directories");
 
 @::createStepPickerSteps = (\%checkServerStatus, \%addWebSiteBinding,
                             \%assignAppToAppPool, \%createAppPool,
@@ -288,5 +302,6 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get WebSite St
                             \%stopAppPool, \%stopWebSite, \%deployAdvanced,
                             \%undeploy, \%deploy,
                             \%startServer, \%stopServer, \%resetServer,
-                            \%recycleAppPool
+                            \%recycleAppPool, \%listApplicationPools,
+                            \%listVdirs
 );

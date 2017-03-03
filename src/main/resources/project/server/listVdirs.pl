@@ -4,4 +4,4 @@ use warnings;
 use EC::IIS;
 
 my $iis = EC::IIS->new;
-$iis->step_list_apps;
+$iis->step_list_vdirs;
