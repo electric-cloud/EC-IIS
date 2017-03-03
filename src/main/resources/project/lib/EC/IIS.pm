@@ -1047,7 +1047,7 @@ sub step_list_apps {
 sub step_list_vdirs {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/vdirName propertyName expandPropertySheet/);
+    my $params = $self->get_params_as_hashref(qw/vdirName propertyName dumpFormat/);
     my $command = $self->driver->list_vdirs_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
@@ -1066,10 +1066,23 @@ sub step_list_vdirs {
 
     $params->{propertyName} ||= '/myJob/IISVirtualDirectories';
 
-    $self->save_data_to_property_sheet(
+    my $xml_handler = sub {
+        my ($hashref) = @_;
+        my @list = ();
+        for my $name (keys %$hashref) {
+            my $v = $hashref->{$name};
+            $v->{name} = $name;
+            push @list, $v;
+        }
+        return {vdirs => \@list};
+    };
+
+    $self->save_retrieved_data(
         data => \%data,
+        raw => $stdout,
+        format => $params->{dumpFormat},
         property => $params->{propertyName},
-        expand => $params->{expandPropertySheet}
+        xml_handle => $xml_handler,
     );
 
     my $found = scalar keys %data;
