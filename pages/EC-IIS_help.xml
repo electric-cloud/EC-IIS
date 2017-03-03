@@ -51,6 +51,7 @@
                 <li><a href="#AssignAppToAppPool">Assign Application to Application Pool</a></li>
                 <li><a href="#ListSites">List Sites</a></li>
                 <li><a href="#ListSiteApps">List Applications</a></li>
+                <li><a href="#ListAppPools">List Application Pools</a></li>
                 <li><a href="#AddWebSiteBinding">Add Web Site Binding</a></li>
             </ul>
         </ul>
@@ -1881,7 +1882,68 @@ Providers can be optionally modified by using provider settings. Provider settin
             to see the diagnostic info. The output is similar to
             the following diagnostic
             report.</p><img src="../../plugins/@PLUGIN_KEY@/images/ListSiteApps/EC-IIS7ListSiteApps4.png" />
-            </div>
+        </div>
+        <div id="ListAppPools">
+            <a name="ListAppPools" id="ListAppPools"></a>
+
+            <h3>ListAppPools</h3>
+
+            <p>List the application pools.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>User-defined criterias</td>
+                        <td>The user-defined criterias to search the application pools. Blank lists all pools. i.e: '/apppool.name:"my pool"'.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Property name
+                        </td>
+                        <td>
+                            Property to write retrieved data.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Dump format
+                        </td>
+                        <td>
+                            Choose the format to represent retrieved data.
+                            Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To list the application pools, select the
+            following highlighted
+            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListAppPools/EC-IIS7ListAppPools1.png" />
+
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListAppPools/EC-IIS7ListAppPools2.png" />
+
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            applications
+            detected:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListAppPools/EC-IIS7ListAppPools3.png" />
+
+
+            <p>In the <b>ListAppPools</b> step, click the Log icon
+            to see the diagnostic info. The output is similar to
+            the following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/ListAppPools/EC-IIS7ListAppPools4.png" />
+        </div>
 
         <div id="AddWebSiteBinding">
             <a name="AddWebSiteBinding" id="AddWebSiteBinding"></a>
