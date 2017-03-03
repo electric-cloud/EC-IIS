@@ -16,7 +16,7 @@ sub cmd_appcmd {
 
 sub after_init_hook {
     my ($self, %params) = @_;
-    $self->debug_level(1);
+    $self->debug_level(0);
 }
 
 
@@ -330,6 +330,17 @@ sub list_apps_cmd {
         $extra = qq{/site.name:"$site"};
     }
     return $self->get_app_cmd('list', 'apps', $extra);
+}
+
+sub list_vdirs_cmd {
+    my ($self, $params) = @_;
+
+    my $vdir = $params->{vdirName} || '';
+    my $extra = '';
+    if ($vdir) {
+        $extra = qq{/vdir.name:"$vdir"};
+    }
+    return $self->get_app_cmd('list', 'vdirs', $extra);
 }
 
 1;

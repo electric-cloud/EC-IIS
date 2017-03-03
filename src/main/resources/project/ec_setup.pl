@@ -248,6 +248,12 @@ my %recycleAppPool = (
     description => "Uses the appcmd utility to recycle an app pool.",
     category    => "Application Server"
 );
+my %listVdirs = (
+    label       => "IIS - List Virtual Directories",
+    procedure   => "RecycleAppPool",
+    description => "List the virtual directories on a web server.",
+    category    => "Application Server"
+);
 
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Check Server Status");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Add Website Binding");
@@ -283,6 +289,7 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Start IIS Serv
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Pause WebSite");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get WebSite Status");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Application Pools");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Virtual Directories");
 
 @::createStepPickerSteps = (\%checkServerStatus, \%addWebSiteBinding,
                             \%assignAppToAppPool, \%createAppPool,
@@ -295,5 +302,6 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Applicati
                             \%stopAppPool, \%stopWebSite, \%deployAdvanced,
                             \%undeploy, \%deploy,
                             \%startServer, \%stopServer, \%resetServer,
-                            \%recycleAppPool, \%listApplicationPools
+                            \%recycleAppPool, \%listApplicationPools,
+                            \%listVdirs
 );

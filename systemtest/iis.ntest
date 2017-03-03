@@ -803,9 +803,6 @@ ntest "createAppPool", {}, sub {
       my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
       assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" add apppool /name:"My App Pool"');
 
-      # my $searchCommandLine = $xpath->findvalue("//property[propertyName='searchCmdLine']/value");
-      # assertEq($searchCommandLine, '%windir%\system32\inetsrv\appcmd list apppool "My App Pool 1"');
-
 };
 
 ntest "Recycle app pool", {}, sub {
@@ -1023,10 +1020,10 @@ ntest "listSitesByBinding", {}, sub {
 
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='cmdLine']/value");
-      assertEq($commandLine, '%windir%\system32\inetsrv\appcmd list site /bindings:http/*:80:');
-
+      assertEq($commandLine, '"C:\Windows\system32\inetsrv\appcmd" list site /bindings:http/*:80:');
 
 };
+
 
 ntest "startAppPool-NameWithSpaces", {}, sub {
 
@@ -1397,4 +1394,5 @@ ntest "Undeploy nonexistent site", {}, sub {
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
 };
+
 

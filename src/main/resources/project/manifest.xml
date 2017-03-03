@@ -190,6 +190,10 @@
     <xpath>//procedure[procedureName=&quot;ListApplicationPools&quot;]/step[stepName=&quot;ListAppPools&quot;]/command</xpath>
   </file>
   <file>
+    <path>server/listVdirs.pl</path>
+    <xpath>//procedure[procedureName=&quot;ListVirtualDirectories&quot;]/step[stepName=&quot;ListVirtualDirectories&quot;]/command</xpath>
+  </file>
+  <file>
     <path>server/listSiteApps.pl</path>
     <xpath>//procedure[procedureName=&quot;ListSiteApps&quot;]/step[stepName=&quot;ListSiteApps&quot;]/command</xpath>
   </file>
@@ -316,6 +320,10 @@
   <file>
     <path>forms/IISListAppPoolsForm.xml</path>
     <xpath>//procedure[procedureName=&quot;ListApplicationPools&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+  <file>
+    <path>forms/IISListVirtualDirectoriesForm.xml</path>
+    <xpath>//procedure[procedureName=&quot;ListVirtualDirectories&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
     <path>forms/IISListSiteAppsForm.xml</path>

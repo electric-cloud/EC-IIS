@@ -57,7 +57,7 @@ use constant {
 
 sub after_init_hook {
     my ($self, %params) = @_;
-    $self->debug_level(1);
+    $self->debug_level(0);
 }
 
 
@@ -390,7 +390,7 @@ sub step_deploy_advanced {
 sub step_create_or_update_site {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw(websitename bindings websitepath websiteid additionalParameters));
+    my $params = $self->get_params_as_hashref(qw(websitename bindings websitepath websiteid));
     my $website_name = $params->{websitename};
     $params = {
         websiteName => $params->{websitename},
@@ -887,6 +887,7 @@ sub step_list_sites {
     my ($self) = @_;
 
     my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName expandPropertySheet/);
+    $params->{criteria} = $params->{searchcriteria};
     my $command = $self->driver->list_sites_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
@@ -948,6 +949,23 @@ sub step_list_pools {
 
     $params->{propertyName} ||= '/myJob/IISSiteList';
 
+    my ($total, $started, $stopped, $other) = (0, 0, 0, 0);
+    for my $name (keys %data) {
+        $total ++;
+        if ($data{$name}->{state} eq 'Started') {
+            $started++;
+        }
+        elsif ($data{$name}->{state} eq 'Stopped') {
+            $stopped++;
+        }
+        else {
+            $other++;
+        }
+    }
+
+    my $summary = "Pools: $total detected\nStarted: $started detected\nStopped: $stopped detected\nOther: $other detected";
+    $self->ec->setProperty('/myJobStep/summary', $summary);
+
     $self->save_data_to_property_sheet(
         data => \%data,
         property => $params->{propertyName},
@@ -983,6 +1001,44 @@ sub step_list_apps {
         property => $params->{propertyName},
         expand => $params->{expandPropertySheet}
     );
+
+    my $total = scalar keys %data;
+    my $summary = "Found $total applications";
+    $self->ec->setProperty('/myJobStep/summary', $summary);
+}
+
+sub step_list_vdirs {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/vdirName propertyName expandPropertySheet/);
+    my $command = $self->driver->list_vdirs_cmd($params);
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+
+    if ($result->{code}) {
+        return $self->bail_out("Cannot list vdirs: " . ($result->{stderr} || $result->{stdout}));
+    }
+
+    my $stdout = $result->{stdout};
+    my @lines = split /[\n\r]/ => $stdout;
+
+    my %data = map {
+        m/VDIR\s"(.+)"\s\(physicalPath:(.+)\)/;
+        $1 => {physicalPath => $2}
+    } @lines;
+
+    $params->{propertyName} ||= '/myJob/IISVirtualDirectories';
+
+    $self->save_data_to_property_sheet(
+        data => \%data,
+        property => $params->{propertyName},
+        expand => $params->{expandPropertySheet}
+    );
+
+    my $found = scalar keys %data;
+    my $summary = "Found $found virtual directories";
+
+    $self->ec->setProperty('/myJobStep/summary', $summary);
 }
 
 sub save_data_to_property_sheet {
@@ -1127,6 +1183,7 @@ sub check_http_status {
 sub _flatten_map {
     my ($map, $prefix) = @_;
 
+    $prefix ||= '';
     my %retval = ();
     for my $key (keys %$map) {
         my $value = $map->{$key};
