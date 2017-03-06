@@ -14,7 +14,7 @@
        <h1>IIS</h1>
        <p>Plugin Version @PLUGIN_VERSION@</p>
        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-       <p>Revised on March 1, 2017</p>
+       <p>Revised on March 6, 2017</p>
        <p>
 	    Internet Information Server - is a web server application
         and set of feature extension modules created by Microsoft
@@ -31,37 +31,38 @@
             <li><a href="#CreateConfiguration">Setting up the plugin configuration</a></li>
             <li><a href="#procedures">Plugin procedures</a></li>
             <ul>
-                <li><a href="#CheckServerStatus">Check Server Status</a></li>
-                <li><a href="#CreateAppPool">Create Application Pool</a></li>
-                <li><a href="#CreateVirtualDirectory">Create Virtual Directory</a></li>
-                <li><a href="#CreateWebApplication">Create Web Application</a></li>
-                <li><a href="#CreateWebSite">Create Web Site</a></li>
-                <li><a href="#DeleteWebApplication">Delete Web Application</a></li>
-                <li><a href="#DeleteVirtualDirectory">Delete Virtual Directory</a></li>
-                <li><a href="#DeleteWebSite">Delete Web Site</a></li>
-                <li><a href="#DeleteAppPool">Delete Application Pool</a></li>
-                <li><a href="#DeployCopy">Deploy Copy (Deprecated)</a></li>
+                <li><a href="#CheckServerStatus">CheckServerStatus</a></li>
+                <li><a href="#CreateAppPool">CreateApplicationPool</a></li>
+                <li><a href="#CreateVirtualDirectory">CreateVirtualDirectory</a></li>
+                <li><a href="#CreateWebApplication">CreateWebApplication</a></li>
+                <li><a href="#CreateWebSite">CreateWebSite</a></li>
+                <li><a href="#DeleteWebApplication">DeleteWebApplication</a></li>
+                <li><a href="#DeleteVirtualDirectory">DeleteVirtualDirectory</a></li>
+                <li><a href="#DeleteWebSite">DeleteWebSite</a></li>
+                <li><a href="#DeleteAppPool">DeleteApplicationPool</a></li>
+                <li><a href="#DeployCopy">DeployCopy (Deprecated)</a></li>
                 <li><a href="#Deploy">Deploy</a></li>
-                <li><a href="#DeployAdvanced">Deploy Advanced</a></li>
-                <li><a href="#StartAppPool">Start Application Pool</a></li>
-                <li><a href="#StartWebSite">Start Web Site</a></li>
-                <li><a href="#StopAppPool">Stop Application Pool</a></li>
-                <li><a href="#StopWebSite">Stop Web site</a></li>
-                <li><a href="#RecycleAppPool">Recycle Application Pool</a></li>
-                <li><a href="#AssignAppToAppPool">Assign Application to Application Pool</a></li>
-                <li><a href="#ListSites">List Sites</a></li>
-                <li><a href="#ListSiteApps">List Applications</a></li>
-                <li><a href="#ListAppPools">List Application Pools</a></li>
-                <li><a href="#ListVirtualDirectories">List Virtual Directories</a></li>
-                <li><a href="#AddWebSiteBinding">Add Web Site Binding</a></li>
+                <li><a href="#DeployAdvanced">DeployAdvanced</a></li>
+                <li><a href="#StartAppPool">StartApplicationPool</a></li>
+                <li><a href="#StartWebSite">StartWebSite</a></li>
+                <li><a href="#StopAppPool">StopApplicationPool</a></li>
+                <li><a href="#StopWebSite">StopWebsite</a></li>
+                <li><a href="#RecycleAppPool">RecycleApplicationPool</a></li>
+                <li><a href="#AssignAppToAppPool">AssignAppToAppPool</a></li>
+                <li><a href="#ListSites">ListSites</a></li>
+                <li><a href="#ListSiteApps">ListSiteApps</a></li>
+                <li><a href="#ListAppPools">ListApplicationPools</a></li>
+                <li><a href="#ListVirtualDirectories">ListVirtualDirectories</a></li>
+                <li><a href="#AddWebSiteBinding">AddWebSiteBinding</a></li>
+                <li><a href="#StopServer">StopServer</a></li>
+                <li><a href="#StartServer">StartServer</a></li>
+                <li><a href="#RestartServer">RestartServer</a></li>
             </ul>
         </ul>
 
 
         <h2>IIS Links</h2>
-
         <p>More information can be found at:</p>
-
         <ul>
           <li><a href="http://www.iis.net/overview" target="_blank">IIS Overview</a></li>
         </ul>
@@ -2068,7 +2069,106 @@ Providers can be optionally modified by using provider settings. Provider settin
             icon to see the diagnostic info. The output is similar
             to the following diagnostic
             report.</p><img src="../../plugins/@PLUGIN_KEY@/images/AddWebSiteBinding/EC-IIS7AddWebSiteBinding4.png" />
-            </div>
+        </div>
+        <div id="StopServer">
+            <a name="StopServer" id="StopServer"></a>
+
+            <h3>StopServer</h3>
+
+            <p>Stops IIS server.</p>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Absolute location of the iisreset utility</td>
+                        <td>
+                            Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'.
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Additional parameters</td>
+                        <td>Additional parameters to pass to iisreset utility.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <p>To stop IIS server, enter the following parameters</p><img src="../../plugins/@PLUGIN_KEY@/images/StopServer/EC-IIS7StopServer.png" />
+
+        </div>
+        <div id="StartServer">
+            <a name="StartServer" id="StartServer"></a>
+
+            <h3>StartServer</h3>
+
+            <p>Starts IIS server.</p>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Absolute location of the iisreset utility</td>
+                        <td>
+                            Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'.
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Additional parameters</td>
+                        <td>Additional parameters to pass to iisreset utility.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <p>To start IIS server, enter the following parameters</p><img src="../../plugins/@PLUGIN_KEY@/images/StopServer/EC-IIS7StopServer.png" />
+
+        </div>
+        <div id="RestartServer">
+            <a name="RestartServer" id="RestartServer"></a>
+
+            <h3>RestartServer</h3>
+
+            <p>Restarts IIS server.</p>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Absolute location of the iisreset utility</td>
+                        <td>
+                            Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'.
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Additional parameters</td>
+                        <td>Additional parameters to pass to iisreset utility.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <p>To restart IIS server, enter the following parameters</p><img src="../../plugins/@PLUGIN_KEY@/images/StopServer/EC-IIS7StopServer.png" />
+
+        </div>
 
         <h1>Examples and Use Cases</h1>
 
@@ -2105,37 +2205,37 @@ Providers can be optionally modified by using provider settings. Provider settin
 
 
         <h1>Release Notes</h1>
-    <h2>@PLUGIN_KEY@ 3.0.0</h2>
-    <ul>
-        <li>
-            Full plugin redesign, IIS from version 7 is now supported.
-        </li>
-    </ul>
+
+        <h2>@PLUGIN_KEY@ 3.0.0</h2>
+        <ul>
+            <li>
+                Full plugin redesign, IIS from version 7 is now supported.
+            </li>
+        </ul>
 
 
-    <h2>@PLUGIN_KEY@ 2.0.7</h2>
-    <ul>
-        <li>Fixed issue with configurations being cached for IE.</li>
-    </ul>
-		<h2>@PLUGIN_KEY@-2.0.6</h2>
+        <h2>@PLUGIN_KEY@ 2.0.7</h2>
+        <ul>
+            <li>Fixed issue with configurations being cached for IE.</li>
+        </ul>
 
 
-
+        <h2>@PLUGIN_KEY@-2.0.6</h2>
         <ul>
             <li>Renamed ElectricCommander to ElectricFlow.</li>
             <li>Added link to plugin Configuration Page in plugin step panels.</li>
         </ul>
-        <h2>@PLUGIN_KEY@-2.0.5</h2>
 
+        <h2>@PLUGIN_KEY@-2.0.5</h2>
         <ul>
-            <li>Removed the unused file IISServer.pm file and its references.</li>
+            <li>Fixed manifest file.</li>
+            <li>Removed need for agent/lib directory.</li>
         </ul>
 
-		<h2>@PLUGIN_KEY@-2.0.4</h2>
-
-		<ul>
-			<li>Procedure name(s) were changed in the step picker section</li>
-		</ul>
+        <h2>@PLUGIN_KEY@-2.0.4</h2>
+        <ul>
+            <li>Procedure name(s) were changed in the step picker section</li>
+        </ul>
 
         <h2>@PLUGIN_KEY@ 2.0.3</h2>
 
@@ -2152,30 +2252,18 @@ Providers can be optionally modified by using provider settings. Provider settin
         <h2>@PLUGIN_KEY@ 2.0.1</h2>
 
         <ul>
-            <li>Improved xml parameter panels.</li>
-
-            <li>New help page format.</li>
+            <li>Upgrade to use the new Parameter Form XML.</li>
 
             <li>Added a link directly to the new help
             document.</li>
+        </ul>
 
-            <li>
-                Created 4 new procedures:
+        <h2>@PLUGIN_KEY@ 2.0.0</h2>
 
-                <ul>
-                    <li><b>Create Website:</b> Creates a
-                    website.</li>
+        <ul>
+            <li>Improve xml parameter panels.</li>
 
-                    <li><b>Delete Website:</b> Deletes a
-                    website.</li>
-
-                    <li><b>Add Binding to a Website:</b> Adds a
-                    binding to a Website.</li>
-
-                    <li><b>Delete AppPool:</b> Deletes an
-                    application pool.</li>
-                </ul>
-            </li>
+            <li>New help page format.</li>
         </ul>
     </div>
 </body>
