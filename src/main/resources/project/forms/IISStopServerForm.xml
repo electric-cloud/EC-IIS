@@ -13,7 +13,7 @@
 	</formElement>
 	<formElement>
 		<type>textarea</type>
-		<label>Additional parameters</label>
+		<label>Additional parameters:</label>
 		<property>additionalParams</property>
 		<required>0</required>
 		<value></value>
