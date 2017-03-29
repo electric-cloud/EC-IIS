@@ -503,6 +503,7 @@ sub step_deploy {
     });
     $self->set_cmd_line($deploy_command);
     my $result = $self->run_command($deploy_command);
+
     if ($result->{code} != 0) {
         return $self->bail_out("Cannot deploy the application: $result->{stderr}");
     }
