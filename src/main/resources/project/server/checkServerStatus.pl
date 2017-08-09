@@ -75,8 +75,8 @@ my $gConfigName     = $ec->getProperty("configname")->findvalue("//value");
 my $gUrl            = $ec->getProperty("checkUrl")->findvalue("//value");
 my $gExpectStatus   = $ec->getProperty("expectStatus")->findvalue("//value");
 my $gUnavailable    = $ec->getProperty("unavailable")->findvalue("//value");
-my $gTimeout        = $ec->getProperty("timeout")->findvalue("//value");
-my $gRetries        = $ec->getProperty("retries")->findvalue("//value");
+my $gTimeout        = $ec->getProperty("requestTimeout")->findvalue("//value");
+my $gRetries        = $ec->getProperty("retriesCount")->findvalue("//value");
 # my $gContentRex     = $ec->getProperty("contentRex")->findvalue("//value");
 
 # -------------------------------------------------------------------------

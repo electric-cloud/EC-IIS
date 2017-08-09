@@ -2413,7 +2413,7 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>timeout</propertyName>
+                                    <propertyName>requestTimeout</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -2423,7 +2423,7 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>retries</propertyName>
+                                    <propertyName>retriesCount</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -2474,14 +2474,14 @@
                 <type>checkbox</type>
             </formalParameter>
             <formalParameter>
-                <formalParameterName>timeout</formalParameterName>
+                <formalParameterName>requestTimeout</formalParameterName>
                 <defaultValue/>
                 <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
-                <formalParameterName>retries</formalParameterName>
+                <formalParameterName>retriesCount</formalParameterName>
                 <defaultValue/>
                 <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>

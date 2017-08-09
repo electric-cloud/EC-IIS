@@ -68,14 +68,14 @@ for availability and URL path and status parameters will be ignored.</documentat
     <formElement>
         <type>entry</type>
         <label>Timeout:</label>
-        <property>timeout</property>
+        <property>requestTimeout</property>
         <required>0</required>
         <documentation>Specify connection timeout. Default is 30s.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Retries:</label>
-        <property>retries</property>
+        <property>retriesCount</property>
         <required>0</required>
         <documentation>Specify number of retries. Default is 1. This only affects connecting to server, NOT the status returned by server.</documentation>
     </formElement>
