@@ -60,6 +60,10 @@ sub after_init_hook {
     my ($self, %params) = @_;
 
     print 'Using plugin @PLUGIN_NAME@' . "\n";
+    my $is_win = EC::Plugin::Core::is_win();
+    unless($is_win) {
+        $self->bail_out("Non-windows system detected. Please run the plugin on Windows resource.");
+    }
     $self->debug_level(0);
 }
 
