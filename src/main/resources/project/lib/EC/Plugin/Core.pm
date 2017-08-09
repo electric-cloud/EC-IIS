@@ -268,7 +268,7 @@ sub bail_out {
     $msg .= "\n";
 
     $self->error();
-    $self->out(1, "BAILED_OUT:\n$msg\n");
+    print "BAILED_OUT:\n$msg\n";
     $self->set_property(summary => $msg);
     exit 1;
 }
