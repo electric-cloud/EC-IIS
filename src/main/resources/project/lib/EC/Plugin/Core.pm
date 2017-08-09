@@ -268,7 +268,7 @@ sub bail_out {
     $msg .= "\n";
 
     $self->error();
-    $self->out(0, "BAILED_OUT:\n$msg\n");
+    print "BAILED_OUT:\n$msg\n";
     $self->set_property(summary => $msg);
     exit 1;
 }
@@ -593,9 +593,7 @@ sub _syscall_win32 {
         $ENV{NOPAUSE} = 1;
     }
 
-    no warnings 'io';
     my $pid = system($command);
-
     my $retval = {
         stdout => '',
         stderr => '',
