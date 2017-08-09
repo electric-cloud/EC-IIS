@@ -32,22 +32,23 @@
             <li><a href="#procedures">Plugin procedures</a></li>
             <ul>
                 <li><a href="#CheckServerStatus">CheckServerStatus</a></li>
-                <li><a href="#CreateAppPool">CreateApplicationPool</a></li>
+                <li><a href="#CreateAppPool">CreateAppPool</a></li>
                 <li><a href="#CreateVirtualDirectory">CreateVirtualDirectory</a></li>
                 <li><a href="#CreateWebApplication">CreateWebApplication</a></li>
                 <li><a href="#CreateWebSite">CreateWebSite</a></li>
                 <li><a href="#DeleteWebApplication">DeleteWebApplication</a></li>
                 <li><a href="#DeleteVirtualDirectory">DeleteVirtualDirectory</a></li>
                 <li><a href="#DeleteWebSite">DeleteWebSite</a></li>
-                <li><a href="#DeleteAppPool">DeleteApplicationPool</a></li>
+                <li><a href="#DeleteAppPool">DeleteAppPool</a></li>
                 <li><a href="#DeployCopy">DeployCopy (Deprecated)</a></li>
                 <li><a href="#Deploy">Deploy</a></li>
+                <li><a href="#Undeploy">Undeploy</a></li>
                 <li><a href="#DeployAdvanced">DeployAdvanced</a></li>
-                <li><a href="#StartAppPool">StartApplicationPool</a></li>
+                <li><a href="#StartAppPool">StartAppPool</a></li>
                 <li><a href="#StartWebSite">StartWebSite</a></li>
-                <li><a href="#StopAppPool">StopApplicationPool</a></li>
+                <li><a href="#StopAppPool">StopAppPool</a></li>
                 <li><a href="#StopWebSite">StopWebsite</a></li>
-                <li><a href="#RecycleAppPool">RecycleApplicationPool</a></li>
+                <li><a href="#RecycleAppPool">RecycleAppPool</a></li>
                 <li><a href="#AssignAppToAppPool">AssignAppToAppPool</a></li>
                 <li><a href="#ListSites">ListSites</a></li>
                 <li><a href="#ListSiteApps">ListSiteApps</a></li>
@@ -56,7 +57,7 @@
                 <li><a href="#AddWebSiteBinding">AddWebSiteBinding</a></li>
                 <li><a href="#StopServer">StopServer</a></li>
                 <li><a href="#StartServer">StartServer</a></li>
-                <li><a href="#RestartServer">RestartServer</a></li>
+                <li><a href="#RestartServer">ResetServer</a></li>
             </ul>
         </ul>
 
@@ -1283,6 +1284,87 @@
             following diagnostic
             report.</p><img src="../../plugins/@PLUGIN_KEY@/images/Deploy/EC-IIS7Deploy4.png" />
         </div>
+        <div id="Undeploy">
+            <a name="Undeploy" id="Undeploy"></a>
+
+            <h3>Undeploy</h3>
+
+            <p>Uses MsDeploy to undeploy an application or site.</p>
+            <p>MsDeploy is required for this procedure.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">
+                            MS deploy path
+                        </td>
+                        <td>
+                            Provide the relative or absolute path to the MSDeploy executable.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">
+                            Web site name
+                        </td>
+                        <td>
+                            A web site name to undeploy.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Application name
+                        </td>
+                        <td>
+                            An application name to undeploy. Warning: if not specified, the web site with the name above will be undeployed.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Delete virtual directories?
+                        </td>
+                        <td>
+                            Deletes the specified Web site or Web application, including any virtual directories and their content.
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Strict mode
+                        </td>
+                        <td>
+                            If checked, the procedure will fail in case the specified web site does not exist.
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <p>Enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/Undeploy/Form.png" />
+
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            copy was
+            success:</p><img src="../../plugins/@PLUGIN_KEY@/images/Undeploy/Job.png" />
+
+
+            <p>In the <b>Deploy</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/Undeploy/Logs.png" />
+        </div>
         <div id="DeployAdvanced">
             <a name="DeployAdvanced" id="DeployAdvanced"></a>
 
@@ -2139,7 +2221,7 @@ Providers can be optionally modified by using provider settings. Provider settin
         <div id="RestartServer">
             <a name="RestartServer" id="RestartServer"></a>
 
-            <h3>RestartServer</h3>
+            <h3>ResetServer</h3>
 
             <p>Restarts IIS server.</p>
             <table class="grid">
