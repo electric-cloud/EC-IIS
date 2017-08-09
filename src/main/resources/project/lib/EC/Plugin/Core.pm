@@ -485,7 +485,7 @@ sub run_command {
 
     my $cmd_to_display = join '', @cmd;
     $cmd_to_display = $self->safe_cmd($cmd_to_display);
-    $self->out(1, "Running command: " . $cmd_to_display);
+    $self->out(0, "Running command: " . $cmd_to_display);
     if ($self->dryrun()) {
         $self->dbg("Running command in dryrun mode");
         return {

@@ -58,6 +58,8 @@ use constant {
 
 sub after_init_hook {
     my ($self, %params) = @_;
+
+    print 'Using plugin @PLUGIN_NAME@' . "\n";
     $self->debug_level(0);
 }
 
@@ -504,8 +506,10 @@ sub step_deploy {
     $self->set_cmd_line($deploy_command);
     my $result = $self->run_command($deploy_command);
 
+    $self->logger->info($result->{stdout});
+
     if ($result->{code} != 0) {
-        return $self->bail_out("Cannot deploy the application: $result->{stderr}");
+        return $self->bail_out("Cannot deploy the application: " . _message_from_result($result));
     }
 
     my $application = $params->{applicationPath};
@@ -531,9 +535,10 @@ sub step_deploy {
             qq{/site.name:"$params->{websiteName}"},
             qq{/[path='/$application'].applicationPool:"$app_pool_name"}
         );
+        $self->logger->info("Going to move app $application to app pool $app_pool_name");
         my $result = $self->run_command($cmd);
         if ($result->{code} != 0) {
-            return $self->bail_out($result->{stderr});
+            return $self->bail_out("Failed to move application $application to app pool $app_pool_name: " . _message_from_result($result));
         }
         $self->logger->info($result->{stdout});
     }
@@ -738,6 +743,7 @@ sub step_create_app_pool {
         processModel.idleTimeout
         cpu.resetInterval
         recycling.periodicRestart.time
+        failure.rapidFailProtectionInterval
     );
 
     # Some parameters require special format
@@ -851,6 +857,7 @@ sub step_delete_web_site {
     my $name = $params->{websiteName};
 
     unless($self->driver->check_site_exists($name)) {
+        $self->logger->info(qq{Website "$name" does not exist});
         if ($params->{strictMode}) {
             return $self->bail_out("Website $name does not exist");
         }
@@ -872,6 +879,7 @@ sub step_delete_vdir {
     my $name = $params->{vdirName};
 
     unless ($self->driver->check_vdir_exists($name)) {
+        $self->logger->info(qq{Virtual directory "$name" does not exist});
         if ($params->{strictMode}) {
             return $self->bail_out("Virtual directory $name does not exist");
         }
@@ -895,7 +903,7 @@ sub step_list_sites {
     my $result = $self->run_command($command);
 
     if ($result->{code}) {
-        return $self->bail_out("Cannot list sites: " . ($result->{stderr} || $result->{stdout}));
+        return $self->bail_out("Cannot list sites: " . _message_from_result($result));
     }
 
     my $stdout = $result->{stdout};
@@ -941,7 +949,7 @@ sub step_list_pools {
     my $result = $self->run_command($command);
 
     if ($result->{code}) {
-        return $self->bail_out("Cannot list pools: " . ($result->{stderr} || $result->{stdout}));
+        return $self->bail_out("Cannot list pools: " . _message_from_result($result));
     }
 
     # APPPOOL "site" (MgdVersion:v4.0,MgdMode:Integrated,state:Started)
@@ -1175,7 +1183,18 @@ sub _process_result {
 sub _message_from_result {
     my ($result) = @_;
 
-    return $result->{stderr} ? $result->{stderr} : $result->{stdout};
+    my $code = $result->{code} || 0;
+    my $message = "Exit code: $code";
+    if ($code == 0) {
+        return $message;
+    }
+    if ($result->{stderr}) {
+        return  "$message, $result->{stderr}";
+    }
+    if ($result->{stdout}) {
+        return "$message, $result->{stdout}";
+    }
+    return $message;
 }
 
 
@@ -1185,6 +1204,19 @@ sub is_int {
     return $number && $number =~ m/^\d+$/;
 }
 
+sub run_command {
+    my ($self, $command) = @_;
+
+    $self->logger->info("Going to run command: $command");
+    my $result = $self->SUPER::run_command($command);
+    my $code = $result->{code} || 0;
+    $self->logger->info("Exit code: $code");
+    chomp $result->{stderr};
+    chomp $result->{stdout};
+    $self->logger->info('STDOUT: ' . $result->{stdout} || '');
+    $self->logger->info('STDERR: ' . $result->{stderr} || '');
+    return $result;
+}
 
 =head2 check_http_status( %options )
 

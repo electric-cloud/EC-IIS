@@ -19,7 +19,7 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#AddWebSiteBinding</help>
 	<label>Application server - IIS addwebsitebinding</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Adds a binding to a Website.</description>			
+	<description>Adds a binding to a Website.</description>
 	<formElement>
 		<type>entry</type>
 		<label>Website name:</label>
@@ -27,7 +27,7 @@
 		<documentation>The name of the Website to add a binding, i.e: 'Default Web Site'.</documentation>
 		<required>1</required>
 	</formElement>
-	
+
 	<formElement>
 		<type>entry</type>
 		<label>Binding protocol:</label>
@@ -35,12 +35,12 @@
 		<documentation>Protocol of the binding to add, i.e: 'http'.</documentation>
 		<required>1</required>
 	</formElement>
-	
+
 	<formElement>
 		<type>entry</type>
 		<label>Binding information:</label>
 		<property>bindingInformation</property>
 		<documentation>Information of the binding to add, including the host and the port, i.e: 'localhost:443', '*:81'.</documentation>
 		<required>1</required>
-	</formElement>	
+	</formElement>
 </editor>

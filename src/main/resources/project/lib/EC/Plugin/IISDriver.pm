@@ -317,7 +317,7 @@ sub list_sites_cmd {
 sub list_pools_cmd {
     my ($self, $params) = @_;
 
-    my $criteria = $params->{criteria} || '';
+    my $criteria = $params->{searchcriteria} || '';
     return $self->get_app_cmd('list', 'apppool', $criteria);
 }
 
