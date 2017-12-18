@@ -485,9 +485,9 @@ sub run_command {
 
     my $cmd_to_display = join '', @cmd;
     $cmd_to_display = $self->safe_cmd($cmd_to_display);
-    $self->out(1, "Running command: " . $cmd_to_display);
+    $self->logger->debug( "Running command: " . $cmd_to_display);
     if ($self->dryrun()) {
-        $self->dbg("Running command in dryrun mode");
+        $self->logger->debug("Running command in dryrun mode");
         return {
             code => 0,
             stdout => 'DUMMY_STDOUT',
@@ -764,6 +764,9 @@ sub get_params_as_hashref {
         my $param = $self->get_param($param_name);
         next unless defined $param;
         $retval->{$param_name} = trim_input($param);
+    }
+    for my $param_name (sort keys %$retval) {
+        $self->logger->info(qq{Got parameter "$param_name" with value "$retval->{$param_name}"});
     }
     return $retval;
 }

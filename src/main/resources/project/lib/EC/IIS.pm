@@ -59,14 +59,20 @@ use constant {
 sub after_init_hook {
     my ($self, %params) = @_;
 
-    print 'Using plugin @PLUGIN_NAME@' . "\n";
     my $is_win = EC::Plugin::Core::is_win();
     unless($is_win) {
         $self->bail_out("Non-windows system detected. Please run the plugin on Windows resource.");
     }
-    $self->debug_level(0);
+    $self->logger->info('Using plugin @PLUGIN_NAME@');
+    eval {
+        my $debug_level = $self->ec->getProperty('/plugins/EC-IIS/project/debugLevel')->findvalue('//value')->string_value;
+        $self->debug_level($debug_level);
+        $self->logger->level($debug_level);
+    } or do {
+        $self->debug_level(0);
+        $self->logger->level(0);
+    };
 }
-
 
 sub driver {
     my ($self) = @_;
@@ -495,6 +501,7 @@ sub step_deploy {
     else {
         $source_provider = 'package';
     }
+    $self->logger->info(qq{Source provider: $source_provider});
     my $destination_object_path = $params->{websiteName};
     if ($params->{applicationPath}) {
         $destination_object_path .= "/$params->{applicationPath}";
@@ -1179,7 +1186,7 @@ sub _process_result {
         $self->warning($1);
     }
     else {
-        $self->logger->info($result->{stdout});
+        # $self->logger->info("Result: $result->{stdout}");
         $self->success($result->{stdout});
     }
 }
@@ -1217,8 +1224,10 @@ sub run_command {
     $self->logger->info("Exit code: $code");
     chomp $result->{stderr};
     chomp $result->{stdout};
-    $self->logger->info('STDOUT: ' . $result->{stdout} || '');
-    $self->logger->info('STDERR: ' . $result->{stderr} || '');
+    my $stderr = $result->{stderr} || 'N/A';
+    my $stdout = $result->{stdout} || 'N/A';
+    $self->logger->info('STDOUT: ' . $stdout);
+    $self->logger->info('STDERR: ' . $stderr);
     return $result;
 }
 

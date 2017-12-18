@@ -18,6 +18,16 @@ sub new {
     return bless $self,$class;
 }
 
+sub level {
+    my ($self, $level) = @_;
+    if (defined $level) {
+        $self->{level} = $level;
+    }
+    else {
+        return $self->{level};
+    }
+}
+
 sub info {
     my ($self, @messages) = @_;
     $self->log(INFO, @messages);

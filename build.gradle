@@ -8,11 +8,11 @@
 
 buildscript {
     repositories {
-	maven {
-		url 'http://dl.bintray.com/ecpluginsdev/maven'
-	}
+    	maven {
+    		url 'http://dl.bintray.com/ecpluginsdev/maven'
+    	}
 
-	jcenter()
+    	jcenter()
     }
     dependencies {
         classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '+'
@@ -27,7 +27,7 @@ repositories {
 
 group = "com.electriccloud"
 description = "Plugins : EC-IIS"
-version = "3.0.1"
+version = "3.1.0"
 
 apply plugin: 'flow-gradle-plugin'
 
