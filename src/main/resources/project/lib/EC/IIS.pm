@@ -72,6 +72,12 @@ sub after_init_hook {
         $self->debug_level(0);
         $self->logger->level(0);
     };
+
+    eval {
+        my $log_to_property = $self->ec->getProperty('/plugins/EC-IIS/project/ec_debug_logToProperty')->findvalue('//value')->string_value;
+        $self->logger->log_to_property($log_to_property);
+        $self->logger->info("Logs are redirected to property $log_to_property");
+    };
 }
 
 sub driver {
