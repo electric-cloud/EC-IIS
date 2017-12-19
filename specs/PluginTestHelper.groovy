@@ -155,7 +155,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     def createSite(siteName, bindings = '', path = '', id = '') {
-        bindings ?: 'http://*:80'
+        bindings ?: 'http://*:9900'
         path ?: 'c:/tmp/test_path'
         def idString = id ? "/id:${id}" : ''
         def result = dsl """
@@ -242,9 +242,11 @@ class PluginTestHelper extends PluginSpockTestSupport {
 
         def logs = getJobProperty('/myJob/appCmdLog', result.jobId)
         def group = logs =~ /\(id:(\d+),bindings:(.+),state:(\w+)/
+        def bindings = group[0][2].split(',')
+
         def retval = [
             id: group[0][1],
-            bindings: group[0][2],
+            bindings: bindings,
             state: group[0][3]
         ]
 

@@ -15,9 +15,9 @@ class CreateWebsite extends PluginTestHelper {
         createHelperProject(resName)
     }
 
-    // def doCleanupSpec() {
-    //     dsl "deleteProject '$projectName'"
-    // }
+    def doCleanupSpec() {
+        dsl "deleteProject '$projectName'"
+    }
 
 
     def "normal params"() {
@@ -45,10 +45,10 @@ class CreateWebsite extends PluginTestHelper {
         cleanup:
             removeSite(siteName)
         where:
-            siteName << ['mysite', 'Some Site']
-            siteId << ['', 56]
-            sitePath << ['c:/tmp/path', 'c:/tmp/somepath']
-            bindings << ['http://*:80', 'http://localhost:9080']
+            siteName << ['mysite', 'Some Site', 'Multiple Bindings']
+            siteId << ['', 56, '']
+            sitePath << ['c:/tmp/path', 'c:/tmp/somepath', 'c:/tmp/path']
+            bindings << ['http://*:80', 'http://localhost:9080', "http://*:9991,http://*:1112"]
     }
 
     def "site already exists"() {
