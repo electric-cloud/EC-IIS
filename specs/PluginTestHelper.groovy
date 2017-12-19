@@ -4,6 +4,7 @@ import com.electriccloud.spec.*
 class PluginTestHelper extends PluginSpockTestSupport {
 
     static def helperProjName = 'IIS Helper Project'
+    static def helperProcedure = 'Run App Cmd'
 
     def redirectLogs(String parentProperty = '/myJob') {
         def propertyLogName = parentProperty + '/debug_logs'
@@ -163,6 +164,39 @@ class PluginTestHelper extends PluginSpockTestSupport {
                 procedureName: 'Run App Cmd',
                 actualParameter: [
                     appCmd: 'add site /name:"$siteName" /bindings:"$bindings" /physicalpath:"$path" $idString'
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+    }
+
+
+    def stopSite(siteName) {
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: '$helperProcedure',
+                actualParameter: [
+                    appCmd: 'stop site /name:"$siteName" '
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+    }
+
+    def startSite(siteName) {
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: '$helperProcedure',
+                actualParameter: [
+                    appCmd: 'start site /name:"$siteName" '
                 ]
             )
         """
