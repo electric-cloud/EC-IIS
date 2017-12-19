@@ -113,6 +113,20 @@ class PluginTestHelper extends PluginSpockTestSupport {
                     resourceName = '$resName'
                     step 'Run Command', {
                         command = '$appcmdPath \$[appCmd]'
+                        logFileName = 'RunCommand.log'
+                    }
+                    step 'Read Log', {
+                        shell = 'ec-perl'
+                        command = '''
+                            use strict;
+                            use warnings;
+                            use ElectricCommander;
+                            open my \$fh, 'RunCommand.log' or die \$!;
+                            my \$content = join('', <\$fh>);
+                            close \$fh;
+                            my \$ec = ElectricCommander->new;
+                            \$ec->setProperty('/myJob/appCmdLog', \$content);
+                        '''
                     }
                     formalParameter 'appCmd', defaultValue: '', {
                         type = 'entry'
@@ -139,15 +153,16 @@ class PluginTestHelper extends PluginSpockTestSupport {
         }
     }
 
-    def createSite(siteName, bindings = '', path = '') {
+    def createSite(siteName, bindings = '', path = '', id = '') {
         bindings ?: 'http://*:80'
         path ?: 'c:/tmp/test_path'
+        def idString = id ? "/id:${id}" : ''
         def result = dsl """
             runProcedure(
                 projectName: '$helperProjName',
                 procedureName: 'Run App Cmd',
                 actualParameter: [
-                    appCmd: 'add site /name:"$siteName" /bindings:"$bindings" /physicalpath:"$path"'
+                    appCmd: 'add site /name:"$siteName" /bindings:"$bindings" /physicalpath:"$path" $idString'
                 ]
             )
         """
@@ -156,5 +171,59 @@ class PluginTestHelper extends PluginSpockTestSupport {
             jobCompleted result.jobId
         }
     }
+
+
+    def getSite(siteName) {
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: 'Run App Cmd',
+                actualParameter: [
+                    appCmd: 'list site /name:"$siteName"'
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+
+        def logs = getJobProperty('/myJob/appCmdLog', result.jobId)
+        def group = logs =~ /\(id:(\d+),bindings:(.+),state:(\w+)/
+        def retval = [
+            id: group[0][1],
+            bindings: group[0][2],
+            state: group[0][3]
+        ]
+
+        return retval
+    }
+
+
+    def getVdir(siteName) {
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: 'Run App Cmd',
+                actualParameter: [
+                    appCmd: 'list vdir /vdir.name:"${siteName}/"'
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+
+        def logs = getJobProperty('/myJob/appCmdLog', result.jobId)
+        def group = logs =~ /\(physicalPath:(.+)\)/
+        def retval = [
+            path: group[0][1]
+        ]
+
+        return retval
+    }
+
+
 
 }
