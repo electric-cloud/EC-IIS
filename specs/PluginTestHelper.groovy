@@ -173,6 +173,24 @@ class PluginTestHelper extends PluginSpockTestSupport {
         }
     }
 
+
+    def runAppCmd(command) {
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: '$helperProcedure',
+                actualParameter: [
+                    appCmd: '$command'
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+        return result.jobId
+    }
+
     def createAppPool(name) {
         def result = dsl """
             runProcedure(
@@ -187,6 +205,14 @@ class PluginTestHelper extends PluginSpockTestSupport {
         waitUntil {
             jobCompleted result.jobId
         }
+    }
+
+    def stopAppPool(name) {
+        runAppCmd('stop apppool /apppool.name:"${name}"')
+    }
+
+    def startAppPool(name) {
+        runAppCmd('start apppool /apppool.name:"${name}"')
     }
 
 
@@ -337,6 +363,33 @@ class PluginTestHelper extends PluginSpockTestSupport {
         def group = logs =~ /\(applicationPool:(\w+)\)/
         def retval = [
             applicationPool: group[0][1]
+        ]
+
+        return retval
+    }
+
+    def getAppPool(name) {
+
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: 'Run App Cmd',
+                actualParameter: [
+                    appCmd: 'list apppool /apppool.name:"${name}"'
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+
+        def logs = getJobProperty('/myJob/appCmdLog', result.jobId)
+        def group = logs =~ /\(MgdVersion:(.+),MgdMode:(\w+),state:(\w+)\)/
+        def retval = [
+            mgdVersion: group[0][1],
+            mgdMode: group[0][2],
+            state: group[0][3]
         ]
 
         return retval
