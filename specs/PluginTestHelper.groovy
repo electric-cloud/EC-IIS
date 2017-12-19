@@ -206,6 +206,24 @@ class PluginTestHelper extends PluginSpockTestSupport {
         }
     }
 
+    def createApp(siteName, appName, physicalPath = '') {
+        physicalPath ?: 'c:/tmp/path'
+        def app = "/path:" + '/"' + appName + '"'
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: '$helperProcedure',
+                actualParameter: [
+                    appCmd: 'add app /site.name:"$siteName" $app /physicalPath:"$physicalPath" '
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+    }
+
 
     def getSite(siteName) {
         def result = dsl """
@@ -234,13 +252,17 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
 
-    def getVdir(siteName) {
+    def getVdir(siteName, appName = '') {
+        def vdirPath = siteName + '/'
+        if (appName) {
+            vdirPath += appName
+        }
         def result = dsl """
             runProcedure(
                 projectName: '$helperProjName',
                 procedureName: 'Run App Cmd',
                 actualParameter: [
-                    appCmd: 'list vdir /vdir.name:"${siteName}/"'
+                    appCmd: 'list vdir /vdir.name:"${vdirPath}/"'
                 ]
             )
         """
@@ -258,6 +280,32 @@ class PluginTestHelper extends PluginSpockTestSupport {
         return retval
     }
 
+
+    def getApp(siteName, appName) {
+        assert siteName
+        assert appName
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: 'Run App Cmd',
+                actualParameter: [
+                    appCmd: 'list app /app.name:"${siteName}/${appName}"'
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+
+        def logs = getJobProperty('/myJob/appCmdLog', result.jobId)
+        def group = logs =~ /\(applicationPool:(\w+)\)/
+        def retval = [
+            applicationPool: group[0][1]
+        ]
+
+        return retval
+    }
 
 
 }
