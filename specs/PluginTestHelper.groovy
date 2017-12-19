@@ -155,8 +155,10 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     def createSite(siteName, bindings = '', path = '', id = '') {
-        bindings ?: 'http://*:9900'
-        path ?: 'c:/tmp/test_path'
+        if (!bindings)
+            bindings = 'http://*:9900'
+        if (!path)
+            path = 'c:/tmp/test_path'
         def idString = id ? "/id:${id}" : ''
         def result = dsl """
             runProcedure(
@@ -208,11 +210,11 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     def stopAppPool(name) {
-        runAppCmd('stop apppool /apppool.name:"${name}"')
+        runAppCmd("stop apppool /apppool.name:\"${name}\"")
     }
 
     def startAppPool(name) {
-        runAppCmd('start apppool /apppool.name:"${name}"')
+        runAppCmd("start apppool /apppool.name:\"${name}\"")
     }
 
 
@@ -266,7 +268,9 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     def createApp(siteName, appName, physicalPath = '') {
-        physicalPath ?: 'c:/tmp/path'
+        if(!physicalPath)
+            physicalPath = 'c:/tmp/path'
+
         def app = "/path:" + '/"' + appName + '"'
         def result = dsl """
             runProcedure(
@@ -281,6 +285,12 @@ class PluginTestHelper extends PluginSpockTestSupport {
         waitUntil {
             jobCompleted result.jobId
         }
+    }
+
+    def createVdir(name, path = '', physicalPath = '') {
+        path ?: 'app'
+        physicalPath ?: 'c:/tmp/path'
+        runAppCmd("add vdir /app.name:\"${name}\" /path:\"${path}\" /physicalpath:\"${physicalPath}\"")
     }
 
 
