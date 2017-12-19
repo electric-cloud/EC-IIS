@@ -1,7 +1,7 @@
 import spock.lang.*
 import com.electriccloud.spec.*
 
-class CreateWebsite extends PluginTestHelper {
+class StartWebsite extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs StartWebSite'
     static def iisHandler
 
