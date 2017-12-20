@@ -194,19 +194,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     def createAppPool(name) {
-        def result = dsl """
-            runProcedure(
-                projectName: '$helperProjName',
-                procedureName: '$helperProcedure',
-                actualParameter: [
-                    appCmd: 'add apppool /name:"$name"'
-                ]
-            )
-        """
-        assert result.jobId
-        waitUntil {
-            jobCompleted result.jobId
-        }
+        runAppCmd("add apppool /apppool.name:\"${name}\"")
     }
 
     def stopAppPool(name) {
@@ -219,19 +207,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
 
 
     def removeAppPool(name) {
-        def result = dsl """
-            runProcedure(
-                projectName: '$helperProjName',
-                procedureName: '$helperProcedure',
-                actualParameter: [
-                    appCmd: 'delete apppool /name:"$name"'
-                ]
-            )
-        """
-        assert result.jobId
-        waitUntil {
-            jobCompleted result.jobId
-        }
+        runAppCmd("delete apppool /apppool.name:\"${name}\"")
     }
 
 
