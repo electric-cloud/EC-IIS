@@ -56,6 +56,7 @@ use constant {
 
 };
 
+
 sub after_init_hook {
     my ($self, %params) = @_;
 
@@ -1109,12 +1110,13 @@ sub step_list_vdirs {
         return {vdirs => \@list};
     };
 
+
     $self->save_retrieved_data(
         data => \%data,
         raw => $stdout,
         format => $params->{dumpFormat},
         property => $params->{propertyName},
-        xml_handle => $xml_handler,
+        xml_handler => $xml_handler,
     );
 
     my $found = scalar keys %data;
@@ -1165,6 +1167,9 @@ sub save_retrieved_data {
         $self->ec->setProperty($property, $json);
     }
     elsif ($format eq 'xml') {
+        unless($xml_handler && ref $xml_handler eq 'CODE') {
+            $self->bail_out('No xml_handler provided for XML output');
+        }
         my $refined = $xml_handler->($data);
         my $xml = XMLout($refined, NoAttr => 1, RootName => 'data', XMLDecl => 1);
         $message = "Data has been saved as XML under $property";
