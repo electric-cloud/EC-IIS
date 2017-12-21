@@ -23,7 +23,7 @@ class StopServer extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        dsl "deleteProject '$projectName'"
+        // dsl "deleteProject '$projectName'"
     }
 
     @Unroll
@@ -45,6 +45,7 @@ class StopServer extends PluginTestHelper {
             assert result.outcome == 'success'
             def status = serverStatus()
             logger.debug(status)
+            status =~ /Status for World Wide Web Publishing Service ( W3SVC ) : Stopped/
     }
 
     @Unroll
@@ -85,6 +86,22 @@ class StopServer extends PluginTestHelper {
         then: 'it finishes'
             assert result.outcome == 'success'
 
+    }
+
+    def "negative: wrong iisreset path"() {
+        when: "procedure runs"
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        additionalParams: '/TIMEOUT:5',
+                        execpath: 'wrong'
+                    ]
+                )
+            """
+        then: 'it finishes'
+            assert result.outcome == 'error'
     }
 
 }

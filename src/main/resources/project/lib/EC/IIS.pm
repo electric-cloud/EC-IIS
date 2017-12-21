@@ -153,17 +153,6 @@ sub read_cmd {
     return wantarray ? ($data, $status) : $data;
 };
 
-sub run_cscript_js {
-    my ($self, $src) = @_;
-
-    my ( $scriptfh, $scriptfilename ) = tempfile( DIR => '.', SUFFIX => '.js' );
-
-    print $scriptfh $src;
-    close($scriptfh);
-
-    return $self->run_cmd( [ cscript => '/E:jscript', '/NoLogo', $scriptfilename ] );
-};
-
 sub run_reset {
     my ($self, $args) = @_;
 
@@ -1123,6 +1112,26 @@ sub step_list_vdirs {
     my $summary = "Found $found virtual directories";
 
     $self->ec->setProperty('/myJobStep/summary', $summary);
+}
+
+
+sub step_stop_server {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        additionalParams
+        execpath
+    /);
+
+    my $cmd = $params->{execpath} ? qq{"$params->{execpath}"} : $self->iisreset;
+    $cmd .= ' /STOP';
+
+    if ($params->{additionalParams}) {
+        $cmd .= ' ' . $params->{additionalParams};
+    }
+
+    my $result = $self->run_command($cmd);
+    $self->_process_result($result);
 }
 
 sub save_data_to_property_sheet {
