@@ -170,6 +170,9 @@ sub update_app_pool_cmd {
         push @settings, $params->{appPoolAdditionalSettings};
     }
 
+    unless (@settings) {
+        return;
+    }
     my $command = $self->get_app_cmd('set', 'apppool', qq{/apppool.name:"$name"}, @settings);
     return $command;
 }
@@ -338,7 +341,7 @@ sub list_vdirs_cmd {
     my $vdir = $params->{vdirName} || '';
     my $extra = '';
     if ($vdir) {
-        $extra = qq{/vdir.name:"$vdir"};
+        $extra = $vdir;
     }
     return $self->get_app_cmd('list', 'vdirs', $extra);
 }

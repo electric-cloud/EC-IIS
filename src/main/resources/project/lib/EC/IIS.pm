@@ -56,6 +56,7 @@ use constant {
 
 };
 
+
 sub after_init_hook {
     my ($self, %params) = @_;
 
@@ -71,6 +72,12 @@ sub after_init_hook {
     } or do {
         $self->debug_level(0);
         $self->logger->level(0);
+    };
+
+    eval {
+        my $log_to_property = $self->ec->getProperty('/plugins/EC-IIS/project/ec_debug_logToProperty')->findvalue('//value')->string_value;
+        $self->logger->log_to_property($log_to_property);
+        $self->logger->info("Logs are redirected to property $log_to_property");
     };
 }
 
@@ -533,12 +540,13 @@ sub step_deploy {
             $app_pool_name = $params->{websiteName};
         }
         else {
-            $self->out(0, "Application $application is in app pool $app_pool_name");
+            $self->logger->info(qq{Application "$application" is in app pool "$app_pool_name"});
         }
         $params->{applicationPool} = $app_pool_name;
     }
 
-    if ($application && $app_pool_name) {
+    if ($app_pool_name) {
+        $application ||= '';
         $self->create_or_update_app_pool($params);
         my $cmd = $self->driver->get_app_cmd(
             'set',
@@ -553,9 +561,7 @@ sub step_deploy {
         }
         $self->logger->info($result->{stdout});
     }
-    elsif ($app_pool_name) {
-        $self->warning("Application pool name is specified, but not application name. Skipping application pool creation.");
-    }
+
 }
 
 sub get_site_app_pool {
@@ -577,12 +583,12 @@ sub create_or_update_app_pool {
 
     my $name = $params->{applicationPool};
     if ($self->driver->check_app_pool_exists($name)) {
-        print "Application pool $name already exists, going to update\n";
+        $self->logger->info(qq{Application pool "$name" already exists, going to update});
         # Application pool exists
         $self->update_app_pool($params, $settings);
     }
     else {
-        print "Application pool $name has not been created yet. Proceeding to adding it.\n";
+        $self->logger->info(qq{Application pool "$name" has not been created yet. Proceeding to adding it.});
         $self->create_app_pool($params, $settings);
     }
 }
@@ -612,9 +618,16 @@ sub update_app_pool {
     my ($self, $params, $available_settings) = @_;
 
     my $command = $self->driver->update_app_pool_cmd($params, $available_settings);
-    $self->set_cmd_line($command);
-    my $result = $self->run_command($command);
-    $self->_process_result($result);
+
+    if ($command) {
+        $self->set_cmd_line($command);
+        my $result = $self->run_command($command);
+        $self->_process_result($result);
+    }
+    else {
+        $self->logger->info("No changes found for application pool");
+        return;
+    }
 }
 
 
@@ -1097,12 +1110,13 @@ sub step_list_vdirs {
         return {vdirs => \@list};
     };
 
+
     $self->save_retrieved_data(
         data => \%data,
         raw => $stdout,
         format => $params->{dumpFormat},
         property => $params->{propertyName},
-        xml_handle => $xml_handler,
+        xml_handler => $xml_handler,
     );
 
     my $found = scalar keys %data;
@@ -1153,6 +1167,9 @@ sub save_retrieved_data {
         $self->ec->setProperty($property, $json);
     }
     elsif ($format eq 'xml') {
+        unless($xml_handler && ref $xml_handler eq 'CODE') {
+            $self->bail_out('No xml_handler provided for XML output');
+        }
         my $refined = $xml_handler->($data);
         my $xml = XMLout($refined, NoAttr => 1, RootName => 'data', XMLDecl => 1);
         $message = "Data has been saved as XML under $property";
