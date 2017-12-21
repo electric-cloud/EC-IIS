@@ -134,6 +134,32 @@ class PluginTestHelper extends PluginSpockTestSupport {
                     }
                 }
 
+                procedure 'RunCmd', {
+                    resourceName = '$resName'
+                    step 'runcmd', {
+                        command = '\$[cmd]'
+                        logFileName = 'Command.log'
+                    }
+
+                    step 'Read Log', {
+                        shell = 'ec-perl'
+                        command = '''
+                            use strict;
+                            use warnings;
+                            use ElectricCommander;
+                            open my \$fh, 'Command.log' or die \$!;
+                            my \$content = join('', <\$fh>);
+                            close \$fh;
+                            my \$ec = ElectricCommander->new;
+                            \$ec->setProperty('/myJob/cmdLog', \$content);
+                        '''
+                    }
+
+                    formalParameter 'cmd', defaultValue: '', {
+                        type = 'textarea'
+                    }
+                }
+
 
                 procedure 'mkdir', {
                     resourceName = '$resName'
@@ -204,6 +230,24 @@ class PluginTestHelper extends PluginSpockTestSupport {
             jobCompleted result.jobId
         }
         return result.jobId
+    }
+
+    def runCmd(command) {
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: 'RunCmd',
+                actualParameter: [
+                    cmd: '''$command'''
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+        def logs = getJobProperty('/myJob/cmdLog', result.jobId)
+        return logs
     }
 
     def createAppPool(name) {
@@ -408,6 +452,19 @@ class PluginTestHelper extends PluginSpockTestSupport {
         def cmd = "set site /site.name:\"${name}\" /+\"bindings.[protocol='http',bindingInformation='${binding}']\""
         println cmd
         runAppCmd(cmd)
+    }
+
+    def startServer() {
+        runCmd("iisreset /START")
+    }
+
+    def stopServer() {
+        runCmd('iisreset /STOP')
+    }
+
+    def serverStatus() {
+        def logs = runCmd('iisreset /STATUS')
+        logs
     }
 
 }
