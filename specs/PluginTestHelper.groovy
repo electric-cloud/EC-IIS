@@ -195,7 +195,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
                 projectName: '$helperProjName',
                 procedureName: '$helperProcedure',
                 actualParameter: [
-                    appCmd: '$command'
+                    appCmd: '''$command'''
                 ]
             )
         """
@@ -402,6 +402,12 @@ class PluginTestHelper extends PluginSpockTestSupport {
         waitUntil {
             jobCompleted result.jobId
         }
+    }
+
+    def addBinding(name, binding) {
+        def cmd = "set site /site.name:\"${name}\" /+\"bindings.[protocol='http',bindingInformation='${binding}']\""
+        println cmd
+        runAppCmd(cmd)
     }
 
 }
