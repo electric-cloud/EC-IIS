@@ -23,7 +23,7 @@ class StartServer extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        // dsl "deleteProject '$projectName'"
+        dsl "deleteProject '$projectName'"
     }
 
     @Unroll
@@ -87,7 +87,25 @@ class StartServer extends PluginTestHelper {
             """
         then: 'it finishes'
             assert result.outcome == 'success'
+    }
 
+    @Unroll
+    def "negative: wrong iisreset path"() {
+        given:
+            stopServer()
+        when: "procedure runs"
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        additionalParams: '/TIMEOUT:5',
+                        execpath: 'wrong'
+                    ]
+                )
+            """
+        then: 'it finishes'
+            assert result.outcome == 'error'
     }
 
 }

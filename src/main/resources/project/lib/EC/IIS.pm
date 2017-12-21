@@ -1134,6 +1134,26 @@ sub step_stop_server {
     $self->_process_result($result);
 }
 
+
+sub step_start_server {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        additionalParams
+        execpath
+    /);
+
+    my $cmd = $params->{execpath} ? qq{"$params->{execpath}"} : $self->iisreset;
+    $cmd .= ' /START';
+
+    if ($params->{additionalParams}) {
+        $cmd .= ' ' . $params->{additionalParams};
+    }
+
+    my $result = $self->run_command($cmd);
+    $self->_process_result($result);
+}
+
 sub save_data_to_property_sheet {
     my ($self, %params) = @_;
 
