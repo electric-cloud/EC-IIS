@@ -170,6 +170,9 @@ sub update_app_pool_cmd {
         push @settings, $params->{appPoolAdditionalSettings};
     }
 
+    unless (@settings) {
+        return;
+    }
     my $command = $self->get_app_cmd('set', 'apppool', qq{/apppool.name:"$name"}, @settings);
     return $command;
 }

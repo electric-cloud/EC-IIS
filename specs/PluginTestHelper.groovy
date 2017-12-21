@@ -134,6 +134,19 @@ class PluginTestHelper extends PluginSpockTestSupport {
                     }
                 }
 
+
+                procedure 'mkdir', {
+                    resourceName = '$resName'
+                    step 'mkdir', {
+                        command = 'mkdir "\$[directory]"'
+                        shell = 'powershell'
+                    }
+
+                    formalParameter 'directory', defaultValue: '', {
+                        type = 'entry'
+                    }
+                }
+
             }
         """
     }
@@ -346,7 +359,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
         }
 
         def logs = getJobProperty('/myJob/appCmdLog', result.jobId)
-        def group = logs =~ /\(applicationPool:(\w+)\)/
+        def group = logs =~ /\(applicationPool:(.+)\)/
         def retval = [
             applicationPool: group[0][1]
         ]
@@ -354,23 +367,10 @@ class PluginTestHelper extends PluginSpockTestSupport {
         return retval
     }
 
-    def getAppPool(name) {
+    def getAppPool(name, all = false) {
+        def jobId = runAppCmd("list apppool /apppool.name:\"${name}\"")
+        def logs = getJobProperty('/myJob/appCmdLog', jobId)
 
-        def result = dsl """
-            runProcedure(
-                projectName: '$helperProjName',
-                procedureName: 'Run App Cmd',
-                actualParameter: [
-                    appCmd: 'list apppool /apppool.name:"${name}"'
-                ]
-            )
-        """
-        assert result.jobId
-        waitUntil {
-            jobCompleted result.jobId
-        }
-
-        def logs = getJobProperty('/myJob/appCmdLog', result.jobId)
         def group = logs =~ /\(MgdVersion:(.+),MgdMode:(\w+),state:(\w+)\)/
         def retval = [
             mgdVersion: group[0][1],
@@ -378,8 +378,30 @@ class PluginTestHelper extends PluginSpockTestSupport {
             state: group[0][3]
         ]
 
+        if (all) {
+            jobId = runAppCmd("list apppool /apppool.name:\"${name}\" /text:*")
+            logs = getJobProperty('/myJob/appCmdLog', jobId)
+            retval.details = logs
+        }
+
         return retval
     }
 
+    def createDir(dirName) {
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: 'mkdir',
+                actualParameter: [
+                    directory: '$dirName'
+                ]
+            )
+        """
+
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+    }
 
 }

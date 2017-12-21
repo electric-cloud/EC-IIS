@@ -539,12 +539,13 @@ sub step_deploy {
             $app_pool_name = $params->{websiteName};
         }
         else {
-            $self->out(0, "Application $application is in app pool $app_pool_name");
+            $self->logger->info(qq{Application "$application" is in app pool "$app_pool_name"});
         }
         $params->{applicationPool} = $app_pool_name;
     }
 
-    if ($application && $app_pool_name) {
+    if ($app_pool_name) {
+        $application ||= '';
         $self->create_or_update_app_pool($params);
         my $cmd = $self->driver->get_app_cmd(
             'set',
@@ -559,9 +560,7 @@ sub step_deploy {
         }
         $self->logger->info($result->{stdout});
     }
-    elsif ($app_pool_name) {
-        $self->warning("Application pool name is specified, but not application name. Skipping application pool creation.");
-    }
+
 }
 
 sub get_site_app_pool {
@@ -583,12 +582,12 @@ sub create_or_update_app_pool {
 
     my $name = $params->{applicationPool};
     if ($self->driver->check_app_pool_exists($name)) {
-        print "Application pool $name already exists, going to update\n";
+        $self->logger->info(qq{Application pool "$name" already exists, going to update});
         # Application pool exists
         $self->update_app_pool($params, $settings);
     }
     else {
-        print "Application pool $name has not been created yet. Proceeding to adding it.\n";
+        $self->logger->info(qq{Application pool "$name" has not been created yet. Proceeding to adding it.});
         $self->create_app_pool($params, $settings);
     }
 }
@@ -618,9 +617,16 @@ sub update_app_pool {
     my ($self, $params, $available_settings) = @_;
 
     my $command = $self->driver->update_app_pool_cmd($params, $available_settings);
-    $self->set_cmd_line($command);
-    my $result = $self->run_command($command);
-    $self->_process_result($result);
+
+    if ($command) {
+        $self->set_cmd_line($command);
+        my $result = $self->run_command($command);
+        $self->_process_result($result);
+    }
+    else {
+        $self->logger->info("No changes found for application pool");
+        return;
+    }
 }
 
 
