@@ -174,7 +174,7 @@
         </propertySheet>
         <procedure>
             <procedureName>CreateConfiguration</procedureName>
-            <description>Create a IIS configuration</description>
+            <description>Create a IIS configuration (DEPRECATED)</description>
             <jobNameTemplate>iis-cfg-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
