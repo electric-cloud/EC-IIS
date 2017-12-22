@@ -2432,6 +2432,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>credential</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
 
                             </propertySheet>
                         </property>
@@ -2442,7 +2452,7 @@
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
                 <description>Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration if the 'Use Credentials' parameter is checked. (Required)</description>
-                <required>1</required>
+                <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
@@ -2487,6 +2497,13 @@
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
+            <formalParameter>
+                <formalParameterName>credential</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>credential</type>
+            </formalParameter>
             <step>
                 <stepName>CheckServerStatus</stepName>
                 <alwaysRun>0</alwaysRun>
@@ -2521,6 +2538,9 @@
                         </propertySheet>
                     </property>
                 </propertySheet>
+                <attachedParameters>
+                    <formalParameterName>credential</formalParameterName>
+                </attachedParameters>
             </step>
         </procedure>
 

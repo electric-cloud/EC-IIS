@@ -1199,13 +1199,13 @@ sub step_check_server_status {
     my ($self) = @_;
 
     my $params = $self->get_params_as_hashref(qw/
-        usecredentials
         configname
         checkUrl
         expectStatus
         unavailable
         checkTimeout
         checkRetries
+        credential
     /);
     my $url = '';
     my $port = '';
@@ -1223,14 +1223,21 @@ sub step_check_server_status {
         if ($config->{iis_port}) {
             $port = $config->{iis_port};
         }
-        if($params->{usecredentials}) {
-            if ($config->{user}) {
-                $user = $config->{user};
-            }
-            if ($config->{password}) {
-                $pass = $config->{password};
-            }
+
+        if ($config->{user}) {
+            $user = $config->{user};
         }
+        if ($config->{password}) {
+            $pass = $config->{password};
+        }
+
+    }
+
+    if ($params->{credential}) {
+        # Get user/password out of credential
+        my $xpath = $self->ec->getFullCredential($params->{credential});
+        $user = $xpath->findvalue('//userName')->string_value;
+        $pass = $xpath->findvalue('//password')->string_value;
     }
 
     if ( $port ne '' ) {
@@ -1242,17 +1249,16 @@ sub step_check_server_status {
         status => $params->{expectStatus},
         unavailable => $params->{unavailable},
         timeout => $params->{checkTimeout},
-        tries => $params->{checkRetries}
+        tries => $params->{checkRetries},
+        user => $user,
+        pass => $pass
     );
 
     unless($opt{url}) {
         $self->bail_out("URL must be specified either in configuration or in the procedure parameters.");
     }
 
-    if ($params->{usecredentials}) {
-        $opt{user} = $user;
-        $opt{pass} = $pass;
-    }
+
     my $error = $self->check_http_status(%opt);
 
     # Check the outcome of the response
@@ -1302,10 +1308,6 @@ sub check_http_status {
             , (defined $opt{user})?('user', 'pass'):('pass', 'user');
     };
 
-    # TODO self->out, but we have debug_level 0
-    warn "check_http_status(): "
-        .join ", ", map { "$_: '$opt{$_}'" } sort keys %opt;
-
     # TODO check that server resolves first and DIE if not
 
     $self->logger->info("Using timeout: $opt{timeout} seconds");
@@ -1349,7 +1351,6 @@ sub check_http_status {
         $request->authorization_basic( $opt{user}, $opt{pass} );
     };
 
-    $opt{tries};
     my $response;
     my $status = qr/$opt{status}/;
     my $success;
