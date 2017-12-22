@@ -174,7 +174,7 @@
         </propertySheet>
         <procedure>
             <procedureName>CreateConfiguration</procedureName>
-            <description>Create a IIS configuration (DEPRECATED)</description>
+            <description>Create a IIS configuration</description>
             <jobNameTemplate>iis-cfg-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
@@ -264,7 +264,7 @@
             <formalParameter>
                 <formalParameterName>iis_computer</formalParameterName>
                 <defaultValue/>
-                <description>Computer name of the server that will run the scripts (e.g. srv01).</description>
+                <description>Computer name of the server that will run the scripts (e.g. srv01). (DEPRECATED).</description>
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
