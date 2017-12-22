@@ -461,7 +461,7 @@
                             Orphan action executable parameters
                         </td>
                         <td>
-                            Parameters for the executable that is run when a worker process is abandoned (orphaned). For example, -g –p %1% is appropriate if the NTSD is the executable invoked for debugging worker process failures.
+                            Parameters for the executable that is run when a worker process is abandoned (orphaned). For example, -g -p %1% is appropriate if the NTSD is the executable invoked for debugging worker process failures.
                         </td>
                     </tr>
 
