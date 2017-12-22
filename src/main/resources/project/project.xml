@@ -265,7 +265,7 @@
                 <formalParameterName>iis_computer</formalParameterName>
                 <defaultValue/>
                 <description>Computer name of the server that will run the scripts (e.g. srv01). (DEPRECATED).</description>
-                <required>1</required>
+                <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
@@ -2413,7 +2413,7 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>timeout</propertyName>
+                                    <propertyName>checkTimeout</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -2423,7 +2423,7 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>retries</propertyName>
+                                    <propertyName>checkRetries</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -2474,14 +2474,14 @@
                 <type>checkbox</type>
             </formalParameter>
             <formalParameter>
-                <formalParameterName>timeout</formalParameterName>
+                <formalParameterName>checkTimeout</formalParameterName>
                 <defaultValue/>
                 <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
-                <formalParameterName>retries</formalParameterName>
+                <formalParameterName>checkRetries</formalParameterName>
                 <defaultValue/>
                 <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>

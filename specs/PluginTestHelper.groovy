@@ -197,25 +197,25 @@ class PluginTestHelper extends PluginSpockTestSupport {
         if (!bindings)
             bindings = 'http://*:9900'
         if (!path)
-            path = 'c:/tmp/test_path'
+            path = "c:/tmp/test_path"
         def idString = id ? "/id:${id}" : ''
-        def result = dsl """
-            runProcedure(
-                projectName: '$helperProjName',
-                procedureName: 'Run App Cmd',
-                actualParameter: [
-                    appCmd: 'add site /name:"$siteName" /bindings:"$bindings" /physicalpath:"$path" $idString'
-                ]
-            )
-        """
-        assert result.jobId
-        waitUntil {
-            jobCompleted result.jobId
+
+        runAppCmd("add site /name:\"$siteName\" /bindings:\"$bindings\" /physicalpath:\"$path\" $idString")
+    }
+
+
+    def moveAppToPool(siteName, appName, poolName) {
+        def name = siteName + '/'
+        if (appName) {
+            name += appName
         }
+        runAppCmd("set app /app.name:\"${name}\" /applicationPool:\"${poolName}\"")
+
     }
 
 
     def runAppCmd(command) {
+
         def result = dsl """
             runProcedure(
                 projectName: '$helperProjName',
@@ -359,14 +359,14 @@ class PluginTestHelper extends PluginSpockTestSupport {
     def getVdir(siteName, appName = '') {
         def vdirPath = siteName + '/'
         if (appName) {
-            vdirPath += appName
+            vdirPath += appName+ '/'
         }
         def result = dsl """
             runProcedure(
                 projectName: '$helperProjName',
                 procedureName: 'Run App Cmd',
                 actualParameter: [
-                    appCmd: 'list vdir /vdir.name:"${vdirPath}/"'
+                    appCmd: 'list vdir /vdir.name:"${vdirPath}"'
                 ]
             )
         """
@@ -376,6 +376,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
         }
 
         def logs = getJobProperty('/myJob/appCmdLog', result.jobId)
+
         def group = logs =~ /\(physicalPath:(.+)\)/
         def retval = [
             path: group[0][1]

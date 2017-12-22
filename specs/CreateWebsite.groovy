@@ -19,8 +19,8 @@ class CreateWebsite extends PluginTestHelper {
         dsl "deleteProject '$projectName'"
     }
 
-
-    def "normal params"() {
+    @Unroll
+    def "normal params siteName: #siteName, siteId: #siteId, sitePath: #sitePath , bindings: #bindings"() {
         given: 'the site is removed'
             removeSite(siteName)
         when: 'procedure runs'
@@ -42,6 +42,9 @@ class CreateWebsite extends PluginTestHelper {
             assert result.logs =~ /SITE object "$siteName" added/
             assert result.logs =~ /APP object "$siteName\/" added/
 
+            def validPath = sitePath.replaceAll('/', "\\\\").replace('c', 'C')
+            def vdir = getVdir(siteName)
+            assert vdir.path == validPath
         cleanup:
             removeSite(siteName)
         where:

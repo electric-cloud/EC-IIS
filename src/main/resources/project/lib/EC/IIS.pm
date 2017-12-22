@@ -173,7 +173,7 @@ sub setProperties {
     };
 }
 
-# TBD to delete
+
 sub getConfiguration($){
     my ($self, $configName) = @_;
 
@@ -1193,6 +1193,84 @@ sub run_command {
     return $result;
 }
 
+
+
+sub step_check_server_status {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        usecredentials
+        configname
+        checkUrl
+        expectStatus
+        unavailable
+        checkTimeout
+        checkRetries
+    /);
+    my $url = '';
+    my $port = '';
+    my $user;
+    my $pass;
+    if ($params->{configname}) {
+        my $config = $self->getConfiguration($params->{configname});
+        if ($config->{iis_url}) {
+            $url = $config->{iis_url};
+        }
+        else {
+            $self->bail_out(qq{Cannot get IIS URL from config "$params->{configname}"});
+        }
+
+        if ($config->{iis_port}) {
+            $port = $config->{iis_port};
+        }
+        if($params->{usecredentials}) {
+            if ($config->{user}) {
+                $user = $config->{user};
+            }
+            if ($config->{password}) {
+                $pass = $config->{password};
+            }
+        }
+    }
+
+    if ( $port ne '' ) {
+        $url =~ s/(\/*)$/:$port/;
+    }
+
+    my %opt = (
+        url => $params->{checkUrl} || $url,
+        status => $params->{expectStatus},
+        unavailable => $params->{unavailable},
+        timeout => $params->{checkTimeout},
+        tries => $params->{checkRetries}
+    );
+
+    unless($opt{url}) {
+        $self->bail_out("URL must be specified either in configuration or in the procedure parameters.");
+    }
+
+    if ($params->{usecredentials}) {
+        $opt{user} = $user;
+        $opt{pass} = $pass;
+    }
+    my $error = $self->check_http_status(%opt);
+
+    # Check the outcome of the response
+    if ( !$error ) {
+        $self->logger->info("URL successful (expected $opt{status}): $url");
+    }
+    else {
+        $self->logger->info("Error: $error");
+    }
+    my %props = ();
+    $props{'checkServerStatusLine'} = $url;
+    $props{'checkServerStatusError'} = $error;
+    $self->setProperties( \%props );
+    if ($error) {
+        $self->bail_out($error);
+    }
+}
+
 =head2 check_http_status( %options )
 
 %options may include:
@@ -1214,7 +1292,7 @@ sub check_http_status {
     my ($self, %opt) = @_;
 
     my $url = $opt{url};
-    defined $url or croak "check_http_status(): url parameter is required";
+    defined $url or die "check_http_status(): url parameter is required";
     $url =~ m#^https?://# or $url = "http://$url";
     $opt{timeout} ||= 30;
     $opt{tries}   ||= 1;
@@ -1230,6 +1308,7 @@ sub check_http_status {
 
     # TODO check that server resolves first and DIE if not
 
+    $self->logger->info("Using timeout: $opt{timeout} seconds");
     # check port availability if asked to do so
     if ($opt{unavailable}) {
         my ($host, $port) = $url =~ m#https?://([\w\-\.]+)(?::(\d+))?(?:[/?]|$)#;
@@ -1256,28 +1335,35 @@ sub check_http_status {
     };
 
     # Finally, go for HTTP request
-    my $agent = LWP::UserAgent->new( env_proxy => 1, keep_alive => 1
-        , timeout => $opt{timeout} );
+    my $agent = LWP::UserAgent->new(
+        env_proxy => 1,
+        keep_alive => 1,
+        timeout => $opt{timeout}
+    );
     my $request = HTTP::Request->new( GET => $url );
 
+    $self->logger->info("Request: " . $request->as_string);
+
     if (defined $opt{user} and defined $opt{pass}) {
+        $self->logger->info("Username: $opt{user}, password: ****");
         $request->authorization_basic( $opt{user}, $opt{pass} );
     };
 
-    # If timeout, retry
-    # TODO Heard rumors that timeout isn't handled properly on https
-    # but this is unlikely to disrupt us here
-    # TODO Don't rely on human-readable message
-    $opt{tries}--;
+    $opt{tries};
     my $response;
+    my $status = qr/$opt{status}/;
+    my $success;
     do {
         $response = $agent->request($request);
-    } while ($response->message =~ /Can't connect/ and $opt{tries}-->0 );
+        $opt{tries}--;
+        $self->logger->info("Retries left: $opt{tries}");
+        $success = ($response->code =~ $status);
+        sleep 10;
+    } while ($opt{tries} > 0 && !$success);
 
-    my $success = ($response->code == $opt{status});
 
     return $success ? '' : "Expected $opt{status}, got ".$response->status_line;
-};
+}
 
 sub _flatten_map {
     my ($map, $prefix) = @_;
