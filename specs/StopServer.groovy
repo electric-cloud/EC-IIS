@@ -45,6 +45,7 @@ class StopServer extends PluginTestHelper {
             assert result.outcome == 'success'
             def status = serverStatus()
             logger.debug(status)
+            assert status =~ /Stopped/
     }
 
     @Unroll
@@ -85,6 +86,22 @@ class StopServer extends PluginTestHelper {
         then: 'it finishes'
             assert result.outcome == 'success'
 
+    }
+
+    def "negative: wrong iisreset path"() {
+        when: "procedure runs"
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        additionalParams: '/TIMEOUT:5',
+                        execpath: 'wrong'
+                    ]
+                )
+            """
+        then: 'it finishes'
+            assert result.outcome == 'error'
     }
 
 }
