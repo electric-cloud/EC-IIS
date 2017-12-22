@@ -100,100 +100,12 @@ sub trim {
     return $string;
 };
 
-sub run_cmd {
-    my ($self, $args, %opt) = @_;
-
-    croak "No command to execute"
-        unless $args->[0];
-
-    my $cmd = $self->printable_cmdline($args);
-    my $cmd_show = $self->printable_cmdline($args, %opt);
-    print "Executing: $cmd_show\n";
-
-    local $!;
-    my $ret = system $cmd;
-    if ($!) {
-        croak "Cannot execute '$args->[0]': $!";
-    } else {
-        $ret >>= 8;
-    };
-
-    $self->setProperties({cmdLine => $cmd_show}); # TODO what if >1  commands?..
-
-    return $ret;
-};
-
-sub read_cmd {
-    my ($self, $args, %opt) = @_;
-
-    croak "read_cmd(): First argument MUST be an arrayref"
-        unless ref $args eq 'ARRAY';
-    croak "read_cmd(): No command to execute"
-        unless $args->[0];
-
-    my $cmd = $self->printable_cmdline($args);
-    my $cmd_show = $self->printable_cmdline($args, %opt);
-    print Carp::shortmess("Reading output from: $cmd_show");
-
-    local $!;
-    my $pid = open( my $fd, "-|", $cmd)
-        or croak "Failed to execute '$args->[0]': $!";
-
-    local $/;
-    my $data = <$fd>;
-    waitpid($pid, 0);
-    my $status = $? >> 8;
-
-    if ($status) {
-        print Carp::shortmess("Command exited with status $status");
-    };
-
-    $self->setProperties({cmdLine => $cmd_show}); # TODO what if >1  commands?..
-
-    return wantarray ? ($data, $status) : $data;
-};
-
-sub run_reset {
-    my ($self, $args) = @_;
-
-    $args = [] unless defined $args;
-    $args = [ $args ] unless ref $args eq 'ARRAY'; # just 1 arg
-    my $ret = $self->run_cmd( [ $self->iisreset, @$args ] );
-
-    if ($ret) {
-        print "iisreset ".$self->iisreset." failed with exit status $ret\n";
-    };
-
-    return $ret;
-};
-
 sub iisreset {
     return 'iisreset'; #TODO configurable
 };
 
 sub cmd_appcmd {
     return DEFAULT_APPCMD_PATH;
-};
-
-sub printable_cmdline {
-    my ($self, $args, %opt) = @_;
-
-    # We know for sure that password (if any) follows the /p flag
-    my $is_password;
-    my @safe;
-    foreach (@$args) {
-        if ($is_password) {
-            push @safe, '*****';
-            $is_password = 0;
-            next;
-        };
-        $is_password++ if $opt{password_after} and $_ eq $opt{password_after};
-        push @safe, $_;
-    };
-
-    return join ' ', map {
-        /[^\w\/\\\.]/ ? qq{"$_"} : $_; # TODO escape \'s?..
-    } @safe;
 };
 
 
@@ -238,22 +150,6 @@ sub outcome_error {
     return $self->ec->setProperty( "/myJobStep/outcome", $fail ? 'error' : 'success' );
 };
 
-sub get_site_id {
-    my ($self, $name) = @_;
-
-    if ($self->iis_version < 7) {
-        croak "get_site_id() unimplemented on IIS v.".$self->iis_version;
-    };
-    my ($content, $ret) = $self->read_cmd(
-        [ $self->cmd_appcmd => list => site => "/name:$name" ] );
-    croak "get_site_id(): Failed to execute ".$self->cmd_appcmd.": ret $ret, output was $content"
-        if $ret;
-
-    print "Got this: $content\n";
-    $content =~ m#id:(\d+)#;
-    return $1;
-};
-
 ########################################################################
 # setProperties - set a group of properties into the Electric Commander
 #
@@ -277,6 +173,7 @@ sub setProperties {
     };
 }
 
+# TBD to delete
 sub getConfiguration($){
     my ($self, $configName) = @_;
 
@@ -1125,6 +1022,25 @@ sub step_stop_server {
 
     my $cmd = $params->{execpath} ? qq{"$params->{execpath}"} : $self->iisreset;
     $cmd .= ' /STOP';
+
+    if ($params->{additionalParams}) {
+        $cmd .= ' ' . $params->{additionalParams};
+    }
+
+    my $result = $self->run_command($cmd);
+    $self->_process_result($result);
+}
+
+
+sub step_reset_server {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        additionalParams
+        execpath
+    /);
+
+    my $cmd = $params->{execpath} ? qq{"$params->{execpath}"} : $self->iisreset;
 
     if ($params->{additionalParams}) {
         $cmd .= ' ' . $params->{additionalParams};
