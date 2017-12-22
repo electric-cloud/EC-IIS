@@ -25,7 +25,7 @@
         <documentation>IP Address of IIS Server. e.g. 192.168.1.100</documentation>
         <required>1</required>
     </formElement>
-    
+
     <formElement>
         <type>entry</type>
         <label>IIS Port:</label>
@@ -34,16 +34,16 @@
         <documentation>IP Port of the IIS Server. If port is 80, leave the field blank.</documentation>
         <required>0</required>
     </formElement>
-    
+
     <formElement>
         <type>entry</type>
         <label>Computer Name:</label>
         <property>iis_computer</property>
         <value></value>
-        <documentation>Computer name into scripts will be run. e.g. SRV01</documentation>
+        <documentation>Computer name into scripts will be run. e.g. SRV01. (DEPRECATED).</documentation>
         <required>0</required>
     </formElement>
-    
+
     <formElement>
         <type>credential</type>
         <label>Login as:</label>
@@ -52,5 +52,5 @@
         <required>0</required>
     </formElement>
 
-    
+
 </editor>

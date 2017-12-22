@@ -2287,6 +2287,14 @@ Providers can be optionally modified by using provider settings. Provider settin
 
 
         <h1>Release Notes</h1>
+        <h2>@PLUGIN_KEY@ 3.1.0</h2>
+        <ul>
+            <li>Field "Computer Name" in configuration is deprecated.</li>
+            <li>"Credentials" field was added to "CheckServerStatus" procedure.</li>
+            <li>"Configuration Name" field is no longer required in "CheckServerStatus" procedure.</li>
+            <li>Deploy logic has changed: if no application name is provided to Deploy procedure, but Application Pool parameters are provided, root application of the Web Site (/) is moved into the specified Application Pool and parameters are applied to this application pool.
+            </li>
+        </ul>
 
         <h2>@PLUGIN_KEY@ 3.0.0</h2>
         <ul>

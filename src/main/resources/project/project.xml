@@ -264,8 +264,8 @@
             <formalParameter>
                 <formalParameterName>iis_computer</formalParameterName>
                 <defaultValue/>
-                <description>Computer name of the server that will run the scripts (e.g. srv01).</description>
-                <required>1</required>
+                <description>Computer name of the server that will run the scripts (e.g. srv01). (DEPRECATED).</description>
+                <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
@@ -2413,7 +2413,7 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>timeout</propertyName>
+                                    <propertyName>checkTimeout</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -2423,7 +2423,17 @@
                                     </propertySheet>
                                 </property>
                                 <property>
-                                    <propertyName>retries</propertyName>
+                                    <propertyName>checkRetries</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>credential</propertyName>
                                     <propertySheet>
                                         <property>
                                             <propertyName>formType</propertyName>
@@ -2442,7 +2452,7 @@
                 <formalParameterName>configname</formalParameterName>
                 <defaultValue/>
                 <description>Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration if the 'Use Credentials' parameter is checked. (Required)</description>
-                <required>1</required>
+                <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
@@ -2474,18 +2484,25 @@
                 <type>checkbox</type>
             </formalParameter>
             <formalParameter>
-                <formalParameterName>timeout</formalParameterName>
+                <formalParameterName>checkTimeout</formalParameterName>
                 <defaultValue/>
                 <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
-                <formalParameterName>retries</formalParameterName>
+                <formalParameterName>checkRetries</formalParameterName>
                 <defaultValue/>
                 <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>credential</formalParameterName>
+                <defaultValue/>
+                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <required>0</required>
+                <type>credential</type>
             </formalParameter>
             <step>
                 <stepName>CheckServerStatus</stepName>
@@ -2521,6 +2538,9 @@
                         </propertySheet>
                     </property>
                 </propertySheet>
+                <attachedParameters>
+                    <formalParameterName>credential</formalParameterName>
+                </attachedParameters>
             </step>
         </procedure>
 
