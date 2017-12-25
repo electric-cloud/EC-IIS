@@ -34,6 +34,18 @@ sub get_app_pool {
     return;
 }
 
+
+sub start_site_cmd {
+    my ($self, $params) = @_;
+
+    my $name = $params->{siteName};
+    unless($name) {
+        die "No site name is provided";
+    }
+
+    return $self->get_app_cmd('start', 'site', qq{/site.name:"$name"});
+}
+
 sub recycle_app_pool_cmd {
     my ($self, $params) = @_;
 

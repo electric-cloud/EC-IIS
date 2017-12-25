@@ -15,9 +15,9 @@ class StartWebsite extends PluginTestHelper {
         createHelperProject(resName)
     }
 
-    // def doCleanupSpec() {
-    //     dsl "deleteProject '$projectName'"
-    // }
+    def doCleanupSpec() {
+        dsl "deleteProject '$projectName'"
+    }
 
 
     def "start stopped site"() {
@@ -104,6 +104,7 @@ class StartWebsite extends PluginTestHelper {
         then: 'procedure succeeds'
             assert result.outcome == 'error'
             logger.debug(result.logs)
+            assert result.logs =~ /Cannot create a file when that file already exists/
         cleanup:
             removeSite('AnotherSite')
             removeSite('MySite')

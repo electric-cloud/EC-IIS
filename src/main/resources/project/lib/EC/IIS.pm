@@ -568,6 +568,23 @@ sub step_create_application {
     }
 }
 
+
+sub step_start_website {
+    my ($self) = @_;
+
+    eval {
+        my $params = $self->get_params_as_hashref(qw/sitename/);
+        my $command = $self->driver->start_site_cmd({siteName => $params->{sitename}});
+        $self->set_cmd_line($command);
+
+        my $result = $self->run_command($command);
+        $self->_process_result($result);
+        1;
+    } or do {
+        $self->bail_out($@);
+    };
+}
+
 sub step_delete_application {
     my ($self) = @_;
 
