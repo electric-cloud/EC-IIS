@@ -20,6 +20,6 @@ services:
       - internal
     container_name: iis
     tty: true
-networks:
-  internal:
-    driver: bridge
+# networks:
+#   internal:
+#     driver: bridge
