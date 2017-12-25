@@ -11,7 +11,7 @@ services:
       - internal
     container_name: electricflow
     tty: true
-  jira:
+  iis:
     image: "electricflow/iis:iis10"
     ports:
       - "7808:7800"
@@ -20,6 +20,6 @@ services:
       - internal
     container_name: iis
     tty: true
-# networks:
-#   internal:
-#     driver: bridge
+networks:
+  internal:
+    name: internal
