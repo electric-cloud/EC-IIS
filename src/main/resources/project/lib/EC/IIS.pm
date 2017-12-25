@@ -185,7 +185,13 @@ sub getConfiguration($){
     my $proj = "$[/myProject/projectName]";
     my $pluginConfigs = new ElectricCommander::PropDB($ec,"/projects/$proj/iis_cfgs");
 
-    my %configRow = $pluginConfigs->getRow($configName);
+    my %configRow;
+    eval {
+        %configRow = $pluginConfigs->getRow($configName);
+        1;
+    } or do {
+        $self->bail_out(qq{Configuration "$configName" does not exist});
+    };
 
     # Check if configuration exists
     unless(keys(%configRow)) {
