@@ -28,7 +28,7 @@ class CheckServerStatus extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        dsl "deleteProject '$projectName'"
+        // dsl "deleteProject '$projectName'"
     }
 
     @Unroll
@@ -164,6 +164,23 @@ class CheckServerStatus extends PluginTestHelper {
             username << ['', 'test']
             password << ['', 'test']
 
+    }
+
+    def 'non-existing configuration'() {
+        when: "procedure runs"
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        configname: 'no config',
+                    ]
+                )
+            """
+        then:
+            assert result.outcome == 'error'
+            logger.debug(result.logs)
+            assert result.logs =~ /does not exist/
     }
 
     def createLivingSite(siteName, port) {
