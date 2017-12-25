@@ -28,7 +28,7 @@ class CheckServerStatus extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        // dsl "deleteProject '$projectName'"
+        dsl "deleteProject '$projectName'"
     }
 
     @Unroll
