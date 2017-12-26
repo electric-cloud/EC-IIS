@@ -3514,6 +3514,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>credential</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
 
                             </propertySheet>
                         </property>
@@ -3560,6 +3570,13 @@
                 <required>0</required>
                 <type>checkbox</type>
             </formalParameter>
+            <formalParameter>
+                <formalParameterName>credential</formalParameterName>
+                <defaultValue/>
+                <description>If provided, this credential will be used to access site folder.</description>
+                <required>0</required>
+                <type>credential</type>
+            </formalParameter>
 
             <step>
                 <stepName>CreateWebSite</stepName>
@@ -3594,6 +3611,9 @@
                         </propertySheet>
                     </property>
                 </propertySheet>
+                <attachedParameters>
+                    <formalParameterName>credential</formalParameterName>
+                </attachedParameters>
             </step>
         </procedure>
 

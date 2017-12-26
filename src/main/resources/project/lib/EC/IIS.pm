@@ -308,16 +308,18 @@ sub step_create_or_update_site {
         websitepath
         websiteid
         createDirectory
+        credential
     ));
 
     my $website_name = $params->{websitename};
-    $params = {
-        websiteName => $params->{websitename},
-        bindings => $params->{bindings},
-        physicalPath => EC::Plugin::Core::canon_path($params->{websitepath}),
-        websiteId => $params->{websiteid},
-        createDirectory => $params->{createDirectory}
-    };
+    $params->{websiteName} = $params->{websitename};
+    $params->{physicalPath} = EC::Plugin::Core::canon_path($params->{websitepath});
+    $params->{websiteId} = $params->{websiteid};
+
+    my $creds;
+    if ($params->{credential}) {
+        $creds = $self->_get_credentials($params->{credential});
+    }
 
     if ($self->driver->check_site_exists($params->{websiteName})) {
         $self->logger->info("Site $params->{websiteName} already exists.");
@@ -348,6 +350,14 @@ sub step_create_or_update_site {
         $self->set_cmd_line($command);
         my $result = $self->run_command($command);
         $self->_process_result($result);
+    }
+
+    if ($creds) {
+        my $vdir_name = "$params->{websiteName}/";
+        $self->logger->info("Going to set credentails for directory $vdir_name");
+        my $cmd =  $self->driver->set_vdir_creds_cmd({vdirName => $vdir_name, creds => $creds});
+        my $res = $self->run_command($cmd);
+        $self->_process_result($res);
     }
 }
 
@@ -1448,6 +1458,17 @@ sub _create_directory {
     else {
         $self->logger->info(qq{Created directory "$normalized"});
     }
+}
+
+
+sub _get_credentials {
+    my ($self, $credential) = @_;
+
+    # Get user/password out of credential
+    my $xpath = $self->ec->getFullCredential($credential);
+    my $user = $xpath->findvalue('//userName')->string_value;
+    my $pass = $xpath->findvalue('//password')->string_value;
+    return {userName => $user, password => $pass};
 }
 
 1;

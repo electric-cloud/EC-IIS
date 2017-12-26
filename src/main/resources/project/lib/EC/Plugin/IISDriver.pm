@@ -358,4 +358,23 @@ sub list_vdirs_cmd {
     return $self->get_app_cmd('list', 'vdirs', $extra);
 }
 
+sub set_vdir_creds_cmd {
+    my ($self, $params) = @_;
+
+    my $vdir = $params->{vdirName};
+    my $creds = $params->{creds};
+
+    my $username = $creds->{userName};
+    my $password = $creds->{password};
+
+    unless($vdir) {
+        die 'No virtual directory name found in params';
+    }
+    unless($username && $password) {
+        die 'No username or password found in params';
+    }
+    # TODO escape
+    return $self->get_app_cmd('set', 'vdir', qq{/vdir.name:"$vdir"}, qq{/username:"$username"}, qq{/password:"$password"});
+}
+
 1;

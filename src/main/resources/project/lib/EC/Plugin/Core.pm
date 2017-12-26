@@ -37,6 +37,7 @@ use IO::Select;
 use Symbol qw/gensym/;
 use File::Spec;
 use EC::Plugin::Logger;
+use Encode qw(encode decode);
 
 my $DRYRUN = 0;
 
@@ -579,6 +580,8 @@ sub _syscall_win32 {
     my ($self, @command) = @_;
 
     my $command = join ' ', @command;
+
+    $command = encode('utf8', $command);
 
     my $result_folder = $ENV{COMMANDER_WORKSPACE};
     if (!$result_folder) {
