@@ -19,26 +19,36 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateWebApplication</help>
 	<label>Application server - IIS createwebapplication</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Creates a web application.</description>	
+	<description>Creates a web application.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Application name:</label>
+		<label>Application Name:</label>
 		<property>appname</property>
 		<required>1</required>
 		<documentation>The name of the website to add the application, i.e: 'Default Web Site'.</documentation>
-	</formElement>		
+	</formElement>
 	<formElement>
 		<type>entry</type>
-		<label>Virtual path:</label>
+		<label>Virtual Path:</label>
 		<property>path</property>
 		<required>1</required>
 		<documentation>Virtual path of the application, i.e: '/myApplication'.</documentation>
-	</formElement>		
+	</formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Absolute Physical Path:</label>
+        <property>physicalpath</property>
+        <required>1</required>
+        <documentation>The absolute physical path of the application to create, i.e: 'c:/Inetpub/wwwroot/myApp'.</documentation>
+    </formElement>
 	<formElement>
-		<type>entry</type>
-		<label>Absolute physical path:</label>
-		<property>physicalpath</property>
-		<required>1</required>
-		<documentation>The absolute physical path of the application to create, i.e: 'c:/Inetpub/wwwroot/myApp'.</documentation>
-	</formElement>		
+		<type>checkbox</type>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+		<label>Create Directory?:</label>
+		<property>createDirectory</property>
+		<required>0</required>
+		<documentation>If checked, the specified directory will be created if it does not exist.</documentation>
+        <value>0</value>
+	</formElement>
 </editor>

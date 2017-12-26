@@ -554,11 +554,12 @@ sub step_create_application {
     my ($self) = @_;
 
     # TODO rename form fields
-    my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
+    my $params = $self->get_params_as_hashref(qw/appname path physicalpath createDirectory/);
     $params = {
         websiteName => $params->{appname},
         applicationPath => $params->{path},
         physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
+        createDirectory => $params->{createDirectory}
     };
 
     my $application_name = "$params->{websiteName}/$params->{applicationPath}";
@@ -573,6 +574,9 @@ sub step_create_application {
         }
     }
     else {
+        if ($params->{createDirectory}) {
+            $self->_create_directory($params->{physicalPath});
+        }
         my $command = $self->driver->create_app_cmd($params);
         $self->set_cmd_line($command);
         my $result = $self->run_command($command);
