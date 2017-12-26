@@ -1,7 +1,7 @@
 import spock.lang.*
 import com.electriccloud.spec.*
 
-class AssignAppToAppPool extends PluginTestHelper {
+class StartAppPool extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs StartAppPool'
     static def iisHandler
     static def procName = 'StartAppPool'
