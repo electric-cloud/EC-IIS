@@ -16,14 +16,15 @@ class CreateVirtualDirectory extends PluginTestHelper {
             params: [
                 appname: '',
                 path: '',
-                physicalpath: ''
+                physicalpath: '',
+                createDirectory: ''
             ]
         ]
         createHelperProject(resName)
     }
 
     def doCleanupSpec() {
-        dsl "deleteProject '$projectName'"
+        // dsl "deleteProject '$projectName'"
     }
 
     @Unroll
@@ -94,5 +95,38 @@ class CreateVirtualDirectory extends PluginTestHelper {
             """
         then:
             assert result.outcome == 'error'
+    }
+
+    @Unroll
+    def "create directory #createDirectory"() {
+        given:
+            def appName = 'app'
+            def siteName = randomize('my site')
+            createSite(siteName)
+            def physicalPath = "c:/tmp/$siteName/$appName"
+        when:
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        appname: '${siteName}/',
+                        path: '$appName/',
+                        physicalpath: '$physicalPath',
+                        createDirectory: '$createDirectory'
+                    ]
+                )
+            """
+        then:
+            assert result.outcome == 'success'
+            def exists = dirExists(physicalPath)
+            if (createDirectory == '1') {
+                assert exists =~ /Exists/
+            }
+            else {
+                assert exists =~ /Does not exist/
+            }
+        where:
+            createDirectory << ['1', '0']
     }
 }

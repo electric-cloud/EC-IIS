@@ -736,11 +736,12 @@ sub step_recycle_app_pool {
 sub step_create_or_update_vdir {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
+    my $params = $self->get_params_as_hashref(qw/appname path physicalpath createDirectory/);
     $params = {
         applicationName => $params->{appname},
         path => $params->{path},
         physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
+        createDirectory => $params->{createDirectory},
     };
     $params->{path} = '/' . $params->{path} unless $params->{path} =~ m/^\//;
 
@@ -753,6 +754,9 @@ sub step_create_or_update_vdir {
         $command = $self->driver->update_vdir_cmd($params);
     }
     else {
+        if ($params->{createDirectory}) {
+            $self->_create_directory($params->{physicalPath});
+        }
         $self->logger->info("Virtual directory $vdir does not exists, proceeding to creating it");
         $command = $self->driver->create_vdir_cmd($params);
     }
