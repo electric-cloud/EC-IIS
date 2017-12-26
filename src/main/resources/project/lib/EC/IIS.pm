@@ -35,6 +35,7 @@ use LWP::UserAgent;
 use IO::Socket::INET;
 use JSON;
 use XML::Simple qw(XMLout);
+use File::Path qw(mkpath);
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
@@ -302,14 +303,22 @@ sub step_deploy_advanced {
 sub step_create_or_update_site {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw(websitename bindings websitepath websiteid));
+    my $params = $self->get_params_as_hashref(qw(websitename
+        bindings
+        websitepath
+        websiteid
+        createDirectory
+    ));
+
     my $website_name = $params->{websitename};
     $params = {
         websiteName => $params->{websitename},
         bindings => $params->{bindings},
         physicalPath => EC::Plugin::Core::canon_path($params->{websitepath}),
         websiteId => $params->{websiteid},
+        createDirectory => $params->{createDirectory}
     };
+
     if ($self->driver->check_site_exists($params->{websiteName})) {
         $self->logger->info("Site $params->{websiteName} already exists.");
 
@@ -331,6 +340,9 @@ sub step_create_or_update_site {
 
     }
     else {
+        if ($params->{createDirectory}) {
+            $self->_create_directory($params->{physicalPath});
+        }
         $self->logger->info("Site $params->{websiteName} does not exist");
         my $command = $self->driver->create_site_cmd($params);
         $self->set_cmd_line($command);
@@ -542,11 +554,12 @@ sub step_create_application {
     my ($self) = @_;
 
     # TODO rename form fields
-    my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
+    my $params = $self->get_params_as_hashref(qw/appname path physicalpath createDirectory/);
     $params = {
         websiteName => $params->{appname},
         applicationPath => $params->{path},
         physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
+        createDirectory => $params->{createDirectory}
     };
 
     my $application_name = "$params->{websiteName}/$params->{applicationPath}";
@@ -561,6 +574,9 @@ sub step_create_application {
         }
     }
     else {
+        if ($params->{createDirectory}) {
+            $self->_create_directory($params->{physicalPath});
+        }
         my $command = $self->driver->create_app_cmd($params);
         $self->set_cmd_line($command);
         my $result = $self->run_command($command);
@@ -720,11 +736,12 @@ sub step_recycle_app_pool {
 sub step_create_or_update_vdir {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/appname path physicalpath/);
+    my $params = $self->get_params_as_hashref(qw/appname path physicalpath createDirectory/);
     $params = {
         applicationName => $params->{appname},
         path => $params->{path},
         physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
+        createDirectory => $params->{createDirectory},
     };
     $params->{path} = '/' . $params->{path} unless $params->{path} =~ m/^\//;
 
@@ -737,6 +754,9 @@ sub step_create_or_update_vdir {
         $command = $self->driver->update_vdir_cmd($params);
     }
     else {
+        if ($params->{createDirectory}) {
+            $self->_create_directory($params->{physicalPath});
+        }
         $self->logger->info("Virtual directory $vdir does not exists, proceeding to creating it");
         $command = $self->driver->create_vdir_cmd($params);
     }
@@ -1409,6 +1429,25 @@ sub _flatten_map {
         }
     }
     return \%retval;
+}
+
+
+sub _create_directory {
+    my ($self, $path) = @_;
+
+    $self->logger->info(qq{Going to create directory "$path"});
+    my $normalized = EC::Plugin::Core::canon_path($path);
+    if (-e $normalized) {
+        $self->logger->info(qq{Directory "$normalized" already exists, skipping});
+        return;
+    }
+    my $ok = mkpath($normalized);
+    unless($ok) {
+        $self->logger->warning("Cannot create directory: $!");
+    }
+    else {
+        $self->logger->info(qq{Created directory "$normalized"});
+    }
 }
 
 1;

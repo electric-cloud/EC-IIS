@@ -5,6 +5,7 @@ def params = [
   appname: '',
   physicalpath: '',
   path: '',
+  createDirectory: ''
 ]
 
 project projName, {

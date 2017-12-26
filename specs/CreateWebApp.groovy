@@ -19,7 +19,8 @@ class CreateWebApp extends PluginTestHelper {
         dsl "deleteProject '$projectName'"
     }
 
-    def "normal params"() {
+    @Unroll
+    def "normal params physicalPath #physicalPath, path #path"() {
         given: 'a site exists'
             def siteName = 'MySite'
             createSite(siteName)
@@ -94,6 +95,41 @@ class CreateWebApp extends PluginTestHelper {
             assert result.outcome == 'error'
             logger.debug(result.logs)
             assert result.logs =~ /message:Cannot find SITE object with identifier "SomeSite"/
+    }
+
+    def "Create directory"() {
+        given: 'a site exists'
+            def siteName = 'MySite'
+            createSite(siteName)
+            def path = randomize('app')
+            def physicalPath = "c:/tmp/$path"
+        when: 'procedure runs'
+            def result = runProcedureDsl("""
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: 'Create App',
+                    actualParameter: [
+                        appname: '$siteName',
+                        physicalpath: '$physicalPath',
+                        path: '$path',
+                        createDirectory: '$createDirectory'
+                    ]
+                )
+            """)
+        then: 'procedure succeeds'
+            assert result.outcome == 'success'
+            def exists = dirExists(physicalPath)
+            if (createDirectory == '1') {
+                assert exists =~ /Exists/
+            }
+            else {
+                assert exists =~ /Does not exist/
+            }
+        cleanup:
+            removeSite(siteName)
+        where:
+            createDirectory << ['1', '0']
+
     }
 
 

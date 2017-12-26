@@ -19,26 +19,36 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateVirtualDirectory</help>
 	<label>Application server - IIS createvirtualdirectory</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Creates a virtual directory into the specified Website.</description>	
+	<description>Creates a virtual directory into the specified Website.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Application name:</label>
+		<label>Application Name:</label>
 		<property>appname</property>
 		<required>1</required>
 		<documentation>The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Web Site/myapp02'.</documentation>
-	</formElement>		
+	</formElement>
 	<formElement>
 		<type>entry</type>
-		<label>Virtual path:</label>
+		<label>Virtual Path:</label>
 		<property>path</property>
 		<required>1</required>
 		<documentation>Virtual path of the virtual directory, i.e: '/myvirtualdir'.</documentation>
-	</formElement>		
+	</formElement>
 	<formElement>
 		<type>entry</type>
-		<label>Absolute physical path:</label>
+		<label>Absolute Physical Path:</label>
 		<property>physicalpath</property>
 		<required>1</required>
 		<documentation>The absolute physical path of the Virtual Directory to create, i.e: 'c:/Inetpub/wwwroot/myvdir'.</documentation>
-	</formElement>		
+	</formElement>
+    <formElement>
+        <type>checkbox</type>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <label>Create Directory?:</label>
+        <property>createDirectory</property>
+        <required>0</required>
+        <documentation>If checked, the specified directory will be created if it does not exist.</documentation>
+        <value>0</value>
+    </formElement>
 </editor>

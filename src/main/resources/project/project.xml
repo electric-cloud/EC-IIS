@@ -2594,6 +2594,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>createDirectory</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
 
                             </propertySheet>
                         </property>
@@ -2624,7 +2634,13 @@
                 <required>1</required>
                 <type>entry</type>
             </formalParameter>
-
+            <formalParameter>
+                <formalParameterName>createDirectory</formalParameterName>
+                <defaultValue/>
+                <description>If checked, the specified directory will be created if it does not exist.</description>
+                <required>0</required>
+                <type>checkbox</type>
+            </formalParameter>
             <step>
                 <stepName>CreateVirtualDirectory</stepName>
                 <alwaysRun>0</alwaysRun>
@@ -2807,6 +2823,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>createDirectory</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
 
                             </propertySheet>
                         </property>
@@ -2836,6 +2862,13 @@
                 <description>The absolute physical path of the application to create, i.e: 'c:/Inetpub/wwwroot/myApp'. (Required)</description>
                 <required>1</required>
                 <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>createDirectory</formalParameterName>
+                <defaultValue/>
+                <description>If checked, the specified directory will be created if it does not exist.</description>
+                <required>0</required>
+                <type>checkbox</type>
             </formalParameter>
 
             <step>
@@ -3471,6 +3504,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>createDirectory</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
 
                             </propertySheet>
                         </property>
@@ -3508,6 +3551,14 @@
                 <description>The id of the WebSite.</description>
                 <required>0</required>
                 <type>entry</type>
+            </formalParameter>
+
+            <formalParameter>
+                <formalParameterName>createDirectory</formalParameterName>
+                <defaultValue/>
+                <description>If this checkbox is checked and physical path for the site does not exist, it will be created.</description>
+                <required>0</required>
+                <type>checkbox</type>
             </formalParameter>
 
             <step>
