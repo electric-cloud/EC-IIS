@@ -68,7 +68,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
         logger.debug(objectToJson(resources))
 
         def resource = resources.resource.find {
-            it.hostName == hostname
+            it.hostName == hostname || it.resourceName == 'IIS'
         }
         if (resource) {
             logger.debug("IIS resource already exists")
@@ -137,8 +137,9 @@ class PluginTestHelper extends PluginSpockTestSupport {
                 procedure 'RunCmd', {
                     resourceName = '$resName'
                     step 'runcmd', {
-                        command = '\$[cmd]'
+                        command = '''\$[cmd]'''
                         logFileName = 'Command.log'
+                        shell = 'powershell'
                     }
 
                     step 'Read Log', {
@@ -169,6 +170,57 @@ class PluginTestHelper extends PluginSpockTestSupport {
                     }
 
                     formalParameter 'directory', defaultValue: '', {
+                        type = 'entry'
+                    }
+                }
+
+
+                procedure 'ls', {
+                    resourceName = '$resName'
+                    step 'ls', {
+                        command = 'ls "\$[directory]"'
+                        shell = 'powershell'
+                    }
+                    formalParameter 'directory', defaultValue: '', {
+                        type = 'entry'
+                    }
+                }
+
+                procedure 'checkDir', {
+                    resourceName = '$resName'
+                    step 'check', {
+                        command = '''
+                        use strict;
+                        use warnings;
+
+                        my \$dir = '\$[dir]';
+                        if (-e \$dir) {
+                            print "Exists\n";
+                        }
+                        else {
+                            print "Does not exist\n";
+                        }
+                        '''
+                        shell = 'ec-perl'
+                        logFileName = 'Command.log'
+                    }
+
+                    step 'Read Log', {
+                        shell = 'ec-perl'
+                        command = '''
+                            use strict;
+                            use warnings;
+                            use ElectricCommander;
+                            open my \$fh, 'Command.log' or die \$!;
+                            my \$content = join('', <\$fh>);
+                            close \$fh;
+                            my \$ec = ElectricCommander->new;
+                            \$ec->setProperty('/myJob/cmdLog', \$content);
+                        '''
+                    }
+
+
+                    formalParameter 'dir', defaultValue: '', {
                         type = 'entry'
                     }
                 }
@@ -239,6 +291,24 @@ class PluginTestHelper extends PluginSpockTestSupport {
                 procedureName: 'RunCmd',
                 actualParameter: [
                     cmd: '''$command'''
+                ]
+            )
+        """
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+        def logs = getJobProperty('/myJob/cmdLog', result.jobId)
+        return logs
+    }
+
+    def dirExists(dir) {
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: 'checkDir',
+                actualParameter: [
+                    dir: '''$dir'''
                 ]
             )
         """
@@ -447,6 +517,27 @@ class PluginTestHelper extends PluginSpockTestSupport {
         waitUntil {
             jobCompleted result.jobId
         }
+    }
+
+
+    def lsDir(dirName) {
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: 'ls',
+                actualParameter: [
+                    directory: '$dirName'
+                ]
+            )
+        """
+
+        assert result.jobId
+        waitUntil {
+            jobCompleted result.jobId
+        }
+
+         def logs = getJobProperty('/myJob/cmdLog', result.jobId)
+         logs
     }
 
     def addBinding(name, binding) {

@@ -5,7 +5,8 @@ def params = [
   websitename: '',
   websitepath: '',
   bindings: '',
-  websiteid: ''
+  websiteid: '',
+  createDirectory: ''
 ]
 
 project projName, {

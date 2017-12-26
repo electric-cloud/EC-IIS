@@ -303,14 +303,22 @@ sub step_deploy_advanced {
 sub step_create_or_update_site {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw(websitename bindings websitepath websiteid createDirectory));
+    my $params = $self->get_params_as_hashref(qw(websitename
+        bindings
+        websitepath
+        websiteid
+        createDirectory
+    ));
+
     my $website_name = $params->{websitename};
     $params = {
         websiteName => $params->{websitename},
         bindings => $params->{bindings},
         physicalPath => EC::Plugin::Core::canon_path($params->{websitepath}),
         websiteId => $params->{websiteid},
+        createDirectory => $params->{createDirectory}
     };
+
     if ($self->driver->check_site_exists($params->{websiteName})) {
         $self->logger->info("Site $params->{websiteName} already exists.");
 
@@ -333,7 +341,7 @@ sub step_create_or_update_site {
     }
     else {
         if ($params->{createDirectory}) {
-            $self->_create_directory($params->{websitepath});
+            $self->_create_directory($params->{physicalPath});
         }
         $self->logger->info("Site $params->{websiteName} does not exist");
         my $command = $self->driver->create_site_cmd($params);
@@ -1419,6 +1427,7 @@ sub _flatten_map {
 sub _create_directory {
     my ($self, $path) = @_;
 
+    $self->logger->info(qq{Going to create directory "$path"});
     my $normalized = EC::Plugin::Core::canon_path($path);
     if (-e $normalized) {
         $self->logger->info(qq{Directory "$normalized" already exists, skipping});

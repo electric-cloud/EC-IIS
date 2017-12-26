@@ -16,7 +16,7 @@ class CreateWebsite extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        dsl "deleteProject '$projectName'"
+        // dsl "deleteProject '$projectName'"
     }
 
     @Unroll
@@ -32,7 +32,7 @@ class CreateWebsite extends PluginTestHelper {
                         websitename: '$siteName',
                         websiteid: '$siteId',
                         websitepath: '$sitePath',
-                        bindings: '''$bindings'''
+                        bindings: '''$bindings''',
                     ]
                 )
             """)
@@ -109,6 +109,7 @@ class CreateWebsite extends PluginTestHelper {
             removeSite(siteName)
     }
 
+
     def "create site with id"() {
         given:
             def siteName = 'MySite'
@@ -177,4 +178,41 @@ class CreateWebsite extends PluginTestHelper {
         cleanup:
             removeSite(siteName)
     }
+
+    def "create directory"() {
+        given: 'no site'
+            def siteName = randomize('site')
+            def dir = "c:/tmp/site/$siteName"
+            removeSite(siteName)
+            def port = 9912
+            def bindings = "http://*:$port"
+        when:
+            def result = runProcedureDsl("""
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: 'Create Site',
+                    actualParameter: [
+                        websitename: '$siteName',
+                        websitepath: '$dir',
+                        bindings: '''$bindings''',
+                        createDirectory: '$createDirectory'
+                    ]
+                )
+            """)
+        then:
+            assert result.outcome == 'success'
+            def exists = dirExists(dir)
+            logger.debug(exists)
+            if (createDirectory == '1') {
+                assert exists =~ /Exists/
+            }
+            else {
+                assert exists =~ /Does not exist/
+            }
+        cleanup:
+            removeSite(siteName)
+        where:
+            createDirectory << ['1', '0']
+    }
+
 }
