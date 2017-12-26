@@ -35,6 +35,7 @@ use LWP::UserAgent;
 use IO::Socket::INET;
 use JSON;
 use XML::Simple qw(XMLout);
+use File::Path qw(mkpath);
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
@@ -302,7 +303,7 @@ sub step_deploy_advanced {
 sub step_create_or_update_site {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw(websitename bindings websitepath websiteid));
+    my $params = $self->get_params_as_hashref(qw(websitename bindings websitepath websiteid createDirectory));
     my $website_name = $params->{websitename};
     $params = {
         websiteName => $params->{websitename},
@@ -331,6 +332,9 @@ sub step_create_or_update_site {
 
     }
     else {
+        if ($params->{createDirectory}) {
+            $self->_create_directory($params->{websitepath});
+        }
         $self->logger->info("Site $params->{websiteName} does not exist");
         my $command = $self->driver->create_site_cmd($params);
         $self->set_cmd_line($command);
@@ -1409,6 +1413,24 @@ sub _flatten_map {
         }
     }
     return \%retval;
+}
+
+
+sub _create_directory {
+    my ($self, $path) = @_;
+
+    my $normalized = EC::Plugin::Core::canon_path($path);
+    if (-e $normalized) {
+        $self->logger->info(qq{Directory "$normalized" already exists, skipping});
+        return;
+    }
+    my $ok = mkpath($normalized);
+    unless($ok) {
+        $self->logger->warning("Cannot create directory: $!");
+    }
+    else {
+        $self->logger->info(qq{Created directory "$normalized"});
+    }
 }
 
 1;

@@ -48,4 +48,14 @@
         <required>1</required>
         <documentation>List of bindings in the friendly form of 'http://domain:port,...' or raw form of 'protocol/bindingInformation,...'. Bindings should be separated by comma, e.g. http://*:8080,https://*:443.</documentation>
     </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Create Site Directory?:</label>
+        <property>createDirectory</property>
+        <required>0</required>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <value>0</value>
+        <documentation>If this checkbox is checked and physical path for the site does not exist, it will be created.</documentation>
+    </formElement>
 </editor>

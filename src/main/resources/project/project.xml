@@ -3471,6 +3471,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>createDirectory</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
 
                             </propertySheet>
                         </property>
@@ -3508,6 +3518,14 @@
                 <description>The id of the WebSite.</description>
                 <required>0</required>
                 <type>entry</type>
+            </formalParameter>
+
+            <formalParameter>
+                <formalParameterName>createDirectory</formalParameterName>
+                <defaultValue/>
+                <description>If this checkbox is checked and physical path for the site does not exist, it will be created.</description>
+                <required>0</required>
+                <type>checkbox</type>
             </formalParameter>
 
             <step>
