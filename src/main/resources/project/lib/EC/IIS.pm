@@ -746,14 +746,25 @@ sub step_recycle_app_pool {
 sub step_create_or_update_vdir {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/appname path physicalpath createDirectory/);
+    my $params = $self->get_params_as_hashref(qw/appname
+        path
+        physicalpath
+        createDirectory
+        credential
+    /);
     $params = {
         applicationName => $params->{appname},
         path => $params->{path},
         physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
         createDirectory => $params->{createDirectory},
+        credential => $params->{credential},
     };
     $params->{path} = '/' . $params->{path} unless $params->{path} =~ m/^\//;
+
+    my $creds;
+    if ($params->{credential}) {
+        $creds = $self->_get_credentials($params->{credential});
+    }
 
     my $vdir = "$params->{applicationName}$params->{path}";
     $vdir =~ s/\/+/\//g;
@@ -773,6 +784,16 @@ sub step_create_or_update_vdir {
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
     $self->_process_result($result);
+
+
+    if ($creds) {
+        my $vdir = $params->{vdirName};
+        $vdir =~ s/\/$//;
+        $self->logger->info(qq{Going to set credentails for directory "$vdir"});
+        my $cmd =  $self->driver->set_vdir_creds_cmd({vdirName => $vdir, creds => $creds});
+        my $res = $self->run_command($cmd);
+        $self->_process_result($res);
+    }
 }
 
 sub _is_xml {

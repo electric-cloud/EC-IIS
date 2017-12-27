@@ -379,6 +379,13 @@ sub set_vdir_creds_cmd {
 sub escape {
     my ($string) = @_;
     # TODO
+
+    # Didn't work
+    # $string =~ s/"/^"/g;
+    # $string =~ s/"/\\"/g;
+    # $string =~ s/"/\\\\\"/g;
+    # $string =~ s/"/\\""/;
+    # $string =~ s/"/""/g;
     return $string;
 }
 
