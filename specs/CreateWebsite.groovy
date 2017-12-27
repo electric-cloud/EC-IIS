@@ -20,6 +20,7 @@ class CreateWebsite extends PluginTestHelper {
     }
 
     @Unroll
+
     def "normal params siteName: #siteName, siteId: #siteId, sitePath: #sitePath , bindings: #bindings"() {
         given: 'the site is removed'
             removeSite(siteName)
@@ -54,6 +55,7 @@ class CreateWebsite extends PluginTestHelper {
             bindings << ['http://*:80', 'http://localhost:9080', "http://*:9991,http://*:1112"]
     }
 
+
     def "site already exists"() {
         given: 'a site'
             def siteName = 'Test Site'
@@ -84,6 +86,7 @@ class CreateWebsite extends PluginTestHelper {
         cleanup:
             removeSite(siteName)
     }
+
 
     def "port & path already taken"() {
         given: 'a site'
@@ -136,6 +139,7 @@ class CreateWebsite extends PluginTestHelper {
 
     }
 
+
     def "negative: invalid bindings"() {
         when: 'procedure runs'
             def result = runProcedureDsl """
@@ -152,6 +156,7 @@ class CreateWebsite extends PluginTestHelper {
         then: 'it fails'
             assert result.outcome == 'error'
     }
+
 
     def "negative: id already taken"() {
         given:
@@ -179,7 +184,9 @@ class CreateWebsite extends PluginTestHelper {
             removeSite(siteName)
     }
 
-    def "create directory"() {
+    @Unroll
+
+    def "create directory #createDirectory"() {
         given: 'no site'
             def siteName = randomize('site')
             def dir = "c:/tmp/site/$siteName"
@@ -215,4 +222,43 @@ class CreateWebsite extends PluginTestHelper {
             createDirectory << ['1', '0']
     }
 
+    @Unroll
+    def "new site with credentials #userName"() {
+        given: 'no site'
+            def siteName = randomize('site_with_creds')
+            removeSite(siteName)
+            def dir = 'c:/tmp/vdir'
+            def bindings = 'http://*:9999'
+        when:
+            def result = runProcedureDsl("""
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: 'Create Site',
+                    credential: [
+                        credentialName: 'credential',
+                        userName: '$userName',
+                        password: '$password'
+                    ],
+                    actualParameter: [
+                        websitename: '$siteName',
+                        websitepath: '$dir',
+                        bindings: '''$bindings''',
+                        createDirectory: '1',
+                        credential: 'credential',
+                    ]
+                )
+            """)
+        then:
+            assert result.outcome == 'success'
+            def vdir = runAppCmdLogs("list vdir /vdir.name:$siteName/ /text:*")
+            logger.debug(vdir)
+            assert vdir =~ /$userName/
+            assert vdir =~ /"\Q$password"/
+        cleanup:
+            removeSite(siteName)
+        where:
+            userName << ['build', 'test&!']
+            password << ['test', "test!*&#"]
+
+    }
 }

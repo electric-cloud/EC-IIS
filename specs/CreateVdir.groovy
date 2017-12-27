@@ -17,7 +17,8 @@ class CreateVirtualDirectory extends PluginTestHelper {
                 appname: '',
                 path: '',
                 physicalpath: '',
-                createDirectory: ''
+                createDirectory: '',
+                credential: ''
             ]
         ]
         createHelperProject(resName)
@@ -126,7 +127,50 @@ class CreateVirtualDirectory extends PluginTestHelper {
             else {
                 assert exists =~ /Does not exist/
             }
+        cleanup:
+            removeSite(siteName)
         where:
             createDirectory << ['1', '0']
+    }
+
+
+    @Unroll
+    def "with credentials"() {
+        given:
+            def appName = 'app'
+            def siteName = randomize('my site')
+            createSite(siteName)
+            def physicalPath = "c:/tmp/$siteName/$appName"
+        when:
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    credential: [
+                        credentialName: 'credential',
+                        userName: '$userName',
+                        password: '$password'
+                    ],
+                    actualParameter: [
+                        appname: '${siteName}/',
+                        path: '$appName/',
+                        physicalpath: '$physicalPath',
+                        createDirectory: '1',
+                        credential: 'credential'
+                    ]
+                )
+            """
+        then:
+            assert result.outcome == 'success'
+            def vdir = runAppCmdLogs("list vdir /vdir.name:\"$siteName/$appName/\" /text:*")
+            logger.debug(vdir)
+            assert vdir =~ /$userName/
+            assert vdir =~ /"\Q$password"/
+
+        cleanup:
+            removeSite(siteName)
+        where:
+            userName << ['test', 'test1']
+            password << ['test', 'ID&!*&!***&^']
     }
 }

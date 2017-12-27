@@ -12,6 +12,15 @@ project projName, {
     procedure 'Create App', {
       resourceName = resName
 
+
+      params.each {name, defValue ->
+        formalParameter name, defaultValue: defValue, {
+          type = 'textarea'
+        }
+      }
+      formalParameter 'credential', defaultValue: '', {
+        type = 'credential'
+      }
       step 'Create App', {
         description = ''
         subprocedure = 'CreateWebApplication'
@@ -20,13 +29,8 @@ project projName, {
         params.each { name, defValue ->
           actualParameter name, '$[' + name + ']'
         }
-      }
-
-
-      params.each {name, defValue ->
-        formalParameter name, defaultValue: defValue, {
-          type = 'textarea'
-        }
+        actualParameter 'credential', '$[credential]'
+        attachParameter(formalParameterName: 'credential')
       }
   }
 }

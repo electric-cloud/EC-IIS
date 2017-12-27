@@ -308,16 +308,18 @@ sub step_create_or_update_site {
         websitepath
         websiteid
         createDirectory
+        credential
     ));
 
     my $website_name = $params->{websitename};
-    $params = {
-        websiteName => $params->{websitename},
-        bindings => $params->{bindings},
-        physicalPath => EC::Plugin::Core::canon_path($params->{websitepath}),
-        websiteId => $params->{websiteid},
-        createDirectory => $params->{createDirectory}
-    };
+    $params->{websiteName} = $params->{websitename};
+    $params->{physicalPath} = EC::Plugin::Core::canon_path($params->{websitepath});
+    $params->{websiteId} = $params->{websiteid};
+
+    my $creds;
+    if ($params->{credential}) {
+        $creds = $self->_get_credentials($params->{credential});
+    }
 
     if ($self->driver->check_site_exists($params->{websiteName})) {
         $self->logger->info("Site $params->{websiteName} already exists.");
@@ -348,6 +350,14 @@ sub step_create_or_update_site {
         $self->set_cmd_line($command);
         my $result = $self->run_command($command);
         $self->_process_result($result);
+    }
+
+    if ($creds) {
+        my $vdir_name = "$params->{websiteName}/";
+        $self->logger->info("Going to set credentails for directory $vdir_name");
+        my $cmd =  $self->driver->set_vdir_creds_cmd({vdirName => $vdir_name, creds => $creds});
+        my $res = $self->run_command($cmd);
+        $self->_process_result($res);
     }
 }
 
@@ -554,20 +564,33 @@ sub step_create_application {
     my ($self) = @_;
 
     # TODO rename form fields
-    my $params = $self->get_params_as_hashref(qw/appname path physicalpath createDirectory/);
+    my $params = $self->get_params_as_hashref(qw/
+        appname
+        path
+        physicalpath
+        createDirectory
+        credential/);
     $params = {
         websiteName => $params->{appname},
         applicationPath => $params->{path},
         physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
-        createDirectory => $params->{createDirectory}
+        createDirectory => $params->{createDirectory},
+        credential => $params->{credential}
     };
 
+    my $creds;
+    if ($params->{credential}) {
+        $creds = $self->_get_credentials($params->{credential});
+    }
     my $application_name = "$params->{websiteName}/$params->{applicationPath}";
+    $application_name =~ s/\/+/\//g;
+    $self->logger->info("Application full name: $application_name");
+    my $vdir_name = "$application_name/";
 
     if ($self->driver->check_application_exists($application_name)) {
         if ($params->{physicalPath}) {
-            $self->logger->info("Going to update virtual directory $application_name");
-            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => "$application_name/"});
+            $self->logger->info("Going to update virtual directory $vdir_name");
+            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => $vdir_name});
             $self->set_cmd_line($command, 'updateVdir');
             my $result = $self->run_command($command);
             $self->_process_result($result);
@@ -581,6 +604,13 @@ sub step_create_application {
         $self->set_cmd_line($command);
         my $result = $self->run_command($command);
         $self->_process_result($result);
+    }
+
+    if ($creds) {
+        $self->logger->info("Going to set credentails for directory $vdir_name");
+        my $cmd =  $self->driver->set_vdir_creds_cmd({vdirName => $vdir_name, creds => $creds});
+        my $res = $self->run_command($cmd);
+        $self->_process_result($res);
     }
 }
 
@@ -736,14 +766,25 @@ sub step_recycle_app_pool {
 sub step_create_or_update_vdir {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/appname path physicalpath createDirectory/);
+    my $params = $self->get_params_as_hashref(qw/appname
+        path
+        physicalpath
+        createDirectory
+        credential
+    /);
     $params = {
         applicationName => $params->{appname},
         path => $params->{path},
         physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
         createDirectory => $params->{createDirectory},
+        credential => $params->{credential},
     };
     $params->{path} = '/' . $params->{path} unless $params->{path} =~ m/^\//;
+
+    my $creds;
+    if ($params->{credential}) {
+        $creds = $self->_get_credentials($params->{credential});
+    }
 
     my $vdir = "$params->{applicationName}$params->{path}";
     $vdir =~ s/\/+/\//g;
@@ -763,6 +804,16 @@ sub step_create_or_update_vdir {
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
     $self->_process_result($result);
+
+
+    if ($creds) {
+        my $vdir = $params->{vdirName};
+        $vdir =~ s/\/$//;
+        $self->logger->info(qq{Going to set credentails for directory "$vdir"});
+        my $cmd =  $self->driver->set_vdir_creds_cmd({vdirName => $vdir, creds => $creds});
+        my $res = $self->run_command($cmd);
+        $self->_process_result($res);
+    }
 }
 
 sub _is_xml {
@@ -1448,6 +1499,17 @@ sub _create_directory {
     else {
         $self->logger->info(qq{Created directory "$normalized"});
     }
+}
+
+
+sub _get_credentials {
+    my ($self, $credential) = @_;
+
+    # Get user/password out of credential
+    my $xpath = $self->ec->getFullCredential($credential);
+    my $user = $xpath->findvalue('//userName')->string_value;
+    my $pass = $xpath->findvalue('//password')->string_value;
+    return {userName => $user, password => $pass};
 }
 
 1;
