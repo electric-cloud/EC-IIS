@@ -63,6 +63,6 @@
         <label>Credential:</label>
         <property>credential</property>
         <required>0</required>
-        <documentation>If provided, this credential will be used to access site folder. Can be used for network paths. Please  notice, that passwords are stored in clear text in the IIS configuration. If this field is not set, Application User (Pass-through authentication) will be used.</documentation>
+        <documentation>If provided, this credential will be used to access site folder. Can be used for network paths. Please  notice, that passwords are stored in clear text in the IIS configuration. If this field is not set, Application User (Pass-through authentication) will be used. Double-quote '"' is not supported in username/password due to escape issues.</documentation>
     </formElement>
 </editor>

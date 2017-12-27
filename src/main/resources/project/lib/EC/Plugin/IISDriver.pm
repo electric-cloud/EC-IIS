@@ -364,8 +364,8 @@ sub set_vdir_creds_cmd {
     my $vdir = $params->{vdirName};
     my $creds = $params->{creds};
 
-    my $username = $creds->{userName};
-    my $password = $creds->{password};
+    my $username = escape($creds->{userName});
+    my $password = escape($creds->{password});
 
     unless($vdir) {
         die 'No virtual directory name found in params';
@@ -373,8 +373,13 @@ sub set_vdir_creds_cmd {
     unless($username && $password) {
         die 'No username or password found in params';
     }
-    # TODO escape
     return $self->get_app_cmd('set', 'vdir', qq{/vdir.name:"$vdir"}, qq{/username:"$username"}, qq{/password:"$password"});
+}
+
+sub escape {
+    my ($string) = @_;
+    # TODO
+    return $string;
 }
 
 1;

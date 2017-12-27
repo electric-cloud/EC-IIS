@@ -284,6 +284,13 @@ class PluginTestHelper extends PluginSpockTestSupport {
         return result.jobId
     }
 
+
+    def runAppCmdLogs(cmd) {
+        def jobId = runAppCmd(cmd)
+        def logs = getJobProperty('/myJob/appCmdLog', jobId)
+        return logs
+    }
+
     def runCmd(command) {
         def result = dsl """
             runProcedure(

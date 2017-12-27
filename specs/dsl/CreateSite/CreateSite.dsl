@@ -6,12 +6,22 @@ def params = [
   websitepath: '',
   bindings: '',
   websiteid: '',
-  createDirectory: ''
+  createDirectory: '',
 ]
 
 project projName, {
     procedure 'Create Site', {
       resourceName = resName
+
+      params.each {name, defValue ->
+        formalParameter name, defaultValue: defValue, {
+          type = 'textarea'
+        }
+      }
+
+      formalParameter 'credential', defaultValue: '', {
+        type = 'credential'
+      }
 
       step 'Create Site', {
         description = ''
@@ -21,13 +31,12 @@ project projName, {
         params.each { name, defValue ->
           actualParameter name, '$[' + name + ']'
         }
+
+        actualParameter 'credential', '$[credential]'
+        attachParameter(formalParameterName: 'credential')
       }
 
 
-      params.each {name, defValue ->
-        formalParameter name, defaultValue: defValue, {
-          type = 'textarea'
-        }
-      }
+
   }
 }
