@@ -16,11 +16,10 @@ class CreateWebsite extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        // dsl "deleteProject '$projectName'"
+        dsl "deleteProject '$projectName'"
     }
 
     @Unroll
-
     def "normal params siteName: #siteName, siteId: #siteId, sitePath: #sitePath , bindings: #bindings"() {
         given: 'the site is removed'
             removeSite(siteName)
@@ -40,8 +39,8 @@ class CreateWebsite extends PluginTestHelper {
         then: 'procedure succeeds'
             assert result.outcome == 'success'
             logger.debug(result.logs)
-            assert result.logs =~ /SITE object "$siteName" added/
-            assert result.logs =~ /APP object "$siteName\/" added/
+            assert result.logs =~ /SITE object "\Q$siteName\E" added/
+            assert result.logs =~ /APP object "\Q$siteName\E\/" added/
 
             def validPath = sitePath.replaceAll('/', "\\\\").replace('c', 'C')
             def vdir = getVdir(siteName)
@@ -49,16 +48,15 @@ class CreateWebsite extends PluginTestHelper {
         cleanup:
             removeSite(siteName)
         where:
-            siteName << ['mysite', 'Some Site', 'Multiple Bindings']
+            siteName << ['mysite', 'Some Site()%$#&', 'Multiple Bindings']
             siteId << ['', 56, '']
             sitePath << ['c:/tmp/path', 'c:/tmp/somepath', 'c:/tmp/path']
             bindings << ['http://*:80', 'http://localhost:9080', "http://*:9991,http://*:1112"]
     }
 
-
-    def "site already exists"() {
+    @Unroll
+    def "site already exists #siteName"() {
         given: 'a site'
-            def siteName = 'Test Site'
             def bindings = 'http://*:80'
             def sitePath = 'c:/tmp/Test'
             createSite(siteName)
@@ -77,7 +75,7 @@ class CreateWebsite extends PluginTestHelper {
         then: 'procedure succeeds'
             assert result.outcome == 'success'
             logger.debug(result.logs)
-            assert result.logs =~ /SITE object "$siteName" changed/
+            assert result.logs =~ /SITE object "\Q$siteName\E" changed/
             def updatedSite = getSite(siteName)
             logger.debug(objectToJson(updatedSite))
             assert updatedSite.bindings =~ /8080/
@@ -85,6 +83,8 @@ class CreateWebsite extends PluginTestHelper {
             assert updatedVdir.path =~ /newPath/
         cleanup:
             removeSite(siteName)
+        where:
+            siteName << ['Test Site', '!@#$%^&*()']
     }
 
 
@@ -223,6 +223,7 @@ class CreateWebsite extends PluginTestHelper {
     }
 
     @Unroll
+
     def "new site with credentials #userName"() {
         given: 'no site'
             def siteName = randomize('site_with_creds')

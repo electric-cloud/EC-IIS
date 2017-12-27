@@ -22,14 +22,14 @@
 	<description>Creates or updates a website.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Website name:</label>
+		<label>Website Name:</label>
 		<property>websitename</property>
 		<required>1</required>
 		<documentation>The name of the Website to create, e.g. My Site.</documentation>
 	</formElement>
 	<formElement>
 		<type>entry</type>
-		<label>Website path:</label>
+		<label>Website Path:</label>
 		<property>websitepath</property>
 		<required>1</required>
 		<documentation>The root application containing a root virtual directory pointing to the specified path to be created for this site.</documentation>
@@ -43,7 +43,7 @@
 	</formElement>
     <formElement>
         <type>textarea</type>
-        <label>List of bindings:</label>
+        <label>List of Bindings:</label>
         <property>bindings</property>
         <required>1</required>
         <documentation>List of bindings in the friendly form of 'http://domain:port,...' or raw form of 'protocol/bindingInformation,...'. Bindings should be separated by comma, e.g. http://*:8080,https://*:443.</documentation>

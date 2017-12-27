@@ -230,6 +230,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     def removeSite(siteName) {
+        siteName = siteName.replaceAll(~/%/, '%%')
         def result = dsl """
             runProcedure(
                 projectName: '$helperProjName',
@@ -251,7 +252,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
         if (!path)
             path = "c:/tmp/test_path"
         def idString = id ? "/id:${id}" : ''
-
+        siteName = siteName.replaceAll(~/%/, '%%')
         runAppCmd("add site /name:\"$siteName\" /bindings:\"$bindings\" /physicalpath:\"$path\" $idString")
     }
 
@@ -405,6 +406,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
 
 
     def getSite(siteName) {
+        siteName = siteName.replaceAll(~/%/, '%%')
         def result = dsl """
             runProcedure(
                 projectName: '$helperProjName',
@@ -438,6 +440,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
         if (appName) {
             vdirPath += appName+ '/'
         }
+        vdirPath = vdirPath.replaceAll(~/%/, '%%')
         def result = dsl """
             runProcedure(
                 projectName: '$helperProjName',
