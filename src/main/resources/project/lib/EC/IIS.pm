@@ -564,20 +564,33 @@ sub step_create_application {
     my ($self) = @_;
 
     # TODO rename form fields
-    my $params = $self->get_params_as_hashref(qw/appname path physicalpath createDirectory/);
+    my $params = $self->get_params_as_hashref(qw/
+        appname
+        path
+        physicalpath
+        createDirectory
+        credential/);
     $params = {
         websiteName => $params->{appname},
         applicationPath => $params->{path},
         physicalPath => EC::Plugin::Core::canon_path($params->{physicalpath}),
-        createDirectory => $params->{createDirectory}
+        createDirectory => $params->{createDirectory},
+        credential => $params->{credential}
     };
 
+    my $creds;
+    if ($params->{credential}) {
+        $creds = $self->_get_credentials($params->{credential});
+    }
     my $application_name = "$params->{websiteName}/$params->{applicationPath}";
+    $application_name =~ s/\/+/\//g;
+    $self->logger->info("Application full name: $application_name");
+    my $vdir_name = "$application_name/";
 
     if ($self->driver->check_application_exists($application_name)) {
         if ($params->{physicalPath}) {
-            $self->logger->info("Going to update virtual directory $application_name");
-            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => "$application_name/"});
+            $self->logger->info("Going to update virtual directory $vdir_name");
+            my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => $vdir_name});
             $self->set_cmd_line($command, 'updateVdir');
             my $result = $self->run_command($command);
             $self->_process_result($result);
@@ -591,6 +604,13 @@ sub step_create_application {
         $self->set_cmd_line($command);
         my $result = $self->run_command($command);
         $self->_process_result($result);
+    }
+
+    if ($creds) {
+        $self->logger->info("Going to set credentails for directory $vdir_name");
+        my $cmd =  $self->driver->set_vdir_creds_cmd({vdirName => $vdir_name, creds => $creds});
+        my $res = $self->run_command($cmd);
+        $self->_process_result($res);
     }
 }
 

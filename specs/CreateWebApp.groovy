@@ -132,5 +132,41 @@ class CreateWebApp extends PluginTestHelper {
 
     }
 
+    @Unroll
+    def "Credentials #userName, #password"() {
+        given: 'a site exists'
+            def siteName = 'MySite'
+            createSite(siteName)
+            def path = randomize('app')
+            def physicalPath = "c:/tmp/$path"
+        when: 'procedure runs'
+            def result = runProcedureDsl("""
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: 'Create App',
+                    credential: [
+                        credentialName: 'credential',
+                        userName: "$userName",
+                        password: '$password'
+                    ],
+                    actualParameter: [
+                        appname: '$siteName',
+                        physicalpath: '$physicalPath',
+                        path: '$path',
+                        createDirectory: '1',
+                        credential: 'credential'
+                    ]
+                )
+            """)
+        then: 'procedure succeeds'
+            assert result.outcome == 'success'
+        cleanup:
+            removeSite(siteName)
+        where:
+            userName << ['test', 'test']
+            password << ['test', "71#&^&^%!#"]
+
+    }
+
 
 }

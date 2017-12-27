@@ -17,6 +17,22 @@ sub cmd_appcmd {
 sub after_init_hook {
     my ($self, %params) = @_;
     $self->debug_level(0);
+
+    eval {
+        my $debug_level = $self->ec->getProperty('/plugins/EC-IIS/project/debugLevel')->findvalue('//value')->string_value;
+        $self->debug_level($debug_level);
+        $self->logger->level($debug_level);
+    } or do {
+        $self->debug_level(0);
+        $self->logger->level(0);
+    };
+
+    eval {
+        my $log_to_property = $self->ec->getProperty('/plugins/EC-IIS/project/ec_debug_logToProperty')->findvalue('//value')->string_value;
+        $self->logger->log_to_property($log_to_property);
+        $self->logger->info("Logs are redirected to property $log_to_property");
+    };
+
 }
 
 
@@ -105,7 +121,7 @@ sub create_app_cmd {
 sub check_application_exists {
     my ($self, $appname) =  @_;
 
-    my $command = $self->get_app_cmd('list', 'apps', qq{/app.name:"$appname"});
+    my $command = $self->get_app_cmd('list', 'apps');
     $self->logger->debug($command);
     my $result = $self->run_command($command);
     $self->logger->debug($result);
@@ -374,6 +390,7 @@ sub set_vdir_creds_cmd {
         die 'No username or password found in params';
     }
     return $self->get_app_cmd('set', 'vdir', qq{/vdir.name:"$vdir"}, qq{/username:"$username"}, qq{/password:"$password"});
+    # return $self->get_app_cmd('set', 'vdir', qq{/vdir.name:"$vdir"}, qq{/username:$username}, qq{/password:$password});
 }
 
 sub escape {
@@ -384,8 +401,13 @@ sub escape {
     # $string =~ s/"/^"/g;
     # $string =~ s/"/\\"/g;
     # $string =~ s/"/\\\\\"/g;
-    # $string =~ s/"/\\""/;
+    # Does not work either, but at least it runs
+    $string =~ s/"/\\""/;
     # $string =~ s/"/""/g;
+    # $string =~ s/"/\^"/;
+
+    # Escape shell metacharacters:
+    # $string =~ s/([()%!^"<>&|;, ])/\^$1/g;
     return $string;
 }
 

@@ -22,7 +22,7 @@
 	<description>Creates a web application.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Application Name:</label>
+		<label>Web Site Name:</label>
 		<property>appname</property>
 		<required>1</required>
 		<documentation>The name of the website to add the application, i.e: 'Default Web Site'.</documentation>
@@ -51,4 +51,11 @@
 		<documentation>If checked, the specified directory will be created if it does not exist.</documentation>
         <value>0</value>
 	</formElement>
+    <formElement>
+        <type>credential</type>
+        <label>Credential:</label>
+        <property>credential</property>
+        <required>0</required>
+        <documentation>If provided, this credential will be used to access site folder. Can be used for network paths. Please  notice, that passwords are stored in clear text in the IIS configuration. If this field is not set, Application User (Pass-through authentication) will be used. Double-quote '"' is not supported in username/password due to escape issues.</documentation>
+    </formElement>
 </editor>
