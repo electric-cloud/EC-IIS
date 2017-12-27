@@ -22,6 +22,9 @@ services:
     - EF_SERVER_ADMIN_USER=admin
     - EF_SERVER_ADMIN_PASS=changeme
     - EF_RESOURCE_NAME=IIS
+    restart_policy:
+      condition: any
+      delay: 5s
 networks:
   default:
     external:
