@@ -65,7 +65,6 @@ class Deploy extends PluginTestHelper {
         then:
             assert result.outcome == 'success'
             logger.debug(result.logs)
-            // TODO build and check url
         cleanup:
             removeSite(siteName)
     }
@@ -286,7 +285,6 @@ class Deploy extends PluginTestHelper {
 
 
     // C259521
-
     def "negative: deploy non-existing site"() {
         given:
             def siteName = randomize('NetDash')
@@ -313,7 +311,6 @@ class Deploy extends PluginTestHelper {
     }
 
     // C259522
-
     def "negative: wrong path to msdeploy"() {
         given:
             def siteName = randomize('NetDash')

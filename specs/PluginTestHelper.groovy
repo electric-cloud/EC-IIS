@@ -493,6 +493,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     def getAppPool(name, all = false) {
+        name = name.replaceAll(~/%/, '%%')
         def jobId = runAppCmd("list apppool /apppool.name:\"${name}\"")
         def logs = getJobProperty('/myJob/appCmdLog', jobId)
 
