@@ -28,35 +28,39 @@
         <ul>
             <li><a href="#CreateConfiguration">Setting up the plugin configuration</a></li>
             <li><a href="#procedures">Plugin procedures</a></li>
-            <ul>
-                <li><a href="#CheckServerStatus">CheckServerStatus</a></li>
-                <li><a href="#CreateAppPool">CreateAppPool</a></li>
-                <li><a href="#CreateVirtualDirectory">CreateVirtualDirectory</a></li>
-                <li><a href="#CreateWebApplication">CreateWebApplication</a></li>
-                <li><a href="#CreateWebSite">CreateWebSite</a></li>
-                <li><a href="#DeleteWebApplication">DeleteWebApplication</a></li>
-                <li><a href="#DeleteVirtualDirectory">DeleteVirtualDirectory</a></li>
-                <li><a href="#DeleteWebSite">DeleteWebSite</a></li>
-                <li><a href="#DeleteAppPool">DeleteAppPool</a></li>
-                <li><a href="#DeployCopy">DeployCopy (Deprecated)</a></li>
-                <li><a href="#Deploy">Deploy</a></li>
-                <li><a href="#Undeploy">Undeploy</a></li>
-                <li><a href="#DeployAdvanced">DeployAdvanced</a></li>
-                <li><a href="#StartAppPool">StartAppPool</a></li>
-                <li><a href="#StartWebSite">StartWebSite</a></li>
-                <li><a href="#StopAppPool">StopAppPool</a></li>
-                <li><a href="#StopWebSite">StopWebsite</a></li>
-                <li><a href="#RecycleAppPool">RecycleAppPool</a></li>
-                <li><a href="#AssignAppToAppPool">AssignAppToAppPool</a></li>
-                <li><a href="#ListSites">ListSites</a></li>
-                <li><a href="#ListSiteApps">ListSiteApps</a></li>
-                <li><a href="#ListAppPools">ListApplicationPools</a></li>
-                <li><a href="#ListVirtualDirectories">ListVirtualDirectories</a></li>
-                <li><a href="#AddWebSiteBinding">AddWebSiteBinding</a></li>
-                <li><a href="#StopServer">StopServer</a></li>
-                <li><a href="#StartServer">StartServer</a></li>
-                <li><a href="#RestartServer">ResetServer</a></li>
-            </ul>
+            <li>
+                <ul>
+                    <li><a href="#CheckServerStatus">CheckServerStatus</a></li>
+                    <li><a href="#CreateAppPool">CreateAppPool</a></li>
+                    <li><a href="#CreateVirtualDirectory">CreateVirtualDirectory</a></li>
+                    <li><a href="#CreateWebApplication">CreateWebApplication</a></li>
+                    <li><a href="#CreateWebSite">CreateWebSite</a></li>
+                    <li><a href="#DeleteWebApplication">DeleteWebApplication</a></li>
+                    <li><a href="#DeleteVirtualDirectory">DeleteVirtualDirectory</a></li>
+                    <li><a href="#DeleteWebSite">DeleteWebSite</a></li>
+                    <li><a href="#DeleteAppPool">DeleteAppPool</a></li>
+                    <li><a href="#DeployCopy">DeployCopy (Deprecated)</a></li>
+                    <li><a href="#Deploy">Deploy</a></li>
+                    <li><a href="#Undeploy">Undeploy</a></li>
+                    <li><a href="#DeployAdvanced">DeployAdvanced</a></li>
+                    <li><a href="#StartAppPool">StartAppPool</a></li>
+                    <li><a href="#StartWebSite">StartWebSite</a></li>
+                    <li><a href="#StopAppPool">StopAppPool</a></li>
+                    <li><a href="#StopWebSite">StopWebsite</a></li>
+                    <li><a href="#RecycleAppPool">RecycleAppPool</a></li>
+                    <li><a href="#AssignAppToAppPool">AssignAppToAppPool</a></li>
+                    <li><a href="#ListSites">ListSites</a></li>
+                    <li><a href="#ListSiteApps">ListSiteApps</a></li>
+                    <li><a href="#ListAppPools">ListApplicationPools</a></li>
+                    <li><a href="#ListVirtualDirectories">ListVirtualDirectories</a></li>
+                    <li><a href="#AddWebSiteBinding">AddWebSiteBinding</a></li>
+                    <li><a href="#StopServer">StopServer</a></li>
+                    <li><a href="#StartServer">StartServer</a></li>
+                    <li><a href="#RestartServer">ResetServer</a></li>
+                </ul>
+            </li>
+            <li><a href="#KnownIssues">Known Issues</a></li>
+            <li><a href="#ReleaseNotes">Release Notes</a></li>
         </ul>
 
 
@@ -102,7 +106,8 @@
 
             <h3>Plugin Configuration</h3>
             <div>
-                Plugin configurations are sets of parameters that
+                <p>
+                    Plugin configurations are sets of parameters that
                 apply across some or all of the plugin's
                 procedures. They are intended to reduce repetition
                 of common values, create predefined sets of
@@ -116,6 +121,7 @@
                 line for the specific plugin, there is a
                 "Configure" link which will open the Configuration
                 page.
+                </p>
             </div>
 
             <p>To enable ElectricFlow to communicate with your IIS
@@ -142,7 +148,6 @@
 
                     <tr>
                         <td class="required">IIS IP Address</td>
-
                         <td>Provide the URL for the IIS server, it
                         must include the protocol. i.e:
                         'http://192.168.1.100'. </td>
@@ -150,7 +155,6 @@
 
                     <tr>
                         <td>IIS Port</td>
-
                         <td>Provide the port for the IIS server.
                         This port is used in conjuction with the IP
                         Adress to conform the URL. If not provided,
@@ -159,16 +163,13 @@
                     </tr>
 
                     <tr>
-                        <td>Computer Name</td>
-
+                        <td>Computer Name (DEPRECATED)</td>
                         <td>Provide the computer name or IP address
-                        without backslashes. i.e: 'server01'
-                        <i>or</i> '192.168.1.100'.</td>
+                        without backslashes. i.e: 'server01'. Is not used, will be removed in the next release.</td>
                     </tr>
 
                     <tr>
                         <td>Login as</td>
-
                         <td><i>Username</i>: Provide the user name
                         ElectricFlow uses to communicate with the IIS
                         server.<br />
@@ -181,12 +182,11 @@
             </table>
 
             <p>Enter this parameters in the configuration
-            panel:</p><img src="../../plugins/@PLUGIN_KEY@/images/Config/EC-IIS7Config.png" alt="screenshot" />
+            panel:</p><img src="../../plugins/@PLUGIN_KEY@/images/Config/ConfigForm.png" alt="screenshot" />
         </div>
 
 
         <a name="procedures"></a>
-
         <div id="CheckServerStatus">
             <a name="CreateConfiguration" id="CreateConfiguration"></a>
 
@@ -205,8 +205,7 @@
 
                 <tbody>
                     <tr>
-                        <td class="required">Configuration
-                        name</td>
+                        <td class="required">Configuration name</td>
 
                         <td>Provide the name of the configuration
                         that holds connection information for the
@@ -217,34 +216,69 @@
                     </tr>
 
                     <tr>
-                        <td>Use Credentials</td>
-
+                        <td>Use Credentials (Deprecated)</td>
                         <td>Indicate if credentials must be used.
                         If checked, ElectricFlow uses the user and
-                        password typed in the configuration.</td>
+                        password typed in the configuration. This parameter is deprecated, credentials will be used if they are provided.</td>
+                    </tr>
+                    <tr>
+                        <td>Credential</td>
+                        <td>Specify username and password for check. Will be used for basic authentication.</td>
+                    </tr>
+                    <tr>
+                        <td>Link to Check For</td>
+                        <td>Url to check. If not given, one will be constructed from IIS conf.</td>
+                    </tr>
+                    <tr>
+                        <td>Expected Status</td>
+                        <td>3-digit HTTP status to wait for. Default is 200. Can be regular expression, e.g. 200|201.</td>
+                    </tr>
+                    <tr>
+                        <td>Check Unavailable</td>
+                        <td>If checked, the server:port will just be checked
+for availability and URL path and status parameters will be ignored. If server is available, the procedure will fail.</td>
+                    </tr>
+                    <tr>
+                        <td>Timeout</td>
+                        <td>Specify connection timeout. Default is 30s.</td>
+                    </tr>
+                    <tr>
+                        <td>Retries</td>
+                        <td>Specify number of retries. Default is 1. This only affects connecting to server, NOT the status returned by server.</td>
                     </tr>
                 </tbody>
             </table>
 
-            <p>To check the server status, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CheckServerStatus/EC-IIS7CheckServerStatus1.png" />
-
-
-            <p>Then, enter the following
-            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CheckServerStatus/EC-IIS7CheckServerStatus2.png" />
+            <p>Enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CheckServerStatus/Form.png" />
 
 
             <p>When the job is executed, you should see the
             following job detail, note the output indicating the
             result of the
-            check:</p><img src="../../plugins/@PLUGIN_KEY@/images/CheckServerStatus/EC-IIS7CheckServerStatus3.png" />
+            check:</p>
+            <img src="../../plugins/@PLUGIN_KEY@/images/CheckServerStatus/Outcome.png" />
+
+            <p>
+                The logs similar to the following must appear:
+<pre>
+Using plugin EC-IIS-3.1.0.0
+Logs are redirected to property /myJob/debug_logs
+Got parameter "checkRetries" with value ""
+Got parameter "checkTimeout" with value ""
+Got parameter "checkUrl" with value "http://localhost:80"
+Got parameter "configname" with value ""
+Got parameter "credential" with value ""
+Got parameter "expectStatus" with value "200"
+Got parameter "unavailable" with value "0"
+Using timeout: 30 seconds
+Request: GET http://localhost:80
 
 
-            <p>In the <b>CheckServerStatus</b> step, click the Log
-            icon to see the diagnostic info. The output is similar
-            to the following diagnostic
-            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CheckServerStatus/EC-IIS7CheckServerStatus4.png" />
+Retries left: 0
+URL successful (expected 200):
+</pre>
+        </p>
             </div>
 
         <div id="CreateAppPool">
@@ -658,28 +692,52 @@
                         'c:/Inetpub/wwwroot/myvdir'.
                         </td>
                     </tr>
+                    <tr>
+                        <td>Create Directory?</td>
+                        <td>If checked, the specified directory will be created if it does not exist.</td>
+                    </tr>
+                    <tr>
+                        <td>Credential</td>
+                        <td>
+                            If provided, this credential will be used to access site folder. Can be used for network paths. Please  notice, that passwords are stored in clear text in the IIS configuration. If this field is not set, Application User (Pass-through authentication) will be used. Double-quote '"' is not supported in username/password due to escape issues.
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
-            <p>To create a virtual directory, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IIS7CreateVirtualDirectory1.png" />
 
-
-            <p>Then, enter the following
-            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IIS7CreateVirtualDirectory2.png" />
+            <p>Enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/Form.png" />
 
 
             <p>When the job is executed, you should see the
             following job detail, note the output indicating the
             virtual directory was created
-            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IIS7CreateVirtualDirectory3.png" />
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/Outcome.png" />
 
 
-            <p>In the <b>CreateVirtualDirectory</b> step, click the
-            Log icon to see the diagnostic info. The output is
-            similar to the following diagnostic
-            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateVirtualDirectory/EC-IIS7CreateVirtualDirectory4.png" />
+            <p>Logs will be similar to the following:</p>
+<pre>
+Using plugin EC-IIS-3.1.0.0
+Got parameter "appname" with value "Default Web Site/"
+Got parameter "createDirectory" with value "1"
+Got parameter "credential" with value "credential"
+Got parameter "path" with value "mydir"
+Got parameter "physicalpath" with value "c:/tmp/path"
+Going to create directory "C:\tmp\path"
+Directory "C:\tmp\path" already exists, skipping
+Virtual directory Default Web Site/mydir does not exists, proceeding to creating it
+Wrote command to property cmdLine
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add vdir /app.name:"Default Web Site/" /path:"/mydir" /physicalPath:"C:\tmp\path"
+Exit code: 0
+STDOUT: VDIR object "Default Web Site/mydir" added
+STDERR: N/A
+Going to set credentails for directory "Default Web Site/mydir"
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Web Site/mydir" /username:"build" /password:"*****"
+Exit code: 0
+STDOUT: VDIR object "Default Web Site/mydir" changed
+STDERR: N/A
+</pre>
             </div>
 
         <div id="CreateWebApplication">
@@ -724,35 +782,54 @@
                         application to create, i.e:
                         'c:/Inetpub/wwwroot/myApp'. </td>
                     </tr>
+                    <tr>
+                        <td>Create Directory?</td>
+                        <td>If checked, the specified directory will be created if it does not exist.</td>
+                    </tr>
+                    <tr>
+                        <td>Credential</td>
+                        <td>
+                            If provided, this credential will be used to access site folder. Can be used for network paths. Please  notice, that passwords are stored in clear text in the IIS configuration. If this field is not set, Application User (Pass-through authentication) will be used. Double-quote '"' is not supported in username/password due to escape issues.
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
-            <p>To create a web application, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApplication/EC-IIS7CreateWebApplication1.png" />
-
-
-            <p>Then, enter the following
-            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApplication/EC-IIS7CreateWebApplication2.png" />
-
-
+            <p>Enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApplication/Form.png" />
             <p>When the job is executed, you should see the
             following job detail, note the output indicating the
             web application was created
-            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApplication/EC-IIS7CreateWebApplication3.png" />
-
-
-            <p>In the <b>CreateWebApplication</b> step, click the
-            Log icon to see the diagnostic info. The output is
-            similar to the following diagnostic
-            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApplication/EC-IIS7CreateWebApplication4.png" />
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebApplication/Outcome.png" />
+            <p>Logs will look like the following:</p>
+<pre>
+Using plugin EC-IIS-3.1.0.0
+Got parameter "appname" with value "Default Web Site"
+Got parameter "createDirectory" with value "1"
+Got parameter "credential" with value "credential"
+Got parameter "path" with value "myApp"
+Got parameter "physicalpath" with value "c:/tmp/myApp"
+Application full name: Default Web Site/myApp
+Going to create directory "C:\tmp\myApp"
+Created directory "C:\tmp\myApp"
+Wrote command to property cmdLine
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add app /site.name:"Default Web Site" /path:"/myApp" /physicalPath:"C:\tmp\myApp"
+Exit code: 0
+STDOUT: APP object "Default Web Site/myApp" added
+VDIR object "Default Web Site/myApp" added
+STDERR: N/A
+Going to set credentails for directory Default Web Site/myApp/
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Web Site/myApp/" /username:"build" /password:"*****"
+Exit code: 0
+STDOUT: VDIR object "Default Web Site/myApp/" changed
+STDERR: N/A
+</pre>
             </div>
 
         <div id="CreateWebSite">
             <a name="CreateWebSite" id="CreateWebSite"></a>
 
             <h3>CreateWebSite</h3>
-
             <p>Creates or updates a website configuration on a local or remote
             computer.</p>
 
@@ -760,7 +837,6 @@
                 <thead>
                     <tr>
                         <th>Parameter</th>
-
                         <th>Description</th>
                     </tr>
                 </thead>
@@ -768,14 +844,11 @@
                 <tbody>
                     <tr>
                         <td class="required">Website name</td>
-
-                        <td>The name of the Website to create.
-                        </td>
+                        <td>The name of the Website to create.</td>
                     </tr>
 
                     <tr>
                         <td class="required">Website path</td>
-
                         <td>If specified, will cause the root
                         application containing a root virtual
                         directory pointing to the specified path to
@@ -787,7 +860,6 @@
 
                     <tr>
                         <td>Website ID</td>
-
                         <td>The id of the Website.</td>
                     </tr>
 
@@ -796,31 +868,52 @@
 
                         <td>List of bindings in the friendly form
                         of 'http://domain:port,...' or raw form of
-                        'protocol/bindingInformation,...'
+                        'protocol/bindingInformation,...'. Bindings should be separated by comma.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Create Directory?</td>
+                        <td>If checked, the specified directory will be created if it does not exist.</td>
+                    </tr>
+                    <tr>
+                        <td>Credential</td>
+                        <td>
+                            If provided, this credential will be used to access site folder. Can be used for network paths. Please  notice, that passwords are stored in clear text in the IIS configuration. If this field is not set, Application User (Pass-through authentication) will be used. Double-quote '"' is not supported in username/password due to escape issues.
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <p>To create a website, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IIS7CreateWebSite1.png" />
-
-
-            <p>Then, enter the following
-            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IIS7CreateWebSite2.png" />
+            <p>Enter the following
+            parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/Form.png" />
 
 
             <p>When the job is executed, you should see the
             following job detail, note the output indicating the
             website was created
-            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IIS7CreateWebSite3.png" />
+            successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/Outcome.png" />
 
 
-            <p>In the <b>CreateWebSite</b> step, click the Log icon
-            to see the diagnostic info. The output is similar to
-            the following diagnostic
-            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateWebSite/EC-IIS7CreateWebSite4.png" />
+            <p>Logs should look like the following:</p>
+<pre>
+Using plugin EC-IIS-3.1.0.0
+Got parameter "bindings" with value "http://*:8080"
+Got parameter "createDirectory" with value "1"
+Got parameter "credential" with value ""
+Got parameter "websiteid" with value ""
+Got parameter "websitename" with value "My Site"
+Got parameter "websitepath" with value "c:/tmp/my site"
+Going to create directory "C:\tmp\my site"
+Created directory "C:\tmp\my site"
+Site My Site does not exist
+Wrote command to property cmdLine
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add site /site.name:"My Site" /bindings:"http://*:8080" /physicalPath:"C:\tmp\my site"
+Exit code: 0
+STDOUT: SITE object "My Site" added
+APP object "My Site/" added
+VDIR object "My Site/" added
+STDERR: N/A
+</pre>
             </div>
 
         <div id="DeleteWebApplication">
@@ -2292,7 +2385,12 @@ Providers can be optionally modified by using provider settings. Provider settin
         successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/Case1/EC-IIS7StartWebSite2.png" />
 
 
-        <h1>Release Notes</h1>
+        <h1 id="KnownIssues">Known issues</h1>
+        <p>
+            Due to escape issues, double quote (") is not supported in parameter values.
+        </p>
+
+        <h1 id="ReleaseNotes">Release Notes</h1>
         <h2>@PLUGIN_KEY@ 3.1.0</h2>
         <ul>
             <li>Field "Computer Name" in configuration is deprecated.</li>
