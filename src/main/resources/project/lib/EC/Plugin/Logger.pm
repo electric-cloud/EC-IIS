@@ -68,13 +68,15 @@ sub _log {
     my @lines = ();
     for my $message (@messages) {
         if (ref $message) {
-            print Dumper($message);
-            push @lines, Dumper($message);
+            push @lines, $self->refine(Dumper($message));
         }
         else {
-            print "$message\n";
-            push @lines, $message;
+            push @lines, $self->refine($message);
         }
+    }
+
+    for (@lines) {
+        print "$_\n";
     }
 
    if ($self->{log_to_property}) {
@@ -87,6 +89,24 @@ sub _log {
         unshift @lines, split("\n", $value);
         $self->ec->setProperty($prop, join("\n", @lines));
     }
+}
+
+sub add_secrets {
+    my ($self, @secrets) = @_;
+
+    $self->{secrets} ||= [];
+    push @{$self->{secrets}}, @secrets;
+}
+
+sub refine {
+    my ($self, $message) = @_;
+
+    my $secrets = $self->{secrets};
+    $secrets ||= [];
+    my $regexp = join('|', map { quotemeta($_) } @$secrets);
+    return $message unless @$secrets;
+    $message =~ s/($regexp)/****/g;
+    return $message;
 }
 
 sub ec {

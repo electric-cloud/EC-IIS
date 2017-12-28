@@ -87,7 +87,6 @@ class CreateWebsite extends PluginTestHelper {
             siteName << ['Test Site', '!@#$%^&*()']
     }
 
-
     def "port & path already taken"() {
         given: 'a site'
             def siteName = 'Test'
@@ -111,7 +110,6 @@ class CreateWebsite extends PluginTestHelper {
         cleanup:
             removeSite(siteName)
     }
-
 
     def "create site with id"() {
         given:
@@ -139,7 +137,6 @@ class CreateWebsite extends PluginTestHelper {
 
     }
 
-
     def "negative: invalid bindings"() {
         when: 'procedure runs'
             def result = runProcedureDsl """
@@ -157,7 +154,7 @@ class CreateWebsite extends PluginTestHelper {
             assert result.outcome == 'error'
     }
 
-
+    @Ignore
     def "negative: id already taken"() {
         given:
             def siteId = 99
@@ -185,7 +182,6 @@ class CreateWebsite extends PluginTestHelper {
     }
 
     @Unroll
-
     def "create directory #createDirectory"() {
         given: 'no site'
             def siteName = randomize('site')
@@ -223,7 +219,6 @@ class CreateWebsite extends PluginTestHelper {
     }
 
     @Unroll
-
     def "new site with credentials #userName"() {
         given: 'no site'
             def siteName = randomize('site_with_creds')
@@ -253,6 +248,7 @@ class CreateWebsite extends PluginTestHelper {
             assert result.outcome == 'success'
             def vdir = runAppCmdLogs("list vdir /vdir.name:$siteName/ /text:*")
             logger.debug(vdir)
+            assert !(result.logs =~ /\Q$password/)
             assert vdir =~ /$userName/
             assert vdir =~ /"\Q$password"/
         cleanup:
