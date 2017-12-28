@@ -160,6 +160,7 @@ class CreateWebApp extends PluginTestHelper {
             """)
         then: 'procedure succeeds'
             assert result.outcome == 'success'
+            assert !(result.logs =~ /\Q$password/)
         cleanup:
             removeSite(siteName)
         where:

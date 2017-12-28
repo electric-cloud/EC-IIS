@@ -203,6 +203,7 @@ sub getConfiguration($){
     my $xpath = $ec->getFullCredential($configRow{credential});
     $configToUse{'user'} = $xpath->findvalue("//userName");
     $configToUse{'password'} = $xpath->findvalue("//password");
+    $self->logger->add_secrets($configToUse{password});
 
     foreach my $c (keys %configRow) {
         #getting all values except the credential that was read previously
@@ -1510,6 +1511,7 @@ sub _get_credentials {
     my $xpath = $self->ec->getFullCredential($credential);
     my $user = $xpath->findvalue('//userName')->string_value;
     my $pass = $xpath->findvalue('//password')->string_value;
+    $self->logger->add_secrets($pass);
     return {userName => $user, password => $pass};
 }
 
