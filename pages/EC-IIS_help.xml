@@ -951,12 +951,7 @@ STDERR: N/A
                 </tbody>
             </table>
 
-            <p>To delete a web application, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteWebApplication/EC-IIS7DeleteWebApplication1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteWebApplication/EC-IIS7DeleteWebApplication2.png" />
 
 
@@ -1009,12 +1004,8 @@ STDERR: N/A
                 </tbody>
             </table>
 
-            <p>To delete a virtual directory, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteVirtualDirectory/EC-IIS7DeleteVirtualDirectory1.png" />
 
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteVirtualDirectory/EC-IIS7DeleteVirtualDirectory2.png" />
 
 
@@ -1064,12 +1055,8 @@ STDERR: N/A
                 </tbody>
             </table>
 
-            <p>To delete a website, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteWebSite/EC-IIS7DeleteWebSite1.png" />
 
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteWebSite/EC-IIS7DeleteWebSite2.png" />
 
 
@@ -1120,21 +1107,12 @@ STDERR: N/A
                 </tbody>
             </table>
 
-            <p>To delete an application pool, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteAppPool/EC-IIS7DeleteAppPool1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteAppPool/EC-IIS7DeleteAppPool2.png" />
-
-
             <p>When the job is executed, you should see the
             following job detail, note the output indicating the
             application pool was deleted
             successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteAppPool/EC-IIS7DeleteAppPool3.png" />
-
-
             <p>In the <b>DeleteAppPool</b> step, click the Log icon
             to see the diagnostic info. The output is similar to
             the following diagnostic
@@ -1144,7 +1122,7 @@ STDERR: N/A
         <div id="DeployCopy">
             <a name="DeployCopy" id="DeployCopy"></a>
 
-            <h3>DeployCopy</h3>
+            <h3>DeployCopy (DEPRECATED)</h3>
             <h2>Deprecated</h2>
 
             <p>Copies the application files recursively to the
@@ -1154,7 +1132,6 @@ STDERR: N/A
                 <thead>
                     <tr>
                         <th>Parameter</th>
-
                         <th>Description</th>
                     </tr>
                 </thead>
@@ -1245,12 +1222,14 @@ STDERR: N/A
             following diagnostic
             report.</p><img src="../../plugins/@PLUGIN_KEY@/images/DeployCopy/EC-IIS7DeployCopy4.png" />
         </div>
+
+
         <div id="Deploy">
             <a name="Deploy" id="Deploy"></a>
 
             <h3>Deploy</h3>
 
-            <p>Uses MsDeploy to deploy a package or a site from directory into the specified destination. Also allows to configure application pool.</p>
+            <p>Uses MsDeploy (WebDeploy) to deploy a package or a site from directory into the specified destination. Also allows to configure application pool.</p>
             <p>MsDeploy is required for this procedure.</p>
 
             <table class="grid">
@@ -1364,11 +1343,8 @@ STDERR: N/A
                 </tbody>
             </table>
 
-            <p>To deploy, select the following highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/Deploy/EC-IIS7Deploy1.png" />
 
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/Deploy/EC-IIS7Deploy2.png" />
 
 
@@ -1464,6 +1440,8 @@ STDERR: N/A
             following diagnostic
             report.</p><img src="../../plugins/@PLUGIN_KEY@/images/Undeploy/Logs.png" />
         </div>
+
+
         <div id="DeployAdvanced">
             <a name="DeployAdvanced" id="DeployAdvanced"></a>
 
@@ -1635,35 +1613,25 @@ Providers can be optionally modified by using provider settings. Provider settin
             <a name="StartAppPool" id="StartAppPool"></a>
 
             <h3>StartAppPool</h3>
-
             <p>Starts an IIS application pool.</p>
 
             <table class="grid">
                 <thead>
                     <tr>
                         <th>Parameter</th>
-
                         <th>Description</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td class="required">Application pool
-                        name</td>
-
-                        <td>The name of the application pool to
-                        start. i.e: 'FirstAppPool'. </td>
+                        <td class="required">Application pool name</td>
+                        <td>The name of the application pool to start. i.e: 'FirstAppPool'. </td>
                     </tr>
                 </tbody>
             </table>
 
-            <p>To start an application pool, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/StartAppPool/EC-IIS7StartAppPool1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/StartAppPool/EC-IIS7StartAppPool2.png" />
 
 
@@ -1683,14 +1651,12 @@ Providers can be optionally modified by using provider settings. Provider settin
             <a name="StartWebSite" id="StartWebSite"></a>
 
             <h3>StartWebSite</h3>
-
             <p>Starts a website into an IIS Server.</p>
 
             <table class="grid">
                 <thead>
                     <tr>
                         <th>Parameter</th>
-
                         <th>Description</th>
                     </tr>
                 </thead>
@@ -1698,7 +1664,6 @@ Providers can be optionally modified by using provider settings. Provider settin
                 <tbody>
                     <tr>
                         <td class="required">Website name</td>
-
                         <td>Provide the descriptive name of the
                         website you want to start. i.e: 'Default
                         Web Site'. </td>
@@ -1706,11 +1671,7 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To start a website, select the following highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/StartWebSite/EC-IIS7StartWebSite1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/StartWebSite/EC-IIS7StartWebSite2.png" />
 
 
@@ -1737,7 +1698,6 @@ Providers can be optionally modified by using provider settings. Provider settin
                 <thead>
                     <tr>
                         <th>Parameter</th>
-
                         <th>Description</th>
                     </tr>
                 </thead>
@@ -1753,12 +1713,7 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To stop an application pool, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/StopAppPool/EC-IIS7StopAppPool1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/StopAppPool/EC-IIS7StopAppPool2.png" />
 
 
@@ -1801,11 +1756,7 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To stop a website, select the following highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/StopWebSite/EC-IIS7StopWebSite1.png" />
-
-
-            <p>Then, enter the following
+             <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/StopWebSite/EC-IIS7StopWebSite2.png" />
 
 
@@ -1845,11 +1796,7 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To recycle an application pool, select the following highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/RecycleAppPool/EC-IIS7RecycleAppPool1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/RecycleAppPool/EC-IIS7RecycleAppPool2.png" />
 
 
@@ -1908,12 +1855,8 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To assign an application to an application pool,
-            select the following highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/AddAppToAppPool/EC-IIS7AddAppToAppPool1.png" />
 
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/AddAppToAppPool/EC-IIS7AddAppToAppPool2.png" />
 
 
@@ -1976,12 +1919,7 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To list the sites on a web server, select the
-            following highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListSites/EC-IIS7ListSites1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListSites/EC-IIS7ListSites2.png" />
 
 
@@ -2046,12 +1984,7 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To list the applications on a website, select the
-            following highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListSiteApps/EC-IIS7ListSiteApps1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListSiteApps/EC-IIS7ListSiteApps2.png" />
 
 
@@ -2107,12 +2040,7 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To list the application pools, select the
-            following highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListAppPools/EC-IIS7ListAppPools1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListAppPools/EC-IIS7ListAppPools2.png" />
 
 
@@ -2167,12 +2095,8 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To list the virtual directories, select the
-            following highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListVirtualDirectories/EC-IIS7ListVirtualDirectories1.png" />
 
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListVirtualDirectories/EC-IIS7ListVirtualDirectories2.png" />
 
 
@@ -2231,20 +2155,13 @@ Providers can be optionally modified by using provider settings. Provider settin
                 </tbody>
             </table>
 
-            <p>To add a binding to a Website, select the following
-            highlighted
-            step:</p><img src="../../plugins/@PLUGIN_KEY@/images/AddWebSiteBinding/EC-IIS7AddWebSiteBinding1.png" />
-
-
-            <p>Then, enter the following
+            <p>Enter the following
             parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/AddWebSiteBinding/EC-IIS7AddWebSiteBinding2.png" />
-
 
             <p>When the job is executed, you should see the
             following job detail, note the output indicating the
             binding was added
             successfully:</p><img src="../../plugins/@PLUGIN_KEY@/images/AddWebSiteBinding/EC-IIS7AddWebSiteBinding3.png" />
-
 
             <p>In the <b>AddWebSiteBinding</b> step, click the Log
             icon to see the diagnostic info. The output is similar
