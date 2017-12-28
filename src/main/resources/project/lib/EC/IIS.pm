@@ -818,6 +818,65 @@ sub step_create_or_update_vdir {
     }
 }
 
+
+sub step_add_ssl_certificate {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        port
+        certStore
+        certHash
+        ip
+        certHostName
+    /);
+
+    unless($params->{ip} || $params->{certHostName}) {
+        $self->bail_out('Either IP or Hostname should be provided');
+    }
+    my $hash = $params->{certHash};
+    $hash =~ s/\s+//g;
+    $hash =~ s/\W//gi;
+    $hash = uc $hash;
+
+    my $guid = $self->ec->getProperty('/myJob/id')->findvalue('//value');
+    my $appid = $guid;
+
+    my $certificate = $self->driver->get_ssl_certificate($params);
+
+    if ($certificate && $certificate->{'Certificate Hash'}) {
+        $self->logger->info("Certificate already exists, with hash $certificate->{'Certificate Hash'}");
+        # TODO update
+        my @command = qw/netsh http update sslcert/;
+        if ($params->{ip}) {
+            push @command, qq{ipport=$params->{ip}:$params->{port}};
+        }
+        else {
+            push @command, qq{hostnameport=$params->{certHostName}:$params->{port}};
+        }
+        push @command, qq{certstore="$params->{certStore}"};
+        push @command, "certhash=$hash";
+        push @command, qq{appid="{$appid}"};
+        my $command = join(' ', @command);
+        my $result = $self->run_command($command);
+        $self->_process_result($result);
+    }
+    else {
+        my @command = (qw/netsh http add sslcert/);
+        if ($params->{ip}) {
+            push @command, qq{ipport=$params->{ip}:$params->{port}};
+        }
+        else {
+            push @command, qq{hostnameport=$params->{certHostName}:$params->{port}};
+        }
+        push @command, qq{certstore="$params->{certStore}"};
+        push @command, "certhash=$hash";
+        push @command, qq{appid="{$appid}"};
+        my $command = join(' ', @command);
+        my $result = $self->run_command($command);
+        $self->_process_result($result);
+    }
+}
+
 sub _is_xml {
     my ($content) = @_;
 

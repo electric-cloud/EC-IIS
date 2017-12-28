@@ -258,6 +258,10 @@
     <xpath>//procedure[procedureName=&quot;StartWebSite&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
   <file>
+    <path>forms/IISAddSSLCertificateForm.xml</path>
+    <xpath>//procedure[procedureName=&quot;AddSSLCertificate&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+  <file>
     <path>forms/IISStopWebSiteForm.xml</path>
     <xpath>//procedure[procedureName=&quot;StopWebSite&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
   </file>
