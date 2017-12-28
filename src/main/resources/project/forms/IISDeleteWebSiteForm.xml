@@ -22,14 +22,14 @@
 	<description>Deletes a website.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Website name:</label>
+		<label>Website Name:</label>
 		<property>websitename</property>
 		<required>1</required>
 		<documentation>The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.</documentation>
 	</formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Strict mode:</label>
+        <label>Strict Mode:</label>
         <property>strictMode</property>
         <required>0</required>
         <value>0</value>

@@ -369,7 +369,8 @@ sub step_undeploy {
         websiteName
         strictMode
         applicationName
-        deleteVirtualDirectories/);
+        deleteVirtualDirectories
+    /);
 
     my $website_name = $params->{websiteName};
     unless ($self->driver->check_site_exists($website_name)) {
@@ -394,7 +395,7 @@ sub step_undeploy {
         }
     }
 
-    print $result->{stdout};
+    $self->_process_result($result);
 }
 
 sub step_deploy {

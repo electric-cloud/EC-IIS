@@ -22,44 +22,44 @@
     <description>Deploys an application using MS Deploy.</description>
     <formElement>
         <type>entry</type>
-        <label>MS deploy path:</label>
+        <label>MSDeploy (WebDeploy) Path:</label>
         <property>msdeployPath</property>
         <required>1</required>
-        <documentation>Provide the relative or absolute path to the MSDeploy executable.</documentation>
+        <documentation>Provide the relative or absolute path to the MSDeploy (WebDeploy) executable.</documentation>
         <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_discovery/discovered_data/msdeploy_path</propertyReference>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Deploy source path:</label>
+        <label>Deploy Source Path:</label>
         <property>source</property>
         <required>1</required>
         <documentation>A path to package (application.zip) or to directory which contains the content to be deployed.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Destination website:</label>
+        <label>Destination Website:</label>
         <property>websiteName</property>
         <required>1</required>
-        <documentation>A name of the web site to be deployed.</documentation>
+        <documentation>A name of the web site to be deployed, e.g. My Site.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Destination application:</label>
+        <label>Destination Application:</label>
         <property>applicationPath</property>
         <required>0</required>
-        <documentation>A name of the application to be deployed. If not provided, the content will be placed under the website.</documentation>
+        <documentation>A name of the application to be deployed. If not provided, the content will be placed under the root application.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Application pool name:</label>
+        <label>Application Pool Name:</label>
         <property>applicationPool</property>
         <required>0</required>
         <value></value>
-        <documentation>Application pool name. If the application pool does not exists, it will be created. If this parameter was not specified, the application will be placed into the default pool, which has the same name as website.</documentation>
+        <documentation>Application pool name. If the application pool does not exists, it will be created. If this parameter was not specified, the application will be placed into the default pool.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>.NET framework version:</label>
+        <label>.NET Framework Version (Application Pool):</label>
         <property>managedRuntimeVersion</property>
         <required>0</required>
         <value></value>
@@ -68,7 +68,7 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Enable 32-bit applications:</label>
+        <label>Enable 32-bit Applications (Application Pool):</label>
         <property>enable32BitAppOnWin64</property>
         <required>0</required>
         <value></value>
@@ -86,7 +86,7 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
             <value>Integrated</value>
             <name>Integrated</name>
         </option>
-        <label>Managed pipeline mode:</label>
+        <label>Managed Pipeline Mode (Application Pool):</label>
         <property>managedPipelineMode</property>
         <required>0</required>
         <value></value>
@@ -95,7 +95,7 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
     <formElement>
         <type>entry</type>
         <property>queueLength</property>
-        <label>Queue length</label>
+        <label>Queue Length (Application Pool):</label>
         <documentation>Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.</documentation>
         <value></value>
     </formElement>
@@ -110,8 +110,8 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
     <formElement>
         <type>textarea</type>
         <property>appPoolAdditionalSettings</property>
-        <label>Additional settings for application pool</label>
-        <htmlDocumentation>Additional settings for application pool configuration, key-value pair one per line. For the list of available settings please refer to <a target="_blank" href="https://technet.microsoft.com/en-us/library/cc745955.aspx">Managing, Tuning, and Configuring Application Pools in IIS 7.0</a></htmlDocumentation>
+        <label>Additional Settings for Application Pool:</label>
+        <htmlDocumentation>Additional settings for application pool configuration, key-value pairs one per line. For the list of available settings please refer to <a target="_blank" href="https://technet.microsoft.com/en-us/library/cc745955.aspx">Managing, Tuning, and Configuring Application Pools in IIS 7.0</a></htmlDocumentation>
         <value></value>
     </formElement>
 </editor>

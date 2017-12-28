@@ -14,7 +14,7 @@
        <h1>IIS</h1>
        <p>Plugin Version @PLUGIN_VERSION@</p>
        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-       <p>Revised on August 9, 2017</p>
+       <p>Revised on January 10, 2018</p>
        <p>
 	    Internet Information Server - is a web server application
         and set of feature extension modules created by Microsoft
@@ -24,8 +24,6 @@
         Windows Server family of products, as well as certain
         editions of Windows XP, Windows Vista, Windows 7 and Windows 10. IIS is
         not turned on by default when Windows is installed.</p>
-
-
         <h1>Contents</h1>
         <ul>
             <li><a href="#CreateConfiguration">Setting up the plugin configuration</a></li>
@@ -83,7 +81,15 @@
 
         <h2>Integrated Version</h2>
 
-        <p>This plugin was developed and tested with IIS 7.0.</p>
+        <p>
+            This plugin supports next versions of IIS:
+            <ul>
+                <li>7.x</li>
+                <li>8.x</li>
+                <li>9.x</li>
+                <li>10.x</li>
+            </ul>
+        </p>
 
         <h1>Plugin Procedures</h1>
 		<p>IMPORTANT: In the ElectricFlow UI, from the Home page, open the Main Menu, and click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</p>
