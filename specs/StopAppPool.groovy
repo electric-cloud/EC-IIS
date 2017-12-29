@@ -21,7 +21,7 @@ class StopAppPool extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        dsl "deleteProject '$projectName'"
+        // dsl "deleteProject '$projectName'"
     }
 
     def "stop app pool"() {

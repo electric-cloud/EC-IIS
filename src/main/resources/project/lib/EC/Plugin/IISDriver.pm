@@ -74,6 +74,16 @@ sub recycle_app_pool_cmd {
     return $self->get_app_cmd('recycle', 'apppool', qq{/apppool.name:"$name"});
 }
 
+
+sub stop_app_pool_cmd {
+    my ($self, $params) = @_;
+
+    my $name = $params->{applicationPool};
+    assert $name;
+
+    return $self->get_app_cmd('stop', 'apppool', qq{/apppool.name:"$name"});
+}
+
 sub check_app_pool_exists {
     my ($self, $name) = @_;
 

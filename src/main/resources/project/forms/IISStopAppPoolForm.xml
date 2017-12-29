@@ -19,12 +19,22 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopAppPool</help>
 	<label>Application server - IIS stopapppool</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Stops an application pool.</description>	
+	<description>Stops an application pool.</description>
+    <formElement>
+        <type>entry</type>
+        <label>Application Pool Name:</label>
+        <property>apppoolname</property>
+        <required>1</required>
+        <documentation>The name of the application pool to stop. i.e: 'FirstAppPool'.</documentation>
+    </formElement>
 	<formElement>
-		<type>entry</type>
-		<label>Application pool name:</label>
-		<property>apppoolname</property>
-		<required>1</required>
-		<documentation>The name of the application pool to stop. i.e: 'FirstAppPool'.</documentation>
-	</formElement>		
+		<type>checkbox</type>
+		<label>Strict Mode?:</label>
+		<property>strictMode</property>
+		<required>0</required>
+		<documentation>If checked, the procedure will fail if the application pool is already stopped.</documentation>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <value>1</value>
+	</formElement>
 </editor>
