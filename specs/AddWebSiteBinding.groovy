@@ -23,7 +23,7 @@ class AddWebSiteBinding extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        dsl "deleteProject '$projectName'"
+        // dsl "deleteProject '$projectName'"
     }
 
     def "normal binding"() {
@@ -48,6 +48,34 @@ class AddWebSiteBinding extends PluginTestHelper {
             def site = getSite(siteName)
             logger.debug(objectToJson(site))
             assert site.bindings == ['http/*:9999:', 'http/*:9991:']
+        cleanup:
+            removeSite(siteName)
+    }
+
+
+    def "duplicate binding"() {
+        given: 'a site exists'
+            def siteName = randomize('mysite')
+            def port = '9999'
+            createSite(siteName, "http://*:${port}")
+        when: "procedure runs"
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        bindingInformation: '*:$port',
+                        bindingProtocol: 'http',
+                        websitename: '$siteName'
+                    ]
+                )
+            """
+        then: 'it finishes'
+            assert result.outcome == 'success'
+            logger.debug(result.logs)
+            def site = getSite(siteName)
+            logger.debug(objectToJson(site))
+            assert site.bindings == ['http/*:9999:']
         cleanup:
             removeSite(siteName)
     }
@@ -82,6 +110,8 @@ class AddWebSiteBinding extends PluginTestHelper {
             removeSite(siteName)
 
     }
+
+
 
 
     def "add bindings with host header"() {
