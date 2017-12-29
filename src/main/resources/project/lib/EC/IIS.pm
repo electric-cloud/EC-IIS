@@ -946,6 +946,42 @@ sub step_list_sites {
     );
 }
 
+
+sub step_add_site_binding {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        websitename
+        bindingprotocol
+        bindinginformation
+    /);
+
+    my $binding_info = $params->{bindinginformation};
+    $binding_info .= ':' unless $binding_info =~ /:$/;
+    my $site = $self->driver->get_site($params->{websitename});
+    if ($site->{bindings}) {
+        my $exists = 0;
+        for my $binding_str (split(',', $site->{bindings})) {
+            my ($protocol, $info) = split('/', $binding_str);
+
+            if ($protocol eq $params->{bindingprotocol}
+                && $info eq $binding_info) {
+                $exists = 1;
+            }
+        }
+        if ($exists) {
+            $self->logger->info("Binding already exists, skipping");
+            return;
+        }
+    }
+
+    my $command = $self->driver->add_site_binding_cmd({%{$params}, bindinginformation => $binding_info});
+    $self->set_cmd_line($command);
+    my $result = $self->run_command($command);
+    $self->_process_result($result);
+}
+
+
 sub step_list_pools {
     my ($self) = @_;
 
