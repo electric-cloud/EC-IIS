@@ -114,4 +114,11 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
         <htmlDocumentation>Additional settings for application pool configuration, key-value pairs one per line. For the list of available settings please refer to <a target="_blank" href="https://technet.microsoft.com/en-us/library/cc745955.aspx">Managing, Tuning, and Configuring Application Pools in IIS 7.0</a></htmlDocumentation>
         <value></value>
     </formElement>
+    <formElement>
+        <type>textarea</type>
+        <property>additionalOptions</property>
+        <label>Additional Parameters for Web Deploy:</label>
+        <htmlDocumentation>Additional parameters to pass to Web Deploy. For the list of available settings please refer to <a target="_blank" href="https://technet.microsoft.com/en-us/library/dd568991(v=ws.10).aspx">Web Deploy Command Line Reference</a>. E.g., -enableRule:AppOffline.</htmlDocumentation>
+        <value></value>
+    </formElement>
 </editor>
