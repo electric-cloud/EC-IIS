@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use EC::Plugin::Core;
 use base qw(EC::Plugin::Core);
+use subs qw(assert);
+use XML::Simple qw(XMLin);
 
 use constant {
     DEFAULT_APPCMD_PATH => ($ENV{windir} || 'C:\\').'\system32\inetsrv\appcmd',
@@ -393,6 +395,40 @@ sub set_vdir_creds_cmd {
     # return $self->get_app_cmd('set', 'vdir', qq{/vdir.name:"$vdir"}, qq{/username:$username}, qq{/password:$password});
 }
 
+
+sub add_site_binding_cmd {
+    my ($self, $params) = @_;
+
+    my $site_name = $params->{websitename};
+    my $protocol = $params->{bindingprotocol};
+    my $information = $params->{bindinginformation};
+    assert $site_name;
+    assert $information;
+    assert $protocol;
+
+    # appcmd set site /site.name: contoso /bindings.[protocol='https',bindingInformation='*:443:'].bindingInformation:*:443: marketing
+    return $self->get_app_cmd('set', 'site', qq{/site.name:"$site_name"}, qq{/+bindings.[protocol='$protocol',bindingInformation='${information}']});
+}
+
+
+sub get_site {
+    my ($self, $name) = @_;
+
+    my $cmd = $self->get_app_cmd('list', 'site', qq{/site.name:"$name"}, '/xml');
+    my $result = $self->run_command($cmd);
+
+    if ($result->{code}) {
+        die "Cannot get site: code $result->{code}, " . ($result->{stderr} || $result->{stdout});
+    }
+    my $site_data = XMLin($result->{stdout});
+    if ($site_data->{SITE}) {
+        return $site_data->{SITE};
+    }
+    else {
+        return $site_data;
+    }
+}
+
 sub escape {
     my ($string) = @_;
     # TODO
@@ -409,6 +445,15 @@ sub escape {
     # Escape shell metacharacters:
     # $string =~ s/([()%!^"<>&|;, ])/\^$1/g;
     return $string;
+}
+
+
+sub assert($) {
+    my $value = $_[0];
+    unless($value) {
+        my ($module, $file, $line) = caller();
+        die "${module}::${line}: value is required";
+    }
 }
 
 1;
