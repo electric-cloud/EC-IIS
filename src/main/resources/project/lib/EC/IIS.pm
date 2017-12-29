@@ -954,16 +954,23 @@ sub step_add_site_binding {
         websitename
         bindingprotocol
         bindinginformation
+        hostHeader
     /);
 
     my $binding_info = $params->{bindinginformation};
     $binding_info .= ':' unless $binding_info =~ /:$/;
+    if ($params->{hostHeader}) {
+        $binding_info .= $params->{hostHeader};
+    }
     my $site = $self->driver->get_site($params->{websitename});
     if ($site->{bindings}) {
         my $exists = 0;
         for my $binding_str (split(',', $site->{bindings})) {
             my ($protocol, $info) = split('/', $binding_str);
+            my ($host, $port, $header) = split(':', $info);
 
+
+            $self->logger->info("Found binding: protocol $protocol, info: $info");
             if ($protocol eq $params->{bindingprotocol}
                 && $info eq $binding_info) {
                 $exists = 1;

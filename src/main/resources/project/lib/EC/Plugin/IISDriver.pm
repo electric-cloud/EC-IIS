@@ -406,6 +406,7 @@ sub add_site_binding_cmd {
     assert $information;
     assert $protocol;
 
+    # appcmd set site /site.name: contoso /bindings.[protocol='https',bindingInformation='*:443:'].bindingInformation:*:443: marketing
     return $self->get_app_cmd('set', 'site', qq{/site.name:"$site_name"}, qq{/+bindings.[protocol='$protocol',bindingInformation='${information}']});
 }
 
