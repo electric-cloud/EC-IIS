@@ -3803,6 +3803,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>hostHeader</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -3830,6 +3840,14 @@
                 <defaultValue/>
                 <description>Information of the binding to add, including the host and the port, i.e: 'localhost:443', '*:81'. (Required)</description>
                 <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+
+            <formalParameter>
+                <formalParameterName>hostHeader</formalParameterName>
+                <defaultValue/>
+                <description>Host headers (also known as domain names or host names) let you assign more than one site to a single IP address on a Web server.</description>
+                <required>0</required>
                 <type>entry</type>
             </formalParameter>
 

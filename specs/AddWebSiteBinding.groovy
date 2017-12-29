@@ -16,7 +16,8 @@ class AddWebSiteBinding extends PluginTestHelper {
             params: [
                 bindingInformation: '',
                 bindingProtocol: '',
-                websitename: ''
+                websitename: '',
+                hostHeader: ''
             ]
         ]
         createHelperProject(resName)
@@ -52,6 +53,64 @@ class AddWebSiteBinding extends PluginTestHelper {
             removeSite(siteName)
     }
 
+
+    def "duplicate binding"() {
+        given: 'a site exists'
+            def siteName = randomize('mysite')
+            def port = '9999'
+            createSite(siteName, "http://*:${port}")
+        when: "procedure runs"
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        bindingInformation: '*:$port',
+                        bindingProtocol: 'http',
+                        websitename: '$siteName'
+                    ]
+                )
+            """
+        then: 'it finishes'
+            assert result.outcome == 'success'
+            logger.debug(result.logs)
+            def site = getSite(siteName)
+            logger.debug(objectToJson(site))
+            assert site.bindings == ['http/*:9999:']
+            assert result.logs =~ /already exists/
+        cleanup:
+            removeSite(siteName)
+    }
+
+    def "duplicate binding with host header"() {
+        given: 'a site exists'
+            def siteName = randomize('mysite')
+            def port = '9999'
+            createSite(siteName, "http://*:${port}")
+        when: "procedure runs"
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        bindingInformation: '*:$port',
+                        bindingProtocol: 'http',
+                        websitename: '$siteName',
+                        hostHeader: 'mysite.com'
+                    ]
+                )
+            """
+        then: 'it finishes'
+            assert result.outcome == 'success'
+            logger.debug(result.logs)
+            def site = getSite(siteName)
+            logger.debug(objectToJson(site))
+            assert site.bindings == ['http/*:9999:', 'http/*:9999:mysite.com']
+
+        cleanup:
+            removeSite(siteName)
+    }
+
     def "different protocols two bindings"() {
         given: 'a site exists'
             def siteName = randomize('mysite')
@@ -83,20 +142,21 @@ class AddWebSiteBinding extends PluginTestHelper {
 
     }
 
-
     def "add bindings with host header"() {
         given: 'a site exists'
             def siteName = randomize('mysite')
             createSite(siteName, 'http://*:9999')
+            def hostHeader = 'myhost.com'
         when: "procedure runs"
             def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
                     actualParameter: [
-                        bindingInformation: '*:9911:hostHeader',
+                        bindingInformation: '*:9911',
                         bindingProtocol: 'http',
-                        websitename: '$siteName'
+                        websitename: '$siteName',
+                        hostHeader: '$hostHeader'
                     ]
                 )
             """
@@ -105,6 +165,7 @@ class AddWebSiteBinding extends PluginTestHelper {
             logger.debug(result.logs)
             def site = getSite(siteName)
             logger.debug(objectToJson(site))
+            assert "http/*:9911:$hostHeader".toString() in site.bindings
 
         cleanup:
             removeSite(siteName)
@@ -118,9 +179,9 @@ class AddWebSiteBinding extends PluginTestHelper {
                     projectName: "$projectName",
                     procedureName: '$procName',
                     actualParameter: [
-                        bindingInformation: '*:9911:hostHeader',
+                        bindingInformation: '*:9911',
                         bindingProtocol: 'http',
-                        websitename: 'SomeSite'
+                        websitename: 'SomeSite',
                     ]
                 )
             """
