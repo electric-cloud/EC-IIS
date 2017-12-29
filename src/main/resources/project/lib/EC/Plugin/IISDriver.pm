@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use EC::Plugin::Core;
 use base qw(EC::Plugin::Core);
+use subs qw(assert);
 
 use constant {
     DEFAULT_APPCMD_PATH => ($ENV{windir} || 'C:\\').'\system32\inetsrv\appcmd',
@@ -410,6 +411,36 @@ sub get_ssl_certificate {
     return;
 }
 
+
+sub add_ssl_certificate_cmd {
+    my ($self, $params) = @_;
+
+    my $verb = $params->{verb} ||= 'add';
+    my @command = (qw/netsh http/);
+    push @command, $verb;
+    push @command, 'sslcert';
+    if ($params->{ip}) {
+        push @command, qq{ipport=$params->{ip}:$params->{port}};
+    }
+    elsif ($params->{certHostName}) {
+        push @command, qq{hostnameport=$params->{certHostName}:$params->{port}};
+    }
+    else {
+        die 'Either IP or certHostName must be provided';
+    }
+    my $hash = $params->{hash};
+    assert($hash);
+    my $appid = $params->{appid};
+    assert($appid);
+    assert($params->{certStore});
+
+    push @command, qq{certstore="$params->{certStore}"};
+    push @command, "certhash=$hash";
+    push @command, qq{appid="{$appid}"};
+    my $command = join(' ', @command);
+    return $command;
+}
+
 sub set_vdir_creds_cmd {
     my ($self, $params) = @_;
 
@@ -445,6 +476,15 @@ sub escape {
     # Escape shell metacharacters:
     # $string =~ s/([()%!^"<>&|;, ])/\^$1/g;
     return $string;
+}
+
+
+sub assert($) {
+    my $value = $_[0];
+    unless($value) {
+        my ($module, $file, $line) = caller();
+        die "${module}::${line}: value is required";
+    }
 }
 
 1;

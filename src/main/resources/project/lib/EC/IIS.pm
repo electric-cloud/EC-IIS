@@ -845,33 +845,12 @@ sub step_add_ssl_certificate {
 
     if ($certificate && $certificate->{'Certificate Hash'}) {
         $self->logger->info("Certificate already exists, with hash $certificate->{'Certificate Hash'}");
-        # TODO update
-        my @command = qw/netsh http update sslcert/;
-        if ($params->{ip}) {
-            push @command, qq{ipport=$params->{ip}:$params->{port}};
-        }
-        else {
-            push @command, qq{hostnameport=$params->{certHostName}:$params->{port}};
-        }
-        push @command, qq{certstore="$params->{certStore}"};
-        push @command, "certhash=$hash";
-        push @command, qq{appid="{$appid}"};
-        my $command = join(' ', @command);
+        my $command = $self->driver->add_ssl_certificate_cmd({verb => 'update', hash => $hash, appid => $appid, %$params});
         my $result = $self->run_command($command);
         $self->_process_result($result);
     }
     else {
-        my @command = (qw/netsh http add sslcert/);
-        if ($params->{ip}) {
-            push @command, qq{ipport=$params->{ip}:$params->{port}};
-        }
-        else {
-            push @command, qq{hostnameport=$params->{certHostName}:$params->{port}};
-        }
-        push @command, qq{certstore="$params->{certStore}"};
-        push @command, "certhash=$hash";
-        push @command, qq{appid="{$appid}"};
-        my $command = join(' ', @command);
+        my $command = $self->driver->add_ssl_certificate_cmd({hash => $hash, appid => $appid, %$params});
         my $result = $self->run_command($command);
         $self->_process_result($result);
     }
