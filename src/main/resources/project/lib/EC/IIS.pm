@@ -957,6 +957,7 @@ sub step_add_site_binding {
         hostHeader
     /);
 
+    # TODO update existing binding wtih host header
     my $binding_info = $params->{bindinginformation};
     $binding_info .= ':' unless $binding_info =~ /:$/;
     if ($params->{hostHeader}) {
