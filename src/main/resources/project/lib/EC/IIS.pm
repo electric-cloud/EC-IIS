@@ -1171,6 +1171,26 @@ sub step_stop_server {
     $self->_process_result($result);
 }
 
+sub step_stop_application_pool {
+    my ($self) = @_;
+
+    my $params = $self->get_params_as_hashref(qw/
+        apppoolname
+        strictMode
+    /);
+
+    my $cmd = $self->driver->stop_app_pool_cmd({applicationPool => $params->{apppoolname}});
+    my $result = $self->run_command($cmd);
+    if (!$params->{strictMode}
+        && $result->{code}
+        && $result->{stdout} =~ /already stopped/) {
+        $self->warning($result->{stdout});
+    }
+    else {
+        $self->_process_result($result);
+    }
+}
+
 
 sub step_reset_server {
     my ($self) = @_;

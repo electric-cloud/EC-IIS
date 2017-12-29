@@ -82,7 +82,6 @@ class StartWebsite extends PluginTestHelper {
             logger.debug(result.logs)
     }
 
-
     def "negative: start site when the port is already used"() {
         given: 'a site'
             def bindings = 'http://*:9090'
@@ -110,25 +109,4 @@ class StartWebsite extends PluginTestHelper {
             removeSite('MySite')
     }
 
-    @Ignore
-    def "negative: start an invalid site"() {
-        given: 'a site'
-            def bindings = 'http://*:9090'
-            def siteName = 'MySite'
-            createSite(siteName, bindings, 'c:/wrong_dir')
-        when: 'procedure runs'
-            def result = runProcedureDsl """
-                runProcedure(
-                    projectName: "$projectName",
-                    procedureName: 'Start Site',
-                    actualParameter: [
-                        sitename: '$siteName'
-                    ]
-                )
-            """
-        then: 'procedure succeeds'
-            assert result.outcome == 'error'
-            logger.debug(result.logs)
-
-    }
 }
