@@ -19,7 +19,7 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateWebSite</help>
 	<label>Application server - IIS Add SSL Certificate</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Adds SSL certificate to the specified port.</description>
+	<description>Adds SSL certificate to the specified port or updates if one already exists.</description>
     <formElement>
         <type>entry</type>
         <label>IP:</label>
