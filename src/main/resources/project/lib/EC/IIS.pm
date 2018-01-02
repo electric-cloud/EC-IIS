@@ -273,6 +273,7 @@ sub create_msdeploy_command {
     if ($params->{additionalOptions}) {
         $command .= " $params->{additionalOptions}";
     }
+
     return $command;
 }
 
@@ -414,6 +415,7 @@ sub step_deploy {
         queueLength
         autoStart
         appPoolAdditionalSettings
+        additionalOptions
     /);
 
     my $source_provider;
@@ -435,7 +437,8 @@ sub step_deploy {
         sourceProviderObjectPath => $source,
         destProvider => 'iisApp',
         destProviderObjectPath => $destination_object_path,
-        verb => 'sync'
+        verb => 'sync',
+        additionalOptions => $params->{additionalOptions}
     });
     $self->set_cmd_line($deploy_command);
     my $result = $self->run_command($deploy_command);

@@ -24,7 +24,8 @@ class Deploy extends PluginTestHelper {
                 msdeployPath: 'msdeploy.exe',
                 queueLength: '',
                 source: '',
-                websiteName: ''
+                websiteName: '',
+                additionalOptions: ''
             ]
         ]
         createHelperProject(resName)
@@ -224,7 +225,7 @@ class Deploy extends PluginTestHelper {
                         managedPipelineMode: 'Classic',
                         enable32BitAppOnWin64: 'true',
                         autoStart: 'false',
-                        queueLength: '10'
+                        queueLength: '10',
                     ]
                 )
             """
@@ -244,6 +245,48 @@ class Deploy extends PluginTestHelper {
             assert appPool.details =~ /autoStart:"false"/
             assert appPool.details =~ /enable32BitAppOnWin64:"true"/
             assert appPool.details =~ /queueLength:"10"/
+        cleanup:
+            removeSite(siteName)
+            removeAppPool(appPoolName)
+    }
+
+
+    // C259519
+    def "provide additional options"() {
+        given: "application is downloaded to the machine"
+            createDir('c:/tmp')
+            uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
+            def siteName = randomize('NetDash')
+            def sitePath = "c:/site_${siteName}"
+            createDir(sitePath)
+            createSite(siteName, 'http://*:8888', sitePath)
+            def appPoolName = randomize('NetDashPool')
+            createAppPool(appPoolName)
+            def appName = 'NetDash'
+        when: 'the deploy runs'
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        source: 'c:/tmp/NetDash-master/Insya.NetDash',
+                        websiteName: '$siteName',
+                        msdeployPath: 'msdeploy.exe',
+                        applicationPath: '$appName',
+                        applicationPool: '$appPoolName',
+                        managedRuntimeVersion: 'v2.0',
+                        managedPipelineMode: 'Classic',
+                        enable32BitAppOnWin64: 'true',
+                        autoStart: 'false',
+                        queueLength: '10',
+                        additionalOptions: '-enableRule:AppOffline'
+                    ]
+                )
+            """
+        then:
+            assert result.outcome == 'success'
+            logger.debug(result.logs)
+            assert result.logs =~ /-enableRule:AppOffline/
         cleanup:
             removeSite(siteName)
             removeAppPool(appPoolName)
@@ -335,6 +378,7 @@ class Deploy extends PluginTestHelper {
             assert result.logs =~ /"wrong"' is not recognized as an internal or external command/
 
     }
+
 
 
     def uploadArtifact(url, artifactPath) {
