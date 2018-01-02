@@ -38,6 +38,12 @@ sub debug {
     $self->_log(DEBUG, '[DEBUG]', @messages);
 }
 
+sub warning {
+    my ($self, @messages) = @_;
+
+    $self->_log(ERROR, '[WARNING]', @messages);
+}
+
 sub error {
     my ($self, @messages) = @_;
     $self->_log(ERROR, '[ERROR]', @messages);

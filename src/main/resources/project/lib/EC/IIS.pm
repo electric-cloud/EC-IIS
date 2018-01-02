@@ -386,17 +386,21 @@ sub step_undeploy {
     my $command = $self->create_undeploy_command($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
+    my $output = $result->{stderr} || $result->{stdout};
     if ($result->{code} != 0) {
         # This is not an error, just a warning
-        if ($result->{stderr} =~ m/Error: Provider rootWebConfig32 is blocked, by BlockHarmfulDeleteOperations, from performing delete operations to avoid harmful results/) {
-            print $result->{stdout};
+        if ($output =~ m/Error:\s*Provider\s*rootWebConfig32\s*is\s*blocked/i) {
+            $self->warning($output);
+            return;
         }
         else {
             $self->bail_out("Error: $result->{stderr}");
         }
     }
-
-    $self->_process_result($result);
+    else {
+        $self->_process_result($result);
+    }
+    # $self->_process_result($result);
 }
 
 sub step_deploy {
@@ -1325,6 +1329,9 @@ sub _process_result {
     if ($result->{stdout} =~ m/ERROR\s*\(\s*message:(.+)\)/ms) {
         $self->warning($1);
     }
+    elsif($result->{stdout} =~ m/Error:\s*(.+)/) {
+        $self->warning($1);
+    }
     else {
         # $self->logger->info("Result: $result->{stdout}");
         $self->success($result->{stdout});
@@ -1366,6 +1373,8 @@ sub run_command {
     chomp $result->{stdout};
     my $stderr = $result->{stderr} || 'N/A';
     my $stdout = $result->{stdout} || 'N/A';
+    $stdout =~ s/(Error:|\[ERROR\])//;
+    $stderr =~ s/(Error:|\[ERROR\])//;
     $self->logger->info('STDOUT: ' . $stdout);
     $self->logger->info('STDERR: ' . $stderr);
     return $result;
