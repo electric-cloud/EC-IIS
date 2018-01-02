@@ -386,6 +386,72 @@ sub list_vdirs_cmd {
     return $self->get_app_cmd('list', 'vdirs', $extra);
 }
 
+sub get_ssl_certificate {
+    my ($self, $params) = @_;
+
+    my $command = 'netsh http show sslcert ';
+    my $port = $params->{port} || die 'No port is provided';
+    if ($params->{ip}) {
+        $command .= qq{ipport=$params->{ip}:$port};
+    }
+    elsif ($params->{certHostName}) {
+        $command .= qq{hostnameport=$params->{certHostName}:$port};
+    }
+
+    my $result = $self->run_command($command);
+    if ($result->{stdout}) {
+
+        my @lines = split(/\n/, $result->{stdout});
+        my $retval = {};
+        for my $line (@lines) {
+            $line =~ /^\s*([\w\s:]+)\s*:\s*(.+)$/;
+            if ($1 && $2) {
+                my $key = $1;
+                my $value = $2;
+                $key =~ s/\s+$//g;
+                $retval->{$key} = $value;
+            }
+        }
+        return $retval;
+    }
+    else {
+        if ($result->{code}) {
+            die "Show certificate failed: " . ($result->{stderr} || $result->{stdout});
+        }
+    }
+    return;
+}
+
+
+sub add_ssl_certificate_cmd {
+    my ($self, $params) = @_;
+
+    my $verb = $params->{verb} ||= 'add';
+    my @command = (qw/netsh http/);
+    push @command, $verb;
+    push @command, 'sslcert';
+    if ($params->{ip}) {
+        push @command, qq{ipport=$params->{ip}:$params->{port}};
+    }
+    elsif ($params->{certHostName}) {
+        push @command, qq{hostnameport=$params->{certHostName}:$params->{port}};
+    }
+    else {
+        die 'Either IP or certHostName must be provided';
+    }
+    my $hash = $params->{hash};
+    assert($hash);
+    my $appid = $params->{appid};
+    assert($appid);
+    assert($params->{certStore});
+
+    push @command, qq{certstore="$params->{certStore}"};
+    push @command, "certhash=$hash";
+    push @command, qq{appid="{$appid}"};
+    my $command = join(' ', @command);
+    return $command;
+}
+
 sub set_vdir_creds_cmd {
     my ($self, $params) = @_;
 

@@ -57,6 +57,7 @@
                     <li><a href="#StopServer">StopServer</a></li>
                     <li><a href="#StartServer">StartServer</a></li>
                     <li><a href="#RestartServer">ResetServer</a></li>
+                    <li><a href="#AddSSLCertificate">AddSSLCertificate</a></li>
                 </ul>
             </li>
             <li><a href="#KnownIssues">Known Issues</a></li>
@@ -1123,7 +1124,6 @@ STDERR: N/A
             <a name="DeployCopy" id="DeployCopy"></a>
 
             <h3>DeployCopy (DEPRECATED)</h3>
-            <h2>Deprecated</h2>
 
             <p>Copies the application files recursively to the
             website application's physical directory.</p>
@@ -1432,13 +1432,27 @@ STDERR: N/A
             <p>When the job is executed, you should see the
             following job detail, note the output indicating the
             copy was
-            success:</p><img src="../../plugins/@PLUGIN_KEY@/images/Undeploy/Job.png" />
+            success:</p><img src="../../plugins/@PLUGIN_KEY@/images/Undeploy/Summary.png" />
 
 
-            <p>In the <b>Deploy</b> step, click the Log icon to
-            see the diagnostic info. The output is similar to the
-            following diagnostic
-            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/Undeploy/Logs.png" />
+            <p>The logs will look like thw following:</p>
+<pre>
+Using plugin EC-IIS-3.1.0.0
+Got parameter "applicationName" with value ""
+Got parameter "deleteVirtualDirectories" with value "0"
+Got parameter "msdeployPath" with value "msdeploy"
+Got parameter "strictMode" with value "0"
+Got parameter "websiteName" with value "NetDash"
+Wrote command to property cmdLine
+Going to run command: "msdeploy" -verb:delete -dest:iisApp="NetDash"
+Exit code: 0
+STDOUT: Info: Deleting application (NetDash)
+Info: Deleting iisApp (NetDash).
+Info: Deleting MSDeploy.iisApp (MSDeploy.iisApp).
+Total changes: 3 (0 added, 3 deleted, 0 updated, 0 parameters changed, 0 bytes copied)
+STDERR: N/A
+
+</pre>
         </div>
 
 
@@ -1994,10 +2008,27 @@ Providers can be optionally modified by using provider settings. Provider settin
             detected:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListSiteApps/EC-IIS7ListSiteApps3.png" />
 
 
-            <p>In the <b>ListSiteApps</b> step, click the Log icon
-            to see the diagnostic info. The output is similar to
-            the following diagnostic
-            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/ListSiteApps/EC-IIS7ListSiteApps4.png" />
+            <p>The logs will look like the following:</p>
+<pre>
+Using plugin EC-IIS-3.1.0.0
+Got parameter "dumpFormat" with value "propertySheet"
+Got parameter "propertyName" with value "/myJob/IISApps"
+Got parameter "sitename" with value ""
+Wrote command to property cmdLine
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" list apps
+Exit code: 0
+STDOUT: APP "Default Web Site/" (applicationPool:DefaultAppPool)
+APP "Default Web Site/myApp" (applicationPool:DefaultAppPool)
+APP "NetDash/" (applicationPool:NetDash)
+APP "MySite/" (applicationPool:DefaultAppPool)
+APP "NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934/" (applicationPool:DefaultAppPool)
+STDERR: N/A
+Wrote property: /myJob/IISApps/Default Web Site//applicationPool -> DefaultAppPool
+Wrote property: /myJob/IISApps/Default Web Site/myApp/applicationPool -> DefaultAppPool
+Wrote property: /myJob/IISApps/MySite//applicationPool -> DefaultAppPool
+Wrote property: /myJob/IISApps/NetDash//applicationPool -> NetDash
+Wrote property: /myJob/IISApps/NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934//applicationPool -> DefaultAppPool
+</pre>
         </div>
         <div id="ListAppPools">
             <a name="ListAppPools" id="ListAppPools"></a>
@@ -2106,10 +2137,29 @@ Providers can be optionally modified by using provider settings. Provider settin
             detected:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListVirtualDirectories/EC-IIS7ListVirtualDirectories3.png" />
 
 
-            <p>In the <b>ListVirtualDirectories</b> step, click the Log icon
-            to see the diagnostic info. The output is similar to
-            the following diagnostic
-            report.</p><img src="../../plugins/@PLUGIN_KEY@/images/ListVirtualDirectories/EC-IIS7ListVirtualDirectories4.png" />
+            <p>The logs will look like the following:</p>
+<pre>
+Using plugin EC-IIS-3.1.0.0
+Got parameter "dumpFormat" with value "propertySheet"
+Got parameter "propertyName" with value "/myJob/IISVirtualDirectories"
+Got parameter "vdirName" with value ""
+Wrote command to property cmdLine
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" list vdirs
+Exit code: 0
+STDOUT: VDIR "Default Web Site/" (physicalPath:%SystemDrive%\inetpub\wwwroot)
+VDIR "Default Web Site/mydir" (physicalPath:C:\tmp\path)
+VDIR "Default Web Site/myApp/" (physicalPath:C:\tmp\myApp)
+VDIR "NetDash/" (physicalPath:C:\inetpub\NetDash)
+VDIR "MySite/" (physicalPath:c:/wrong_dir)
+VDIR "NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934/" (physicalPath:c:/site_NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934)
+STDERR: N/A
+Wrote property: /myJob/IISVirtualDirectories/Default Web Site//physicalPath -> %SystemDrive%\inetpub\wwwroot
+Wrote property: /myJob/IISVirtualDirectories/Default Web Site/myApp//physicalPath -> C:\tmp\myApp
+Wrote property: /myJob/IISVirtualDirectories/Default Web Site/mydir/physicalPath -> C:\tmp\path
+Wrote property: /myJob/IISVirtualDirectories/MySite//physicalPath -> c:/wrong_dir
+Wrote property: /myJob/IISVirtualDirectories/NetDash//physicalPath -> C:\inetpub\NetDash
+Wrote property: /myJob/IISVirtualDirectories/NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934//physicalPath -> c:/site_NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934
+</pre>
         </div>
 
         <div id="AddWebSiteBinding">
@@ -2268,6 +2318,82 @@ Providers can be optionally modified by using provider settings. Provider settin
 
         </div>
 
+        <div id="AddSSLCertificate">
+            <a name="AddSSLCertificate" id="AddSSLCertificate"></a>
+
+            <h3>AddSSLCertificate</h3>
+            <p>Adds SSL certificate to the specified port or updates if one already exists.</p>
+            <p>
+                Certificate should be added to IIS certificates storage. Please refer to <a href="https://forums.iis.net/t/1158284.aspx?Binding+an+existing+certificate+to+default+web+site+with+appcmd" target="blank">IIS.NET Forums</a> for instructions.
+            </p>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>IP</td>
+                        <td>
+                            IP address or hostname to add certificate, e.g. 0.0.0.0. Either this parameter or Hostname should be provided.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Hostname</td>
+                        <td>
+                           Hostname for the certificate, e.g. mysite.com. Either this parameter or IP should be provided.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Port</td>
+                        <td>
+                           Port to add SSL certificate, e.g. 443.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="required">Certificate Store</td>
+                        <td>
+                           The name of the certificate store, e.g. My.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="required">Certificate Hash (Thumbprint)</td>
+                        <td>
+                           The certificate hash. Can be found in "Server Certificates" tab of IIS console. E.g., '‎b4 7c 04 0c 0a 7e fc f5 3f 9e 12 fc df 07 30 ee b1 d6 04 88'. Spaces are not required.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <p>Enter the following parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/AddSSLCertificate/Form.png" />
+
+            <p>When the job is executed, you should see the following job detail:</p><img src="../../plugins/@PLUGIN_KEY@/images/AddSSLCertificate/Summary.png" />
+
+            <p>Logs will look like the following:</p>
+<pre>
+Using plugin EC-IIS-3.1.0.0
+Logs are redirected to property /myJob/debug_logs
+Got parameter "certHash" with value "b4 7c 04 0c 0a 7e fc f5 3f 9e 12 fc df 07 30 ee b1 d6 04 88"
+Got parameter "certHostName" with value ""
+Got parameter "certStore" with value "My"
+Got parameter "ip" with value "0.0.0.0"
+Got parameter "port" with value "444"
+Logs are redirected to property /myJob/debug_logs
+Certificate already exists, with hash b47c040c0a7efcf53f9e12fcdf0730eeb1d60488
+Going to run command: netsh http update sslcert ipport=0.0.0.0:444 certstore="My" certhash=B47C040C0A7EFCF53F9E12FCDF0730EEB1D60488 appid="{8c12f395-efc4-11e7-8b93-005056a5a0d0}"
+Exit code: 0
+STDOUT:
+SSL Certificate successfully updated
+
+STDERR: N/A
+</pre>
+
+        </div>
+
         <h1>Examples and Use Cases</h1>
 
         <h2>Create Web Site</h2>
@@ -2320,6 +2446,9 @@ Providers can be optionally modified by using provider settings. Provider settin
             </li>
             <li>
                 "Create Directory?" option was added for CreateWebSite, CreateWebApplication, CreateVirtualDirectory procedures.
+            </li>
+            <li>
+                AddSSLCertificate procedure has been added.
             </li>
         </ul>
 

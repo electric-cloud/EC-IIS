@@ -254,6 +254,12 @@ my %listVdirs = (
     description => "List the virtual directories on a web server.",
     category    => "Application Server"
 );
+my %addSSlCertificate = (
+    label       => "IIS - Add SSL Certificate",
+    procedure   => "AddSSLCertificate",
+    description => "Add SSL certificate to the specified port.",
+    category    => "Application Server"
+);
 
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Check Server Status");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Add Website Binding");
@@ -292,6 +298,7 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Pause WebSite"
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Get WebSite Status");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Application Pools");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Virtual Directories");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - Add SSL Certificate");
 
 @::createStepPickerSteps = (\%checkServerStatus, \%addWebSiteBinding,
                             \%assignAppToAppPool, \%createAppPool,
@@ -305,5 +312,5 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/IIS - List Virtual D
                             \%undeploy, \%deploy,
                             \%startServer, \%stopServer, \%resetServer,
                             \%recycleAppPool, \%listApplicationPools,
-                            \%listVdirs
+                            \%listVdirs, \%addSSlCertificate
 );
