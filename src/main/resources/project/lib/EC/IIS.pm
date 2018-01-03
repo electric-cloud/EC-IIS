@@ -453,40 +453,45 @@ sub step_deploy {
         return $self->bail_out("Cannot deploy the application: " . _message_from_result($result));
     }
 
-    my $application = $params->{applicationPath};
+    my $application = $params->{applicationPath} || '';
     my $app_pool_name = $params->{applicationPool};
+    my $app_name = $application;
+    $app_name =~ s{^/}{};
+
+    my $app_path = $application;
+    $app_path = '/' . $app_path unless $app_path =~ m{^/};
 
     if(!$app_pool_name && $application) {
-        $app_pool_name = $self->get_site_app_pool($params->{websiteName}, $application);
+        $app_pool_name = $self->get_site_app_pool($params->{websiteName}, $app_name);
         unless($app_pool_name) {
             # There is no app pool, so one will be created and it will have the site name
             $app_pool_name = $params->{websiteName};
         }
         else {
-            $self->logger->info(qq{Application "$application" is in app pool "$app_pool_name"});
+            $self->logger->info(qq{Application "$app_name" is in app pool "$app_pool_name"});
         }
         $params->{applicationPool} = $app_pool_name;
     }
 
     if ($app_pool_name) {
-        $application ||= '';
         $self->create_or_update_app_pool($params);
         my $cmd = $self->driver->get_app_cmd(
             'set',
             'site',
             qq{/site.name:"$params->{websiteName}"},
-            qq{/[path='/$application'].applicationPool:"$app_pool_name"}
+            qq{/[path='$app_path'].applicationPool:"$app_pool_name"}
         );
-        $self->logger->info("Going to move app $application to app pool $app_pool_name");
+        $self->logger->info("Going to move app $app_name to app pool $app_pool_name");
         my $result = $self->run_command($cmd);
         if ($result->{code} != 0) {
-            return $self->bail_out("Failed to move application $application to app pool $app_pool_name: " . _message_from_result($result));
+            return $self->bail_out("Failed to move application $app_name to app pool $app_pool_name: " . _message_from_result($result));
         }
         $self->logger->info($result->{stdout});
     }
 
 }
 
+# application should not start with slash
 sub get_site_app_pool {
     my ($self, $website, $application) = @_;
 
@@ -597,6 +602,7 @@ sub step_create_application {
     my $vdir_name = "$application_name/";
 
     if ($self->driver->check_application_exists($application_name)) {
+        $self->logger->info(qq{Application "$application_name" exists});
         if ($params->{physicalPath}) {
             $self->logger->info("Going to update virtual directory $vdir_name");
             my $command = $self->driver->update_vdir_cmd({ %$params, vdirName => $vdir_name});

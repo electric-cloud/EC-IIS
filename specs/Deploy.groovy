@@ -144,6 +144,7 @@ class Deploy extends PluginTestHelper {
 
 
     // C259518
+    @Unroll
     def "deploy application #appName and change app pool settings"() {
         given: "application is downloaded to the machine"
             createDir('c:/tmp')
@@ -194,7 +195,7 @@ class Deploy extends PluginTestHelper {
             removeSite(siteName)
             removeAppPool(appPoolName)
         where:
-            appName << ['', 'NetDash']
+            appName << ['', 'NetDash', '/myApp']
     }
 
 

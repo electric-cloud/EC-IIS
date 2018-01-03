@@ -466,8 +466,10 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
 
-    def getApp(siteName, appName) {
+    def getApp(siteName, appName = '') {
         assert siteName
+
+        appName = appName.replace('/', '')
 
         def result = dsl """
             runProcedure(

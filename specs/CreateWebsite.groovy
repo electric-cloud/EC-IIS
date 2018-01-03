@@ -182,10 +182,9 @@ class CreateWebsite extends PluginTestHelper {
     }
 
     @Unroll
-    def "create directory #createDirectory"() {
+    def "create directory #createDirectory, dir #dir"() {
         given: 'no site'
             def siteName = randomize('site')
-            def dir = "c:/tmp/site/$siteName"
             removeSite(siteName)
             def port = 9912
             def bindings = "http://*:$port"
@@ -216,6 +215,7 @@ class CreateWebsite extends PluginTestHelper {
             removeSite(siteName)
         where:
             createDirectory << ['1', '0']
+            dir << ["c:/tmp/site/" + randomize('site'), 'c:/tmp/dir1/' + randomize('dir') + '/dir2']
     }
 
     @Unroll
