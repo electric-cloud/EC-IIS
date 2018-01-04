@@ -2,10 +2,10 @@
     <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeployAdvanced</help>
     <label>Application server - IIS deployadvanced</label>
     <version>@PLUGIN_VERSION@</version>
-    <description>This procedure uses MS Deploy to perform different actions with the IIS application.</description>
+    <description>This procedure uses Web Deploy to perform different actions with the IIS application.</description>
     <formElement>
         <type>entry</type>
-        <label>MSDeploy path:</label>
+        <label>MSDeploy (Web Deploy) path:</label>
         <property>msdeployPath</property>
         <required>1</required>
         <documentation>Provide the relative or absolute path to the MSDeploy executable.</documentation>
@@ -41,7 +41,7 @@
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Source provider:</label>
+        <label>Source Provider:</label>
         <property>sourceProvider</property>
         <required>1</required>
         <default />
@@ -97,7 +97,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Source provider object path:</label>
+        <label>Source Provider Object Path:</label>
         <property>sourceProviderObjectPath</property>
         <required>0</required>
         <default />
@@ -105,7 +105,7 @@
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Source provider settings:</label>
+        <label>Source Provider Settings:</label>
         <property>sourceProviderSettings</property>
         <required>0</required>
         <default />
@@ -114,7 +114,7 @@
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Destination provider:</label>
+        <label>Destination Provider:</label>
         <property>destProvider</property>
         <required>1</required>
         <default />
@@ -171,14 +171,14 @@
     <formElement>
         <property>destProviderObjectPath</property>
         <type>entry</type>
-        <label>Destination provider object path:</label>
+        <label>Destination Provider Object Path:</label>
         <default />
         <required>0</required>
         <documentation>Specifies a path of the provider object. Some providers require a path and some do not. If required, the kind of path depends on the provider.</documentation>
     </formElement>
     <formElement>
         <property>destProviderSettings</property>
-        <label>Destination provider settings:</label>
+        <label>Destination Provider Settings:</label>
         <type>textarea</type>
         <default />
         <required>0</required>
@@ -186,7 +186,7 @@
     </formElement>
     <formElement>
         <property>allowUntrusted</property>
-        <label>Allow untrusted?</label>
+        <label>Allow Untrusted?</label>
         <type>checkbox</type>
         <default />
         <required>0</required>
@@ -196,7 +196,7 @@
     </formElement>
     <formElement>
         <property>preSync</property>
-        <label>Pre-sync command:</label>
+        <label>Pre-Sync Command:</label>
         <type>textarea</type>
         <default />
         <required>0</required>
@@ -204,7 +204,7 @@
     </formElement>
     <formElement>
         <property>postSync</property>
-        <label>Post-sync command:</label>
+        <label>Post-Sync Command:</label>
         <type>textarea</type>
         <default />
         <required>0</required>
@@ -212,7 +212,7 @@
     </formElement>
     <formElement>
         <property>additionalOptions</property>
-        <label>Additional options:</label>
+        <label>Additional Options:</label>
         <type>textarea</type>
         <default/>
         <required>0</required>
@@ -220,7 +220,7 @@
     </formElement>
     <formElement>
         <property>setParamFile</property>
-        <label>Set param file:</label>
+        <label>Set Param File:</label>
         <type>textarea</type>
         <default/>
         <required>0</required>
@@ -228,7 +228,7 @@
     </formElement>
     <formElement>
         <property>declareParamFile</property>
-        <label>Declare param file:</label>
+        <label>Declare Param File:</label>
         <type>textarea</type>
         <default/>
         <required>0</required>
