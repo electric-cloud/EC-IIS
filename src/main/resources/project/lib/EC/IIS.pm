@@ -221,21 +221,25 @@ sub create_msdeploy_command {
     my $exec = EC::Plugin::Core::canon_path($params->{msdeployPath});
     my $command = "\"$exec\" -verb:$params->{verb}";
 
-    $command .= " -source:$params->{sourceProvider}";
-    if ($params->{sourceProviderObjectPath}) {
-        my $path = EC::Plugin::Core::canon_path($params->{sourceProviderObjectPath});
-        $command .= qq{="$path"};
+    if ($params->{sourceProvider}) {
+        $command .= " -source:$params->{sourceProvider}";
+        if ($params->{sourceProviderObjectPath}) {
+            my $path = EC::Plugin::Core::canon_path($params->{sourceProviderObjectPath});
+            $command .= qq{="$path"};
+        }
+        if ($params->{sourceProviderSettings}) {
+            $command .= ",$params->{sourceProviderSettings}";
+        }
     }
-    if ($params->{sourceProviderSettings}) {
-        $command .= ",$params->{sourceProviderSettings}";
-    }
-    $command .= " -dest:$params->{destProvider}";
-    if ($params->{destProviderObjectPath}) {
-        my $path = EC::Plugin::Core::canon_path($params->{destProviderObjectPath});
-        $command .= qq{="$path"};
-    }
-    if ($params->{destProviderSettings}) {
-        $command .= ",$params->{destProviderSettings}";
+    if ($params->{destProvider}) {
+        $command .= " -dest:$params->{destProvider}";
+        if ($params->{destProviderObjectPath}) {
+            my $path = EC::Plugin::Core::canon_path($params->{destProviderObjectPath});
+            $command .= qq{="$path"};
+        }
+        if ($params->{destProviderSettings}) {
+            $command .= ",$params->{destProviderSettings}";
+        }
     }
     if ($params->{allowUntrusted}) {
         $command .= " -allowUntrusted";

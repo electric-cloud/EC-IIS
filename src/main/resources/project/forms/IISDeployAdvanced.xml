@@ -43,7 +43,7 @@
         <type>select</type>
         <label>Source Provider:</label>
         <property>sourceProvider</property>
-        <required>1</required>
+        <required>0</required>
         <default />
         <documentation>Providers process specific source or destination data for Web Deploy. For example, the contentPath provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the -source: or -dest: argument.</documentation>
         <option><name>appHostAuthOverride</name><value>appHostAuthOverride</value></option>
@@ -116,7 +116,7 @@
         <type>select</type>
         <label>Destination Provider:</label>
         <property>destProvider</property>
-        <required>1</required>
+        <required>0</required>
         <default />
         <documentation>Providers process specific source or destination data for Web Deploy. For example, the contentPath provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the -source: or -dest: argument.</documentation>
         <option><name>appHostAuthOverride</name><value>appHostAuthOverride</value></option>

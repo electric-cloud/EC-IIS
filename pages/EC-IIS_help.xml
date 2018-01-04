@@ -1506,7 +1506,7 @@ STDERR: N/A
                     </tr>
 
                     <tr>
-                        <td class="required">
+                        <td>
                             Source provider
                         </td>
                         <td>
@@ -1533,7 +1533,7 @@ Providers can be optionally modified by using provider settings. Provider settin
                     </tr>
 
                     <tr>
-                        <td class="required">
+                        <td>
                             Destination provider
                         </td>
                         <td>
