@@ -73,7 +73,8 @@
 
         <h2>ElectricFlow Integration to IIS</h2>
 
-        <p>This plugin allows users to interact with the Internet
+        <p>
+            This plugin allows users to interact with the Internet
         Information Services Server 7 (IIS7) and higher versions
          and accomplish tasks
         such as managing web sites, and virtual directories using
@@ -82,7 +83,14 @@
         executables, running tasks as create a virtual directory
         and create a website. Also, the users can check the status
         of running processes to see if it ran successfully or if an
-        error existed, and determine what caused the error.</p>
+        error existed, and determine what caused the error.
+        </p>
+        <p>
+            This plugin uses appcmd.exe to interact with IIS, so the procedures should run on the resource with IIS server.
+        </p>
+        <p>
+            Some procedures use WebDeploy utility (Deploy and AdvancedDeploy). WebDeploy should be installed separately (it is not included in the default IIS setup). It can be downloaded from Microsoft site <a href="https://www.iis.net/downloads/microsoft/web-deploy" target="_blank">Web Deploy</a>. After installation, Web Deploy can usually be found in C:/Program Files/IIS/Microsoft Web Deploy V3 directory.
+        </p>
 
         <h2>Integrated Version</h2>
 
@@ -93,6 +101,11 @@
                 <li>8.x</li>
                 <li>9.x</li>
                 <li>10.x</li>
+            </ul>
+            This plugin supports next versions of Web Deploy:
+            <ul>
+                <li>3.5</li>
+                <li>3.6</li>
             </ul>
         </p>
 
