@@ -86,6 +86,10 @@ if ($upgradeAction eq "upgrade") {
                 });
             }
 
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'CheckServerStatus',
+                stepName => 'CheckServerStatus'
+            });
 
         }
     }
