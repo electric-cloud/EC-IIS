@@ -41,6 +41,7 @@ use ElectricCommander;
 use ElectricCommander::PropDB;
 use EC::Plugin::IISDriver;
 
+
 use constant {
     SUCCESS => 0,
     ERROR   => 1,
@@ -348,14 +349,15 @@ sub step_create_or_update_site {
 
     }
     else {
-        if ($params->{createDirectory}) {
-            $self->_create_directory($params->{physicalPath});
-        }
         $self->logger->info("Site $params->{websiteName} does not exist");
         my $command = $self->driver->create_site_cmd($params);
         $self->set_cmd_line($command);
         my $result = $self->run_command($command);
         $self->_process_result($result);
+    }
+
+    if ($params->{createDirectory}) {
+        $self->_create_directory($params->{physicalPath});
     }
 
     if ($creds) {
@@ -616,15 +618,14 @@ sub step_create_application {
         }
     }
     else {
-        if ($params->{createDirectory}) {
-            $self->_create_directory($params->{physicalPath});
-        }
         my $command = $self->driver->create_app_cmd($params);
         $self->set_cmd_line($command);
         my $result = $self->run_command($command);
         $self->_process_result($result);
     }
-
+    if ($params->{createDirectory}) {
+        $self->_create_directory($params->{physicalPath});
+    }
     if ($creds) {
         $self->logger->info("Going to set credentails for directory $vdir_name");
         my $cmd =  $self->driver->set_vdir_creds_cmd({vdirName => $vdir_name, creds => $creds});
@@ -814,9 +815,6 @@ sub step_create_or_update_vdir {
         $command = $self->driver->update_vdir_cmd($params);
     }
     else {
-        if ($params->{createDirectory}) {
-            $self->_create_directory($params->{physicalPath});
-        }
         $self->logger->info("Virtual directory $vdir does not exists, proceeding to creating it");
         $command = $self->driver->create_vdir_cmd($params);
     }
@@ -824,6 +822,9 @@ sub step_create_or_update_vdir {
     my $result = $self->run_command($command);
     $self->_process_result($result);
 
+    if ($params->{createDirectory}) {
+        $self->_create_directory($params->{physicalPath});
+    }
 
     if ($creds) {
         my $vdir = $params->{vdirName};
