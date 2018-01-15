@@ -55,6 +55,6 @@
 		<label>Certificate Hash (Thumbprint):</label>
 		<property>certHash</property>
 		<required>1</required>
-		<documentation>The certificate hash. Can be found in "Server Certificates" tab of IIS console. E.g., '‎b4 7c 04 0c 0a 7e fc f5 3f 9e 12 fc df 07 30 ee b1 d6 04 88'. Spaces are not required.</documentation>
+		<documentation>The certificate hash. Can be found in "Server Certificates" tab of IIS console. E.g., 'b4 7c 04 0c 0a 7e fc f5 3f 9e 12 fc df 07 30 ee b1 d6 04 88'. Spaces are not required.</documentation>
 	</formElement>
 </editor>
