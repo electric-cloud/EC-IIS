@@ -187,7 +187,7 @@ class AddWebSiteBinding extends PluginTestHelper {
             """
         then: 'it finishes'
             assert result.outcome == 'error'
-
+            assert result.logs =~ /The site "SomeSite" does not exist/
     }
 
 }
