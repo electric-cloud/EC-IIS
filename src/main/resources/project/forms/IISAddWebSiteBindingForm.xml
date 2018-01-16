@@ -43,12 +43,11 @@
         <documentation>Information of the binding to add, including the host and the port, e.g.: 'localhost:443', '*:81'.</documentation>
         <required>1</required>
     </formElement>
-
 	<formElement>
 		<type>entry</type>
 		<label>Host Header:</label>
 		<property>hostHeader</property>
-		<documentation>Host headers (also known as domain names or host names) let you assign more than one site to a single IP address on a Web server. E.g., myhost.com</documentation>
+		<documentation>Host headers (also known as domain names or host names) let you assign more than one site to a single IP address on a Web server. E.g., myhost.com.</documentation>
 		<required>0</required>
 	</formElement>
 </editor>
