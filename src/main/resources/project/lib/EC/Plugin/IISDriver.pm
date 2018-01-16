@@ -486,7 +486,6 @@ sub add_site_binding_cmd {
     return $self->get_app_cmd('set', 'site', qq{/site.name:"$site_name"}, qq{/+bindings.[protocol='$protocol',bindingInformation='${information}']});
 }
 
-
 sub get_site {
     my ($self, $name) = @_;
 
@@ -494,6 +493,9 @@ sub get_site {
     my $result = $self->run_command($cmd);
 
     if ($result->{code}) {
+        if ($result->{code} == 1) {
+            die qq{The site "$name" does not exist\n};
+        }
         die "Cannot get site: code $result->{code}, " . ($result->{stderr} || $result->{stdout});
     }
     my $site_data = XMLin($result->{stdout});

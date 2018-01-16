@@ -171,6 +171,25 @@
                 <expandable>1</expandable>
                 <value>pickListOnly</value>
             </property>
+
+            <property>
+                <propertyName>dropdowns</propertyName>
+                <propertySheet>
+                    <property>
+                        <propertyName>bindingProtocols</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>http</propertyName>
+                                <value>http</value>
+                            </property>
+                            <property>
+                                <propertyName>https</propertyName>
+                                <value>https</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </property>
         </propertySheet>
         <procedure>
             <procedureName>CreateConfiguration</procedureName>
