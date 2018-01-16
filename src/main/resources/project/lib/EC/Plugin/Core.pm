@@ -501,6 +501,7 @@ sub run_command {
     else {
         $retval =  $self->_syscall(@cmd);
     }
+    $self->logger->debug('Command output: ', $retval);
     return $retval;
 }
 

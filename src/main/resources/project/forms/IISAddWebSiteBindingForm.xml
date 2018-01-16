@@ -28,20 +28,13 @@
 		<required>1</required>
 	</formElement>
 	<formElement>
-		<type>select</type>
+		<type>entry</type>
 		<label>Binding Protocol:</label>
 		<property>bindingProtocol</property>
 		<documentation>Protocol of the binding to add.</documentation>
-        <value>http</value>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/dropdowns/bindingProtocols</propertyReference>
+        <defaultValue>http</defaultValue>
 		<required>1</required>
-        <option>
-            <name>HTTP</name>
-            <value>http</value>
-        </option>
-        <option>
-            <name>HTTPS</name>
-            <value>https</value>
-        </option>
 	</formElement>
     <formElement>
         <type>entry</type>

@@ -1019,7 +1019,14 @@ sub step_add_site_binding {
     if ($params->{hostHeader}) {
         $binding_info .= $params->{hostHeader};
     }
-    my $site = $self->driver->get_site($params->{websitename});
+    my $site;
+    eval {
+        $site = $self->driver->get_site($params->{websitename});
+        1;
+    } or do {
+        my $err = $@;
+        $self->bail_out($err);
+    };
     if ($site->{bindings}) {
         my $exists = 0;
         for my $binding_str (split(',', $site->{bindings})) {
