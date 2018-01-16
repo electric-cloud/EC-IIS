@@ -455,9 +455,7 @@ sub step_deploy {
 
     $self->logger->info($result->{stdout});
 
-    if ($result->{code} != 0) {
-        return $self->bail_out("Cannot deploy the application: " . _message_from_result($result));
-    }
+    $self->_process_result($result);
 
     my $application = $params->{applicationPath} || '';
     my $app_pool_name = $params->{applicationPool};
@@ -1375,7 +1373,12 @@ sub _process_result {
     }
     else {
         # $self->logger->info("Result: $result->{stdout}");
-        $self->success($result->{stdout});
+        my $message = $result->{stdout};
+        my $MAX_LENGTH = 255;
+        if (length($message) > $MAX_LENGTH) {
+            $message = substr($message, 0, $MAX_LENGTH) . '...';
+        }
+        $self->success($message);
     }
 }
 
