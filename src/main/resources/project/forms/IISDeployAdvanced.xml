@@ -5,7 +5,7 @@
     <description>This procedure uses Web Deploy to perform different actions with the IIS application.</description>
     <formElement>
         <type>entry</type>
-        <label>MSDeploy (Web Deploy) path:</label>
+        <label>MSDeploy (Web Deploy) Path:</label>
         <property>msdeployPath</property>
         <required>1</required>
         <documentation>Provide the relative or absolute path to the MSDeploy executable.</documentation>

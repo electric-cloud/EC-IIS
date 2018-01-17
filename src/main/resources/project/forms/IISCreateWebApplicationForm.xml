@@ -22,7 +22,7 @@
 	<description>Creates a web application.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Web Site Name:</label>
+		<label>Website Name:</label>
 		<property>appname</property>
 		<required>1</required>
 		<documentation>The name of the website to add the application, i.e: 'Default Web Site'.</documentation>

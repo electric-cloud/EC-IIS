@@ -30,7 +30,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>WebSite Name:</label>
+        <label>Website Name:</label>
         <property>websiteName</property>
         <required>1</required>
         <documentation>A web site name to undeploy.</documentation>

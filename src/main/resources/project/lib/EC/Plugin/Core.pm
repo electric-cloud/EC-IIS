@@ -232,6 +232,7 @@ Sets outcome step status to warning.
 sub warning {
     my ($self, @msg) = @_;
 
+    $self->logger->info(@msg);
     $self->set_summary(@msg);
     return $self->_set_outcome('warning');
 }

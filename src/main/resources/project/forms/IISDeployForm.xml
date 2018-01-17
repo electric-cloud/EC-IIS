@@ -68,7 +68,7 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Enable 32-bit Applications (Application Pool):</label>
+        <label>Enable 32-bit Applications (Application Pool)?:</label>
         <property>enable32BitAppOnWin64</property>
         <required>0</required>
         <value></value>
@@ -102,7 +102,7 @@ To use version 3.5, install the appropriate version of .NET Framework and use pr
     <formElement>
         <type>checkbox</type>
         <property>autoStart</property>
-        <label>Start automatically</label>
+        <label>Start Automatically?:</label>
         <documentation>If True, the application pool starts on creation or when IIS starts. Starting an application pool sets this property to True. Stopping an application sets this property to False.</documentation>
         <checkedValue>true</checkedValue>
         <uncheckedValue>false</uncheckedValue>

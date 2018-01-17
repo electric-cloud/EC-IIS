@@ -29,7 +29,7 @@
 	</formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Strict Mode:</label>
+        <label>Strict Mode?:</label>
         <property>strictMode</property>
         <required>0</required>
         <value>0</value>

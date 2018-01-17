@@ -5,7 +5,7 @@
 	<description>This procedure uses the iisreset utility to stop a server.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Absolute location of the iisreset utility:</label>
+		<label>Path of the iisreset Utility:</label>
 		<property>execpath</property>
 		<required>1</required>
 		<value>iisreset</value>
@@ -13,7 +13,7 @@
 	</formElement>
 	<formElement>
 		<type>textarea</type>
-		<label>Additional parameters:</label>
+		<label>Additional Parameters:</label>
 		<property>additionalParams</property>
 		<required>0</required>
 		<value></value>

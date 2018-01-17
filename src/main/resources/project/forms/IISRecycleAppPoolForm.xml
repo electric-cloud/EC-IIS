@@ -5,7 +5,7 @@
 	<description>This procedure recycles an application pool. When recycling occurs, the worker process currently serving the application pool terminates and the WWW service restarts a new worker process to replace it.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Application pool name:</label>
+		<label>Application Pool Name:</label>
 		<property>applicationPool</property>
 		<required>1</required>
 		<documentation>Provide the name of the application pool to recycle.</documentation>
