@@ -139,6 +139,34 @@ class Undeploy extends PluginTestHelper {
             strictMode << ['1', '0']
     }
 
+    def "strict mode #strictMode, website exists, application does not"() {
+        given:
+            def siteName = randomize('siteName')
+            createSite(siteName)
+        when:
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        websiteName: '$siteName',
+                        msdeployPath: 'msdeploy.exe',
+                        strictMode: '$strictMode',
+                        applicationName: 'no such app'
+                    ]
+                )
+            """
+        then:
+            if (strictMode == '1') {
+                assert result.outcome == 'error'
+            }
+            else {
+                assert result.outcome == 'warning'
+            }
+        where:
+            strictMode << ['1', '0']
+    }
+
     def uploadArtifact(url, artifactPath) {
         def res = dsl """
             runProcedure(
