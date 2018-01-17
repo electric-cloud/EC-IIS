@@ -22,14 +22,14 @@
 	<description>List the virtual directories on a web server.</description>
     <formElement>
         <type>entry</type>
-        <label>Virtual directory name:</label>
+        <label>Virtual Directory Name:</label>
         <property>vdirName</property>
         <required>0</required>
         <documentation>Virtual directory name to retrieve. If not provided, will retrieve all the virtual directories.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Property name:</label>
+        <label>Property Name:</label>
         <property>propertyName</property>
         <required>0</required>
         <value>/myJob/IISVirtualDirectories</value>
@@ -37,7 +37,7 @@
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Dump format:</label>
+        <label>Dump Format:</label>
         <property>dumpFormat</property>
         <required>0</required>
         <option>

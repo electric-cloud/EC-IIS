@@ -390,6 +390,19 @@ sub step_undeploy {
         }
     }
 
+    my $app_name = $params->{applicationName};
+    if ($app_name) {
+        unless($self->driver->check_application_exists("$website_name/$app_name")) {
+            my $message = qq{Application "$app_name" does not exist in the site "$website_name"};
+            if ($params->{strictMode}) {
+                return $self->bail_out($message);
+            }
+            else {
+                return $self->warning($message);
+            }
+        }
+    }
+
     my $command = $self->create_undeploy_command($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);

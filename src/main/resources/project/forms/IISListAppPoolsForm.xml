@@ -22,14 +22,14 @@
 	<description>List the application pools on a web server.</description>
     <formElement>
         <type>textarea</type>
-        <label>User-defined criterias:</label>
+        <label>User-defined Criterias:</label>
         <property>searchcriteria</property>
         <required>0</required>
         <documentation>The user-defined criterias to search the application pools. Blank lists all pools. i.e: '/apppool.name:"my pool"'.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Property name:</label>
+        <label>Property Name:</label>
         <property>propertyName</property>
         <required>0</required>
         <value>/myJob/IISAppPoolList</value>
@@ -37,7 +37,7 @@
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Dump format:</label>
+        <label>Dump Format:</label>
         <property>dumpFormat</property>
         <required>0</required>
         <option>

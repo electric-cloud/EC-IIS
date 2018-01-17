@@ -19,12 +19,12 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StartAppPool</help>
 	<label>Application server - IIS startapppool</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Starts an application pool.</description>	
+	<description>Starts an application pool.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Application pool name:</label>
+		<label>Application Pool Name:</label>
 		<property>apppoolname</property>
 		<required>1</required>
 		<documentation>The name of the application pool to start. i.e: 'FirstAppPool'.</documentation>
-	</formElement>		
+	</formElement>
 </editor>

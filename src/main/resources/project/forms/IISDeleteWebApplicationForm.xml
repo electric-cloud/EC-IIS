@@ -22,14 +22,14 @@
 	<description>Deletes a web application into the specified website.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Application name:</label>
+		<label>Application Name:</label>
 		<property>appname</property>
 		<required>1</required>
 		<documentation>The website that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.</documentation>
 	</formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Strict mode:</label>
+        <label>Strict Mode?:</label>
         <property>strictMode</property>
         <required>0</required>
         <value>0</value>

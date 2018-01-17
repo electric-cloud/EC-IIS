@@ -19,12 +19,12 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopWebSite</help>
 	<label>Application server - IIS stopwebsite</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Stops a website.</description>	
+	<description>Stops a website.</description>
 	<formElement>
 		<type>entry</type>
-		<label>Website name:</label>
+		<label>Website Name:</label>
 		<property>sitename</property>
 		<required>1</required>
 		<documentation>Provide the descriptive name of the website you want to stop. i.e: 'Default Web Site'.</documentation>
-	</formElement>		
+	</formElement>
 </editor>
