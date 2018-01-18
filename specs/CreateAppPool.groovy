@@ -61,6 +61,7 @@ class CreateAppPool extends PluginTestHelper {
     }
 
     @Unroll
+
     def "create with params #paramName, #value"() {
         given:
             def name = randomize('AppPool')
@@ -80,7 +81,16 @@ class CreateAppPool extends PluginTestHelper {
             def details = runAppCmdLogs("list apppool /apppool.name:\"$name\" /text:*")
             logger.debug(details)
             def pname = paramName.split(/\./).last()
-            assert details =~ /(?i)${pname}:"${convert(pname, value)}"/
+            if (paramName != 'recycling.periodicRestart.schedule') {
+                assert details =~ /(?i)${pname}:"${convert(pname, value)}"/
+            }
+            else {
+                logger.debug(details)
+                def times = value.split(/\s*,\s*/)
+                times.each {
+                    assert details =~ /$it/
+                }
+            }
         cleanup:
             removeAppPool(name)
         where:
@@ -132,8 +142,55 @@ class CreateAppPool extends PluginTestHelper {
             'recycling.periodicRestart.time'                     | '5'
             'recycling.periodicRestart.requests'                 | '5'
             'recycling.periodicRestart.memory'                   | '5'
+            'recycling.periodicRestart.schedule'                 | '13:00:00, 12:00:00'
+            'recycling.periodicRestart.schedule'                 | '13:00:00'
 
     }
+
+    @Unroll
+    def "update app pool, #paramName, oldValue #originalValue, newValue: #newValue"() {
+        given:
+            def name = randomize('appPool')
+            def resultStart = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        apppoolname: '$name',
+                        '$paramName': '$originalValue',
+                    ]
+                )
+            """
+            assert resultStart.outcome == 'success'
+
+        when:
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        apppoolname: '$name',
+                        '$paramName': '$newValue',
+                    ]
+                )
+            """
+        then:
+            assert result.outcome == 'success'
+            logger.debug(result.logs)
+
+            def details = runAppCmdLogs("list apppool /apppool.name:\"$name\" /text:*")
+            def times = newValue.split(/\s*,\s*/)
+            times.each {
+                assert details =~ /$it/
+            }
+        where:
+            paramName                            |     originalValue     |     newValue
+
+            'recycling.periodicRestart.schedule' |  '13:00:00'           | '10:00:00'
+            'recycling.periodicRestart.schedule' |  '13:00:00'           | '10:00:00, 12:00:00'
+
+    }
+
 
 
     def "create app pool"() {
