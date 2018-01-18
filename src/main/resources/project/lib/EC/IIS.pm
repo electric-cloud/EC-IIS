@@ -524,17 +524,22 @@ sub get_site_app_pool {
 }
 
 sub create_or_update_app_pool {
-    my ($self, $params, $settings) = @_;
+    my ($self, $params, $settings, $options) = @_;
 
     my $name = $params->{applicationPool};
     if ($self->driver->check_app_pool_exists($name)) {
         $self->logger->info(qq{Application pool "$name" already exists, going to update});
         # Application pool exists
-        $self->update_app_pool($params, $settings);
+
+        if ($options->{recycling_periodic_restart}) {
+            my $cmd = $self->driver->get_app_cmd('set', 'apppool', qq{/apppool.name:"$name"}, qq{/-recycling.periodicRestart.schedule});
+            $self->run_command($cmd);
+        }
+        $self->update_app_pool($params, $settings, $options);
     }
     else {
         $self->logger->info(qq{Application pool "$name" has not been created yet. Proceeding to adding it.});
-        $self->create_app_pool($params, $settings);
+        $self->create_app_pool($params, $settings, $options);
     }
 }
 
@@ -550,9 +555,9 @@ Creates app pool.
 my @app_pool_settings = qw(managedRuntimeVersion enable32BitAppOnWin64 managedPipelineMode queueLength autoStart);
 
 sub create_app_pool {
-    my ($self, $params, $available_settings) = @_;
+    my ($self, $params, $available_settings, $options) = @_;
 
-    my $command = $self->driver->create_app_pool_cmd($params, $available_settings);
+    my $command = $self->driver->create_app_pool_cmd($params, $available_settings, $options);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
     $self->_process_result($result);
@@ -560,9 +565,9 @@ sub create_app_pool {
 
 
 sub update_app_pool {
-    my ($self, $params, $available_settings) = @_;
+    my ($self, $params, $available_settings, $options) = @_;
 
-    my $command = $self->driver->update_app_pool_cmd($params, $available_settings);
+    my $command = $self->driver->update_app_pool_cmd($params, $available_settings, $options);
 
     if ($command) {
         $self->set_cmd_line($command);
@@ -734,9 +739,12 @@ sub step_create_app_pool {
         'recycling.periodicRestart.schedule',
         'appPoolAdditionalSettings');
     $params->{applicationPool} = $params->{apppoolname};
-    my $periodic_restart_setting_name = q/recycling.periodicRestart.schedule.[value='timespan'].value/;
-    $params->{$periodic_restart_setting_name} = delete $params->{'recycling.periodicRestart.schedule'};
-    push @settings, $periodic_restart_setting_name;
+
+    my $recycling = delete $params->{'recycling.periodicRestart.schedule'};
+
+    my %options = (
+        recycling_periodic_restart => $recycling
+    );
 
     my @time_span_parameters = qw(
         processModel.startupTimeLimit
@@ -772,7 +780,7 @@ sub step_create_app_pool {
         }
     }
 
-    $self->create_or_update_app_pool($params, \@settings);
+    $self->create_or_update_app_pool($params, \@settings, \%options);
 }
 
 

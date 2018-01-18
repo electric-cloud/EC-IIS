@@ -143,7 +143,7 @@ sub check_application_exists {
 my @app_pool_settings = qw(managedRuntimeVersion enable32BitAppOnWin64 managedPipelineMode queueLength autoStart);
 
 sub create_app_pool_cmd {
-    my ($self, $params, $available_settings) = @_;
+    my ($self, $params, $available_settings, $options) = @_;
 
     if (!$available_settings || !@$available_settings) {
         $available_settings = [ @app_pool_settings ];
@@ -163,6 +163,14 @@ sub create_app_pool_cmd {
 
     if ($params->{appPoolAdditionalSettings}) {
         push @settings, $params->{appPoolAdditionalSettings};
+    }
+
+    $options ||= {};
+    if ($options->{recycling_periodic_restart}) {
+        my %times = map { $_ => 1} split(/\s*,\s*/, $options->{recycling_periodic_restart});
+        for my $time (keys %times) {
+            push @settings, qq{/+recycling.periodicRestart.schedule.[value='$time']}
+        }
     }
 
     my $command = $self->get_app_cmd('add', 'apppool', qq{/name:"$name"}, @settings);
@@ -191,7 +199,7 @@ sub get_app_cmd {
 }
 
 sub update_app_pool_cmd {
-    my ($self, $params, $available_settings) = @_;
+    my ($self, $params, $available_settings, $options) = @_;
 
     if (!$available_settings || !@$available_settings) {
         $available_settings = [ @app_pool_settings ];
@@ -208,6 +216,14 @@ sub update_app_pool_cmd {
 
     if ($params->{appPoolAdditionalSettings}) {
         push @settings, $params->{appPoolAdditionalSettings};
+    }
+
+    $options ||= {};
+    if ($options->{recycling_periodic_restart}) {
+        my %times = map { $_ => 1} split(/\s*,\s*/, $options->{recycling_periodic_restart});
+        for my $time (keys %times) {
+            push @settings, qq{/+recycling.periodicRestart.schedule.[value='$time']}
+        }
     }
 
     unless (@settings) {
