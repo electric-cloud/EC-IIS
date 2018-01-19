@@ -977,15 +977,17 @@ sub step_delete_vdir {
 sub step_list_sites {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName dumpFormat/);
+    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName dumpFormat failOnEmpty/);
     $params->{criteria} = $params->{searchcriteria};
     my $command = $self->driver->list_sites_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
 
-    if ($result->{code}) {
-        return $self->bail_out("Cannot list sites: " . _message_from_result($result));
+    if (!$params->{failOnEmpty} && $result->{code} eq '1') {
+        $self->warning('No sites found');
+        return;
     }
+    $self->_process_result($result);
 
     my $stdout = $result->{stdout};
     $self->logger->info($stdout);

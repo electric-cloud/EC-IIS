@@ -3144,6 +3144,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>failOnEmpty</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -3170,7 +3180,13 @@
                 <required>0</required>
                 <type>select</type>
             </formalParameter>
-
+            <formalParameter>
+                <formalParameterName>failOnEmpty</formalParameterName>
+                <defaultValue/>
+                <description></description>
+                <required>0</required>
+                <type>checkbox</type>
+            </formalParameter>
             <step>
                 <stepName>ListSites</stepName>
                 <alwaysRun>0</alwaysRun>
