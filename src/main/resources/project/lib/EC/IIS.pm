@@ -880,15 +880,18 @@ sub step_add_ssl_certificate {
     my $appid = $guid;
 
     my $certificate = $self->driver->get_ssl_certificate($params);
-
+    my $result;
     if ($certificate && $certificate->{'Certificate Hash'}) {
         $self->logger->info("Certificate already exists, with hash $certificate->{'Certificate Hash'}");
-        my $command = $self->driver->add_ssl_certificate_cmd({verb => 'update', hash => $hash, appid => $appid, %$params});
-        my $result = $self->run_command($command);
+        my $delete_command = $self->driver->delete_ssl_certificate_cmd($params);
+        $result = $self->run_command($delete_command);
+        $self->_process_result($result);
+        my $command = $self->driver->add_ssl_certificate_cmd({hash => $hash, appid => $appid, %$params});
+        $result = $self->run_command($command);
     }
     else {
         my $command = $self->driver->add_ssl_certificate_cmd({hash => $hash, appid => $appid, %$params});
-        my $result = $self->run_command($command);
+        $result = $self->run_command($command);
     }
     $self->_process_result($result);
 }
@@ -1000,7 +1003,6 @@ sub step_list_sites {
     $self->_process_result($result);
 
     my $stdout = $result->{stdout};
-    $self->logger->info($stdout);
     my @lines = split /[\n\r]/ => $stdout;
 
     my %data = map { /SITE\s"(.*)"\s\(id:(\d+),bindings:(.+),state:(\w+)\)/; $1 => {

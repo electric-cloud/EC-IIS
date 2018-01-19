@@ -468,6 +468,25 @@ sub add_ssl_certificate_cmd {
     return $command;
 }
 
+
+sub delete_ssl_certificate_cmd {
+    my ($self, $params) = @_;
+
+    my @command = qw(netsh http delete sslcert);
+    if ($params->{ip}) {
+        push @command, qq{ipport=$params->{ip}:$params->{port}};
+    }
+    elsif($params->{certHostName}) {
+        push @command, qq{hostnameport=$params->{certHostName}:$params->{port}};
+    }
+    else {
+        die 'Either IP or certHostName must be provided';
+    }
+
+    my $command = join(' ', @command);
+    return $command;
+}
+
 sub set_vdir_creds_cmd {
     my ($self, $params) = @_;
 

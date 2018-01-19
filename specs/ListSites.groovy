@@ -28,6 +28,7 @@ class ListSites extends PluginTestHelper {
         dsl "deleteProject '$projectName'"
     }
 
+    @Unroll
     def "show one site, property #propertyName, dump format #dumpFormat"() {
         given:
             def siteName = randomize('site')
@@ -47,6 +48,8 @@ class ListSites extends PluginTestHelper {
         then: 'it finishes'
             assert result.outcome == 'success'
             logger.debug(result.logs)
+            def properties = getJobProperties(result.jobId)
+            logger.debug(objectToJson(properties))
 
             def resultProperty = propertyName ? propertyName : '/myJob/IISSiteList'
             switch(dumpFormat) {

@@ -33,7 +33,7 @@
         <label>Hostname:</label>
         <property>certHostName</property>
         <required>0</required>
-        <documentation>Hostname for the certificate, e.g. mysite.com. Either this parameter or IP should be provided.</documentation>
+        <documentation>Hostname for the certificate, e.g. mysite.com. Either this parameter or IP should be provided. This parameter is not supported on Windows Server 2008.</documentation>
     </formElement>
 	<formElement>
 		<type>entry</type>
