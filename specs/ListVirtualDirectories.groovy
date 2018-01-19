@@ -18,6 +18,7 @@ class ListVirtualDirectories extends PluginTestHelper {
                 vdirName: '',
                 propertyName: '',
                 dumpFormat: '',
+                failOnEmpty: ''
             ]
         ]
         createHelperProject(resName)
@@ -73,7 +74,7 @@ class ListVirtualDirectories extends PluginTestHelper {
     }
 
     @Unroll
-    def "Show multiple vdirs"() {
+    def "Show multiple vdirs #criteria"() {
         given:
             (1..3).each {
                 createSite("Site ${it}")
@@ -103,6 +104,30 @@ class ListVirtualDirectories extends PluginTestHelper {
             }
         where:
             criteria << ['', '/path:/']
+    }
+
+
+    def "Empty list #failOnEmpty"() {
+        when:
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        vdirName: '$criteria',
+                        propertyName: '/myJob/result'
+                    ]
+                )
+            """
+        then:
+            if (failOnEmpty == '1') {
+                assert result.outcome == 'error'
+            }
+            else {
+                assert result.outcome == 'warning'
+            }
+        where:
+            failOnEmpty << ['1', '0']
     }
 
 

@@ -69,9 +69,10 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
     }
 
     def doCleanupSpec() {
-        // dsl "deleteProject '$projectName'"
+        if (!System.getenv('NO_CLEANUP')) {
+            dsl "deleteProject '$projectName'"
+        }
     }
-
 
     def "add certificate to site"() {
         given:
@@ -170,7 +171,6 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
         then:
             assert result.outcome == 'success'
             logger.debug(result.logs)
-            assert result.logs =~ /SSL Certificate successfully updated/
         cleanup:
             removeSite(siteName)
             runCmd("netsh http delete sslcert ipport=0.0.0.0:$port")
@@ -218,7 +218,6 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
             logger.debug(output)
             def hash = secondHash.replaceAll(/\W/, '')
             assert output =~ /$hash/
-            assert result.logs =~ /SSL Certificate successfully updated/
         cleanup:
             removeSite(siteName)
             runCmd("netsh http delete sslcert ipport=0.0.0.0:$port")

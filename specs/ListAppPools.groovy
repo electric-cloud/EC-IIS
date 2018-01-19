@@ -18,6 +18,7 @@ class ListAppPools extends PluginTestHelper {
                 searchcriteria: '',
                 propertyName: '',
                 dumpFormat: '',
+                failOnEmpty: ''
             ]
         ]
         createHelperProject(resName)
@@ -27,6 +28,7 @@ class ListAppPools extends PluginTestHelper {
         dsl "deleteProject '$projectName'"
     }
 
+    @Unroll
     def "show one app pool, property #propertyName, dump format #dumpFormat"() {
         given:
             def appPoolName = randomize('appPool')
@@ -71,7 +73,8 @@ class ListAppPools extends PluginTestHelper {
             propertyName = dumpFormat ? '/myJob/result' : ''
     }
 
-    def "Show multiple pools"() {
+    @Unroll
+    def "Show multiple pools #criteria"() {
         given:
             (1..3).each {
                 createAppPool("Pool ${it}")
@@ -93,7 +96,7 @@ class ListAppPools extends PluginTestHelper {
             def saved = getJobProperty('/myJob/result', result.jobId)
             logger.debug(saved)
             (1..3).each {
-                assert saved =~ /APPPOOL \"Pool ${it}\" \(MgdVersion:v4.0,MgdMode:Integrated,state:Started\)/
+                assert saved =~ /APPPOOL \"Pool ${it}\" \(MgdVersion:v(4.0|2.0),MgdMode:Integrated,state:Started\)/
             }
         cleanup:
             (1..3).each {
@@ -103,10 +106,33 @@ class ListAppPools extends PluginTestHelper {
             criteria << ['', '/autoStart:true']
     }
 
+    @Unroll
+    def "Empty list #failOnEmpty"() {
+        when:
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        searchcriteria: 'no_site',
+                        propertyName: '/myJob/result'
+                    ]
+                )
+            """
+        then:
+            if (failOnEmpty == '1') {
+                assert result.outcome == 'error'
+            }
+            else {
+                assert result.outcome == 'warning'
+            }
+        where:
+            failOnEmpty << ['1', '0']
+    }
 
     def validateResultPlaintext(jobId, propertyName, appPoolName) {
         def result = getJobProperty(propertyName, jobId)
-        assert result =~ /APPPOOL \"$appPoolName\" \(MgdVersion:v4.0,MgdMode:Integrated,state:Started\)/
+        assert result =~ /APPPOOL \"$appPoolName\" \(MgdVersion:v(4.0|2.0),MgdMode:Integrated,state:Started\)/
     }
 
     def validateResultXML(jobId, propertyName, appPoolName) {

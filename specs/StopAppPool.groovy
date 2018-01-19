@@ -15,6 +15,7 @@ class StopAppPool extends PluginTestHelper {
             procName: procName,
             params: [
                 apppoolname: '',
+                strictMode: ''
             ]
         ]
         createHelperProject(resName)
@@ -47,7 +48,8 @@ class StopAppPool extends PluginTestHelper {
             removeAppPool(appPoolName)
     }
 
-    def "stop stopped app pool"() {
+    @Unroll
+    def "stop stopped app pool #strictMode"() {
         given:
             def appPoolName = randomize('appPool')
             createAppPool(appPoolName)
@@ -59,15 +61,23 @@ class StopAppPool extends PluginTestHelper {
                     procedureName: '$procName',
                     actualParameter: [
                         apppoolname: '$appPoolName',
+                        strictMode: '$strictMode'
                     ]
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
+            if (strictMode == '1') {
+                assert result.outcome == 'error'
+            }
+            else {
+                assert result.outcome == 'warning'
+            }
             def appPool = getAppPool(appPoolName)
             assert appPool.state == 'Stopped'
         cleanup:
             removeAppPool(appPoolName)
+        where:
+            strictMode << ['1', '0']
     }
 
 

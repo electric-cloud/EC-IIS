@@ -28,7 +28,9 @@ class CheckServerStatus extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        dsl "deleteProject '$projectName'"
+        if (!System.getenv('NO_CLEANUP')) {
+            dsl "deleteProject '$projectName'"
+        }
     }
 
     @Unroll

@@ -18,6 +18,7 @@ class ListSites extends PluginTestHelper {
                 searchcriteria: '',
                 propertyName: '',
                 dumpFormat: '',
+                failOnEmpty: ''
             ]
         ]
         createHelperProject(resName)
@@ -27,6 +28,7 @@ class ListSites extends PluginTestHelper {
         dsl "deleteProject '$projectName'"
     }
 
+    @Unroll
     def "show one site, property #propertyName, dump format #dumpFormat"() {
         given:
             def siteName = randomize('site')
@@ -46,6 +48,8 @@ class ListSites extends PluginTestHelper {
         then: 'it finishes'
             assert result.outcome == 'success'
             logger.debug(result.logs)
+            def properties = getJobProperties(result.jobId)
+            logger.debug(objectToJson(properties))
 
             def resultProperty = propertyName ? propertyName : '/myJob/IISSiteList'
             switch(dumpFormat) {
@@ -129,6 +133,35 @@ class ListSites extends PluginTestHelper {
             }
         where:
             criteria << ['', '/serverAutoStart:true']
+    }
+
+    @Unroll
+    def "No sites #failOnEmpty"() {
+        when:
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        searchcriteria: 'no_such_site',
+                        propertyName: '/myJob/result',
+                        failOnEmpty: '$failOnEmpty'
+                    ]
+                )
+            """
+
+        then:
+            if (failOnEmpty == '1') {
+                assert result.outcome == 'error'
+            }
+            else {
+                assert result.outcome == 'warning'
+                assert result.logs =~ /No sites found/
+            }
+
+            logger.debug(result.logs)
+        where:
+            failOnEmpty << ['1', '0']
     }
 
 

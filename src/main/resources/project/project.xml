@@ -1581,7 +1581,7 @@
 
 		<procedure>
             <procedureName>DeployCopy</procedureName>
-            <description>Use XCOPY to deploy Web Site or ASP.NET Application (DEPRECATED).</description>
+            <description>Use XCOPY to deploy Web Site or ASP.NET Application.</description>
             <jobNameTemplate>iis7-deploycopy-$[jobId]</jobNameTemplate>
             <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
             <propertySheet>
@@ -3144,6 +3144,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>failOnEmpty</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -3170,7 +3180,13 @@
                 <required>0</required>
                 <type>select</type>
             </formalParameter>
-
+            <formalParameter>
+                <formalParameterName>failOnEmpty</formalParameterName>
+                <defaultValue/>
+                <description></description>
+                <required>0</required>
+                <type>checkbox</type>
+            </formalParameter>
             <step>
                 <stepName>ListSites</stepName>
                 <alwaysRun>0</alwaysRun>
@@ -3254,6 +3270,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>failOnEmpty</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
 
 
                             </propertySheet>
@@ -3275,6 +3301,12 @@
                 <description>Property to write retrieved data.</description>
                 <required>0</required>
                 <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>failOnEmpty</formalParameterName>
+                <description>Property to write retrieved data.</description>
+                <required>0</required>
+                <type>checkbox</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>dumpFormat</formalParameterName>
@@ -3366,6 +3398,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>failOnEmpty</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                             </propertySheet>
                         </property>
                     </propertySheet>
@@ -3385,6 +3427,12 @@
                 <description>Property to write retrieved data.</description>
                 <required>0</required>
                 <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>failOnEmpty</formalParameterName>
+                <description>Property to write retrieved data.</description>
+                <required>0</required>
+                <type>checkbox</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>dumpFormat</formalParameterName>
@@ -3477,6 +3525,16 @@
                                         </property>
                                     </propertySheet>
                                 </property>
+                                <property>
+                                    <propertyName>failOnEmpty</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
 
 
                             </propertySheet>
@@ -3501,6 +3559,13 @@
             </formalParameter>
             <formalParameter>
                 <formalParameterName>dumpFormat</formalParameterName>
+                <defaultValue/>
+                <description></description>
+                <required>0</required>
+                <type>checkbox</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>failOnEmpty</formalParameterName>
                 <defaultValue/>
                 <description></description>
                 <required>0</required>

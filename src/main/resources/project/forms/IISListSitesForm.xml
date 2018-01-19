@@ -28,6 +28,16 @@
         <documentation>The user-defined criterias to search the sites. Blank lists all sites. i.e: '/bindings:http/*:80:'.</documentation>
     </formElement>
     <formElement>
+        <type>checkbox</type>
+        <label>Fail on Empty List?:</label>
+        <property>failOnEmpty</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <value>1</value>
+        <required>0</required>
+        <documentation>If checked, the procedure will fail in case the list of sites is empty.</documentation>
+    </formElement>
+    <formElement>
         <type>entry</type>
         <label>Property name:</label>
         <property>propertyName</property>
