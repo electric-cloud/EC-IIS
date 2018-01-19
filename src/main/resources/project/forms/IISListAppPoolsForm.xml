@@ -36,6 +36,16 @@
         <documentation>Property to write retrieved data.</documentation>
     </formElement>
     <formElement>
+        <type>checkbox</type>
+        <label>Fail on Empty List?:</label>
+        <property>failOnEmpty</property>
+        <required>0</required>
+        <value>1</value>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <documentation>If checked, the procedure will fail in case the list of application pools is empty.</documentation>
+    </formElement>
+    <formElement>
         <type>select</type>
         <label>Dump Format:</label>
         <property>dumpFormat</property>

@@ -19,7 +19,7 @@
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeployCopy</help>
 	<label>Application server - IIS deploycopy</label>
 	<version>@PLUGIN_VERSION@</version>
-	<description>Copies the application files recursively to the web site application's physical directory. (DEPRECATED).</description>
+	<description>Copies the application files recursively to the web site application's physical directory.</description>
 	<formElement>
 		<type>entry</type>
 		<label>Destination path:</label>

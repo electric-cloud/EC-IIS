@@ -22,10 +22,10 @@
 	<description>List the virtual directories on a web server.</description>
     <formElement>
         <type>entry</type>
-        <label>Virtual Directory Name:</label>
+        <label>Search Criteria:</label>
         <property>vdirName</property>
         <required>0</required>
-        <documentation>Virtual directory name to retrieve. If not provided, will retrieve all the virtual directories.</documentation>
+        <documentation>Virtual directory name or search criteria to retrieve virtual directories, e.g. MyDirectory or /site.name:"My Site".</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -34,6 +34,16 @@
         <required>0</required>
         <value>/myJob/IISVirtualDirectories</value>
         <documentation>Property to write retrieved data.</documentation>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Fail on Empty List?:</label>
+        <property>failOnEmpty</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <value>1</value>
+        <required>0</required>
+        <documentation>If checked, the procedure will fail in case the list of virtual directories is empty.</documentation>
     </formElement>
     <formElement>
         <type>select</type>

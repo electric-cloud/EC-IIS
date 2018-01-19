@@ -39,7 +39,7 @@
                     <li><a href="#DeleteVirtualDirectory">DeleteVirtualDirectory</a></li>
                     <li><a href="#DeleteWebSite">DeleteWebSite</a></li>
                     <li><a href="#DeleteAppPool">DeleteAppPool</a></li>
-                    <li><a href="#DeployCopy">DeployCopy (Deprecated)</a></li>
+                    <li><a href="#DeployCopy">DeployCopy</a></li>
                     <li><a href="#Deploy">Deploy</a></li>
                     <li><a href="#Undeploy">Undeploy</a></li>
                     <li><a href="#DeployAdvanced">DeployAdvanced</a></li>
@@ -1135,7 +1135,7 @@ STDERR: N/A
         <div id="DeployCopy">
             <a name="DeployCopy" id="DeployCopy"></a>
 
-            <h3>DeployCopy (DEPRECATED)</h3>
+            <h3>DeployCopy</h3>
 
             <p>Copies the application files recursively to the
             website application's physical directory.</p>

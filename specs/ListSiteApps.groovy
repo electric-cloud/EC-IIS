@@ -18,6 +18,7 @@ class ListSiteApps extends PluginTestHelper {
                 sitename: '',
                 propertyName: '',
                 dumpFormat: '',
+                failOnEmpty: ''
             ]
         ]
         createHelperProject(resName)
@@ -87,7 +88,7 @@ class ListSiteApps extends PluginTestHelper {
                     projectName: "$projectName",
                     procedureName: '$procName',
                     actualParameter: [
-                        sitename: '',
+                        sitename: '$siteName',
                         propertyName: '/myJob/result'
                     ]
                 )
@@ -102,8 +103,31 @@ class ListSiteApps extends PluginTestHelper {
             }
         cleanup:
             removeSite(siteName)
+    }
+
+    @Unroll
+    def "No apps #failOnEmpty"() {
+        when:
+            def result = runProcedureDsl """
+                runProcedure(
+                    projectName: "$projectName",
+                    procedureName: '$procName',
+                    actualParameter: [
+                        sitename: 'no_such_site',
+                        propertyName: '/myJob/result',
+                        failOnEmpty: '$failOnEmpty'
+                    ]
+                )
+            """
+        then:
+            if (failOnEmpty == '1') {
+                assert result.outcome == 'error'
+            }
+            else {
+                assert result.outcome == 'warning'
+            }
         where:
-            criteria << ['', '/apppool.name:"DefaultAppPool"']
+            failOnEmpty << ['1', '0']
     }
 
 

@@ -870,6 +870,7 @@ sub step_add_ssl_certificate {
     unless($params->{ip} || $params->{certHostName}) {
         $self->bail_out('Either IP or Hostname should be provided');
     }
+
     my $hash = $params->{certHash};
     $hash =~ s/\s+//g;
     $hash =~ s/\W//gi;
@@ -884,13 +885,12 @@ sub step_add_ssl_certificate {
         $self->logger->info("Certificate already exists, with hash $certificate->{'Certificate Hash'}");
         my $command = $self->driver->add_ssl_certificate_cmd({verb => 'update', hash => $hash, appid => $appid, %$params});
         my $result = $self->run_command($command);
-        $self->_process_result($result);
     }
     else {
         my $command = $self->driver->add_ssl_certificate_cmd({hash => $hash, appid => $appid, %$params});
         my $result = $self->run_command($command);
-        $self->_process_result($result);
     }
+    $self->_process_result($result);
 }
 
 sub _is_xml {
@@ -977,15 +977,25 @@ sub step_delete_vdir {
 sub step_list_sites {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName dumpFormat failOnEmpty/);
+    my $params = $self->get_params_as_hashref(qw/
+        searchcriteria
+        propertyName
+        dumpFormat
+        failOnEmpty
+    /);
     $params->{criteria} = $params->{searchcriteria};
     my $command = $self->driver->list_sites_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
 
-    if (!$params->{failOnEmpty} && $result->{code} eq '1') {
-        $self->warning('No sites found');
-        return;
+    if ($result->{code} && $result->{code} eq '1') {
+        if ($params->{failOnEmpty}) {
+            $self->bail_out('No sites found');
+        }
+        else {
+            $self->warning('No sites found');
+            return;
+        }
     }
     $self->_process_result($result);
 
@@ -1077,14 +1087,22 @@ sub step_add_site_binding {
 sub step_list_pools {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName dumpFormat/);
+    my $params = $self->get_params_as_hashref(qw/searchcriteria propertyName dumpFormat failOnEmpty/);
     my $command = $self->driver->list_pools_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
 
-    if ($result->{code}) {
-        return $self->bail_out("Cannot list pools: " . _message_from_result($result));
+    if ($result->{code} && $result->{code} eq '1') {
+        if ($params->{failOnEmpty}) {
+            $self->bail_out('No application pools found');
+        }
+        else {
+            $self->warning('No application pools found');
+            return;
+        }
     }
+
+    $self->_process_result($result);
 
     # APPPOOL "site" (MgdVersion:v4.0,MgdMode:Integrated,state:Started)
     my $stdout = $result->{stdout};
@@ -1141,15 +1159,28 @@ sub step_list_pools {
 sub step_list_apps {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/sitename propertyName dumpFormat/);
+    my $params = $self->get_params_as_hashref(qw/
+        sitename
+        propertyName
+        dumpFormat
+        failOnEmpty
+    /);
     $params->{websiteName} = $params->{sitename};
     my $command = $self->driver->list_apps_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
 
-    if ($result->{code}) {
-        return $self->bail_out("Cannot list apps: " . ($result->{stderr} || $result->{stdout}));
+    if ($result->{code} && $result->{code} eq '1') {
+        if ($params->{failOnEmpty}) {
+            $self->bail_out('No applications found');
+        }
+        else {
+            $self->warning("No applications found");
+            return;
+        }
     }
+    $self->_process_result($result);
+
 
     my $stdout = $result->{stdout};
     my @lines = split /[\n\r]/ => $stdout;
@@ -1190,10 +1221,20 @@ sub step_list_apps {
 sub step_list_vdirs {
     my ($self) = @_;
 
-    my $params = $self->get_params_as_hashref(qw/vdirName propertyName dumpFormat/);
+    my $params = $self->get_params_as_hashref(qw/vdirName propertyName dumpFormat failOnEmpty/);
     my $command = $self->driver->list_vdirs_cmd($params);
     $self->set_cmd_line($command);
     my $result = $self->run_command($command);
+
+    if ($result->{code} && $result->{code} eq '1') {
+        if ($params->{failOnEmpty}) {
+            $self->bail_out('No virtual directories found');
+        }
+        else {
+            $self->warning('No virtual directories found');
+            return;
+        }
+    }
 
     if ($result->{code}) {
         return $self->bail_out("Cannot list vdirs: " . ($result->{stderr} || $result->{stdout}));

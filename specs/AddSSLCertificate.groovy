@@ -69,9 +69,10 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
     }
 
     def doCleanupSpec() {
-        // dsl "deleteProject '$projectName'"
+        if (!System.getenv('NO_CLEANUP')) {
+            dsl "deleteProject '$projectName'"
+        }
     }
-
 
     def "add certificate to site"() {
         given:

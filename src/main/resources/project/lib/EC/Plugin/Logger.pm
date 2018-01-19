@@ -101,7 +101,7 @@ sub add_secrets {
     my ($self, @secrets) = @_;
 
     $self->{secrets} ||= [];
-    push @{$self->{secrets}}, @secrets;
+    push @{$self->{secrets}}, grep { $_ } @secrets;
 }
 
 sub refine {
@@ -109,7 +109,8 @@ sub refine {
 
     my $secrets = $self->{secrets};
     $secrets ||= [];
-    my $regexp = join('|', map { quotemeta($_) } @$secrets);
+    return $message unless @$secrets;
+    my $regexp = join('|', map { quotemeta($_) } grep { $_ } @$secrets);
     return $message unless @$secrets;
     $message =~ s/($regexp)/****/g;
     return $message;
