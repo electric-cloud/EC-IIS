@@ -246,10 +246,10 @@ sub create_msdeploy_command {
         $command .= " -allowUntrusted";
     }
     if ($params->{postSync}) {
-        $command .= " -postSync:\"$params->{postSync}\"";
+        $command .= " -postSync:runCommand=\"$params->{postSync}\"";
     }
     if ($params->{preSync}) {
-        $command .= " -preSync:\"$params->{preSync}\"";
+        $command .= " -preSync:runCommand=\"$params->{preSync}\"";
     }
     if ($params->{setParamFile}) {
         if (_is_xml($params->{setParamFile}) && $params->{setParamFile} =~ m/parameters/) {
@@ -266,10 +266,10 @@ sub create_msdeploy_command {
     if ($params->{declareParamFile}) {
         if (_is_xml($params->{declareParamFile}) && $params->{declareParamFile} =~ m/parameters/) {
             my $filename = _save_params_file($params->{declareParamFile});
-            $command .= " -declareParamFile:$filename";
+            $command .= " -declareParamFile:\"$filename\"";
         }
         elsif (-f $params->{declareParamFile}) {
-            $command .= " -declareParamFile:$params->{declareParamFile}";
+            $command .= " -declareParamFile:\"$params->{declareParamFile}\"";
         }
         else {
             $self->bail_out("The file $params->{declareParamFile} is not found");
