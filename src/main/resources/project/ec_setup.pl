@@ -52,6 +52,16 @@ if ($upgradeAction eq "upgrade") {
         });
     }
 
+    # my $old_debug_level = $query->getProperty("/plugins/$otherPluginName/project/debugLevel");
+    # local $self->{abortOnError} = 0;
+    # $query->submit();
+    # if ($query->findvalue($old_debug_level, 'code') ne 'NoSuchProperty') {
+    #     $batch->clone({
+    #         path => "/plugins/$otherPluginName/project/debugLevel",
+    #         cloneName => "/plugins/$pluginName/project/debugLevel"
+    #     });
+    # }
+
 
     # Copy configuration credentials and attach them to the appropriate steps
     my $nodes = $query->find($creds);
@@ -254,7 +264,7 @@ my %recycleAppPool = (
 );
 my %listVdirs = (
     label       => "IIS - List Virtual Directories",
-    procedure   => "RecycleAppPool",
+    procedure   => "ListVirtualDirectories",
     description => "List the virtual directories on a web server.",
     category    => "Application Server"
 );
