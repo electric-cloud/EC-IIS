@@ -2377,7 +2377,7 @@ STDERR: N/A
                     <tr>
                         <td>Hostname</td>
                         <td>
-                           Hostname for the certificate, e.g. mysite.com. Either this parameter or IP should be provided.
+                           Hostname for the certificate, e.g. mysite.com. Either this parameter or IP should be provided. This parameter is not supported on Windows Server 2008.
                         </td>
                     </tr>
                     <tr>
