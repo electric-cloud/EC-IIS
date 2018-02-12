@@ -107,7 +107,10 @@ class ListVirtualDirectories extends PluginTestHelper {
     }
 
 
+    @Unroll
     def "Empty list #failOnEmpty"() {
+        given:
+            def criteria = '/path:no_such_path'
         when:
             def result = runProcedureDsl """
                 runProcedure(
@@ -115,7 +118,8 @@ class ListVirtualDirectories extends PluginTestHelper {
                     procedureName: '$procName',
                     actualParameter: [
                         vdirName: '$criteria',
-                        propertyName: '/myJob/result'
+                        propertyName: '/myJob/result',
+                        failOnEmpty: '$failOnEmpty'
                     ]
                 )
             """
