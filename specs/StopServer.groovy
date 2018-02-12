@@ -23,8 +23,8 @@ class StopServer extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        dsl "deleteProject '$projectName'"
         restoreIISService()
+        dsl "deleteProject '$projectName'"
     }
 
     @Unroll

@@ -23,8 +23,8 @@ class ResetServer extends PluginTestHelper {
     }
 
     def doCleanupSpec() {
-        dsl "deleteProject '$projectName'"
         restoreIISService()
+        dsl "deleteProject '$projectName'"
     }
 
     @Unroll

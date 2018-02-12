@@ -568,7 +568,23 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     def restoreIISService() {
-        runCmd('iisreset')
+        def result = dsl """
+            runProcedure(
+                projectName: '$helperProjName',
+                procedureName: 'RunCmd',
+                actualParameter: [
+                    cmd: '''iisreset'''
+                ]
+            )
+        """
+        assert result.jobId
+
+
+        waitUntil {
+            def status = dsl """getJobStatus(jobId: '${result.jobId}')"""
+            assert status.status == 'completed'
+        }
+
     }
 
     def serverStatus() {
