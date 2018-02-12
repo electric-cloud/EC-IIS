@@ -136,6 +136,9 @@
                 "Configure" link which will open the Configuration
                 page.
                 </p>
+                <p>
+                    Please note, that configuration is used only for CheckServerStatus procedure (for now).
+                </p>
             </div>
 
             <p>To enable ElectricFlow to communicate with your IIS
