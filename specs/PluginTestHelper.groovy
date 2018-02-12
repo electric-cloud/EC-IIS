@@ -567,6 +567,10 @@ class PluginTestHelper extends PluginSpockTestSupport {
         runCmd('iisreset /STOP')
     }
 
+    def restoreIISService() {
+        runCmd('iisreset')
+    }
+
     def serverStatus() {
         def logs = runCmd('iisreset /STATUS')
         logs

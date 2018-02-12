@@ -24,6 +24,7 @@ class StartServer extends PluginTestHelper {
 
     def doCleanupSpec() {
         dsl "deleteProject '$projectName'"
+        restoreIISService()
     }
 
     @Unroll
