@@ -115,7 +115,8 @@ class ListAppPools extends PluginTestHelper {
                     procedureName: '$procName',
                     actualParameter: [
                         searchcriteria: 'no_site',
-                        propertyName: '/myJob/result'
+                        propertyName: '/myJob/result',
+                        failOnEmpty: '$failOnEmpty'
                     ]
                 )
             """
