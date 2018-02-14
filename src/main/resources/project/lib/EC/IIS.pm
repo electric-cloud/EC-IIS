@@ -1046,6 +1046,12 @@ sub step_add_site_binding {
         hostHeader
     /);
 
+    for my $req_param (qw/websitename bindingprotocol bindinginformation/) {
+        unless($params->{$req_param}) {
+            $self->bail_out(qq{Required parameter "$req_param" is missing});
+        }
+    }
+
     # TODO update existing binding wtih host header
     my $binding_info = $params->{bindinginformation};
     $binding_info .= ':' unless $binding_info =~ /:$/;
@@ -1065,7 +1071,6 @@ sub step_add_site_binding {
         for my $binding_str (split(',', $site->{bindings})) {
             my ($protocol, $info) = split('/', $binding_str);
             my ($host, $port, $header) = split(':', $info);
-
 
             $self->logger->info("Found binding: protocol $protocol, info: $info");
             if ($protocol eq $params->{bindingprotocol}
