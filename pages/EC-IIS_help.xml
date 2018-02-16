@@ -97,10 +97,10 @@
         <p>
             This plugin supports next versions of IIS:
             <ul>
-                <li>7.x</li>
-                <li>8.x</li>
-                <li>9.x</li>
-                <li>10.x</li>
+                <li>7.5</li>
+                <li>8.0</li>
+                <li>8.5</li>
+                <li>10</li>
             </ul>
             This plugin supports next versions of Web Deploy:
             <ul>
