@@ -97,6 +97,7 @@
         <p>
             This plugin supports next versions of IIS:
             <ul>
+                <li>7.0</li>
                 <li>7.5</li>
                 <li>8.0</li>
                 <li>8.5</li>
