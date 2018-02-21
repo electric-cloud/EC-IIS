@@ -1872,7 +1872,7 @@
                 <formalParameterName>sourceProvider</formalParameterName>
                 <defaultValue/>
                 <description>Providers process specific source or destination data for Web Deploy. For example, the contentPath provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the -source: or -dest: argument.</description>
-                <required>1</required>
+                <required>0</required>
                 <type>select</type>
             </formalParameter>
             <formalParameter>
@@ -1891,7 +1891,7 @@
             <formalParameter>
                 <formalParameterName>destProvider</formalParameterName>
                 <defaultValue/>
-                <required>1</required>
+                <required>0</required>
                 <type>select</type>
             </formalParameter>
             <formalParameter>
