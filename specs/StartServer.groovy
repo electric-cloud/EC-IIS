@@ -2,6 +2,7 @@ import spock.lang.*
 import com.electriccloud.spec.*
 import groovy.json.JsonSlurper
 
+@Ignore
 class StartServer extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs StartServer'
     static def iisHandler
