@@ -2471,6 +2471,10 @@ STDERR: N/A
         </p>
 
         <h1 id="ReleaseNotes">Release Notes</h1>
+        <h2>@PLUGIN_KEY@ 3.1.1</h2>
+            <ul>
+                <li>Internal improvements for 8.3 release.</li>
+            </ul>
         <h2>@PLUGIN_KEY@ 3.1.0</h2>
         <ul>
             <li>Field "Computer Name" in configuration is deprecated.</li>
