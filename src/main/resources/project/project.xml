@@ -6,6 +6,56 @@
         <description>Integration with IIS</description>
         <workspaceName/>
         <propertySheet>
+            <!-- CEV-17558 improvements -->
+            <!-- IIS doesn't have custom GWT logic. Setting it for plugin context -->
+            <property>
+                <propertyName>ec_formXmlCompliant</propertyName>
+                <value>true</value>
+            </property>
+            <property>
+                <propertyName>ec_config</propertyName>
+                <description/>
+                <propertySheet>
+                    <property>
+                        <propertyName>configLocation</propertyName>
+                        <expandable>0</expandable>
+                        <value>iis_cfgs</value>
+                    </property>
+                    <property>
+                        <propertyName>fields</propertyName>
+                        <description/>
+                        <propertySheet>
+                            <property>
+                                <propertyName>config</propertyName>
+                                <propertySheet>
+                                    <property>
+                                        <propertyName>label</propertyName>
+                                        <value>Configuration Name</value>
+                                    </property>
+                                    <property>
+                                        <propertyName>order</propertyName>
+                                        <value>1</value>
+                                    </property>
+                                </propertySheet>
+                            </property>
+                            <property>
+                                <propertyName>iis_url</propertyName>
+                                <propertySheet>
+                                    <property>
+                                        <propertyName>label</propertyName>
+                                        <value>IIS IP Address</value>
+                                    </property>
+                                    <property>
+                                        <propertyName>order</propertyName>
+                                        <value>2</value>
+                                    </property>
+                                </propertySheet>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+            </property>
+            <!-- End of CEV-17558 improvements -->
             <property>
                 <propertyName>ui_forms</propertyName>
                 <description>Property sheet to hold XML specification for forms</description>
