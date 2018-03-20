@@ -7,15 +7,15 @@
         <workspaceName/>
         <propertySheet>
             <!-- CEV-17558 improvements -->
+            <!-- IIS doesn't have custom GWT logic. Setting it for plugin context -->
+            <property>
+                <propertyName>ec_formXmlCompliant</propertyName>
+                <value>true</value>
+            </property>
             <property>
                 <propertyName>ec_config</propertyName>
                 <description/>
                 <propertySheet>
-                    <!-- WebSphere doesn't have custom GWT logic. Setting it for plugin context -->
-                    <property>
-                        <propertyName>ec_formXmlCompliant</propertyName>
-                        <value>true</value>
-                    </property>
                     <property>
                         <propertyName>configLocation</propertyName>
                         <expandable>0</expandable>
@@ -26,11 +26,11 @@
                         <description/>
                         <propertySheet>
                             <property>
-                                <propertyName>iis_url</propertyName>
+                                <propertyName>config</propertyName>
                                 <propertySheet>
                                     <property>
                                         <propertyName>label</propertyName>
-                                        <value>IIS IP Address</value>
+                                        <value>Configuration Name</value>
                                     </property>
                                     <property>
                                         <propertyName>order</propertyName>
@@ -39,11 +39,11 @@
                                 </propertySheet>
                             </property>
                             <property>
-                                <propertyName>iis_port</propertyName>
+                                <propertyName>iis_url</propertyName>
                                 <propertySheet>
                                     <property>
                                         <propertyName>label</propertyName>
-                                        <value>IIS Port</value>
+                                        <value>IIS IP Address</value>
                                     </property>
                                     <property>
                                         <propertyName>order</propertyName>
