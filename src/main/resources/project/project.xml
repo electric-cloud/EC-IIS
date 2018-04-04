@@ -23,8 +23,8 @@
                     </property>
                     <property>
                         <propertyName>form</propertyName>
-                        <expandable>0</expandable>
-                        <value></value>
+                        <expandable>1</expandable>
+                        <value>$[/projects/@PLUGIN_KEY@-@PLUGIN_VERSION@/ui_forms/IISCreateConfigForm]</value>
                     </property>
                     <property>
                         <propertyName>fields</propertyName>
