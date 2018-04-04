@@ -22,6 +22,11 @@
                         <value>iis_cfgs</value>
                     </property>
                     <property>
+                        <propertyName>form</propertyName>
+                        <expandable>0</expandable>
+                        <value></value>
+                    </property>
+                    <property>
                         <propertyName>fields</propertyName>
                         <description/>
                         <propertySheet>
