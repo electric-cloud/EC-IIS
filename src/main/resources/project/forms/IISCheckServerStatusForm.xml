@@ -23,6 +23,9 @@
 	<formElement>
 		<type>entry</type>
 		<label>Configuration Name:</label>
+        <!-- Improvements for CEV-18687 -->
+        <configuration>1</configuration>
+        <!-- End of improvements for CEV-18687 -->
 		<property>configname</property>
 		<required>0</required>
         <documentation>Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration if the 'Use Credentials' parameter is checked. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
