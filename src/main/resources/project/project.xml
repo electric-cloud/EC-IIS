@@ -6,6 +6,12 @@
         <description>Integration with IIS</description>
         <workspaceName/>
         <propertySheet>
+            <!-- Improvement for ECPAPPSERVERIIS-100 -->
+            <property>
+                <propertyName>ec_icon</propertyName>
+                <value>images/icon-plugin.svg</value>
+            </property>
+            <!-- End of improvement for ECPAPPSERVERIIS-100 -->
             <!-- CEV-17558 improvements -->
             <!-- IIS doesn't have custom GWT logic. Setting it for plugin context -->
             <property>
