@@ -14,7 +14,7 @@
        <h1>IIS</h1>
        <p>Plugin Version @PLUGIN_VERSION@</p>
        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-       <p>Revised on February 27, 2019</p>
+       <p>Revised on March 06, 2019</p>
        <p>
 	    Internet Information Server - is a web server application
         and set of feature extension modules created by Microsoft
@@ -2473,7 +2473,7 @@ STDERR: N/A
         <h1 id="ReleaseNotes">Release Notes</h1>
         <h2>@PLUGIN_KEY@ 3.1.4</h2>
         <ul>
-            <li>Fixed creating configuration by user with "@" in username.</li>
+            <li>Configurations can be created by users with "@" sign in a name.</li>
         </ul>
         <h2>@PLUGIN_KEY@ 3.1.3</h2>
         <ul>
