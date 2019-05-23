@@ -5,7 +5,7 @@
     <meta name="generator" content="HTML Tidy for Windows (vers 14 February 2006), see www.w3.org" />
     <meta content="text/html; charset=us-ascii" http-equiv="content-type" />
 
-    <title>ElectricFlow Plugin for IIS (7.0 and above)</title>
+    <title>CloudBees Flow Plugin for IIS (7.0 and above)</title>
     <link rel="stylesheet" href="../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media="screen" />
 </head>
 
@@ -14,7 +14,7 @@
        <h1>IIS</h1>
        <p>Plugin Version @PLUGIN_VERSION@</p>
        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-       <p>Revised on March 06, 2019</p>
+       <p>Revised on May 23, 2019</p>
        <p>
 	    Internet Information Server - is a web server application
         and set of feature extension modules created by Microsoft
@@ -71,7 +71,7 @@
           <li><a href="http://www.iis.net/overview" target="_blank">IIS Overview</a></li>
         </ul>
 
-        <h2>ElectricFlow Integration to IIS</h2>
+        <h2>CloudBees Flow Integration to IIS</h2>
 
         <p>
             This plugin allows users to interact with the Internet
@@ -111,7 +111,7 @@
         </p>
 
         <h1>Plugin Procedures</h1>
-		<p>IMPORTANT: In the ElectricFlow UI, from the Home page, open the Main Menu, and click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</p>
+		<p>IMPORTANT: In the CloudBees Flow UI, from the Home page, open the Main Menu, and click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</p>
         <p>IMPORTANT: For all parameter descriptions below,
         required parameters are shown in
         <span class="required">bold italics</span>.</p>
@@ -131,7 +131,7 @@
                 given a unique name that is entered in designated
                 parameters on procedures that use them.<br />
                  Plugin configurations are created by going to the
-                ElectricFlow "Administration" tab, then to
+                CloudBees Flow "Administration" tab, then to
                 the "Plugins" sub-tab. On the right side of the
                 line for the specific plugin, there is a
                 "Configure" link which will open the Configuration
@@ -142,7 +142,7 @@
                 </p>
             </div>
 
-            <p>To enable ElectricFlow to communicate with your IIS
+            <p>To enable CloudBees Flow to communicate with your IIS
             server, create an IIS configuration, supplying the
             following information:</p>
 
@@ -176,7 +176,7 @@
                         <td>Provide the port for the IIS server.
                         This port is used in conjuction with the IP
                         Adress to conform the URL. If not provided,
-                        ElectricFlow uses the default port '80'.
+                        CloudBees Flow uses the default port '80'.
                         i.e: '8081'.</td>
                     </tr>
 
@@ -189,7 +189,7 @@
                     <tr>
                         <td>Login as</td>
                         <td><i>Username</i>: Provide the user name
-                        ElectricFlow uses to communicate with the IIS
+                        CloudBees Flow uses to communicate with the IIS
                         server.<br />
                          <i>Password</i>: Provide the password for
                         the specified Username.<br />
@@ -236,7 +236,7 @@
                     <tr>
                         <td>Use Credentials (Deprecated)</td>
                         <td>Indicate if credentials must be used.
-                        If checked, ElectricFlow uses the user and
+                        If checked, CloudBees Flow uses the user and
                         password typed in the configuration. This parameter is deprecated, credentials will be used if they are provided.</td>
                     </tr>
                     <tr>
@@ -2471,6 +2471,10 @@ STDERR: N/A
         </p>
 
         <h1 id="ReleaseNotes">Release Notes</h1>
+
+    <h2 id="3.1.5">@PLUGIN_KEY@ 3.1.5</h2>
+    <p>Renaming from "Electric Cloud" to "CloudBees"</p>
+
         <h2>@PLUGIN_KEY@ 3.1.4</h2>
         <ul>
             <li>Configurations can be created by users with "@" sign in a name.</li>
