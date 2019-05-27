@@ -1,7 +1,7 @@
 EC-IIS
 ============
 
-The ElectricFlow IIS integration
+The CloudBees Flow IIS integration
 
 ## Compile ##
 
