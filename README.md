@@ -1,7 +1,7 @@
 EC-IIS
 ============
 
-The CloudBees Flow IIS integration
+The CloudBees CD IIS integration
 
 ## Compile ##
 
