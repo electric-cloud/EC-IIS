@@ -39,7 +39,7 @@
 		<uncheckedValue>0</uncheckedValue>
 		<initiallyChecked>0</initiallyChecked>
 		<required>0</required>
-		<documentation>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</documentation>
+		<documentation>Indicate if credentials must be used. If checked, the CloudBees CD use the user and password typed in the configuration.</documentation>
 	</formElement>
     <formElement>
         <type>credential</type>

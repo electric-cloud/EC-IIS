@@ -2573,49 +2573,49 @@
             <formalParameter>
                 <formalParameterName>usecredentials</formalParameterName>
                 <defaultValue/>
-                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <description>Indicate if credentials must be used. If checked, the CloudBees CD use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>checkbox</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>checkUrl</formalParameterName>
                 <defaultValue/>
-                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <description>Indicate if credentials must be used. If checked, the CloudBees CD use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>expectStatus</formalParameterName>
                 <defaultValue/>
-                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <description>Indicate if credentials must be used. If checked, the CloudBees CD use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>unavailable</formalParameterName>
                 <defaultValue>0</defaultValue>
-                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <description>Indicate if credentials must be used. If checked, the CloudBees CD use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>checkbox</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>checkTimeout</formalParameterName>
                 <defaultValue/>
-                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <description>Indicate if credentials must be used. If checked, the CloudBees CD use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>checkRetries</formalParameterName>
                 <defaultValue/>
-                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <description>Indicate if credentials must be used. If checked, the CloudBees CD use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>entry</type>
             </formalParameter>
             <formalParameter>
                 <formalParameterName>credential</formalParameterName>
                 <defaultValue/>
-                <description>Indicate if credentials must be used. If checked, the Commander use the user and password typed in the configuration.</description>
+                <description>Indicate if credentials must be used. If checked, the CloudBees CD use the user and password typed in the configuration.</description>
                 <required>0</required>
                 <type>credential</type>
             </formalParameter>
