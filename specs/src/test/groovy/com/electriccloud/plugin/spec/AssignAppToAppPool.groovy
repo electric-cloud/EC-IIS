@@ -1,8 +1,5 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-
 class AssignAppToAppPool extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs AssignApp'
     static def iisHandler
@@ -12,14 +9,14 @@ class AssignAppToAppPool extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                appname: '',
-                apppoolname: '',
-                sitename: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        appname    : '',
+                        apppoolname: '',
+                        sitename   : ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -30,14 +27,14 @@ class AssignAppToAppPool extends PluginTestHelper {
 
     def "existing app tp existing app pool"() {
         given:
-            def siteName = randomize('mysite')
-            def appName = 'app'
-            def appPoolName = 'appPool'
-            createSite(siteName)
-            createApp(siteName, appName)
-                createAppPool(appPoolName)
+        def siteName = randomize('mysite')
+        def appName = 'app'
+        def appPoolName = 'appPool'
+        createSite(siteName)
+        createApp(siteName, appName)
+        createAppPool(appPoolName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -49,26 +46,26 @@ class AssignAppToAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def app = getApp(siteName, appName)
-            logger.debug(objectToJson(app))
-            assert app.applicationPool == appPoolName
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def app = getApp(siteName, appName)
+        logger.debug(objectToJson(app))
+        assert app.applicationPool == appPoolName
         cleanup:
-            removeSite(siteName)
-            removeAppPool(appPoolName)
+        removeSite(siteName)
+        removeAppPool(appPoolName)
     }
 
 
     def "root app to existing app pool"() {
         given:
-            def siteName = randomize('mysite')
-            def appName = 'app'
-            def appPoolName = 'appPool'
-            createSite(siteName)
-            createAppPool(appPoolName)
+        def siteName = randomize('mysite')
+        def appName = 'app'
+        def appPoolName = 'appPool'
+        createSite(siteName)
+        createAppPool(appPoolName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -80,22 +77,22 @@ class AssignAppToAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def app = getApp(siteName, '')
-            logger.debug(objectToJson(app))
-            assert app.applicationPool == appPoolName
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def app = getApp(siteName, '')
+        logger.debug(objectToJson(app))
+        assert app.applicationPool == appPoolName
         cleanup:
-            removeSite(siteName)
-            removeAppPool(appPoolName)
+        removeSite(siteName)
+        removeAppPool(appPoolName)
     }
 
     def "negative: non-existing app to app pool"() {
         given:
-            def appPoolName = randomize('appPool')
-            createAppPool(appPoolName)
+        def appPoolName = randomize('appPool')
+        createAppPool(appPoolName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -107,19 +104,19 @@ class AssignAppToAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'error'
+        assert result.outcome == 'error'
         cleanup:
-            removeAppPool(appPoolName)
+        removeAppPool(appPoolName)
     }
 
     def "negative: non-existing app pool"() {
         given:
-            def siteName = randomize('mysite')
-            def appName = 'app'
-            createSite(siteName)
-            createApp(siteName, appName)
+        def siteName = randomize('mysite')
+        def appName = 'app'
+        createSite(siteName)
+        createApp(siteName, appName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -131,9 +128,9 @@ class AssignAppToAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'error'
+        assert result.outcome == 'error'
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
 
     }
 

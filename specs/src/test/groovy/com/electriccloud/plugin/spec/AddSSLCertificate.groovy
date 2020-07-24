@@ -1,8 +1,5 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-
 class AddSSLCertificate extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs AddSSLCertificate'
     static def iisHandler
@@ -23,16 +20,16 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                ip: '',
-                certHostName: '',
-                port: '',
-                certStore: '',
-                certHash: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        ip          : '',
+                        certHostName: '',
+                        port        : '',
+                        certStore   : '',
+                        certHash    : ''
+                ]
         ]
         createHelperProject(resName)
         dsl """
@@ -78,12 +75,12 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
 
     def "add certificate to site"() {
         given:
-            def port = '9999'
-            def siteName = 'Site With Certificate'
-            createSite(siteName, 'c:/tmp/site', port)
-            createCertificate()
+        def port = '9999'
+        def siteName = 'Site With Certificate'
+        createSite(siteName, 'c:/tmp/site', port)
+        createCertificate()
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -96,24 +93,24 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            assert result.logs =~ /SSL Certificate successfully added/
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        assert result.logs =~ /SSL Certificate successfully added/
         cleanup:
-            removeSite(siteName)
-            runCmd("netsh http delete sslcert ipport=0.0.0.0:$port")
+        removeSite(siteName)
+        runCmd("netsh http delete sslcert ipport=0.0.0.0:$port")
     }
 
 
     def "add certificate to hostname"() {
         given:
-            def port = '9999'
-            def siteName = 'Site With Certificate'
-            createSite(siteName, 'c:/tmp/site', port)
-            createCertificate()
-            def hostname = 'localhost'
+        def port = '9999'
+        def siteName = 'Site With Certificate'
+        createSite(siteName, 'c:/tmp/site', port)
+        createCertificate()
+        def hostname = 'localhost'
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -126,24 +123,24 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            assert result.logs =~ /SSL Certificate successfully added/
-            def certificates = showCertificates()
-            assert certificates =~ /Hostname:port\s*:\s*localhost:9999/
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        assert result.logs =~ /SSL Certificate successfully added/
+        def certificates = showCertificates()
+        assert certificates =~ /Hostname:port\s*:\s*localhost:9999/
         cleanup:
-            removeSite(siteName)
-            runCmd("netsh http delete sslcert hostnameport=$hostname:$port")
+        removeSite(siteName)
+        runCmd("netsh http delete sslcert hostnameport=$hostname:$port")
     }
 
 
     def "update certificate"() {
         given:
-            def port = '9999'
-            def siteName = 'Site With Certificate'
-            createSite(siteName, 'c:/tmp/site', port)
-            createCertificate()
-            def res = runProcedureDsl """
+        def port = '9999'
+        def siteName = 'Site With Certificate'
+        createSite(siteName, 'c:/tmp/site', port)
+        createCertificate()
+        def res = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -155,9 +152,9 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
                     ]
                 )
             """
-            assert res.outcome == 'success'
+        assert res.outcome == 'success'
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -171,22 +168,22 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
             """
 
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
         cleanup:
-            removeSite(siteName)
-            runCmd("netsh http delete sslcert ipport=0.0.0.0:$port")
+        removeSite(siteName)
+        runCmd("netsh http delete sslcert ipport=0.0.0.0:$port")
 
     }
 
     def "change certificate"() {
         given:
-            def port = '9999'
-            def siteName = 'Site With Certificate'
-            createSite(siteName, 'c:/tmp/site', port)
-            createCertificate()
-            createSecondCertificate()
-            def res = runProcedureDsl """
+        def port = '9999'
+        def siteName = 'Site With Certificate'
+        createSite(siteName, 'c:/tmp/site', port)
+        createCertificate()
+        createSecondCertificate()
+        def res = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -198,9 +195,9 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
                     ]
                 )
             """
-            assert res.outcome == 'success'
+        assert res.outcome == 'success'
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -214,22 +211,22 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
             """
 
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def output = runCmd("netsh http show sslcert")
-            logger.debug(output)
-            def hash = secondHash.replaceAll(/\W/, '')
-            assert output =~ /$hash/
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def output = runCmd("netsh http show sslcert")
+        logger.debug(output)
+        def hash = secondHash.replaceAll(/\W/, '')
+        assert output =~ /$hash/
         cleanup:
-            removeSite(siteName)
-            runCmd("netsh http delete sslcert ipport=0.0.0.0:$port")
+        removeSite(siteName)
+        runCmd("netsh http delete sslcert ipport=0.0.0.0:$port")
 
     }
 
 
     def "negative: wrong cert hash"() {
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -242,15 +239,15 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
                 )
             """
         then:
-            assert result.outcome == 'error'
-            logger.debug(result.logs)
+        assert result.outcome == 'error'
+        logger.debug(result.logs)
 
     }
 
 
     def "negative: wrong store name"() {
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -263,8 +260,8 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
                 )
             """
         then:
-            assert result.outcome == 'error'
-            logger.debug(result.logs)
+        assert result.outcome == 'error'
+        logger.debug(result.logs)
 
     }
 

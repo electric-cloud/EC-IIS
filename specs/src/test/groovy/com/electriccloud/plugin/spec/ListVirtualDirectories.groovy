@@ -1,8 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
 import groovy.json.JsonSlurper
+import spock.lang.Unroll
 
 class ListVirtualDirectories extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs ListVirtualDirectories'
@@ -13,15 +12,15 @@ class ListVirtualDirectories extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                vdirName: '',
-                propertyName: '',
-                dumpFormat: '',
-                failOnEmpty: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        vdirName    : '',
+                        propertyName: '',
+                        dumpFormat  : '',
+                        failOnEmpty : ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -33,10 +32,10 @@ class ListVirtualDirectories extends PluginTestHelper {
     @Unroll
     def "show one vdir, property #propertyName, dump format #dumpFormat"() {
         given:
-            def siteName = randomize('site')
-            createSite(siteName)
+        def siteName = randomize('site')
+        createSite(siteName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -48,41 +47,41 @@ class ListVirtualDirectories extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
 
-            def resultProperty = propertyName ? propertyName : '/myJob/IISVirtualDirectories'
-            switch(dumpFormat) {
-                case '' :
-                    validateResultPlaintext(result.jobId, resultProperty, siteName)
-                    break
-                case 'propertySheet':
-                    validateResultPropertySheet(result.jobId, resultProperty, siteName)
-                    break
-                case 'json':
-                    validateResultJson(result.jobId, resultProperty, siteName)
-                    break
-                case 'xml':
-                    validateResultXML(result.jobId, resultProperty, siteName)
-                    break
-                default:
-                    throw new RuntimeException("Don't know how to validate $dumpFormat")
-            }
+        def resultProperty = propertyName ? propertyName : '/myJob/IISVirtualDirectories'
+        switch (dumpFormat) {
+            case '':
+                validateResultPlaintext(result.jobId, resultProperty, siteName)
+                break
+            case 'propertySheet':
+                validateResultPropertySheet(result.jobId, resultProperty, siteName)
+                break
+            case 'json':
+                validateResultJson(result.jobId, resultProperty, siteName)
+                break
+            case 'xml':
+                validateResultXML(result.jobId, resultProperty, siteName)
+                break
+            default:
+                throw new RuntimeException("Don't know how to validate $dumpFormat")
+        }
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            dumpFormat << ['', 'propertySheet', 'json', 'xml']
-            propertyName = dumpFormat ? '/myJob/result' : ''
+        dumpFormat << ['', 'propertySheet', 'json', 'xml']
+        propertyName = dumpFormat ? '/myJob/result' : ''
     }
 
     @Unroll
     def "Show multiple vdirs #criteria"() {
         given:
-            (1..3).each {
-                createSite("Site ${it}")
-            }
+        (1..3).each {
+            createSite("Site ${it}")
+        }
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -93,28 +92,28 @@ class ListVirtualDirectories extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.log)
-            def saved = getJobProperty('/myJob/result', result.jobId)
-            logger.debug(saved)
-            (1..3).each {
-                assert saved =~ /VDIR \"Site ${it}\/\"/
-            }
+        assert result.outcome == 'success'
+        logger.debug(result.log)
+        def saved = getJobProperty('/myJob/result', result.jobId)
+        logger.debug(saved)
+        (1..3).each {
+            assert saved =~ /VDIR \"Site ${it}\/\"/
+        }
         cleanup:
-            (1..3).each {
-                removeSite("Site ${it}")
-            }
+        (1..3).each {
+            removeSite("Site ${it}")
+        }
         where:
-            criteria << ['', '/path:/']
+        criteria << ['', '/path:/']
     }
 
 
     @Unroll
     def "Empty list #failOnEmpty"() {
         given:
-            def criteria = '/path:no_such_path'
+        def criteria = '/path:no_such_path'
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -126,14 +125,13 @@ class ListVirtualDirectories extends PluginTestHelper {
                 )
             """
         then:
-            if (failOnEmpty == '1') {
-                assert result.outcome == 'error'
-            }
-            else {
-                assert result.outcome == 'warning'
-            }
+        if (failOnEmpty == '1') {
+            assert result.outcome == 'error'
+        } else {
+            assert result.outcome == 'warning'
+        }
         where:
-            failOnEmpty << ['1', '0']
+        failOnEmpty << ['1', '0']
     }
 
 

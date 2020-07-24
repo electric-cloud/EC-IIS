@@ -1,7 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
+
+import spock.lang.Unroll
 
 class StopAppPool extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs StopAppPool'
@@ -12,13 +12,13 @@ class StopAppPool extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                apppoolname: '',
-                strictMode: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        apppoolname: '',
+                        strictMode : ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -29,11 +29,11 @@ class StopAppPool extends PluginTestHelper {
 
     def "stop app pool"() {
         given:
-            def appPoolName = randomize('appPool')
-            createAppPool(appPoolName)
-            startAppPool(appPoolName)
+        def appPoolName = randomize('appPool')
+        createAppPool(appPoolName)
+        startAppPool(appPoolName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -43,21 +43,21 @@ class StopAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            def appPool = getAppPool(appPoolName)
-            assert appPool.state == 'Stopped'
+        assert result.outcome == 'success'
+        def appPool = getAppPool(appPoolName)
+        assert appPool.state == 'Stopped'
         cleanup:
-            removeAppPool(appPoolName)
+        removeAppPool(appPoolName)
     }
 
     @Unroll
     def "stop stopped app pool #strictMode"() {
         given:
-            def appPoolName = randomize('appPool')
-            createAppPool(appPoolName)
-            stopAppPool(appPoolName)
+        def appPoolName = randomize('appPool')
+        createAppPool(appPoolName)
+        stopAppPool(appPoolName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -68,24 +68,23 @@ class StopAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            if (strictMode == '1') {
-                assert result.outcome == 'error'
-            }
-            else {
-                assert result.outcome == 'warning'
-            }
-            def appPool = getAppPool(appPoolName)
-            assert appPool.state == 'Stopped'
+        if (strictMode == '1') {
+            assert result.outcome == 'error'
+        } else {
+            assert result.outcome == 'warning'
+        }
+        def appPool = getAppPool(appPoolName)
+        assert appPool.state == 'Stopped'
         cleanup:
-            removeAppPool(appPoolName)
+        removeAppPool(appPoolName)
         where:
-            strictMode << ['1', '0']
+        strictMode << ['1', '0']
     }
 
 
     def "negative: stop non-existing app pool"() {
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -95,7 +94,7 @@ class StopAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'error'
+        assert result.outcome == 'error'
     }
 
 }

@@ -1,8 +1,5 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-
 class StartAppPool extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs StartAppPool'
     static def iisHandler
@@ -12,12 +9,12 @@ class StartAppPool extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                apppoolname: '',
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        apppoolname: '',
+                ]
         ]
         createHelperProject(resName)
     }
@@ -28,11 +25,11 @@ class StartAppPool extends PluginTestHelper {
 
     def "start app pool"() {
         given:
-            def appPoolName = randomize('appPool')
-            createAppPool(appPoolName)
-            stopAppPool(appPoolName)
+        def appPoolName = randomize('appPool')
+        createAppPool(appPoolName)
+        stopAppPool(appPoolName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -42,20 +39,20 @@ class StartAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            def appPool = getAppPool(appPoolName)
-            assert appPool.state == 'Started'
+        assert result.outcome == 'success'
+        def appPool = getAppPool(appPoolName)
+        assert appPool.state == 'Started'
         cleanup:
-            removeAppPool(appPoolName)
+        removeAppPool(appPoolName)
     }
 
     def "start running app pool"() {
         given:
-            def appPoolName = randomize('appPool')
-            createAppPool(appPoolName)
-            startAppPool(appPoolName)
+        def appPoolName = randomize('appPool')
+        createAppPool(appPoolName)
+        startAppPool(appPoolName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -65,17 +62,17 @@ class StartAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            def appPool = getAppPool(appPoolName)
-            assert appPool.state == 'Started'
+        assert result.outcome == 'success'
+        def appPool = getAppPool(appPoolName)
+        assert appPool.state == 'Started'
         cleanup:
-            removeAppPool(appPoolName)
+        removeAppPool(appPoolName)
     }
 
 
     def "negative: start non-existing app pool"() {
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -85,7 +82,7 @@ class StartAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'error'
+        assert result.outcome == 'error'
     }
 
 }

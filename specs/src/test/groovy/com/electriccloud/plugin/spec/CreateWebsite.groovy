@@ -1,7 +1,8 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
+
+import spock.lang.Ignore
+import spock.lang.Unroll
 
 class CreateWebsite extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs CreateWebSite'
@@ -11,8 +12,8 @@ class CreateWebsite extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/CreateSite/CreateSite.dsl', [
-            projName: projectName,
-            resName: resName
+                projName: projectName,
+                resName : resName
         ]
         createHelperProject(resName)
     }
@@ -24,9 +25,9 @@ class CreateWebsite extends PluginTestHelper {
     @Unroll
     def "normal params siteName: #siteName, siteId: #siteId, sitePath: #sitePath , bindings: #bindings"() {
         given: 'the site is removed'
-            removeSite(siteName)
+        removeSite(siteName)
         when: 'procedure runs'
-            def result = runProcedureDsl("""
+        def result = runProcedureDsl("""
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create Site',
@@ -39,31 +40,31 @@ class CreateWebsite extends PluginTestHelper {
                 )
             """)
         then: 'procedure succeeds'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            assert result.logs =~ /SITE object "\Q$siteName\E" added/
-            assert result.logs =~ /APP object "\Q$siteName\E\/" added/
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        assert result.logs =~ /SITE object "\Q$siteName\E" added/
+        assert result.logs =~ /APP object "\Q$siteName\E\/" added/
 
-            def validPath = sitePath.replaceAll('/', "\\\\").replace('c', 'C')
-            def vdir = getVdir(siteName)
-            assert vdir.path == validPath
+        def validPath = sitePath.replaceAll('/', "\\\\").replace('c', 'C')
+        def vdir = getVdir(siteName)
+        assert vdir.path == validPath
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            siteName << ['mysite', 'Some Site()%$#&', 'Multiple Bindings']
-            siteId << ['', 56, '']
-            sitePath << ['c:/tmp/path', 'c:/tmp/somepath', 'c:/tmp/path']
-            bindings << ['http://*:80', 'http://localhost:9080', "http://*:9991,http://*:1112"]
+        siteName << ['mysite', 'Some Site()%$#&', 'Multiple Bindings']
+        siteId << ['', 56, '']
+        sitePath << ['c:/tmp/path', 'c:/tmp/somepath', 'c:/tmp/path']
+        bindings << ['http://*:80', 'http://localhost:9080', "http://*:9991,http://*:1112"]
     }
 
     @Unroll
     def "site already exists #siteName"() {
         given: 'a site'
-            def bindings = 'http://*:80'
-            def sitePath = 'c:/tmp/Test'
-            createSite(siteName)
+        def bindings = 'http://*:80'
+        def sitePath = 'c:/tmp/Test'
+        createSite(siteName)
         when: 'procedure runs'
-            def result = runProcedureDsl("""
+        def result = runProcedureDsl("""
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create Site',
@@ -75,28 +76,28 @@ class CreateWebsite extends PluginTestHelper {
                 )
             """)
         then: 'procedure succeeds'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            assert result.logs =~ /SITE object "\Q$siteName\E" changed/
-            def updatedSite = getSite(siteName)
-            logger.debug(objectToJson(updatedSite))
-            assert updatedSite.bindings =~ /8080/
-            def updatedVdir = getVdir(siteName)
-            assert updatedVdir.path =~ /newPath/
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        assert result.logs =~ /SITE object "\Q$siteName\E" changed/
+        def updatedSite = getSite(siteName)
+        logger.debug(objectToJson(updatedSite))
+        assert updatedSite.bindings =~ /8080/
+        def updatedVdir = getVdir(siteName)
+        assert updatedVdir.path =~ /newPath/
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            siteName << ['Test Site', '!@#$%^&*()']
+        siteName << ['Test Site', '!@#$%^&*()']
     }
 
     def "port & path already taken"() {
         given: 'a site'
-            def siteName = 'Test'
-            def bindings = 'http://*:80'
-            def sitePath = 'c:/tmp/test'
-            createSite(siteName, bindings, sitePath)
+        def siteName = 'Test'
+        def bindings = 'http://*:80'
+        def sitePath = 'c:/tmp/test'
+        createSite(siteName, bindings, sitePath)
         when: 'procedure runs'
-            def result = runProcedureDsl("""
+        def result = runProcedureDsl("""
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create Site',
@@ -108,17 +109,17 @@ class CreateWebsite extends PluginTestHelper {
                 )
             """)
         then: 'procedure succeeds'
-            assert result.outcome == 'success'
+        assert result.outcome == 'success'
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
     def "create site with id"() {
         given:
-            def siteName = 'MySite'
-            def siteId = 99
+        def siteName = 'MySite'
+        def siteId = 99
         when: 'procedure runs'
-             def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create Site',
@@ -131,17 +132,17 @@ class CreateWebsite extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            def site = getSite(siteName)
-            assert site.id == "${siteId}"
+        assert result.outcome == 'success'
+        def site = getSite(siteName)
+        assert site.id == "${siteId}"
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
 
     }
 
     def "negative: invalid bindings"() {
         when: 'procedure runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create Site',
@@ -153,19 +154,19 @@ class CreateWebsite extends PluginTestHelper {
                 )
             """
         then: 'it fails'
-            assert result.outcome == 'error'
+        assert result.outcome == 'error'
     }
 
     @Ignore
     def "negative: id already taken"() {
         given:
-            def siteId = 99
-            def siteName = 'TestSite'
-            def path = 'c:/tmp/test_site'
-            def bindings = 'http://*:80'
-            createSite(siteName, bindings, path, siteId)
+        def siteId = 99
+        def siteName = 'TestSite'
+        def path = 'c:/tmp/test_site'
+        def bindings = 'http://*:80'
+        createSite(siteName, bindings, path, siteId)
         when: 'procedure runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create Site',
@@ -178,20 +179,20 @@ class CreateWebsite extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'error'
+        assert result.outcome == 'error'
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
     @Unroll
     def "create directory #createDirectory, dir #dir"() {
         given: 'no site'
-            def siteName = randomize('site')
-            removeSite(siteName)
-            def port = 9912
-            def bindings = "http://*:$port"
+        def siteName = randomize('site')
+        removeSite(siteName)
+        def port = 9912
+        def bindings = "http://*:$port"
         when:
-            def result = runProcedureDsl("""
+        def result = runProcedureDsl("""
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create Site',
@@ -204,31 +205,30 @@ class CreateWebsite extends PluginTestHelper {
                 )
             """)
         then:
-            assert result.outcome == 'success'
-            def exists = dirExists(dir)
-            logger.debug(exists)
-            if (createDirectory == '1') {
-                assert exists =~ /Exists/
-            }
-            else {
-                assert exists =~ /Does not exist/
-            }
+        assert result.outcome == 'success'
+        def exists = dirExists(dir)
+        logger.debug(exists)
+        if (createDirectory == '1') {
+            assert exists =~ /Exists/
+        } else {
+            assert exists =~ /Does not exist/
+        }
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            createDirectory << ['1', '0']
-            dir << ["c:/tmp/site/" + randomize('site'), 'c:/tmp/dir1/' + randomize('dir') + '/dir2']
+        createDirectory << ['1', '0']
+        dir << ["c:/tmp/site/" + randomize('site'), 'c:/tmp/dir1/' + randomize('dir') + '/dir2']
     }
 
     @Unroll
     def "new site with credentials #userName"() {
         given: 'no site'
-            def siteName = randomize('site_with_creds')
-            removeSite(siteName)
-            def dir = 'c:/tmp/vdir'
-            def bindings = 'http://*:9999'
+        def siteName = randomize('site_with_creds')
+        removeSite(siteName)
+        def dir = 'c:/tmp/vdir'
+        def bindings = 'http://*:9999'
         when:
-            def result = runProcedureDsl("""
+        def result = runProcedureDsl("""
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create Site',
@@ -247,17 +247,17 @@ class CreateWebsite extends PluginTestHelper {
                 )
             """)
         then:
-            assert result.outcome == 'success'
-            def vdir = runAppCmdLogs("list vdir /vdir.name:$siteName/ /text:*")
-            logger.debug(vdir)
-            assert !(result.logs =~ /\Q$password/)
-            assert vdir =~ /$userName/
-            assert vdir =~ /"\Q$password"/
+        assert result.outcome == 'success'
+        def vdir = runAppCmdLogs("list vdir /vdir.name:$siteName/ /text:*")
+        logger.debug(vdir)
+        assert !(result.logs =~ /\Q$password/)
+        assert vdir =~ /$userName/
+        assert vdir =~ /"\Q$password"/
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            userName << ['build', 'test&!']
-            password << ['test', "test!*&#"]
+        userName << ['build', 'test&!']
+        password << ['test', "test!*&#"]
 
     }
 }

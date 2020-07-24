@@ -1,8 +1,5 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-
 class DeleteWebApplication extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs DeleteWebApplication'
     static def iisHandler
@@ -12,13 +9,13 @@ class DeleteWebApplication extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                appname: '',
-                strictMode: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        appname   : '',
+                        strictMode: ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -29,12 +26,12 @@ class DeleteWebApplication extends PluginTestHelper {
 
     def "delete existing app, strict: #strictMode"() {
         given:
-            def siteName = randomize('site')
-            def appName = 'app'
-            createSite(siteName)
-            createApp(siteName, appName)
+        def siteName = randomize('site')
+        def appName = 'app'
+        createSite(siteName)
+        createApp(siteName, appName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -45,17 +42,17 @@ class DeleteWebApplication extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            strictMode << ['1', '0']
+        strictMode << ['1', '0']
     }
 
     def "delete non-existing app, strict: #strictMode"() {
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -66,13 +63,12 @@ class DeleteWebApplication extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            if (strictMode == '1') {
-                assert result.outcome == 'error'
-            }
-            else {
-                assert result.outcome == 'warning'
-            }
+        if (strictMode == '1') {
+            assert result.outcome == 'error'
+        } else {
+            assert result.outcome == 'warning'
+        }
         where:
-            strictMode << ['1', '0']
+        strictMode << ['1', '0']
     }
 }

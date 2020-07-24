@@ -1,8 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-import groovy.json.JsonSlurper
+
+import spock.lang.Unroll
 
 class StopServer extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs StopServer'
@@ -13,13 +12,13 @@ class StopServer extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                additionalParams: '',
-                execpath: '',
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        additionalParams: '',
+                        execpath        : '',
+                ]
         ]
         createHelperProject(resName)
     }
@@ -32,9 +31,9 @@ class StopServer extends PluginTestHelper {
     @Unroll
     def "stop started server"() {
         given:
-            startServer()
+        startServer()
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -45,18 +44,18 @@ class StopServer extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            def status = serverStatus()
-            logger.debug(status)
-            assert status =~ /Stopped/
+        assert result.outcome == 'success'
+        def status = serverStatus()
+        logger.debug(status)
+        assert status =~ /Stopped/
     }
 
     @Unroll
     def "stop stopped server"() {
         given:
-            stopServer()
+        stopServer()
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -67,16 +66,16 @@ class StopServer extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
+        assert result.outcome == 'success'
 
     }
 
     @Unroll
     def "stop server, timeout"() {
         given:
-            stopServer()
+        stopServer()
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -87,13 +86,13 @@ class StopServer extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
+        assert result.outcome == 'success'
 
     }
 
     def "negative: wrong iisreset path"() {
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -104,7 +103,7 @@ class StopServer extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'error'
+        assert result.outcome == 'error'
     }
 
 }

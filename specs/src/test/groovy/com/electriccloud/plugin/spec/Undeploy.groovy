@@ -1,8 +1,5 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-
 class Undeploy extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs Undeploy'
     static def netDashUrl = 'https://github.com/electric-cloud/NetDash/archive/master.zip'
@@ -12,21 +9,21 @@ class Undeploy extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                applicationName: '',
-                websiteName: '',
-                deleteVirtualDirectories: '',
-                msdeployPath: 'msdeploy.exe',
-                strictMode: '',
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        applicationName         : '',
+                        websiteName             : '',
+                        deleteVirtualDirectories: '',
+                        msdeployPath            : 'msdeploy.exe',
+                        strictMode              : '',
+                ]
         ]
         createHelperProject(resName)
         dslFile 'dsl/downloadArtifact.dsl', [
-            projName: projectName,
-            resName: resName
+                projName: projectName,
+                resName : resName
         ]
 
     }
@@ -37,10 +34,10 @@ class Undeploy extends PluginTestHelper {
 
     def "undeploy site"() {
         given:
-            def siteName = randomize('SiteName')
-            createSite(siteName)
+        def siteName = randomize('SiteName')
+        createSite(siteName)
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -51,22 +48,22 @@ class Undeploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def site = getSite(siteName)
-            assert site
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def site = getSite(siteName)
+        assert site
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
     def "undeploy application"() {
         given:
-            def siteName = randomize('SiteName')
-            createSite(siteName)
-            def appName = 'app'
-            createApp(siteName, appName)
+        def siteName = randomize('SiteName')
+        createSite(siteName)
+        def appName = 'app'
+        createApp(siteName, appName)
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -78,22 +75,22 @@ class Undeploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def site = getSite(siteName)
-            assert site
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def site = getSite(siteName)
+        assert site
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
     def "undeploy application, delete virtual directories"() {
         given:
-            def siteName = randomize('SiteName')
-            createSite(siteName)
-            def appName = 'app'
-            createApp(siteName, appName)
+        def siteName = randomize('SiteName')
+        createSite(siteName)
+        def appName = 'app'
+        createApp(siteName, appName)
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -106,20 +103,20 @@ class Undeploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def site = getSite(siteName)
-            assert result.logs =~ /Deleting virtualDirectory/
-            assert site
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def site = getSite(siteName)
+        assert result.logs =~ /Deleting virtualDirectory/
+        assert site
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
     def "strict mode #strictMode"() {
         given:
-            def siteName = 'No Such Site'
+        def siteName = 'No Such Site'
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -131,22 +128,21 @@ class Undeploy extends PluginTestHelper {
                 )
             """
         then:
-            if (strictMode == '1') {
-                assert result.outcome == 'error'
-            }
-            else {
-                assert result.outcome == 'warning'
-            }
+        if (strictMode == '1') {
+            assert result.outcome == 'error'
+        } else {
+            assert result.outcome == 'warning'
+        }
         where:
-            strictMode << ['1', '0']
+        strictMode << ['1', '0']
     }
 
     def "strict mode #strictMode, website exists, application does not"() {
         given:
-            def siteName = randomize('siteName')
-            createSite(siteName)
+        def siteName = randomize('siteName')
+        createSite(siteName)
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -159,14 +155,13 @@ class Undeploy extends PluginTestHelper {
                 )
             """
         then:
-            if (strictMode == '1') {
-                assert result.outcome == 'error'
-            }
-            else {
-                assert result.outcome == 'warning'
-            }
+        if (strictMode == '1') {
+            assert result.outcome == 'error'
+        } else {
+            assert result.outcome == 'warning'
+        }
         where:
-            strictMode << ['1', '0']
+        strictMode << ['1', '0']
     }
 
     def uploadArtifact(url, artifactPath) {

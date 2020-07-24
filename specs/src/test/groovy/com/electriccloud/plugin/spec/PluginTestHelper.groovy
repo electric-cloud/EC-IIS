@@ -1,7 +1,6 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
+import com.electriccloud.spec.PluginSpockTestSupport
 
 class PluginTestHelper extends PluginSpockTestSupport {
 
@@ -381,7 +380,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     def createApp(siteName, appName, physicalPath = '') {
-        if(!physicalPath)
+        if (!physicalPath)
             physicalPath = 'c:/tmp/path'
 
         def app = "/path:" + '/"' + appName + '"'
@@ -428,9 +427,9 @@ class PluginTestHelper extends PluginSpockTestSupport {
         def bindings = group[0][2].split(',')
 
         def retval = [
-            id: group[0][1],
-            bindings: bindings,
-            state: group[0][3]
+                id      : group[0][1],
+                bindings: bindings,
+                state   : group[0][3]
         ]
 
         return retval
@@ -440,7 +439,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
     def getVdir(siteName, appName = '') {
         def vdirPath = siteName + '/'
         if (appName) {
-            vdirPath += appName+ '/'
+            vdirPath += appName + '/'
         }
         vdirPath = vdirPath.replaceAll(~/%/, '%%')
         def result = dsl """
@@ -461,7 +460,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
 
         def group = logs =~ /\(physicalPath:(.+)\)/
         def retval = [
-            path: group[0][1]
+                path: group[0][1]
         ]
 
         return retval
@@ -490,7 +489,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
         def logs = getJobProperty('/myJob/appCmdLog', result.jobId)
         def group = logs =~ /\(applicationPool:(.+)\)/
         def retval = [
-            applicationPool: group[0][1]
+                applicationPool: group[0][1]
         ]
 
         return retval
@@ -503,9 +502,9 @@ class PluginTestHelper extends PluginSpockTestSupport {
 
         def group = logs =~ /\(MgdVersion:(.+),MgdMode:(\w+),state:(\w+)\)/
         def retval = [
-            mgdVersion: group[0][1],
-            mgdMode: group[0][2],
-            state: group[0][3]
+                mgdVersion: group[0][1],
+                mgdMode   : group[0][2],
+                state     : group[0][3]
         ]
 
         if (all) {
@@ -551,8 +550,8 @@ class PluginTestHelper extends PluginSpockTestSupport {
             jobCompleted result.jobId
         }
 
-         def logs = getJobProperty('/myJob/cmdLog', result.jobId)
-         logs
+        def logs = getJobProperty('/myJob/cmdLog', result.jobId)
+        logs
     }
 
     def addBinding(name, binding) {

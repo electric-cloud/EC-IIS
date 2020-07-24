@@ -1,8 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-import groovy.json.JsonSlurper
+
+import spock.lang.Unroll
 
 class ResetServer extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs ResetServer'
@@ -13,13 +12,13 @@ class ResetServer extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                additionalParams: '',
-                execpath: '',
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        additionalParams: '',
+                        execpath        : '',
+                ]
         ]
         createHelperProject(resName)
     }
@@ -32,9 +31,9 @@ class ResetServer extends PluginTestHelper {
     @Unroll
     def "reset stopped server"() {
         given:
-            stopServer()
+        stopServer()
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -45,18 +44,18 @@ class ResetServer extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            def status = serverStatus()
-            assert status =~ /Status for World Wide Web Publishing Service \( W3SVC \) : Running/
+        assert result.outcome == 'success'
+        def status = serverStatus()
+        assert status =~ /Status for World Wide Web Publishing Service \( W3SVC \) : Running/
 
     }
 
     @Unroll
     def "reset started server"() {
         given:
-            startServer()
+        startServer()
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -67,18 +66,18 @@ class ResetServer extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            def status = serverStatus()
-            assert status =~ /Status for World Wide Web Publishing Service \( W3SVC \) : Running/
+        assert result.outcome == 'success'
+        def status = serverStatus()
+        assert status =~ /Status for World Wide Web Publishing Service \( W3SVC \) : Running/
 
     }
 
     @Unroll
     def "reset server, timeout"() {
         given:
-            stopServer()
+        stopServer()
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -89,7 +88,7 @@ class ResetServer extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
+        assert result.outcome == 'success'
 
     }
 

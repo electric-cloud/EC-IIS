@@ -1,7 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
+
+import spock.lang.Unroll
 
 class CreateWebApp extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs CreateWebApp'
@@ -11,8 +11,8 @@ class CreateWebApp extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/CreateApp/CreateApp.dsl', [
-            projName: projectName,
-            resName: resName
+                projName: projectName,
+                resName : resName
         ]
         createHelperProject(resName)
     }
@@ -24,10 +24,10 @@ class CreateWebApp extends PluginTestHelper {
     @Unroll
     def "normal params physicalPath #physicalPath, path #path"() {
         given: 'a site exists'
-            def siteName = 'MySite'
-            createSite(siteName)
+        def siteName = 'MySite'
+        createSite(siteName)
         when: 'procedure runs'
-            def result = runProcedureDsl("""
+        def result = runProcedureDsl("""
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create App',
@@ -39,26 +39,26 @@ class CreateWebApp extends PluginTestHelper {
                 )
             """)
         then: 'procedure succeeds'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            assert result.logs =~ /APP object "${siteName}\/${path}" added/
-            def app = getApp(siteName, path)
-            logger.debug(objectToJson(app))
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        assert result.logs =~ /APP object "${siteName}\/${path}" added/
+        def app = getApp(siteName, path)
+        logger.debug(objectToJson(app))
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            physicalPath << ['c:/tmp/myPath', 'c:/tmp/some path']
-            path << ['myApp', 'app/app2']
+        physicalPath << ['c:/tmp/myPath', 'c:/tmp/some path']
+        path << ['myApp', 'app/app2']
     }
 
     def "update application"() {
         given: 'a site and an app exist'
-            def siteName = 'MySite'
-            def appName = 'myapp'
-            createSite(siteName)
-            createApp(siteName, appName)
+        def siteName = 'MySite'
+        def appName = 'myapp'
+        createSite(siteName)
+        createApp(siteName, appName)
         when: 'procedure runs'
-            def result = runProcedureDsl("""
+        def result = runProcedureDsl("""
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create App',
@@ -70,19 +70,19 @@ class CreateWebApp extends PluginTestHelper {
                 )
             """)
         then: 'procedure succeeds'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            assert result.logs =~ /VDIR object "$siteName\/$appName\/" changed/
-            def vdir = getVdir(siteName, appName)
-            assert vdir.path == 'C:\\tmp\\myPath'
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        assert result.logs =~ /VDIR object "$siteName\/$appName\/" changed/
+        def vdir = getVdir(siteName, appName)
+        assert vdir.path == 'C:\\tmp\\myPath'
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
 
     def "negative: add app to non-existing site"() {
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create App',
@@ -94,19 +94,19 @@ class CreateWebApp extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'error'
-            logger.debug(result.logs)
-            assert result.logs =~ /message:Cannot find SITE object with identifier "SomeSite"/
+        assert result.outcome == 'error'
+        logger.debug(result.logs)
+        assert result.logs =~ /message:Cannot find SITE object with identifier "SomeSite"/
     }
 
     def "Create directory"() {
         given: 'a site exists'
-            def siteName = 'MySite'
-            createSite(siteName)
-            def path = randomize('app')
-            def physicalPath = "c:/tmp/$path"
+        def siteName = 'MySite'
+        createSite(siteName)
+        def path = randomize('app')
+        def physicalPath = "c:/tmp/$path"
         when: 'procedure runs'
-            def result = runProcedureDsl("""
+        def result = runProcedureDsl("""
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create App',
@@ -119,30 +119,29 @@ class CreateWebApp extends PluginTestHelper {
                 )
             """)
         then: 'procedure succeeds'
-            assert result.outcome == 'success'
-            def exists = dirExists(physicalPath)
-            if (createDirectory == '1') {
-                assert exists =~ /Exists/
-            }
-            else {
-                assert exists =~ /Does not exist/
-            }
+        assert result.outcome == 'success'
+        def exists = dirExists(physicalPath)
+        if (createDirectory == '1') {
+            assert exists =~ /Exists/
+        } else {
+            assert exists =~ /Does not exist/
+        }
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            createDirectory << ['1', '0']
+        createDirectory << ['1', '0']
 
     }
 
     @Unroll
     def "Credentials #userName, #password"() {
         given: 'a site exists'
-            def siteName = 'MySite'
-            createSite(siteName)
-            def path = randomize('app')
-            def physicalPath = "c:/tmp/$path"
+        def siteName = 'MySite'
+        createSite(siteName)
+        def path = randomize('app')
+        def physicalPath = "c:/tmp/$path"
         when: 'procedure runs'
-            def result = runProcedureDsl("""
+        def result = runProcedureDsl("""
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: 'Create App',
@@ -161,13 +160,13 @@ class CreateWebApp extends PluginTestHelper {
                 )
             """)
         then: 'procedure succeeds'
-            assert result.outcome == 'success'
-            assert !(result.logs =~ /\Q$password/)
+        assert result.outcome == 'success'
+        assert !(result.logs =~ /\Q$password/)
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            userName << ['test', 'test']
-            password << ['test', "71#&^&^%!#"]
+        userName << ['test', 'test']
+        password << ['test', "71#&^&^%!#"]
 
     }
 

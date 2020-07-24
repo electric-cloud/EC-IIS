@@ -1,8 +1,5 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-
 class RecycleAppPool extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs RecycleAppPool'
     static def iisHandler
@@ -12,12 +9,12 @@ class RecycleAppPool extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                applicationPool: '',
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        applicationPool: '',
+                ]
         ]
         createHelperProject(resName)
     }
@@ -28,10 +25,10 @@ class RecycleAppPool extends PluginTestHelper {
 
     def "recycle app pool"() {
         given:
-            def appPoolName = randomize('appPool')
-            createAppPool(appPoolName)
+        def appPoolName = randomize('appPool')
+        createAppPool(appPoolName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -41,14 +38,14 @@ class RecycleAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
+        assert result.outcome == 'success'
         cleanup:
-            removeAppPool(appPoolName)
+        removeAppPool(appPoolName)
     }
 
     def "recycle non-existing app pool"() {
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -58,7 +55,7 @@ class RecycleAppPool extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'error'
+        assert result.outcome == 'error'
 
     }
 }

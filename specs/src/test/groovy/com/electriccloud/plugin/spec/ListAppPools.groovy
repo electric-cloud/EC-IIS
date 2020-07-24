@@ -1,8 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
 import groovy.json.JsonSlurper
+import spock.lang.Unroll
 
 class ListAppPools extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs ListAppPools'
@@ -13,15 +12,15 @@ class ListAppPools extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                searchcriteria: '',
-                propertyName: '',
-                dumpFormat: '',
-                failOnEmpty: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        searchcriteria: '',
+                        propertyName  : '',
+                        dumpFormat    : '',
+                        failOnEmpty   : ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -33,10 +32,10 @@ class ListAppPools extends PluginTestHelper {
     @Unroll
     def "show one app pool, property #propertyName, dump format #dumpFormat"() {
         given:
-            def appPoolName = randomize('appPool')
-            createAppPool(appPoolName)
+        def appPoolName = randomize('appPool')
+        createAppPool(appPoolName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -48,41 +47,41 @@ class ListAppPools extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
 
-            def resultProperty = propertyName ? propertyName : '/myJob/IISSiteList'
-            switch(dumpFormat) {
-                case '' :
-                    validateResultPlaintext(result.jobId, resultProperty, appPoolName)
-                    break
-                case 'propertySheet':
-                    validateResultPropertySheet(result.jobId, resultProperty, appPoolName)
-                    break
-                case 'json':
-                    validateResultJson(result.jobId, resultProperty, appPoolName)
-                    break
-                case 'xml':
-                    validateResultXML(result.jobId, resultProperty, appPoolName)
-                    break
-                default:
-                    throw new RuntimeException("Don't know how to validate $dumpFormat")
-            }
+        def resultProperty = propertyName ? propertyName : '/myJob/IISSiteList'
+        switch (dumpFormat) {
+            case '':
+                validateResultPlaintext(result.jobId, resultProperty, appPoolName)
+                break
+            case 'propertySheet':
+                validateResultPropertySheet(result.jobId, resultProperty, appPoolName)
+                break
+            case 'json':
+                validateResultJson(result.jobId, resultProperty, appPoolName)
+                break
+            case 'xml':
+                validateResultXML(result.jobId, resultProperty, appPoolName)
+                break
+            default:
+                throw new RuntimeException("Don't know how to validate $dumpFormat")
+        }
         cleanup:
-            removeAppPool(appPoolName)
+        removeAppPool(appPoolName)
         where:
-            dumpFormat << ['', 'propertySheet', 'json', 'xml']
-            propertyName = dumpFormat ? '/myJob/result' : ''
+        dumpFormat << ['', 'propertySheet', 'json', 'xml']
+        propertyName = dumpFormat ? '/myJob/result' : ''
     }
 
     @Unroll
     def "Show multiple pools #criteria"() {
         given:
-            (1..3).each {
-                createAppPool("Pool ${it}")
-            }
+        (1..3).each {
+            createAppPool("Pool ${it}")
+        }
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -93,25 +92,25 @@ class ListAppPools extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.log)
-            def saved = getJobProperty('/myJob/result', result.jobId)
-            logger.debug(saved)
-            (1..3).each {
-                assert saved =~ /APPPOOL \"Pool ${it}\" \(MgdVersion:v(4.0|2.0),MgdMode:Integrated,state:Started\)/
-            }
+        assert result.outcome == 'success'
+        logger.debug(result.log)
+        def saved = getJobProperty('/myJob/result', result.jobId)
+        logger.debug(saved)
+        (1..3).each {
+            assert saved =~ /APPPOOL \"Pool ${it}\" \(MgdVersion:v(4.0|2.0),MgdMode:Integrated,state:Started\)/
+        }
         cleanup:
-            (1..3).each {
-                removeAppPool("Pool ${it}")
-            }
+        (1..3).each {
+            removeAppPool("Pool ${it}")
+        }
         where:
-            criteria << ['', '/autoStart:true']
+        criteria << ['', '/autoStart:true']
     }
 
     @Unroll
     def "Empty list #failOnEmpty"() {
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -123,14 +122,13 @@ class ListAppPools extends PluginTestHelper {
                 )
             """
         then:
-            if (failOnEmpty == '1') {
-                assert result.outcome == 'error'
-            }
-            else {
-                assert result.outcome == 'warning'
-            }
+        if (failOnEmpty == '1') {
+            assert result.outcome == 'error'
+        } else {
+            assert result.outcome == 'warning'
+        }
         where:
-            failOnEmpty << ['1', '0']
+        failOnEmpty << ['1', '0']
     }
 
     def validateResultPlaintext(jobId, propertyName, appPoolName) {

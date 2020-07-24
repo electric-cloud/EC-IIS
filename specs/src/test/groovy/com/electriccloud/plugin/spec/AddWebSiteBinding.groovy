@@ -1,8 +1,5 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-
 class AddWebSiteBinding extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs AddWebSiteBinding'
     static def iisHandler
@@ -12,15 +9,15 @@ class AddWebSiteBinding extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                bindingInformation: '',
-                bindingProtocol: '',
-                websitename: '',
-                hostHeader: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        bindingInformation: '',
+                        bindingProtocol   : '',
+                        websitename       : '',
+                        hostHeader        : ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -31,10 +28,10 @@ class AddWebSiteBinding extends PluginTestHelper {
 
     def "normal binding"() {
         given: 'a site exists'
-            def siteName = randomize('mysite')
-            createSite(siteName, 'http://*:9999')
+        def siteName = randomize('mysite')
+        createSite(siteName, 'http://*:9999')
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -46,23 +43,23 @@ class AddWebSiteBinding extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def site = getSite(siteName)
-            logger.debug(objectToJson(site))
-            assert site.bindings == ['http/*:9999:', 'http/*:9991:']
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def site = getSite(siteName)
+        logger.debug(objectToJson(site))
+        assert site.bindings == ['http/*:9999:', 'http/*:9991:']
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
 
     def "duplicate binding"() {
         given: 'a site exists'
-            def siteName = randomize('mysite')
-            def port = '9999'
-            createSite(siteName, "http://*:${port}")
+        def siteName = randomize('mysite')
+        def port = '9999'
+        createSite(siteName, "http://*:${port}")
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -74,23 +71,23 @@ class AddWebSiteBinding extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def site = getSite(siteName)
-            logger.debug(objectToJson(site))
-            assert site.bindings == ['http/*:9999:']
-            assert result.logs =~ /already exists/
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def site = getSite(siteName)
+        logger.debug(objectToJson(site))
+        assert site.bindings == ['http/*:9999:']
+        assert result.logs =~ /already exists/
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
     def "duplicate binding with host header"() {
         given: 'a site exists'
-            def siteName = randomize('mysite')
-            def port = '9999'
-            createSite(siteName, "http://*:${port}")
+        def siteName = randomize('mysite')
+        def port = '9999'
+        createSite(siteName, "http://*:${port}")
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -103,22 +100,22 @@ class AddWebSiteBinding extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def site = getSite(siteName)
-            logger.debug(objectToJson(site))
-            assert site.bindings == ['http/*:9999:', 'http/*:9999:mysite.com']
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def site = getSite(siteName)
+        logger.debug(objectToJson(site))
+        assert site.bindings == ['http/*:9999:', 'http/*:9999:mysite.com']
 
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
     def "different protocols two bindings"() {
         given: 'a site exists'
-            def siteName = randomize('mysite')
-            createSite(siteName, 'http://*:9999')
+        def siteName = randomize('mysite')
+        createSite(siteName, 'http://*:9999')
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -130,27 +127,27 @@ class AddWebSiteBinding extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def site = getSite(siteName)
-            logger.debug(objectToJson(site))
-            assert site.bindings == [
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def site = getSite(siteName)
+        logger.debug(objectToJson(site))
+        assert site.bindings == [
                 'http/*:9999:',
                 'https/*:443:'
-            ]
+        ]
 
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
 
     }
 
     def "add bindings with host header"() {
         given: 'a site exists'
-            def siteName = randomize('mysite')
-            createSite(siteName, 'http://*:9999')
-            def hostHeader = 'myhost.com'
+        def siteName = randomize('mysite')
+        createSite(siteName, 'http://*:9999')
+        def hostHeader = 'myhost.com'
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -163,20 +160,20 @@ class AddWebSiteBinding extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def site = getSite(siteName)
-            logger.debug(objectToJson(site))
-            assert "http/*:9911:$hostHeader".toString() in site.bindings
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def site = getSite(siteName)
+        logger.debug(objectToJson(site))
+        assert "http/*:9911:$hostHeader".toString() in site.bindings
 
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
 
     }
 
     def "negative: add binding to non-existing site"() {
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -188,8 +185,8 @@ class AddWebSiteBinding extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'error'
-            assert result.logs =~ /The site "SomeSite" does not exist/
+        assert result.outcome == 'error'
+        assert result.logs =~ /The site "SomeSite" does not exist/
     }
 
 }

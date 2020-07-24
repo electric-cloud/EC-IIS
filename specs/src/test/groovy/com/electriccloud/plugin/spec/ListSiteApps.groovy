@@ -1,8 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
 import groovy.json.JsonSlurper
+import spock.lang.Unroll
 
 class ListSiteApps extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs ListSiteApps'
@@ -13,15 +12,15 @@ class ListSiteApps extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                sitename: '',
-                propertyName: '',
-                dumpFormat: '',
-                failOnEmpty: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        sitename    : '',
+                        propertyName: '',
+                        dumpFormat  : '',
+                        failOnEmpty : ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -33,12 +32,12 @@ class ListSiteApps extends PluginTestHelper {
     @Unroll
     def "show one app, property #propertyName, dump format #dumpFormat"() {
         given:
-            def siteName = randomize('site')
-            createSite(siteName)
-            def appName = 'app'
-            createApp(siteName, appName)
+        def siteName = randomize('site')
+        createSite(siteName)
+        def appName = 'app'
+        createApp(siteName, appName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -50,42 +49,42 @@ class ListSiteApps extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
 
-            def resultProperty = propertyName ? propertyName : '/myJob/IISApps'
-            switch(dumpFormat) {
-                case '' :
-                    validateResultPlaintext(result.jobId, resultProperty, siteName, appName)
-                    break
-                case 'propertySheet':
-                    validateResultPropertySheet(result.jobId, resultProperty, siteName, appName)
-                    break
-                case 'json':
-                    validateResultJson(result.jobId, resultProperty, siteName, appName)
-                    break
-                case 'xml':
-                    validateResultXML(result.jobId, resultProperty, appName)
-                    break
-                default:
-                    throw new RuntimeException("Don't know how to validate $dumpFormat")
-            }
+        def resultProperty = propertyName ? propertyName : '/myJob/IISApps'
+        switch (dumpFormat) {
+            case '':
+                validateResultPlaintext(result.jobId, resultProperty, siteName, appName)
+                break
+            case 'propertySheet':
+                validateResultPropertySheet(result.jobId, resultProperty, siteName, appName)
+                break
+            case 'json':
+                validateResultJson(result.jobId, resultProperty, siteName, appName)
+                break
+            case 'xml':
+                validateResultXML(result.jobId, resultProperty, appName)
+                break
+            default:
+                throw new RuntimeException("Don't know how to validate $dumpFormat")
+        }
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            dumpFormat << ['', 'propertySheet', 'json', 'xml']
-            propertyName = dumpFormat ? '/myJob/result' : ''
+        dumpFormat << ['', 'propertySheet', 'json', 'xml']
+        propertyName = dumpFormat ? '/myJob/result' : ''
     }
 
     def "Show multiple apps"() {
         given:
-            def siteName = randomize('site')
-            createSite(siteName)
-            (1..3).each {
-                createApp(siteName, "App ${it}")
-            }
+        def siteName = randomize('site')
+        createSite(siteName)
+        (1..3).each {
+            createApp(siteName, "App ${it}")
+        }
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -96,21 +95,21 @@ class ListSiteApps extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.log)
-            def saved = getJobProperty('/myJob/result', result.jobId)
-            logger.debug(saved)
-            (1..3).each {
-                assert saved =~ /APP \"$siteName\/App ${it}\"/
-            }
+        assert result.outcome == 'success'
+        logger.debug(result.log)
+        def saved = getJobProperty('/myJob/result', result.jobId)
+        logger.debug(saved)
+        (1..3).each {
+            assert saved =~ /APP \"$siteName\/App ${it}\"/
+        }
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
     @Unroll
     def "No apps #failOnEmpty"() {
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -122,14 +121,13 @@ class ListSiteApps extends PluginTestHelper {
                 )
             """
         then:
-            if (failOnEmpty == '1') {
-                assert result.outcome == 'error'
-            }
-            else {
-                assert result.outcome == 'warning'
-            }
+        if (failOnEmpty == '1') {
+            assert result.outcome == 'error'
+        } else {
+            assert result.outcome == 'warning'
+        }
         where:
-            failOnEmpty << ['1', '0']
+        failOnEmpty << ['1', '0']
     }
 
 

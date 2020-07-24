@@ -1,7 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
+
+import spock.lang.Unroll
 
 class Deploy extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs Deploy'
@@ -12,28 +12,28 @@ class Deploy extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                applicationPath: '',
-                applicationPool: '',
-                appPoolAdditionalSettings: '',
-                autoStart: '',
-                enable32BitAppOnWin64: '',
-                managedPipelineMode: '',
-                managedRuntimeVersion: '',
-                msdeployPath: 'msdeploy.exe',
-                queueLength: '',
-                source: '',
-                websiteName: '',
-                additionalOptions: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        applicationPath          : '',
+                        applicationPool          : '',
+                        appPoolAdditionalSettings: '',
+                        autoStart                : '',
+                        enable32BitAppOnWin64    : '',
+                        managedPipelineMode      : '',
+                        managedRuntimeVersion    : '',
+                        msdeployPath             : 'msdeploy.exe',
+                        queueLength              : '',
+                        source                   : '',
+                        websiteName              : '',
+                        additionalOptions        : ''
+                ]
         ]
         createHelperProject(resName)
         dslFile 'dsl/downloadArtifact.dsl', [
-            projName: projectName,
-            resName: resName
+                projName: projectName,
+                resName : resName
         ]
 
     }
@@ -46,14 +46,14 @@ class Deploy extends PluginTestHelper {
     // C259515
     def "deploy application into root app"() {
         given: "application is downloaded to the machine"
-            createDir('c:/tmp')
-            uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
-            def siteName = randomize('NetDash')
-            def sitePath = "c:/tmp/site_${siteName}"
-            createDir(sitePath)
-            createSite(siteName, 'http://*:8888', sitePath)
+        createDir('c:/tmp')
+        uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
+        def siteName = randomize('NetDash')
+        def sitePath = "c:/tmp/site_${siteName}"
+        createDir(sitePath)
+        createSite(siteName, 'http://*:8888', sitePath)
         when: 'the deploy runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -66,24 +66,24 @@ class Deploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
 
     // C259516
     def "deploy application into app"() {
         given: "application is downloaded to the machine"
-            createDir('c:/tmp')
-            uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
-            def siteName = randomize('NetDash')
-            def sitePath = "c:/site_${siteName}"
-            createDir(sitePath)
-            createSite(siteName, 'http://*:8888', sitePath)
+        createDir('c:/tmp')
+        uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
+        def siteName = randomize('NetDash')
+        def sitePath = "c:/site_${siteName}"
+        createDir(sitePath)
+        createSite(siteName, 'http://*:8888', sitePath)
         when: 'the deploy runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -96,29 +96,29 @@ class Deploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def app = getApp(siteName, 'NetDash')
-            logger.debug(objectToJson(app))
-            assert app
-            assert app.applicationPool == 'DefaultAppPool'
-            // TODO build and check url
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def app = getApp(siteName, 'NetDash')
+        logger.debug(objectToJson(app))
+        assert app
+        assert app.applicationPool == 'DefaultAppPool'
+        // TODO build and check url
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
     }
 
 
     // C259517
     def "deploy application into non-default app pool"() {
         given: "application is downloaded to the machine"
-            createDir('c:/tmp')
-            uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
-            def siteName = randomize('NetDash')
-            def sitePath = "c:/site_${siteName}"
-            createDir(sitePath)
-            createSite(siteName, 'http://*:8888', sitePath)
+        createDir('c:/tmp')
+        uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
+        def siteName = randomize('NetDash')
+        def sitePath = "c:/site_${siteName}"
+        createDir(sitePath)
+        createSite(siteName, 'http://*:8888', sitePath)
         when: 'the deploy runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -132,16 +132,16 @@ class Deploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def app = getApp(siteName, 'NetDash')
-            logger.debug(objectToJson(app))
-            assert app
-            assert app.applicationPool == 'NetDashPool'
-            // TODO build and check url
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def app = getApp(siteName, 'NetDash')
+        logger.debug(objectToJson(app))
+        assert app
+        assert app.applicationPool == 'NetDashPool'
+        // TODO build and check url
         cleanup:
-            removeSite(siteName)
-            removeAppPool('NetDashPool')
+        removeSite(siteName)
+        removeAppPool('NetDashPool')
     }
 
 
@@ -149,15 +149,15 @@ class Deploy extends PluginTestHelper {
     @Unroll
     def "deploy application #appName and change app pool settings"() {
         given: "application is downloaded to the machine"
-            createDir('c:/tmp')
-            uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
-            def siteName = randomize('NetDash')
-            def sitePath = "c:/site_${siteName}"
-            createDir(sitePath)
-            createSite(siteName, 'http://*:8888', sitePath)
-            def appPoolName = randomize('NetDashPool')
+        createDir('c:/tmp')
+        uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
+        def siteName = randomize('NetDash')
+        def sitePath = "c:/site_${siteName}"
+        createDir(sitePath)
+        createSite(siteName, 'http://*:8888', sitePath)
+        def appPoolName = randomize('NetDashPool')
         when: 'the deploy runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -177,44 +177,44 @@ class Deploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def app = getApp(siteName, appName)
-            logger.debug(objectToJson(app))
-            assert app
-            assert app.applicationPool == appPoolName
-            def appPool = getAppPool(appPoolName, true)
-            logger.debug(objectToJson(appPool))
-            // TODO build and check url
-            assert appPool.mgdVersion == 'v2.0'
-            assert appPool.mgdMode == 'Classic'
-            logger.debug(appPool.details)
-            assert appPool.details =~ /autoStart:"false"/
-            assert appPool.details =~ /enable32BitAppOnWin64:"true"/
-            assert appPool.details =~ /queueLength:"10"/
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def app = getApp(siteName, appName)
+        logger.debug(objectToJson(app))
+        assert app
+        assert app.applicationPool == appPoolName
+        def appPool = getAppPool(appPoolName, true)
+        logger.debug(objectToJson(appPool))
+        // TODO build and check url
+        assert appPool.mgdVersion == 'v2.0'
+        assert appPool.mgdMode == 'Classic'
+        logger.debug(appPool.details)
+        assert appPool.details =~ /autoStart:"false"/
+        assert appPool.details =~ /enable32BitAppOnWin64:"true"/
+        assert appPool.details =~ /queueLength:"10"/
 
         cleanup:
-            removeSite(siteName)
-            removeAppPool(appPoolName)
+        removeSite(siteName)
+        removeAppPool(appPoolName)
         where:
-            appName << ['', 'NetDash', '/myApp']
+        appName << ['', 'NetDash', '/myApp']
     }
 
 
     // C259519
     def "deploy application and change settings of existing app pool"() {
         given: "application is downloaded to the machine"
-            createDir('c:/tmp')
-            uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
-            def siteName = randomize('NetDash')
-            def sitePath = "c:/site_${siteName}"
-            createDir(sitePath)
-            createSite(siteName, 'http://*:8888', sitePath)
-            def appPoolName = randomize('NetDashPool')
-            createAppPool(appPoolName)
-            def appName = 'NetDash'
+        createDir('c:/tmp')
+        uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
+        def siteName = randomize('NetDash')
+        def sitePath = "c:/site_${siteName}"
+        createDir(sitePath)
+        createSite(siteName, 'http://*:8888', sitePath)
+        def appPoolName = randomize('NetDashPool')
+        createAppPool(appPoolName)
+        def appName = 'NetDash'
         when: 'the deploy runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -233,41 +233,41 @@ class Deploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def app = getApp(siteName, appName)
-            logger.debug(objectToJson(app))
-            assert app
-            assert app.applicationPool == appPoolName
-            def appPool = getAppPool(appPoolName, true)
-            logger.debug(objectToJson(appPool))
-            // TODO build and check url
-            assert appPool.mgdVersion == 'v2.0'
-            assert appPool.mgdMode == 'Classic'
-            logger.debug(appPool.details)
-            assert appPool.details =~ /autoStart:"false"/
-            assert appPool.details =~ /enable32BitAppOnWin64:"true"/
-            assert appPool.details =~ /queueLength:"10"/
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def app = getApp(siteName, appName)
+        logger.debug(objectToJson(app))
+        assert app
+        assert app.applicationPool == appPoolName
+        def appPool = getAppPool(appPoolName, true)
+        logger.debug(objectToJson(appPool))
+        // TODO build and check url
+        assert appPool.mgdVersion == 'v2.0'
+        assert appPool.mgdMode == 'Classic'
+        logger.debug(appPool.details)
+        assert appPool.details =~ /autoStart:"false"/
+        assert appPool.details =~ /enable32BitAppOnWin64:"true"/
+        assert appPool.details =~ /queueLength:"10"/
         cleanup:
-            removeSite(siteName)
-            removeAppPool(appPoolName)
+        removeSite(siteName)
+        removeAppPool(appPoolName)
     }
 
 
     // C259519
     def "provide additional options"() {
         given: "application is downloaded to the machine"
-            createDir('c:/tmp')
-            uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
-            def siteName = randomize('NetDash')
-            def sitePath = "c:/site_${siteName}"
-            createDir(sitePath)
-            createSite(siteName, 'http://*:8888', sitePath)
-            def appPoolName = randomize('NetDashPool')
-            createAppPool(appPoolName)
-            def appName = 'NetDash'
+        createDir('c:/tmp')
+        uploadArtifact(netDashUrl, 'c:/tmp/NetDash.zip')
+        def siteName = randomize('NetDash')
+        def sitePath = "c:/site_${siteName}"
+        createDir(sitePath)
+        createSite(siteName, 'http://*:8888', sitePath)
+        def appPoolName = randomize('NetDashPool')
+        createAppPool(appPoolName)
+        def appName = 'NetDash'
         when: 'the deploy runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -287,24 +287,24 @@ class Deploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            assert result.logs =~ /-enableRule:AppOffline/
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        assert result.logs =~ /-enableRule:AppOffline/
         cleanup:
-            removeSite(siteName)
-            removeAppPool(appPoolName)
+        removeSite(siteName)
+        removeAppPool(appPoolName)
     }
 
     // C259520
     def "negative: deploy non-existing dir"() {
         given:
-            def siteName = randomize('NetDash')
-            def sitePath = "c:/site_${siteName}"
-            createDir(sitePath)
-            createSite(siteName, 'http://*:8888', sitePath)
-            def appPoolName = randomize('NetDashPool')
+        def siteName = randomize('NetDash')
+        def sitePath = "c:/site_${siteName}"
+        createDir(sitePath)
+        createSite(siteName, 'http://*:8888', sitePath)
+        def appPoolName = randomize('NetDashPool')
         when: 'the deploy runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -319,13 +319,13 @@ class Deploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'error'
-            logger.debug(result.logs)
-            assert result.logs =~ /Error/
+        assert result.outcome == 'error'
+        logger.debug(result.logs)
+        assert result.logs =~ /Error/
 
         cleanup:
-            removeSite(siteName)
-            removeAppPool(appPoolName)
+        removeSite(siteName)
+        removeAppPool(appPoolName)
 
     }
 
@@ -333,9 +333,9 @@ class Deploy extends PluginTestHelper {
     // C259521
     def "negative: deploy non-existing site"() {
         given:
-            def siteName = randomize('NetDash')
+        def siteName = randomize('NetDash')
         when: 'the deploy runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -350,18 +350,18 @@ class Deploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'error'
-            logger.debug(result.logs)
-            assert result.logs =~ /Error/
+        assert result.outcome == 'error'
+        logger.debug(result.logs)
+        assert result.logs =~ /Error/
 
     }
 
     // C259522
     def "negative: wrong path to msdeploy"() {
         given:
-            def siteName = randomize('NetDash')
+        def siteName = randomize('NetDash')
         when: 'the deploy runs'
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -376,12 +376,11 @@ class Deploy extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'error'
-            logger.debug(result.logs)
-            assert result.logs =~ /"wrong"' is not recognized as an internal or external command/
+        assert result.outcome == 'error'
+        logger.debug(result.logs)
+        assert result.logs =~ /"wrong"' is not recognized as an internal or external command/
 
     }
-
 
 
     def uploadArtifact(url, artifactPath) {

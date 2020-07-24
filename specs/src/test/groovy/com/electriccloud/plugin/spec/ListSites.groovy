@@ -1,8 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
 import groovy.json.JsonSlurper
+import spock.lang.Unroll
 
 class ListSites extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs ListSites'
@@ -13,15 +12,15 @@ class ListSites extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                searchcriteria: '',
-                propertyName: '',
-                dumpFormat: '',
-                failOnEmpty: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        searchcriteria: '',
+                        propertyName  : '',
+                        dumpFormat    : '',
+                        failOnEmpty   : ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -33,10 +32,10 @@ class ListSites extends PluginTestHelper {
     @Unroll
     def "show one site, property #propertyName, dump format #dumpFormat"() {
         given:
-            def siteName = randomize('site')
-            createSite(siteName)
+        def siteName = randomize('site')
+        createSite(siteName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -48,42 +47,42 @@ class ListSites extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
-            def properties = getJobProperties(result.jobId)
-            logger.debug(objectToJson(properties))
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
+        def properties = getJobProperties(result.jobId)
+        logger.debug(objectToJson(properties))
 
-            def resultProperty = propertyName ? propertyName : '/myJob/IISSiteList'
-            switch(dumpFormat) {
-                case '' :
-                    validateResultPlaintext(result.jobId, resultProperty, siteName)
-                    break
-                case 'propertySheet':
-                    validateResultPropertySheet(result.jobId, resultProperty, siteName)
-                    break
-                case 'json':
-                    validateResultJson(result.jobId, resultProperty, siteName)
-                    break
-                case 'xml':
-                    validateResultXML(result.jobId, resultProperty, siteName)
-                    break
-                default:
-                    throw new RuntimeException("Don't know how to validate $dumpFormat")
-            }
+        def resultProperty = propertyName ? propertyName : '/myJob/IISSiteList'
+        switch (dumpFormat) {
+            case '':
+                validateResultPlaintext(result.jobId, resultProperty, siteName)
+                break
+            case 'propertySheet':
+                validateResultPropertySheet(result.jobId, resultProperty, siteName)
+                break
+            case 'json':
+                validateResultJson(result.jobId, resultProperty, siteName)
+                break
+            case 'xml':
+                validateResultXML(result.jobId, resultProperty, siteName)
+                break
+            default:
+                throw new RuntimeException("Don't know how to validate $dumpFormat")
+        }
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            dumpFormat << ['', 'propertySheet', 'json', 'xml']
-            propertyName = dumpFormat ? '/myJob/result' : ''
+        dumpFormat << ['', 'propertySheet', 'json', 'xml']
+        propertyName = dumpFormat ? '/myJob/result' : ''
     }
 
     def "check site with multiple bindings"() {
         given:
-            def siteName = randomize('site')
-            createSite(siteName)
-            addBinding(siteName, '*:111122')
+        def siteName = randomize('site')
+        createSite(siteName)
+        addBinding(siteName, '*:111122')
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -95,23 +94,23 @@ class ListSites extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            def json = getJobProperty('/myJob/result', result.jobId)
-            logger.debug(json)
+        assert result.outcome == 'success'
+        def json = getJobProperty('/myJob/result', result.jobId)
+        logger.debug(json)
 
-            def jsonSlurper = new JsonSlurper()
-            def object = jsonSlurper.parseText(json)
-            assert object[siteName].bindings.size() == 2
+        def jsonSlurper = new JsonSlurper()
+        def object = jsonSlurper.parseText(json)
+        assert object[siteName].bindings.size() == 2
 
     }
 
     def "Show multiple sites"() {
         given:
-            (1..3).each {
-                createSite("Site ${it}")
-            }
+        (1..3).each {
+            createSite("Site ${it}")
+        }
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -122,25 +121,25 @@ class ListSites extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            logger.debug(result.log)
-            def saved = getJobProperty('/myJob/result', result.jobId)
-            logger.debug(saved)
-            (1..3).each {
-                assert saved =~ /SITE \"Site ${it}\"/
-            }
+        assert result.outcome == 'success'
+        logger.debug(result.log)
+        def saved = getJobProperty('/myJob/result', result.jobId)
+        logger.debug(saved)
+        (1..3).each {
+            assert saved =~ /SITE \"Site ${it}\"/
+        }
         cleanup:
-            (1..3).each {
-                removeSite("Site ${it}")
-            }
+        (1..3).each {
+            removeSite("Site ${it}")
+        }
         where:
-            criteria << ['', '/serverAutoStart:true']
+        criteria << ['', '/serverAutoStart:true']
     }
 
     @Unroll
     def "No sites #failOnEmpty"() {
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -153,17 +152,16 @@ class ListSites extends PluginTestHelper {
             """
 
         then:
-            if (failOnEmpty == '1') {
-                assert result.outcome == 'error'
-            }
-            else {
-                assert result.outcome == 'warning'
-                assert result.logs =~ /No sites found/
-            }
+        if (failOnEmpty == '1') {
+            assert result.outcome == 'error'
+        } else {
+            assert result.outcome == 'warning'
+            assert result.logs =~ /No sites found/
+        }
 
-            logger.debug(result.logs)
+        logger.debug(result.logs)
         where:
-            failOnEmpty << ['1', '0']
+        failOnEmpty << ['1', '0']
     }
 
 

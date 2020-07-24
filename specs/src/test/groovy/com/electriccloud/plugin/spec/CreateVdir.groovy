@@ -1,7 +1,7 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
+
+import spock.lang.Unroll
 
 class CreateVirtualDirectory extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs CreateVirtualDirectory'
@@ -12,16 +12,16 @@ class CreateVirtualDirectory extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                appname: '',
-                path: '',
-                physicalpath: '',
-                createDirectory: '',
-                credential: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        appname        : '',
+                        path           : '',
+                        physicalpath   : '',
+                        createDirectory: '',
+                        credential     : ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -33,10 +33,10 @@ class CreateVirtualDirectory extends PluginTestHelper {
     @Unroll
     def "create vdir #appName"() {
         given:
-            def siteName = randomize('site')
-            createSite(siteName)
+        def siteName = randomize('site')
+        createSite(siteName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -48,22 +48,22 @@ class CreateVirtualDirectory extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
+        assert result.outcome == 'success'
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            appName << ['app', 'my app']
+        appName << ['app', 'my app']
     }
 
     @Unroll
     def "update dir"() {
         given:
-            def siteName = randomize('site')
-            createSite(siteName)
-            def appName = 'app'
-            createApp(siteName, appName)
+        def siteName = randomize('site')
+        createSite(siteName)
+        def appName = 'app'
+        createApp(siteName, appName)
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -75,17 +75,17 @@ class CreateVirtualDirectory extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            def vdir = getVdir(siteName, appName)
-            assert vdir.path == 'C:\\tmp\\another path'
+        assert result.outcome == 'success'
+        def vdir = getVdir(siteName, appName)
+        assert vdir.path == 'C:\\tmp\\another path'
     }
 
     @Unroll
     def "negative: non-existing site"() {
         given:
-            def siteName = 'some site'
+        def siteName = 'some site'
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -97,18 +97,18 @@ class CreateVirtualDirectory extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'error'
+        assert result.outcome == 'error'
     }
 
     @Unroll
     def "create directory #createDirectory"() {
         given:
-            def appName = 'app'
-            def siteName = randomize('my site')
-            createSite(siteName)
-            def physicalPath = "c:/tmp/$siteName/$appName"
+        def appName = 'app'
+        def siteName = randomize('my site')
+        createSite(siteName)
+        def physicalPath = "c:/tmp/$siteName/$appName"
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -121,30 +121,29 @@ class CreateVirtualDirectory extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            def exists = dirExists(physicalPath)
-            if (createDirectory == '1') {
-                assert exists =~ /Exists/
-            }
-            else {
-                assert exists =~ /Does not exist/
-            }
+        assert result.outcome == 'success'
+        def exists = dirExists(physicalPath)
+        if (createDirectory == '1') {
+            assert exists =~ /Exists/
+        } else {
+            assert exists =~ /Does not exist/
+        }
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            createDirectory << ['1', '0']
+        createDirectory << ['1', '0']
     }
 
 
     @Unroll
     def "with credentials"() {
         given:
-            def appName = 'app'
-            def siteName = randomize('my site')
-            createSite(siteName)
-            def physicalPath = "c:/tmp/$siteName/$appName"
+        def appName = 'app'
+        def siteName = randomize('my site')
+        createSite(siteName)
+        def physicalPath = "c:/tmp/$siteName/$appName"
         when:
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -163,16 +162,16 @@ class CreateVirtualDirectory extends PluginTestHelper {
                 )
             """
         then:
-            assert result.outcome == 'success'
-            def vdir = runAppCmdLogs("list vdir /vdir.name:\"$siteName/$appName/\" /text:*")
-            logger.debug(vdir)
-            assert vdir =~ /$userName/
-            assert vdir =~ /"\Q$password"/
+        assert result.outcome == 'success'
+        def vdir = runAppCmdLogs("list vdir /vdir.name:\"$siteName/$appName/\" /text:*")
+        logger.debug(vdir)
+        assert vdir =~ /$userName/
+        assert vdir =~ /"\Q$password"/
 
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            userName << ['test', 'test1']
-            password << ['test', 'ID&!*&!***&^']
+        userName << ['test', 'test1']
+        password << ['test', 'ID&!*&!***&^']
     }
 }

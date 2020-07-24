@@ -1,8 +1,5 @@
 package com.electriccloud.plugin.spec
 
-import spock.lang.*
-import com.electriccloud.spec.*
-
 class DeleteVirtualDirectory extends PluginTestHelper {
     static def projectName = 'EC-IIS Specs DeleteVirtualDirectory'
     static def iisHandler
@@ -12,13 +9,13 @@ class DeleteVirtualDirectory extends PluginTestHelper {
         dsl 'setProperty(propertyName: "/plugins/EC-IIS/project/ec_debug_logToProperty", value: "/myJob/debug_logs")'
         def resName = createIISResource()
         dslFile 'dsl/RunProcedure.dsl', [
-            projName: projectName,
-            resName: resName,
-            procName: procName,
-            params: [
-                appname: '',
-                strictMode: ''
-            ]
+                projName: projectName,
+                resName : resName,
+                procName: procName,
+                params  : [
+                        appname   : '',
+                        strictMode: ''
+                ]
         ]
         createHelperProject(resName)
     }
@@ -29,12 +26,12 @@ class DeleteVirtualDirectory extends PluginTestHelper {
 
     def "delete existing vdir, strict: #strictMode"() {
         given:
-            def appName = 'app'
-            def siteName = randomize('site')
-            createSite(siteName)
-            createApp(siteName, appName)
+        def appName = 'app'
+        def siteName = randomize('site')
+        createSite(siteName)
+        createApp(siteName, appName)
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -45,17 +42,17 @@ class DeleteVirtualDirectory extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.outcome == 'success'
-            logger.debug(result.logs)
+        assert result.outcome == 'success'
+        logger.debug(result.logs)
         cleanup:
-            removeSite(siteName)
+        removeSite(siteName)
         where:
-            strictMode << ['1', '0']
+        strictMode << ['1', '0']
     }
 
     def "delete non-existing vdir, strict: #strictMode"() {
         when: "procedure runs"
-            def result = runProcedureDsl """
+        def result = runProcedureDsl """
                 runProcedure(
                     projectName: "$projectName",
                     procedureName: '$procName',
@@ -66,14 +63,13 @@ class DeleteVirtualDirectory extends PluginTestHelper {
                 )
             """
         then: 'it finishes'
-            assert result.logs =~ /does not exist/
-            if (strictMode == '1') {
-                assert result.outcome == 'error'
-            }
-            else {
-                assert result.outcome == 'warning'
-            }
+        assert result.logs =~ /does not exist/
+        if (strictMode == '1') {
+            assert result.outcome == 'error'
+        } else {
+            assert result.outcome == 'warning'
+        }
         where:
-            strictMode << ['1', '0']
+        strictMode << ['1', '0']
     }
 }
