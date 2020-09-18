@@ -16,7 +16,7 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteWebApplication</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#DeleteWebApplication</help>
 	<label>Application server - IIS deletewebapplication</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Deletes a web application into the specified website.</description>

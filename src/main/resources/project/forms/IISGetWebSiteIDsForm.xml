@@ -1,5 +1,5 @@
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#GetWebSiteIDs</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#GetWebSiteIDs</help>
 	<label>Application server - IIS getwebsiteids</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure fetches the numeric internal IIS identifiers of all web sites found on the host server. These IDs are necessary to access internal web site properties in order to perform certain control operations.</description>	

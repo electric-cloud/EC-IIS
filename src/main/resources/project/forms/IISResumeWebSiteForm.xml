@@ -1,5 +1,5 @@
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#ResumeWebSite</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#ResumeWebSite</help>
 	<label>Application server - IIS resumewebsite</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure continues server operation after it has been paused.</description>	

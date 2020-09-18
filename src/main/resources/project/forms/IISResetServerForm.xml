@@ -1,5 +1,5 @@
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#ResetServer</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#ResetServer</help>
 	<label>Application server - IIS resetserver</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure uses the iisreset utility to reset a server.</description>

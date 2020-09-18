@@ -16,7 +16,7 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#ListApplicationPools</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#ListApplicationPools</help>
 	<label>Application server - IIS listapppools</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>List the application pools on a web server.</description>

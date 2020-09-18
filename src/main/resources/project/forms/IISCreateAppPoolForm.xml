@@ -16,7 +16,7 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateAppPool</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#CreateAppPool</help>
 	<label>Application server - IIS createapppool</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Verifies if an Application Pool exists and if it doesn't, an IIS application pool is created.</description>

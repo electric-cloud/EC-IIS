@@ -16,4 +16,6 @@
             <javascript>war/ecplugins.iis.ConfigurationManagement/ecplugins.iis.ConfigurationManagement.nocache.js</javascript>
         </component>
     </components>
+    <hasAdoc>true</hasAdoc>
+    <catalogLabel>Microsoft IIS</catalogLabel>
 </plugin>

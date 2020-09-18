@@ -1,5 +1,5 @@
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopIISServices</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#StopIISServices</help>
 	<label>Application server - IIS stopiisservices</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure stops the necessary services to shut down the IIS server.</description>	

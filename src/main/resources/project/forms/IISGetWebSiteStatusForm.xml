@@ -1,5 +1,5 @@
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#GetWebSiteStatus</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#GetWebSiteStatus</help>
 	<label>Application server - IIS getwebsitestatus</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure returns the current state of the web site. The state is also saved in a Job Property under the "sitestatus" property sheet, with the web site name as the property name and the numeric status code as the value. Possible status values: 1 (starting), 2 (started), 3 (stopping), 4 (stopped), 5 (pausing), 6 (paused), or 7 (continuing).</description>	
