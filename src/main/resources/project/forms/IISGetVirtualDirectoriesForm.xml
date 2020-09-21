@@ -1,5 +1,5 @@
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#GetVirtualDirectories</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#GetVirtualDirectories</help>
 	<label>Application server - IIS getvirtualdirectories</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure returns basic information for all virtual directories defined for the web site (recursively). This procedure is primarily for gathering information rather than performing specific actions.</description>

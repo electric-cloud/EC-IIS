@@ -1,5 +1,5 @@
 <editor>
-    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeployAdvanced</help>
+    <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#DeployAdvanced</help>
     <label>Application server - IIS deployadvanced</label>
     <version>@PLUGIN_VERSION@</version>
     <description>This procedure uses Web Deploy to perform different actions with the IIS application.</description>

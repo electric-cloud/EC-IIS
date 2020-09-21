@@ -16,7 +16,7 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopWebSite</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#StopWebSite</help>
 	<label>Application server - IIS stopwebsite</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Stops a website.</description>

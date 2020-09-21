@@ -16,7 +16,7 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#AddWebSiteBinding</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#AddWebSiteBinding</help>
 	<label>Application server - IIS addwebsitebinding</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Adds a binding to a Website.</description>

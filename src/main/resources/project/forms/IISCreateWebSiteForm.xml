@@ -16,7 +16,7 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateWebSite</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#CreateWebSite</help>
 	<label>Application server - IIS createwebsite</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Creates or updates a website.</description>

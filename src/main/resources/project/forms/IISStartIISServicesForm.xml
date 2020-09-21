@@ -1,5 +1,5 @@
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StartIISServices</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#StartIISServices</help>
 	<label>Application server - IIS startiisservices</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure starts the necessary services to initialize the IIS server.</description>	

@@ -1,5 +1,5 @@
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#PauseWebSite</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#PauseWebSite</help>
 	<label>Application server - IIS pausewebsite</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure pauses a web site. This is similar to stopping, except pausing allows existing processes to continue to their conclusion.</description>	

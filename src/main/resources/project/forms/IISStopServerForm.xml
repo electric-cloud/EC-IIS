@@ -1,5 +1,5 @@
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopServer</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#StopServer</help>
 	<label>Application server - IIS stopserver</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>This procedure uses the iisreset utility to stop a server.</description>

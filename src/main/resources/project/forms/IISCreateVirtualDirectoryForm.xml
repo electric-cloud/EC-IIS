@@ -16,7 +16,7 @@
 
 -->
 <editor>
-	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateVirtualDirectory</help>
+	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-iis#CreateVirtualDirectory</help>
 	<label>Application server - IIS createvirtualdirectory</label>
 	<version>@PLUGIN_VERSION@</version>
 	<description>Creates a virtual directory into the specified Website.</description>
