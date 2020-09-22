@@ -1,17 +1,7 @@
 
 Plugin Version @PLUGIN_VERSION@
-
-'''''
-
 Revised on May 19, 2020
 
-== {CD} integration to IIS
-
-This plugin allows users to interact with the Internet Information Services Server 7 (IIS7) and higher versions and accomplish tasks such as managing web sites, and virtual directories using the specific tools of IIS7 through command line. Using this plugins the users can configure IIS from scripts or executables, running tasks as create a virtual directory and create a website. Also, the users can check the status of running processes to see if it ran successfully or if an error existed, and determine what caused the error.
-
-This plugin uses appcmd.exe to interact with IIS, so the procedures should run on the resource with IIS server.
-
-Some procedures use WebDeploy utility (Deploy and AdvancedDeploy). WebDeploy should be installed separately (it is not included in the default IIS setup). It can be downloaded from Microsoft site https://www.iis.net/downloads/microsoft/web-deploy[Web Deploy]. After installation, Web Deploy can usually be found in C:/Program Files/IIS/Microsoft Web Deploy V3 directory.
 
 == Integrated version
 
@@ -162,19 +152,19 @@ Creates an IIS application pool or updates the existed one.
 
 To create an application pool, select the following highlighted step:
 
-image::cloudbees-common::cd-plugins/ec-iis/CreateAppPool/EC-IIS7CreateAppPool1.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/createapppool/ec-iis7createapppool1.png[image]
 
 Then, enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/CreateAppPool/EC-IIS7CreateAppPool2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/createapppool/ec-iis7createapppool2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the application pool was created successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/CreateAppPool/EC-IIS7CreateAppPool3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/createapppool/ec-iis7createapppool3.png[image]
 
 In the *CreateAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/CreateAppPool/EC-IIS7CreateAppPool4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/createapppool/ec-iis7createapppool4.png[image]
 
 [[CreateVirtualDirectory]]
 === CreateVirtualDirectory
@@ -331,15 +321,15 @@ Deletes a web application from the specified Website.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteWebApplication/EC-IIS7DeleteWebApplication2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the web application was deleted successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteWebApplication/EC-IIS7DeleteWebApplication3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication3.png[image]
 
 In the *DeleteWebApplication* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteWebApplication/EC-IIS7DeleteWebApplication4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication4.png[image]
 
 [[DeleteVirtualDirectory]]
 === DeleteVirtualDirectory
@@ -355,15 +345,15 @@ Deletes a virtual directory from the specified website.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteVirtualDirectory/EC-IIS7DeleteVirtualDirectory2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the virtual directory was deleted successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteVirtualDirectory/EC-IIS7DeleteVirtualDirectory3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory3.png[image]
 
 In the *DeleteVirtualDirectory* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteVirtualDirectory/EC-IIS7DeleteVirtualDirectory4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory4.png[image]
 
 [[DeleteWebSite]]
 === DeleteWebSite
@@ -379,15 +369,15 @@ Deletes a website.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteWebSite/EC-IIS7DeleteWebSite2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the website was deleted successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteWebSite/EC-IIS7DeleteWebSite3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite3.png[image]
 
 In the *DeleteWebSite* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteWebSite/EC-IIS7DeleteWebSite4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite4.png[image]
 
 [[DeleteAppPool]]
 === DeleteAppPool
@@ -403,15 +393,15 @@ Deletes an application pool.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteAppPool/EC-IIS7DeleteAppPool2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the application pool was deleted successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteAppPool/EC-IIS7DeleteAppPool3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool3.png[image]
 
 In the *DeleteAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/DeleteAppPool/EC-IIS7DeleteAppPool4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool4.png[image]
 
 [[DeployCopy]]
 === DeployCopy
@@ -438,19 +428,19 @@ Indicate option switches for the XCOPY executable, excluding source and destinat
 
 To deploy copy, select the following highlighted step:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeployCopy/EC-IIS7DeployCopy1.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy1.png[image]
 
 Then, enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeployCopy/EC-IIS7DeployCopy2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the copy was success:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeployCopy/EC-IIS7DeployCopy3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy3.png[image]
 
 In the *DeployCopy* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/DeployCopy/EC-IIS7DeployCopy4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy4.png[image]
 
 [[Deploy]]
 === Deploy
@@ -482,11 +472,11 @@ image::cloudbees-common::cd-plugins/ec-iis/deploy/form.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the copy was success:
 
-image::cloudbees-common::cd-plugins/ec-iis/Deploy/EC-IIS7Deploy3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deploy/ec-iis7deploy3.png[image]
 
 In the *Deploy* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/Deploy/EC-IIS7Deploy4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deploy/ec-iis7deploy4.png[image]
 
 [[Undeploy]]
 === Undeploy
@@ -560,19 +550,19 @@ MsDeploy is required for this procedure.
 
 To deploy, select the following highlighted step:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeployAdvanced/EC-IIS7DeployAdvanced1.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced1.png[image]
 
 Then, enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeployAdvanced/EC-IIS7DeployAdvanced2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the copy was success:
 
-image::cloudbees-common::cd-plugins/ec-iis/DeployAdvanced/EC-IIS7DeployAdvanced3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced3.png[image]
 
 In the *Deploy* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/DeployAdvanced/EC-IIS7DeployAdvanced4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced4.png[image]
 
 [[StartAppPool]]
 === StartAppPool
@@ -587,15 +577,15 @@ Starts an IIS application pool.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/StartAppPool/EC-IIS7StartAppPool2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/startapppool/ec-iis7startapppool2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the application pool was started successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/StartAppPool/EC-IIS7StartAppPool3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/startapppool/ec-iis7startapppool3.png[image]
 
 In the *StartAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/StartAppPool/EC-IIS7StartAppPool4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/startapppool/ec-iis7startapppool4.png[image]
 
 [[StartWebSite]]
 === StartWebSite
@@ -610,15 +600,15 @@ Starts a website into an IIS Server.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/StartWebSite/EC-IIS7StartWebSite2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the website was started successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/StartWebSite/EC-IIS7StartWebSite3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite3.png[image]
 
 In the *StartWebSite* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/StartWebSite/EC-IIS7StartWebSite4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite4.png[image]
 
 [[StopAppPool]]
 === StopAppPool
@@ -633,15 +623,15 @@ Stops an IIS application pool.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/StopAppPool/EC-IIS7StopAppPool2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the application pool was stoped successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/StopAppPool/EC-IIS7StopAppPool3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool3.png[image]
 
 In the *StopAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/StopAppPool/EC-IIS7StopAppPool4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool4.png[image]
 
 [[StopWebSite]]
 === StopWebSite
@@ -656,15 +646,15 @@ Stops a website.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/StopWebSite/EC-IIS7StopWebSite2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the website was stoped successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/StopWebSite/EC-IIS7StopWebSite3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite3.png[image]
 
 In the *StopWebSite* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/StopWebSite/EC-IIS7StopWebSite4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite4.png[image]
 
 [[RecycleAppPool]]
 === RecycleAppPool
@@ -679,15 +669,15 @@ Recycles the specified application pool.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/RecycleAppPool/EC-IIS7RecycleAppPool2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the website was stoped successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/RecycleAppPool/EC-IIS7RecycleAppPool3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool3.png[image]
 
 In the *RecycleAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/RecycleAppPool/EC-IIS7RecycleAppPool4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool4.png[image]
 
 [[AssignAppToAppPool]]
 === AssignAppToAppPool
@@ -704,15 +694,15 @@ Assigns an application to an application pool.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/AddAppToAppPool/EC-IIS7AddAppToAppPool2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the application was moved successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/AddAppToAppPool/EC-IIS7AddAppToAppPool3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool3.png[image]
 
 In the *AssignApp* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/AddAppToAppPool/EC-IIS7AddAppToAppPool4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool4.png[image]
 
 [[ListSites]]
 === ListSites
@@ -729,19 +719,19 @@ List the sites on a web server and writes the retrived data under the specified 
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/ListSites/EC-IIS7ListSites2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listsites/ec-iis7listsites2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the sites detected and started:
 
-image::cloudbees-common::cd-plugins/ec-iis/ListSites/EC-IIS7ListSites3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listsites/ec-iis7listsites3.png[image]
 
 In the *ListSites* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/ListSites/EC-IIS7ListSites4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listsites/ec-iis7listsites4.png[image]
 
 Under the specified property you will see extracted sites data.
 
-image::cloudbees-common::cd-plugins/ec-iis/ListSites/EC-IIS7ListSites5.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listsites/ec-iis7listsites5.png[image]
 
 [[ListSiteApps]]
 === ListSiteApps
@@ -758,11 +748,11 @@ List the apps of a Website.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/ListSiteApps/EC-IIS7ListSiteApps2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listsiteapps/ec-iis7listsiteapps2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the applications detected:
 
-image::cloudbees-common::cd-plugins/ec-iis/ListSiteApps/EC-IIS7ListSiteApps3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listsiteapps/ec-iis7listsiteapps3.png[image]
 
 The logs will look like the following:
 
@@ -802,15 +792,15 @@ List the application pools.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/ListAppPools/EC-IIS7ListAppPools2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listapppools/ec-iis7listapppools2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the applications detected:
 
-image::cloudbees-common::cd-plugins/ec-iis/ListAppPools/EC-IIS7ListAppPools3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listapppools/ec-iis7listapppools3.png[image]
 
 In the *ListAppPools* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/ListAppPools/EC-IIS7ListAppPools4.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listapppools/ec-iis7listapppools4.png[image]
 
 [[ListVirtualDirectories]]
 === ListVirtualDirectories
@@ -827,11 +817,11 @@ List the virtual directories.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/ListVirtualDirectories/EC-IIS7ListVirtualDirectories2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listvirtualdirectories/ec-iis7listvirtualdirectories2.png[image]
 
 When the job is executed, you should see the following job detail, note the output indicating the applications detected:
 
-image::cloudbees-common::cd-plugins/ec-iis/ListVirtualDirectories/EC-IIS7ListVirtualDirectories3.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/listvirtualdirectories/ec-iis7listvirtualdirectories3.png[image]
 
 The logs will look like the following:
 
@@ -910,7 +900,7 @@ Stops IIS server.
 
 To stop IIS server, enter the following parameters
 
-image::cloudbees-common::cd-plugins/ec-iis/StopServer/EC-IIS7StopServer.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[image]
 
 [[StartServer]]
 
@@ -928,7 +918,7 @@ Starts IIS server.
 
 To start IIS server, enter the following parameters
 
-image::cloudbees-common::cd-plugins/ec-iis/StopServer/EC-IIS7StopServer.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[image]
 
 [[RestartServer]]
 
@@ -946,7 +936,7 @@ Restarts IIS server.
 
 To restart IIS server, enter the following parameters
 
-image::cloudbees-common::cd-plugins/ec-iis/StopServer/EC-IIS7StopServer.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[image]
 
 [[AddSSLCertificate]]
 
@@ -1003,27 +993,27 @@ This example, shows the way to create a web site from the beginning.
 
 First, run the CheckServerStatus with the appropiate parameters to verify the server disponibility:
 
-image::cloudbees-common::cd-plugins/ec-iis/Case1/EC-IIS7CheckServer1.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7checkserver1.png[image]
 
 Now, check the result of the server staus, it must be running:
 
-image::cloudbees-common::cd-plugins/ec-iis/Case1/EC-IIS7CheckServer2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7checkserver2.png[image]
 
 Now that the server is running, the webSite can be created with these parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/Case1/EC-IIS7CreateWebSite1.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7createwebsite1.png[image]
 
 Check the result of the creation of the site:
 
-image::cloudbees-common::cd-plugins/ec-iis/Case1/EC-IIS7CreateWebSite2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7createwebsite2.png[image]
 
 If the creation of the site was successfully, the site can be started with these paramters:
 
-image::cloudbees-common::cd-plugins/ec-iis/Case1/EC-IIS7StartWebSite1.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7startwebsite1.png[image]
 
 Finally, check that the created application was started successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/Case1/EC-IIS7StartWebSite2.png[image]
+image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7startwebsite2.png[image]
 
 [[KnownIssues]]
 == Known issues
