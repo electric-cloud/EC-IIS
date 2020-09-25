@@ -1029,11 +1029,11 @@ Due to escape issues, double quote (") is not supported in parameter values.
 
 === EC-IIS 3.1.6
 
-* Renaming from "CloudBees Flow" to "{CD}"
+* Renaming  to "{CD}"
 
 === EC-IIS 3.1.5
 
-Renaming from "Electric Cloud" to "CloudBees"
+Renaming  to "CloudBees"
 
 === EC-IIS 3.1.4
 
