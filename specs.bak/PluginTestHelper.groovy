@@ -117,7 +117,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
                         logFileName = 'RunCommand.log'
                     }
                     step 'Read Log', {
-                        shell = 'ec-perl'
+                        shell = 'cb-perl'
                         command = '''
                             use strict;
                             use warnings;
@@ -143,7 +143,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
                     }
 
                     step 'Read Log', {
-                        shell = 'ec-perl'
+                        shell = 'cb-perl'
                         command = '''
                             use strict;
                             use warnings;
@@ -201,12 +201,12 @@ class PluginTestHelper extends PluginSpockTestSupport {
                             print "Does not exist\n";
                         }
                         '''
-                        shell = 'ec-perl'
+                        shell = 'cb-perl'
                         logFileName = 'Command.log'
                     }
 
                     step 'Read Log', {
-                        shell = 'ec-perl'
+                        shell = 'cb-perl'
                         command = '''
                             use strict;
                             use warnings;

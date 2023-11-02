@@ -54,7 +54,7 @@ MIIJcQIBAzCCCTcGCSqGSIb3DQEHAaCCCSgEggkkMIIJIDCCA9cGCSqGSIb3DQEHBqCCA8gwggPEAgEA
                                 print \$fh \$decoded;
                                 close \$fh;
                             '''
-                            shell = 'ec-perl'
+                            shell = 'cb-perl'
                         }
 
                         step 'Import Certificate', {
