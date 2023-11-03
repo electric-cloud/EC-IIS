@@ -7,66 +7,66 @@
 // All rights reserved
 
 buildscript {
-	repositories {
-		mavenLocal()
-		mavenCentral()
-		maven {
-			url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
-			credentials {
-				username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
-				password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
-			}
-		}
-		jcenter()
-	}
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
+            credentials {
+                username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+                password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
+            }
+        }
+        jcenter()
+    }
 
-	dependencies {
-		classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '2.4'
-	}
+    dependencies {
+        classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '2.4'
+    }
 }
 
 repositories {
-	mavenLocal()
-	mavenCentral()
-	maven {
-		url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
-		credentials {
-			username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
-			password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
-		}
-	}
-	maven {
-		url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
-		credentials {
-			username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
-			password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
-		}
-	}
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
+        credentials {
+            username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+            password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
+        }
+    }
+    maven {
+        url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
+        credentials {
+            username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+            password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
+        }
+    }
 }
 
 configurations.all {
-	resolutionStrategy {
-		force group: 'com.electriccloud', name: 'ec-test', version: '10.1.0'
-		force group: 'com.electriccloud', name: 'commander-client', version: '10.1.0'
-		force group: 'com.electriccloud', name: 'commander-sdk', version: '6.1.2.1'
-		force group: 'com.electriccloud', name: 'ec_internal', version: '6.1.2.1'
-		force group: 'com.google.gwt', name: 'gwt-user', version: '2.5.0-ec3'
-		force group: 'com.google.gwt', name: 'gwt-dev', version: '2.5.0-ec1'
+    resolutionStrategy {
+        force group: 'com.electriccloud', name: 'ec-test', version: '10.1.0'
+        force group: 'com.electriccloud', name: 'commander-client', version: '10.1.0'
+        force group: 'com.electriccloud', name: 'commander-sdk', version: '6.1.2.1'
+        force group: 'com.electriccloud', name: 'ec_internal', version: '6.1.2.1'
+        force group: 'com.google.gwt', name: 'gwt-user', version: '2.5.0-ec3'
+        force group: 'com.google.gwt', name: 'gwt-dev', version: '2.5.0-ec1'
 
-		cacheChangingModulesFor 0, 'seconds'
-	}
+        cacheChangingModulesFor 0, 'seconds'
+    }
 }
 
 group = "com.electriccloud"
 description = "Plugins : EC-IIS"
-version = "3.1.8"
+version = "4.0.0"
 
 apply plugin: 'flow-gradle-plugin'
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.3'
+    gradleVersion = '2.3'
 }
 
 gwt {
-	modules 'ecplugins.iis.ConfigurationManagement'
+    modules 'ecplugins.iis.ConfigurationManagement'
 }

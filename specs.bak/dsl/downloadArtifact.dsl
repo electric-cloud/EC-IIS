@@ -58,7 +58,7 @@ $zip->extractTree('');
 
 print "\\nExtracted\\n";
             '''
-            shell = 'ec-perl'
+            shell = 'cb-perl'
         }
         formalParameter 'url', defaultValue: '', {
             type = "textarea"

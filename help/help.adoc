@@ -1023,6 +1023,10 @@ Due to escape issues, double quote (") is not supported in parameter values.
 [[rns]]
 == Release notes
 
+=== EC-IIS 4.0.0
+
+* Upgraded from Perl 5.8 to Perl 5.32. The plugin is not backward compatibility with releases prior to {PRODUCT} 10.3. Starting with this release, a new agent is required to run the plugin procedures.
+
 === EC-IIS 3.1.8
 
 * Added session validation.
