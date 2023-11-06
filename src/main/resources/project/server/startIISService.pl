@@ -29,7 +29,6 @@ use warnings;
 use strict;
 use Cwd;
 use File::Spec;
-use diagnostics;
 use Data::Dumper;
 use ElectricCommander::PropDB;
 $| = 1;

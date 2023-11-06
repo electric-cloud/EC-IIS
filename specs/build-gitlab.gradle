@@ -1,0 +1,118 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
+            credentials {
+                username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+                password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
+            }
+        }
+        maven {
+            url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
+            credentials {
+                username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+                password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
+            }
+        }
+
+    }
+    dependencies {
+        classpath "com.cloudbees.cd.plugins:hen:2.0.0"
+    }
+
+}
+
+plugins {
+    // https://docs.gradle.org/current/userguide/groovy_plugin.html
+    id 'groovy'
+    id 'idea'
+    id 'java'
+    id "com.cloudbees.cd.plugins.specs" version "1.9.2.0"
+}
+
+allprojects {
+    apply plugin: 'com.cloudbees.cd.plugins.specs-hen'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+version = "2.0"
+description = "GitLab Specs"
+
+defaultTasks 'test'
+
+generateHenClasses {
+    pluginName = 'GitLab'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
+        credentials {
+            username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+            password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
+        }
+    }
+    maven {
+        url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
+        credentials {
+            username = System.getenv('NEXUS_USERNAME') ?: nexusUsername
+            password = System.getenv('NEXUS_PASSWORD') ?: nexusPassword
+        }
+    }
+
+}
+
+dependencies {
+    implementation "org.codehaus.groovy:groovy-all:3.0.17"
+    implementation "org.spockframework:spock-core:2.4-M1-groovy-3.0"
+    implementation("com.electriccloud:ec-specs-plugins-core:3.0.0") {
+        exclude(group: "org.codehaus.groovy", module: "groovy-all")
+        exclude(group: "org.spockframework", module: "spock-core")
+    }
+
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    testImplementation("io.rest-assured:rest-assured:5.3.1") {
+        exclude(group: "org.apache.groovy", module: "groovy")
+        exclude(group: "org.apache.groovy", module: "groovy-json")
+        exclude(group: "org.apache.groovy", module: "groovy-xml")
+        exclude(group: "org.apache.groovy", module: "groovy-bom")
+    }
+
+    implementation("com.cloudbees.cd.plugins:hen:2.0.0") {
+        exclude(group: "org.codehaus.groovy", module: "groovy-all")
+        exclude(group: "org.codehaus.groovy", module: "groovy")
+    }
+    implementation "org.slf4j:slf4j-api:1.7.36"
+    implementation 'org.gitlab4j:gitlab4j-api:6.0.0-rc.2'
+}
+
+configureTests {
+    environmentName = findProperty('envName') ?: 'default'
+    readEnvironmentVariables = true
+    readSecrets = true
+    dependsOn(['compileGroovy', 'compileTestGroovy', 'compileJava', 'compileTestJava', 'processResources', 'processTestResources'])
+}
+
+sendAllureReports {
+    projectName = 'gitlab'
+}
+
+configurations {
+    testCompile {
+        extendsFrom testImplementation
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
