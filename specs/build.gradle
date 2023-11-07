@@ -16,6 +16,9 @@ buildscript {
             }
         }
     }
+    dependencies {
+        classpath "com.cloudbees.cd.plugins:hen:1.+"
+    }
 }
 
 plugins {
@@ -24,12 +27,19 @@ plugins {
     id "com.cloudbees.cd.plugins.specs" version "1.9.2.0"
 }
 
+allprojects {
+    apply plugin: 'com.cloudbees.cd.plugins.specs-hen'
+}
+
 version = "1.0"
 description = "EC-IIS Specs"
 
 sourceCompatibility = 1.8
-
 defaultTasks 'test'
+
+generateHenClasses {
+    pluginName = 'EC-FeatureFlags'
+}
 
 repositories {
     mavenCentral()
@@ -65,5 +75,10 @@ dependencies {
     }
     testImplementation('com.athaydes:spock-reports:1.8.0') {
         transitive = false // this avoids affecting your semver of Groovy/Spock
+    }
+
+    implementation("com.cloudbees.cd.plugins:hen:1.+") {
+//        exclude(group: "org.codehaus.groovy", module: "groovy-all")
+//        exclude(group: "org.codehaus.groovy", module: "groovy")
     }
 }

@@ -1,28 +1,28 @@
 package com.cloudbees.plugin.spec
 
 import com.electriccloud.spec.PluginSpockTestSupport
+import com.cloudbees.pdk.hen.*
 
 class PluginTestHelper extends PluginSpockTestSupport {
+    static ServerHandler serverHandler = ServerHandler.getInstance()
+
     static final String projectName = 'IIS Spec Tests'
     static def pluginName = "EC-IIS"
-    static def iisIP = System.getenv("IIS_IP")
-    static def iisPort = System.getenv("IIS_PORT")
-    static def iisLogin = System.getenv("IIS_LOGIN")
-    static def iisPassword = System.getenv("IIS_PASSWORD")
+    static def iisIP = Utils.env("IIS_IP")
+    static def iisPort = Utils.env("IIS_PORT", "80")
+    static def iisLogin = Utils.env("IIS_LOGIN")
+    static def iisPassword = Utils.env("IIS_PASSWORD")
 
-    static def procedureName = ""
-    static String CONFIG_NAME = 'specConfig'
-
-
-    def createConfig(configName) {
-        createPluginConfiguration(pluginName, configName, [desc: "test configuration", checkConnection: "0"], iisLogin, iisPassword)
-    }
-    def createInvalidConfig(configName) {
-        createPluginConfiguration(pluginName, configName, [desc: "test configuration", checkConnection: "0"], "wrong_admin", 'wrong_password')
+    def createCustomConfig(configName, userName, password) {
+        createPluginConfiguration(pluginName, configName, [desc: "test configuration", checkConnection: "0"], userName, password)
     }
 
-    String getEnvName() {
-        return System.getenv("ROLLOUT_ENV_NAME") ?: "Production"
+    def createConfig(configName = 'specConfig') {
+        createCustomConfig(configName, iisLogin, iisPassword)
+    }
+
+    static private void createTestResource(String resourceName) {
+        ServerHandler.getInstance().setupResource(resourceName, iisIP, 7800)
     }
 
     def getStepSummary(def jobId, def stepName) {
