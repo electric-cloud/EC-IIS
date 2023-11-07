@@ -24,7 +24,7 @@ buildscript {
 plugins {
     id 'groovy'
     id 'idea'
-    id "com.cloudbees.cd.plugins.specs" version "1.9.2.0"
+    id "com.cloudbees.cd.plugins.specs" version "1.11.0.0"
 }
 
 allprojects {
@@ -67,10 +67,12 @@ sendAllureReports {
 dependencies {
     implementation 'org.codehaus.groovy:groovy-all:2.5.5'
     implementation 'org.spockframework:spock-core:1.3-groovy-2.4'
-    implementation 'com.jayway.restassured:rest-assured:2.9.0'
+//    implementation 'com.jayway.restassured:rest-assured:2.9.0'
+//    implementation 'io.rest-assured:rest-assured:5.3.2'
 
 
-    implementation('com.electriccloud:ec-specs-plugins-core:1.9.2') {
+
+    implementation('com.electriccloud:ec-specs-plugins-core:1.11.0') {
         exclude(group: "org.codehaus.groovy", module: "groovy-all")
     }
     testImplementation('com.athaydes:spock-reports:1.8.0') {
