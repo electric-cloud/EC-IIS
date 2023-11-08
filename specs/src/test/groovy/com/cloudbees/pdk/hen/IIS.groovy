@@ -14,16 +14,39 @@ import static com.cloudbees.pdk.hen.Utils.env
 
 class IIS extends Plugin {
 
-    static IIS create() {
-        IIS plugin = new IIS(name: 'EC-IIS', configPath: 'ec_plugin_cfgs', configFieldName: 'config')
-        plugin.configurationHandling = ConfigurationHandling.OLD
+    static IIS create(String resourceName = null) {
+        IIS plugin
+        if (resourceName) {
+            plugin = new IIS(
+                    name: 'EC-IIS',
+//                    configPath: 'ec_plugin_cfgs',
+                    configPath: 'iis_cfgs',
+                    configFieldName: 'config',
+                    configurationHandling: ConfigurationHandling.OLD,
+                    defaultResource: resourceName
+            )
+        } else {
+            plugin = new IIS(
+                    name: 'EC-IIS',
+//                    configPath: 'ec_plugin_cfgs',
+                    configPath: 'iis_cfgs',
+                    configFieldName: 'config',
+                    configurationHandling: ConfigurationHandling.OLD
+            )
+        }
 
         plugin.configure(plugin.config)
         return plugin
     }
 
-    static IIS createWithoutConfig() {
-        IIS plugin = new IIS(name: 'EC-IIS', configurationHandling: ConfigurationHandling.OLD)
+    static IIS createWithoutConfig(String resourceName = null) {
+        IIS plugin
+        if (resourceName) {
+            plugin = new IIS(name: 'EC-IIS', configurationHandling: ConfigurationHandling.OLD, defaultResource: resourceName)
+        } else {
+            plugin = new IIS(name: 'EC-IIS', configurationHandling: ConfigurationHandling.OLD)
+        }
+
         return plugin
     }
 
@@ -39,9 +62,7 @@ class IIS extends Plugin {
     }
 
     EditConfiguration editConfiguration = EditConfiguration.create(this)
-
     DeleteConfigurationProcedure deleteConfiguration = DeleteConfigurationProcedure.create(this)
-
     TestConfiguration testConfiguration = TestConfiguration.create(this)
 
     CheckServerStatus checkServerStatus = CheckServerStatus.create(this)

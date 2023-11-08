@@ -24,7 +24,7 @@ buildscript {
 plugins {
     id 'groovy'
     id 'idea'
-    id "com.cloudbees.cd.plugins.specs" version "1.11.0.0"
+    id "com.cloudbees.cd.plugins.specs" version "1.9.2.0"
 }
 
 allprojects {
@@ -72,7 +72,7 @@ dependencies {
 
 
 
-    implementation('com.electriccloud:ec-specs-plugins-core:1.11.0') {
+    implementation('com.electriccloud:ec-specs-plugins-core:1.9.2') {
         exclude(group: "org.codehaus.groovy", module: "groovy-all")
     }
     testImplementation('com.athaydes:spock-reports:1.8.0') {

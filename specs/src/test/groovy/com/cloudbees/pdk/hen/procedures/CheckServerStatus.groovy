@@ -5,7 +5,7 @@ import com.cloudbees.pdk.hen.*
 class CheckServerStatus extends Procedure {
 
     static CheckServerStatus create(Plugin plugin) {
-        return new CheckServerStatus(procedureName: 'checkServerStatus', plugin: plugin,)
+        return new CheckServerStatus(procedureName: 'CheckServerStatus', plugin: plugin)
     }
 
     CheckServerStatus flush() {
@@ -20,13 +20,13 @@ class CheckServerStatus extends Procedure {
     }
 
     CheckServerStatus clone() {
-        CheckServerStatus cloned = new CheckServerStatus(procedureName: 'checkServerStatus', plugin: plugin,)
+        CheckServerStatus cloned = new CheckServerStatus(procedureName: 'CheckServerStatus', plugin: plugin,)
         cloned.parameters = this.parameters.clone()
         return cloned
     }
 
-    CheckServerStatus config(String config) {
-        this.addParam('config', config)
+    CheckServerStatus configname(String configname) {
+        this.addParam('configname', configname)
         return this
     }
 

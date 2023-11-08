@@ -2,27 +2,42 @@ package com.cloudbees.plugin.spec
 
 import com.electriccloud.spec.PluginSpockTestSupport
 import com.cloudbees.pdk.hen.*
+import groovy.util.logging.Slf4j
+import spock.lang.Ignore
+import spock.lang.Specification
 
-class PluginTestHelper extends PluginSpockTestSupport {
+@Ignore
+@Slf4j
+class HenHelper extends Specification {
     static ServerHandler serverHandler = ServerHandler.getInstance()
+    static RunOptions runOpts = new RunOptions()
+    static String agentOs = "windows"
 
-    static final String projectName = 'IIS Spec Tests'
+    static String cdFlowProjectName = "IIS Spec Tests"
+
     static def pluginName = "EC-IIS"
     static def iisIP = Utils.env("IIS_IP")
     static def iisPort = Utils.env("IIS_PORT", "80")
     static def iisLogin = Utils.env("IIS_LOGIN")
     static def iisPassword = Utils.env("IIS_PASSWORD")
 
-    def createCustomConfig(configName, userName, password) {
-        createPluginConfiguration(pluginName, configName, [desc: "test configuration", checkConnection: "0"], userName, password)
+    static String getTmp() {
+        if (agentOs == "linux") {
+            return "/tmp"
+        } else if (agentOs == "windows") {
+            return "C:\\Users\\Administrator\\AppData\\Local\\Temp\\"
+        } else {
+            return System.getProperty('java.io.tmpdir')
+        }
     }
 
-    def createConfig(configName = 'specConfig') {
-        createCustomConfig(configName, iisLogin, iisPassword)
-    }
-
-    static private void createTestResource(String resourceName) {
+    static String createTestResource(String resourceName = null) {
+        if (!resourceName) {
+            resourceName = iisIP + ":7800"
+        }
         ServerHandler.getInstance().setupResource(resourceName, iisIP, 7800)
+
+        return resourceName
     }
 
     def getStepSummary(def jobId, def stepName) {
@@ -38,7 +53,7 @@ class PluginTestHelper extends PluginSpockTestSupport {
     }
 
     List<Map> getFormalParameterOptions(String pluginName, String procedureName, String parameterName, Map actualParameters) {
-        String params = actualParameters.collect {k, v -> "$k: '$v'"}.join(",")
+        String params = actualParameters.collect { k, v -> "$k: '$v'" }.join(",")
         String script = """
 getFormalParameterOptions formalParameterName: '$parameterName',
     projectName: '/plugins/$pluginName/project',
