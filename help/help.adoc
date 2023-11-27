@@ -174,7 +174,7 @@ Creates a new virtual directory in the specified website or updates the existed 
 [cols=",",options="header"]
 |===
 |Parameter |Description
-|Application name |The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Website/myapp02'.
+|Application name |The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Web Site/myapp02'.
 |Virtual path |Virtual path of the virtual directory, i.e: '/myvirtualdir'.
 |Absolute physical path |The absolute physical path of the Virtual Directory to create, i.e: 'c:/Inetpub/wwwroot/myvdir'.
 |Create Directory? |If checked, the specified directory will be created if it does not exist.
@@ -193,23 +193,23 @@ Logs will be similar to the following:
 
 ....
 Using plugin EC-IIS-3.1.0.0
-Got parameter "appname" with value "Default Website/"
+Got parameter "appname" with value "Default Web Site/"
 Got parameter "createDirectory" with value "1"
 Got parameter "credential" with value "credential"
 Got parameter "path" with value "mydir"
-Got parameter "physical-path" with value "c:/tmp/path"
+Got parameter "physicalpath" with value "c:/tmp/path"
 Going to create directory "C:\tmp\path"
 Directory "C:\tmp\path" already exists, skipping
-Virtual directory Default Website/mydir does not exist, proceeding to creating it
+Virtual directory Default Web Site/mydir does not exist, proceeding to creating it
 Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add vdir /app.name:"Default Website/" /path:"/mydir" /physicalPath:"C:\tmp\path"
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add vdir /app.name:"Default Web Site/" /path:"/mydir" /physicalPath:"C:\tmp\path"
 Exit code: 0
-STDOUT: VDIR object "Default Website/mydir" added
+STDOUT: VDIR object "Default Web Site/mydir" added
 STDERR: N/A
-Going to set credentials for directory "Default Website/mydir"
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Website/mydir" /username:"build" /password:"*****"
+Going to set credentials for directory "Default Web Site/mydir"
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Web Site/mydir" /username:"build" /password:"*****"
 Exit code: 0
-STDOUT: VDIR object "Default Website/mydir" changed
+STDOUT: VDIR object "Default Web Site/mydir" changed
 STDERR: N/A
 ....
 
@@ -221,7 +221,7 @@ Creates or updates and starts an in-process web application in the given directo
 [cols=",",options="header"]
 |===
 |Parameter |Description
-|Website Name |The name of the website to add the application, i.e: 'Default Website'.
+|Website Name |The name of the website to add the application, i.e: 'Default Web Site'.
 |Virtual Path |Virtual path of the application, i.e: '/myApplication'.
 |Absolute Physical Path |The absolute physical path of the application to create, i.e: 'c:/Inetpub/wwwroot/myApp'.
 |Create Directory? |If checked, the specified directory will be created if it does not exist.
@@ -240,22 +240,22 @@ Logs will look like the following:
 
 ....
 Using plugin EC-IIS-3.1.0.0
-Got parameter "appname" with value "Default Website"
+Got parameter "appname" with value "Default Web Site"
 Got parameter "createDirectory" with value "1"
 Got parameter "credential" with value "credential"
 Got parameter "path" with value "myApp"
 Got parameter "physicalpath" with value "c:/tmp/myApp"
-Application full name: Default Website/myApp
+Application full name: Default Web Site/myApp
 Going to create directory "C:\tmp\myApp"
 Created directory "C:\tmp\myApp"
 Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add app /site.name:"Default Website" /path:"/myApp" /physicalPath:"C:\tmp\myApp"
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add app /site.name:"Default Web Site" /path:"/myApp" /physicalPath:"C:\tmp\myApp"
 Exit code: 0
-STDOUT: APP object "Default Website/myApp" added
+STDOUT: APP object "Default Web Site/myApp" added
 VDIR object "Default Web Site/myApp" added
 STDERR: N/A
-Going to set credentails for directory Default Website/myApp/
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Website/myApp/" /username:"build" /password:"*****"
+Going to set credentails for directory Default Web Site/myApp/
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Web Site/myApp/" /username:"build" /password:"*****"
 Exit code: 0
 STDOUT: VDIR object "Default Web Site/myApp/" changed
 STDERR: N/A
@@ -315,7 +315,7 @@ Deletes a web application from the specified Website.
 [cols=",",options="header"]
 |===
 |Parameter |Description
-|Application Name |The Website that contains the Application to delete. i.e: 'Default Website/' or 'Site1/myapp'.
+|Application Name |The Website that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
 |Strict Mode |If checked, the procedure will fail in case the specified application does not exist.
 |===
 
@@ -339,7 +339,7 @@ Deletes a virtual directory from the specified website.
 [cols=",",options="header"]
 |===
 |Parameter |Description
-|Virtual directory name |The Website and virtual path that contains the Virtual Directory to delete. i.e: 'Default Website/' or 'Site1/myapp'.
+|Virtual directory name |The Website and virtual path that contains the Virtual Directory to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
 |Strict mode |If checked, the procedure will fail in case the specified virtual directory does not exist.
 |===
 
@@ -363,7 +363,7 @@ Deletes a website.
 [cols=",",options="header"]
 |===
 |Parameter |Description
-|Website name |The name of the website to delete. i.e: 'Default Website/' or 'Site1/myapp'.
+|Website name |The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
 |Strict mode |If checked, the procedure will fail in case the specified website does not exist.
 |===
 
@@ -387,7 +387,7 @@ Deletes an application pool.
 [cols=",",options="header"]
 |===
 |Parameter |Description
-|Application pool name |The name of the website to delete. i.e: 'Default Website/' or 'Site1/myapp'.
+|Application pool name |The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
 |Strict mode |If checked, the procedure will fail in case the specified application pool does not exist.
 |===
 
@@ -595,7 +595,7 @@ Starts a website into an IIS Server.
 [cols=",",options="header"]
 |===
 |Parameter |Description
-|Website name |Provide the descriptive name of the website you want to start. i.e: 'Default Website'.
+|Website name |Provide the descriptive name of the website you want to start. i.e: 'Default Web Site'.
 |===
 
 Enter the following parameters:
@@ -641,7 +641,7 @@ Stops a website.
 [cols=",",options="header"]
 |===
 |Parameter |Description
-|Website name |Provide the descriptive name of the website you want to stop. i.e: 'Default Website'.
+|Website name |Provide the descriptive name of the website you want to stop. i.e: 'Default Web Site'.
 |===
 
 Enter the following parameters:
@@ -689,7 +689,7 @@ Assigns an application to an application pool.
 |Parameter |Description
 |Application pool name |The name of the Application Pool to assign the application. i.e: 'FirstAppPool'.
 |Application name |The name of the application to assign. i.e: '/test'.
-|Site name |The name of the site that contains the app to assign. i.e: 'Default Website'.
+|Site name |The name of the site that contains the app to assign. i.e: 'Default Web Site'.
 |===
 
 Enter the following parameters:
@@ -764,14 +764,14 @@ Got parameter "sitename" with value ""
 Wrote command to property cmdLine
 Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" list apps
 Exit code: 0
-STDOUT: APP "Default Website/" (applicationPool:DefaultAppPool)
-APP "Default Website/myApp" (applicationPool:DefaultAppPool)
+STDOUT: APP "Default Web Site/" (applicationPool:DefaultAppPool)
+APP "Default Web Site/myApp" (applicationPool:DefaultAppPool)
 APP "NetDash/" (applicationPool:NetDash)
 APP "MySite/" (applicationPool:DefaultAppPool)
 APP "NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934/" (applicationPool:DefaultAppPool)
 STDERR: N/A
-Wrote property: /myJob/IISApps/Default Website//applicationPool -> DefaultAppPool
-Wrote property: /myJob/IISApps/Default Website/myApp/applicationPool -> DefaultAppPool
+Wrote property: /myJob/IISApps/Default Web Site//applicationPool -> DefaultAppPool
+Wrote property: /myJob/IISApps/Default Web Site/myApp/applicationPool -> DefaultAppPool
 Wrote property: /myJob/IISApps/MySite//applicationPool -> DefaultAppPool
 Wrote property: /myJob/IISApps/NetDash//applicationPool -> NetDash
 Wrote property: /myJob/IISApps/NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934//applicationPool -> DefaultAppPool
@@ -833,16 +833,16 @@ Got parameter "vdirName" with value ""
 Wrote command to property cmdLine
 Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" list vdirs
 Exit code: 0
-STDOUT: VDIR "Default Website/" (physicalPath:%SystemDrive%\inetpub\wwwroot)
-VDIR "Default Website/mydir" (physicalPath:C:\tmp\path)
-VDIR "Default Website/myApp/" (physicalPath:C:\tmp\myApp)
+STDOUT: VDIR "Default Web Site/" (physicalPath:%SystemDrive%\inetpub\wwwroot)
+VDIR "Default Web Site/mydir" (physicalPath:C:\tmp\path)
+VDIR "Default Web Site/myApp/" (physicalPath:C:\tmp\myApp)
 VDIR "NetDash/" (physicalPath:C:\inetpub\NetDash)
 VDIR "MySite/" (physicalPath:c:/wrong_dir)
 VDIR "NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934/" (physicalPath:c:/site_NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934)
 STDERR: N/A
-Wrote property: /myJob/IISVirtualDirectories/Default Website//physicalPath -> %SystemDrive%\inetpub\wwwroot
-Wrote property: /myJob/IISVirtualDirectories/Default Website/myApp//physicalPath -> C:\tmp\myApp
-Wrote property: /myJob/IISVirtualDirectories/Default Website/mydir/physicalPath -> C:\tmp\path
+Wrote property: /myJob/IISVirtualDirectories/Default Web Site//physicalPath -> %SystemDrive%\inetpub\wwwroot
+Wrote property: /myJob/IISVirtualDirectories/Default Web Site/myApp//physicalPath -> C:\tmp\myApp
+Wrote property: /myJob/IISVirtualDirectories/Default Web Site/mydir/physicalPath -> C:\tmp\path
 Wrote property: /myJob/IISVirtualDirectories/MySite//physicalPath -> c:/wrong_dir
 Wrote property: /myJob/IISVirtualDirectories/NetDash//physicalPath -> C:\inetpub\NetDash
 Wrote property: /myJob/IISVirtualDirectories/NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934//physicalPath -> c:/site_NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934
@@ -856,7 +856,7 @@ Adds a binding to a Website.
 [cols=",",options="header"]
 |===
 |Parameter |Description
-|Website Name |The name of the Website to add a binding, i.e: 'Default Website'. The site should exist on server.
+|Website Name |The name of the Website to add a binding, i.e: 'Default Web Site'. The site should exist on server.
 |Binding Protocol |Protocol of the binding to add, e.g. 'http'. Usually the protocol is http or https, for FTP binding please refer to https://technet.microsoft.com/en-us/library/cc731692%28v=ws.10%29.aspx[Add a Binding to a Site] article.
 |Binding Information |Information of the binding to add, including the host and the port, e.g.: 'localhost:443', '*:81'.
 |Host Header |Host headers (also known as domain names or host names) let you assign more than one site to a single IP address on a Web server. E.g., myhost.com.
