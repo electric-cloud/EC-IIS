@@ -1,6 +1,6 @@
 
 Plugin Version @PLUGIN_VERSION@
-Revised on April 14, 2022
+Revised on November 27, 2023
 
 
 == Integrated version
@@ -26,33 +26,33 @@ This plugin supports next versions of Web Deploy:
 
 Plugin configurations are sets of parameters that apply across some or all of the plugin's procedures. They are intended to reduce repetition of common values, create predefined sets of parameters for end users, and to securely store credentials where needed. Each configuration is given a unique name that is entered in designated parameters on procedures that use them.
 
-Plugin configurations are created by going to the {CD} "Administration" tab, then to the "Plugins" sub-tab. On the right side of the line for the specific plugin, there is a "Configure" link which will open the Configuration page.
+Plugin configurations are created by going to the {CDRO} "Administration" tab, then to the "Plugins" sub-tab. On the right side of the line for the specific plugin, there is a "Configure" link which will open the Configuration page.
 
 Please note, that configuration is used only for CheckServerStatus procedure (for now).
 
-To enable {CD} to communicate with your IIS server, create an IIS configuration, supplying the following information:
+To enable {CDRO} to communicate with your IIS server, create an IIS configuration, supplying the following information:
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Configuration Name |Provide a unique name for the configuration, keeping in mind that you may need to create additional configurations over time.
 |IIS IP Address |Provide the URL for the IIS server, it must include the protocol. i.e: 'http://192.168.1.100'.
-|IIS Port |Provide the port for the IIS server. This port is used in conjuction with the IP Adress to conform the URL. If not provided, {CD} uses the default port '80'. i.e: '8081'.
+|IIS Port |Provide the port for the IIS server. This port is used in conjunction with the IP address to conform the URL. If not provided, {CDRO} uses the default port '80'. i.e: '8081'.
 |Computer Name (DEPRECATED) |Provide the computer name or IP address without backslashes. i.e: 'server01'. Is not used, will be removed in the next release.
-|Login as |_Username_: Provide the user name {CD} uses to communicate with the IIS server.
+|Login as |_Username_: Provide the username {CDRO} uses to communicate with the IIS server.
 
 _Password_: Provide the password for the specified Username.
 
 _Retype Password_: Retype the password specified.
 |===
 
-Enter this parameters in the configuration panel:
+Enter these parameters in the configuration panel:
 
-image::cloudbees-common::cd-plugins/ec-iis/config/configform.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/config/configform.png[role="screenshot"]
 
 == Plugin procedures
 
-IMPORTANT: In the {CD} UI, from the Home page, open the Main Menu, and click *Admin* > *Plugins* to open the Plugin Manager.
+IMPORTANT: In the {CDRO} UI, from the Home page, open the Main Menu, and click *Admin* > *Plugins* to open the Plugin Manager.
 
 IMPORTANT: For all parameter descriptions below, required parameters are shown in [.required]#bold italics#.
 
@@ -62,11 +62,11 @@ IMPORTANT: For all parameter descriptions below, required parameters are shown i
 
 Checks the status of the specified server.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Configuration name |Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration if the _Use Credentials_ parameter is checked.
-|Use Credentials (Deprecated) |Indicate if credentials must be used. If checked, {CD} uses the user and password typed in the configuration. This parameter is deprecated, credentials will be used if they are provided.
+|Use Credentials (Deprecated) |Indicate if credentials must be used. If checked, {CDRO} uses the user and password typed in the configuration. This parameter is deprecated, credentials will be used if they are provided.
 |Credential |Specify username and password for check. Will be used for basic authentication.
 |Link to Check For |Url to check. If not given, one will be constructed from IIS conf.
 |Expected Status |3-digit HTTP status to wait for. Default is 200. Can be regular expression, e.g. 200|201.
@@ -77,11 +77,11 @@ Checks the status of the specified server.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/checkserverstatus/form.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/checkserverstatus/form.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the result of the check:
 
-image::cloudbees-common::cd-plugins/ec-iis/checkserverstatus/outcome.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/checkserverstatus/outcome.png[role="screenshot"]
 
 The logs similar to the following must appear:
 
@@ -108,7 +108,7 @@ URL successful (expected 200):
 
 Creates an IIS application pool or updates the existed one.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Application pool name |The name of the Application Pool to create. i.e: 'FirstAppPool'.
@@ -135,7 +135,7 @@ Creates an IIS application pool or updates the existed one.
 |Orphan action executable |Executable to run when a worker process is abandoned (orphaned). For example, "C:\dbgtools\ntsd.exe" would invoke NTSD to debug a worker process failure.
 |Orphan action executable parameters |Parameters for the executable that is run when a worker process is abandoned (orphaned). For example, -g -p %1% is appropriate if the NTSD is the executable invoked for debugging worker process failures.
 |Service unavailable response type |If set to HttpLevel and the application pool is stopped, Http.sys returns an HTTP 503 error. If set to TcpLevel, Http.sys resets the connection. This is useful if the load balancer recognizes one of the response types and subsequently redirects it.
-|Rapid fail protection enabled |If True, the application pool is shut down if there are a specified number of worker process failures (Maximum Failures) within a specified period (Failure Interval). By default, an application pool is shut down if there are five failures in a five minute period.
+|Rapid fail protection enabled |If True, the application pool is shut down if there are a specified number of worker process failures (Maximum Failures) within a specified period (Failure Interval). By default, an application pool is shut down if there are five failures in a five-minute period.
 |Failure interval (minutes) |The time interval (in minutes) during which the specified number of worker process failures (Maximum Failures) must occur before the application pool is shut down by Rapid Fail Protection.
 |Maximum failures |Maximum number of worker process failures permitted before the application pool is shut down by Rapid Fail Protection.
 |Shutdown executable |Executable to run when an application pool is shut down by Rapid Fail Protection. This can be used to configure a load balancer to redirect traffic for this application to another server.
@@ -145,36 +145,36 @@ Creates an IIS application pool or updates the existed one.
 |Private memory limit (KB) |Maximum amount of private memory (in KB) a worker process can consume before causing the application pool to recycle. A value of 0 means there is no limit.
 |Regular time interval (minutes) |Period of time (in minutes) after which an application pool recycles. A value of 0 means the application pool does not recycle at a regular interval.
 |Request limit |Maximum number of requests an application pool can process before it is recycled. A value of 0 means the application pool can process an unlimited number of requests.
-|Specific times |A set of specific local times, in 24 hour format, when the application pool is recycled.
+|Specific times |A set of specific local times, in 24-hour format, when the application pool is recycled.
 |Virtual memory limit (KB) |Maximum amount of virtual memory (in KB) a worker process can consume before causing the application pool to recycle. A value of 0 means there is no limit.
 |Additional parameters |Additional parameters to pass to appcmd.exe.
 |===
 
 To create an application pool, select the following highlighted step:
 
-image::cloudbees-common::cd-plugins/ec-iis/createapppool/ec-iis7createapppool1.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createapppool/ec-iis7createapppool1.png[role="screenshot"]
 
 Then, enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/createapppool/ec-iis7createapppool2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createapppool/ec-iis7createapppool2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the application pool was created successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/createapppool/ec-iis7createapppool3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createapppool/ec-iis7createapppool3.png[role="screenshot"]
 
 In the *CreateAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/createapppool/ec-iis7createapppool4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createapppool/ec-iis7createapppool4.png[role="screenshot"]
 
 [[CreateVirtualDirectory]]
 === CreateVirtualDirectory
 
 Creates a new virtual directory in the specified website or updates the existed one.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|Application name |The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Web Site/myapp02'.
+|Application name |The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Website/myapp02'.
 |Virtual path |Virtual path of the virtual directory, i.e: '/myvirtualdir'.
 |Absolute physical path |The absolute physical path of the Virtual Directory to create, i.e: 'c:/Inetpub/wwwroot/myvdir'.
 |Create Directory? |If checked, the specified directory will be created if it does not exist.
@@ -183,33 +183,33 @@ Creates a new virtual directory in the specified website or updates the existed 
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/createvirtualdirectory/form.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createvirtualdirectory/form.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the virtual directory was created successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/createvirtualdirectory/outcome.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createvirtualdirectory/outcome.png[role="screenshot"]
 
 Logs will be similar to the following:
 
 ....
 Using plugin EC-IIS-3.1.0.0
-Got parameter "appname" with value "Default Web Site/"
+Got parameter "appname" with value "Default Website/"
 Got parameter "createDirectory" with value "1"
 Got parameter "credential" with value "credential"
 Got parameter "path" with value "mydir"
-Got parameter "physicalpath" with value "c:/tmp/path"
+Got parameter "physical-path" with value "c:/tmp/path"
 Going to create directory "C:\tmp\path"
 Directory "C:\tmp\path" already exists, skipping
-Virtual directory Default Web Site/mydir does not exists, proceeding to creating it
+Virtual directory Default Website/mydir does not exist, proceeding to creating it
 Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add vdir /app.name:"Default Web Site/" /path:"/mydir" /physicalPath:"C:\tmp\path"
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add vdir /app.name:"Default Website/" /path:"/mydir" /physicalPath:"C:\tmp\path"
 Exit code: 0
-STDOUT: VDIR object "Default Web Site/mydir" added
+STDOUT: VDIR object "Default Website/mydir" added
 STDERR: N/A
-Going to set credentails for directory "Default Web Site/mydir"
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Web Site/mydir" /username:"build" /password:"*****"
+Going to set credentials for directory "Default Website/mydir"
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Website/mydir" /username:"build" /password:"*****"
 Exit code: 0
-STDOUT: VDIR object "Default Web Site/mydir" changed
+STDOUT: VDIR object "Default Website/mydir" changed
 STDERR: N/A
 ....
 
@@ -218,10 +218,10 @@ STDERR: N/A
 
 Creates or updates and starts an in-process web application in the given directory. This procedure assumes that the specified application path exists as a virtual directory.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|Website Name |The name of the website to add the application, i.e: 'Default Web Site'.
+|Website Name |The name of the website to add the application, i.e: 'Default Website'.
 |Virtual Path |Virtual path of the application, i.e: '/myApplication'.
 |Absolute Physical Path |The absolute physical path of the application to create, i.e: 'c:/Inetpub/wwwroot/myApp'.
 |Create Directory? |If checked, the specified directory will be created if it does not exist.
@@ -230,32 +230,32 @@ Creates or updates and starts an in-process web application in the given directo
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/createwebapplication/form.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createwebapplication/form.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the web application was created successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/createwebapplication/outcome.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createwebapplication/outcome.png[role="screenshot"]
 
 Logs will look like the following:
 
 ....
 Using plugin EC-IIS-3.1.0.0
-Got parameter "appname" with value "Default Web Site"
+Got parameter "appname" with value "Default Website"
 Got parameter "createDirectory" with value "1"
 Got parameter "credential" with value "credential"
 Got parameter "path" with value "myApp"
 Got parameter "physicalpath" with value "c:/tmp/myApp"
-Application full name: Default Web Site/myApp
+Application full name: Default Website/myApp
 Going to create directory "C:\tmp\myApp"
 Created directory "C:\tmp\myApp"
 Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add app /site.name:"Default Web Site" /path:"/myApp" /physicalPath:"C:\tmp\myApp"
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add app /site.name:"Default Website" /path:"/myApp" /physicalPath:"C:\tmp\myApp"
 Exit code: 0
-STDOUT: APP object "Default Web Site/myApp" added
+STDOUT: APP object "Default Website/myApp" added
 VDIR object "Default Web Site/myApp" added
 STDERR: N/A
-Going to set credentails for directory Default Web Site/myApp/
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Web Site/myApp/" /username:"build" /password:"*****"
+Going to set credentails for directory Default Website/myApp/
+Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Website/myApp/" /username:"build" /password:"*****"
 Exit code: 0
 STDOUT: VDIR object "Default Web Site/myApp/" changed
 STDERR: N/A
@@ -266,7 +266,7 @@ STDERR: N/A
 
 Creates or updates a website configuration on a local or remote computer.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Website name |The name of the Website to create.
@@ -279,11 +279,11 @@ Creates or updates a website configuration on a local or remote computer.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/createwebsite/form.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createwebsite/form.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the website was created successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/createwebsite/outcome.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/createwebsite/outcome.png[role="screenshot"]
 
 Logs should look like the following:
 
@@ -312,103 +312,103 @@ STDERR: N/A
 
 Deletes a web application from the specified Website.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|Application Name |The Website that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
+|Application Name |The Website that contains the Application to delete. i.e: 'Default Website/' or 'Site1/myapp'.
 |Strict Mode |If checked, the procedure will fail in case the specified application does not exist.
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the web application was deleted successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication3.png[role="screenshot"]
 
 In the *DeleteWebApplication* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication4.png[role="screenshot"]
 
 [[DeleteVirtualDirectory]]
 === DeleteVirtualDirectory
 
 Deletes a virtual directory from the specified website.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|Virtual directory name |The Website and virtual path that contains the Virtual Directory to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
+|Virtual directory name |The Website and virtual path that contains the Virtual Directory to delete. i.e: 'Default Website/' or 'Site1/myapp'.
 |Strict mode |If checked, the procedure will fail in case the specified virtual directory does not exist.
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the virtual directory was deleted successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory3.png[role="screenshot"]
 
 In the *DeleteVirtualDirectory* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory4.png[role="screenshot"]
 
 [[DeleteWebSite]]
 === DeleteWebSite
 
 Deletes a website.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|Website name |The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
+|Website name |The name of the website to delete. i.e: 'Default Website/' or 'Site1/myapp'.
 |Strict mode |If checked, the procedure will fail in case the specified website does not exist.
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the website was deleted successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite3.png[role="screenshot"]
 
 In the *DeleteWebSite* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite4.png[role="screenshot"]
 
 [[DeleteAppPool]]
 === DeleteAppPool
 
 Deletes an application pool.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|Application pool name |The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
+|Application pool name |The name of the website to delete. i.e: 'Default Website/' or 'Site1/myapp'.
 |Strict mode |If checked, the procedure will fail in case the specified application pool does not exist.
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the application pool was deleted successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool3.png[role="screenshot"]
 
 In the *DeleteAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool4.png[role="screenshot"]
 
 [[DeployCopy]]
 === DeployCopy
 
 Copies the application files recursively to the website application's physical directory.
 
-[width="100%",cols="50%,50%",options="header",]
+[width="100%",cols="50%,50%",options="header"]
 |===
 |Parameter |Description
 |Destination path |Provide the path to the destination directory. This must be a physical directory, but it may have an IIS virtual directory pointing to it. i.e: 'C:\inetpub\wwwroot\copyTest'. (Required)
@@ -421,42 +421,42 @@ Indicate option switches for the XCOPY executable, excluding source and destinat
 * */K* - Copy attributes
 * */R* - Overwrite read-only files
 * */H* - Copy hidden and system files
-* */I* - If the destination does not exist and you are copying more than one file, it is assumed that the destination is a directory.
+* */I* - If the destination does not exist, and you are copying more than one file, it is assumed that the destination is a directory.
 * */Y* - Suppress prompting for overwrite confirmation
 
 |===
 
 To deploy copy, select the following highlighted step:
 
-image::cloudbees-common::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy1.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy1.png[role="screenshot"]
 
 Then, enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the copy was success:
 
-image::cloudbees-common::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy3.png[role="screenshot"]
 
 In the *DeployCopy* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy4.png[role="screenshot"]
 
 [[Deploy]]
 === Deploy
 
-Uses MsDeploy (WebDeploy) to deploy a package or a site from directory into the specified destination. Also allows to configure application pool.
+Uses MsDeploy (WebDeploy) to deploy a package or a site from directory into the specified destination. Also allows you to configure the application pool.
 
 MsDeploy is required for this procedure.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |MS deploy path |Provide the relative or absolute path to the MSDeploy executable.
 |Deploy source path |A path to package (application.zip) or to directory which contains the content to be deployed.
-|Destination website |A name of the web site to be deployed.
+|Destination website |A name of the website to be deployed.
 |Destination application |A name of the application to be deployed. If not provided, the content will be placed under the website.
-|Application pool name |Application pool name. If the application pool does not exists, it will be created. If this parameter was not specified, the application will be placed into the default pool, which has the same name as website.
+|Application pool name |Application pool name. If the application pool does not exist, it will be created. If this parameter was not specified, the application will be placed into the default pool, which has the same name as website.
 |.NET framework version |.NET Framework version 3.5 includes all the functionality of earlier versions, and introduces new features for the technologies in versions 2.0 and 3.0 and additional technologies in the form of new assemblies. To use version 3.5, install the appropriate version of .NET Framework and use product-specific guidelines.
 |Enable 32-bit applications |If set to True for an application pool on a 64-bit operating system, the worker process(es) serving the application pool run in WOW64 (Windows on Windows64) mode. In WOW64 mode, 32-bit processes load only 32-bit applications.
 |Managed pipeline mode |Configures ASP.NET to run in classic mode as an ISAPI extension or in integrated mode where managed code is integrated into the request-processing pipeline.
@@ -468,15 +468,15 @@ MsDeploy is required for this procedure.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/deploy/form.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deploy/form.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the copy was success:
 
-image::cloudbees-common::cd-plugins/ec-iis/deploy/ec-iis7deploy3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deploy/ec-iis7deploy3.png[role="screenshot"]
 
 In the *Deploy* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/deploy/ec-iis7deploy4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deploy/ec-iis7deploy4.png[role="screenshot"]
 
 [[Undeploy]]
 === Undeploy
@@ -485,23 +485,23 @@ Uses MsDeploy to undeploy an application or site.
 
 MsDeploy is required for this procedure.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |MS deploy path |Provide the relative or absolute path to the MSDeploy executable.
-|Web site name |A web site name to undeploy.
-|Application name |An application name to undeploy. Warning: if not specified, the web site with the name above will be undeployed.
-|Delete virtual directories? |Deletes the specified Web site or Web application, including any virtual directories and their content.
-|Strict mode |If checked, the procedure will fail in case the specified web site does not exist.
+|Web site name |A website name to undeploy.
+|Application name |An application name to undeploy. Warning: if not specified, the website with the name above will be undeployed.
+|Delete virtual directories? |Deletes the specified website or web application, including any virtual directories and their content.
+|Strict mode |If selected, the procedure will fail in case the specified website does not exist.
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/undeploy/form.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/undeploy/form.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the copy was success:
 
-image::cloudbees-common::cd-plugins/ec-iis/undeploy/summary.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/undeploy/summary.png[role="screenshot"]
 
 The logs will look like thw following:
 
@@ -529,11 +529,11 @@ An interface to msdeploy.exe utility.
 
 MsDeploy is required for this procedure.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |MSDeploy path |Provide the relative or absolute path to the MSDeploy executable.
-|Verb |Web Deploy operations enable you to gather information from, move, or delete deployment objects like Web sites and Web applications. Web Deploy operations are specified on the command line with the -verb argument. The Web Deploy operations are dump, sync, delete, getDependencies, and getSystemInfo.
+|Verb |Web Deploy operations enable you to gather information from, move, or delete deployment objects like websites and web applications. Web Deploy operations are specified on the command line with the -verb argument. The Web Deploy operations are dump, sync, delete, getDependencies, and getSystemInfo.
 |Source provider |Providers process specific source or destination data for Web Deploy. For example, the contentPath provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the -source: or -dest: argument.
 |Source provider object path |Specifies a path of the provider object. Some providers require a path and some do not. If required, the kind of path depends on the provider.
 |Source provider settings |Providers can be optionally modified by using provider settings. Provider settings can be added to either a source or a destination by using the general syntax
@@ -550,26 +550,26 @@ MsDeploy is required for this procedure.
 
 To deploy, select the following highlighted step:
 
-image::cloudbees-common::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced1.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced1.png[role="screenshot"]
 
 Then, enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the copy was success:
 
-image::cloudbees-common::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced3.png[role="screenshot"]
 
 In the *Deploy* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced4.png[role="screenshot"]
 
 [[StartAppPool]]
 === StartAppPool
 
 Starts an IIS application pool.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Application pool name |The name of the application pool to start. i.e: 'FirstAppPool'.
@@ -577,45 +577,45 @@ Starts an IIS application pool.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/startapppool/ec-iis7startapppool2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/startapppool/ec-iis7startapppool2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the application pool was started successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/startapppool/ec-iis7startapppool3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/startapppool/ec-iis7startapppool3.png[role="screenshot"]
 
 In the *StartAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/startapppool/ec-iis7startapppool4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/startapppool/ec-iis7startapppool4.png[role="screenshot"]
 
 [[StartWebSite]]
 === StartWebSite
 
 Starts a website into an IIS Server.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|Website name |Provide the descriptive name of the website you want to start. i.e: 'Default Web Site'.
+|Website name |Provide the descriptive name of the website you want to start. i.e: 'Default Website'.
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the website was started successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite3.png[role="screenshot"]
 
 In the *StartWebSite* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite4.png[role="screenshot"]
 
 [[StopAppPool]]
 === StopAppPool
 
 Stops an IIS application pool.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Application pool name |The name of the application pool to stop. i.e: 'FirstAppPool'.
@@ -623,45 +623,45 @@ Stops an IIS application pool.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool2.png[role="screenshot"]
 
-When the job is executed, you should see the following job detail, note the output indicating the application pool was stoped successfully:
+When the job is executed, you should see the following job detail, note the output indicating the application pool was stopped successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool3.png[role="screenshot"]
 
 In the *StopAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool4.png[role="screenshot"]
 
 [[StopWebSite]]
 === StopWebSite
 
 Stops a website.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|Website name |Provide the descriptive name of the website you want to stop. i.e: 'Default Web Site'.
+|Website name |Provide the descriptive name of the website you want to stop. i.e: 'Default Website'.
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite2.png[role="screenshot"]
 
-When the job is executed, you should see the following job detail, note the output indicating the website was stoped successfully:
+When the job is executed, you should see the following job detail, note the output indicating the website was stopped successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite3.png[role="screenshot"]
 
 In the *StopWebSite* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite4.png[role="screenshot"]
 
 [[RecycleAppPool]]
 === RecycleAppPool
 
 Recycles the specified application pool.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Application pool name |Provide the name of the application pool to be recycled.
@@ -669,76 +669,76 @@ Recycles the specified application pool.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool2.png[role="screenshot"]
 
-When the job is executed, you should see the following job detail, note the output indicating the website was stoped successfully:
+When the job is executed, you should see the following job detail, note the output indicating the website was stopped successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool3.png[role="screenshot"]
 
 In the *RecycleAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool4.png[role="screenshot"]
 
 [[AssignAppToAppPool]]
 === AssignAppToAppPool
 
 Assigns an application to an application pool.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Application pool name |The name of the Application Pool to assign the application. i.e: 'FirstAppPool'.
 |Application name |The name of the application to assign. i.e: '/test'.
-|Site name |The name of the site that contains the app to assign. i.e: 'Default Web Site'.
+|Site name |The name of the site that contains the app to assign. i.e: 'Default Website'.
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the application was moved successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool3.png[role="screenshot"]
 
 In the *AssignApp* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool4.png[role="screenshot"]
 
 [[ListSites]]
 === ListSites
 
-List the sites on a web server and writes the retrived data under the specified property.
+List the sites on a web server and writes the retrieved data under the specified property.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|User-defined criterias |The user-defined criterias to search the sites. Blank lists all sites. i.e: '/bindings:http/*:80:'.
+|User-defined criteria |The user-defined criteria to search the sites. Blank lists all sites. i.e: '/bindings:http/*:80:'.
 |Property name |Property to write retrieved data.
 |Dump format |Choose the format to represent retrieved data. Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/listsites/ec-iis7listsites2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listsites/ec-iis7listsites2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the sites detected and started:
 
-image::cloudbees-common::cd-plugins/ec-iis/listsites/ec-iis7listsites3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listsites/ec-iis7listsites3.png[role="screenshot"]
 
 In the *ListSites* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/listsites/ec-iis7listsites4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listsites/ec-iis7listsites4.png[role="screenshot"]
 
 Under the specified property you will see extracted sites data.
 
-image::cloudbees-common::cd-plugins/ec-iis/listsites/ec-iis7listsites5.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listsites/ec-iis7listsites5.png[role="screenshot"]
 
 [[ListSiteApps]]
 === ListSiteApps
 
 List the apps of a Website.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Site name |The name of the site to look for Applications. Blank lists all apps.
@@ -748,11 +748,11 @@ List the apps of a Website.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/listsiteapps/ec-iis7listsiteapps2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listsiteapps/ec-iis7listsiteapps2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the applications detected:
 
-image::cloudbees-common::cd-plugins/ec-iis/listsiteapps/ec-iis7listsiteapps3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listsiteapps/ec-iis7listsiteapps3.png[role="screenshot"]
 
 The logs will look like the following:
 
@@ -764,14 +764,14 @@ Got parameter "sitename" with value ""
 Wrote command to property cmdLine
 Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" list apps
 Exit code: 0
-STDOUT: APP "Default Web Site/" (applicationPool:DefaultAppPool)
-APP "Default Web Site/myApp" (applicationPool:DefaultAppPool)
+STDOUT: APP "Default Website/" (applicationPool:DefaultAppPool)
+APP "Default Website/myApp" (applicationPool:DefaultAppPool)
 APP "NetDash/" (applicationPool:NetDash)
 APP "MySite/" (applicationPool:DefaultAppPool)
 APP "NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934/" (applicationPool:DefaultAppPool)
 STDERR: N/A
-Wrote property: /myJob/IISApps/Default Web Site//applicationPool -> DefaultAppPool
-Wrote property: /myJob/IISApps/Default Web Site/myApp/applicationPool -> DefaultAppPool
+Wrote property: /myJob/IISApps/Default Website//applicationPool -> DefaultAppPool
+Wrote property: /myJob/IISApps/Default Website/myApp/applicationPool -> DefaultAppPool
 Wrote property: /myJob/IISApps/MySite//applicationPool -> DefaultAppPool
 Wrote property: /myJob/IISApps/NetDash//applicationPool -> NetDash
 Wrote property: /myJob/IISApps/NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934//applicationPool -> DefaultAppPool
@@ -782,32 +782,32 @@ Wrote property: /myJob/IISApps/NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934//app
 
 List the application pools.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|User-defined criterias |The user-defined criterias to search the application pools. Blank lists all pools. i.e: '/apppool.name:"my pool"'.
+|User-defined criteria |The user-defined criteria to search the application pools. Blank lists all pools. i.e: '/apppool.name:"my pool"'.
 |Property name |Property to write retrieved data.
 |Dump format |Choose the format to represent retrieved data. Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
 |===
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/listapppools/ec-iis7listapppools2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listapppools/ec-iis7listapppools2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the applications detected:
 
-image::cloudbees-common::cd-plugins/ec-iis/listapppools/ec-iis7listapppools3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listapppools/ec-iis7listapppools3.png[role="screenshot"]
 
 In the *ListAppPools* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
-image::cloudbees-common::cd-plugins/ec-iis/listapppools/ec-iis7listapppools4.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listapppools/ec-iis7listapppools4.png[role="screenshot"]
 
 [[ListVirtualDirectories]]
 === ListVirtualDirectories
 
 List the virtual directories.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
 |Virtual directory name |Virtual directory name to retrieve. If not provided, will retrieve all the virtual directories.
@@ -817,11 +817,11 @@ List the virtual directories.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/listvirtualdirectories/ec-iis7listvirtualdirectories2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listvirtualdirectories/ec-iis7listvirtualdirectories2.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the applications detected:
 
-image::cloudbees-common::cd-plugins/ec-iis/listvirtualdirectories/ec-iis7listvirtualdirectories3.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/listvirtualdirectories/ec-iis7listvirtualdirectories3.png[role="screenshot"]
 
 The logs will look like the following:
 
@@ -833,16 +833,16 @@ Got parameter "vdirName" with value ""
 Wrote command to property cmdLine
 Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" list vdirs
 Exit code: 0
-STDOUT: VDIR "Default Web Site/" (physicalPath:%SystemDrive%\inetpub\wwwroot)
-VDIR "Default Web Site/mydir" (physicalPath:C:\tmp\path)
-VDIR "Default Web Site/myApp/" (physicalPath:C:\tmp\myApp)
+STDOUT: VDIR "Default Website/" (physicalPath:%SystemDrive%\inetpub\wwwroot)
+VDIR "Default Website/mydir" (physicalPath:C:\tmp\path)
+VDIR "Default Website/myApp/" (physicalPath:C:\tmp\myApp)
 VDIR "NetDash/" (physicalPath:C:\inetpub\NetDash)
 VDIR "MySite/" (physicalPath:c:/wrong_dir)
 VDIR "NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934/" (physicalPath:c:/site_NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934)
 STDERR: N/A
-Wrote property: /myJob/IISVirtualDirectories/Default Web Site//physicalPath -> %SystemDrive%\inetpub\wwwroot
-Wrote property: /myJob/IISVirtualDirectories/Default Web Site/myApp//physicalPath -> C:\tmp\myApp
-Wrote property: /myJob/IISVirtualDirectories/Default Web Site/mydir/physicalPath -> C:\tmp\path
+Wrote property: /myJob/IISVirtualDirectories/Default Website//physicalPath -> %SystemDrive%\inetpub\wwwroot
+Wrote property: /myJob/IISVirtualDirectories/Default Website/myApp//physicalPath -> C:\tmp\myApp
+Wrote property: /myJob/IISVirtualDirectories/Default Website/mydir/physicalPath -> C:\tmp\path
 Wrote property: /myJob/IISVirtualDirectories/MySite//physicalPath -> c:/wrong_dir
 Wrote property: /myJob/IISVirtualDirectories/NetDash//physicalPath -> C:\inetpub\NetDash
 Wrote property: /myJob/IISVirtualDirectories/NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934//physicalPath -> c:/site_NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934
@@ -853,10 +853,10 @@ Wrote property: /myJob/IISVirtualDirectories/NetDash_25d14fc9-a891-4c5f-bd49-07e
 
 Adds a binding to a Website.
 
-[cols=",",options="header",]
+[cols=",",options="header"]
 |===
 |Parameter |Description
-|Website Name |The name of the Website to add a binding, i.e: 'Default Web Site'. The site should exist on server.
+|Website Name |The name of the Website to add a binding, i.e: 'Default Website'. The site should exist on server.
 |Binding Protocol |Protocol of the binding to add, e.g. 'http'. Usually the protocol is http or https, for FTP binding please refer to https://technet.microsoft.com/en-us/library/cc731692%28v=ws.10%29.aspx[Add a Binding to a Site] article.
 |Binding Information |Information of the binding to add, including the host and the port, e.g.: 'localhost:443', '*:81'.
 |Host Header |Host headers (also known as domain names or host names) let you assign more than one site to a single IP address on a Web server. E.g., myhost.com.
@@ -864,11 +864,11 @@ Adds a binding to a Website.
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/addwebsitebinding/form.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/addwebsitebinding/form.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail, note the output indicating the binding was added successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/addwebsitebinding/summary.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/addwebsitebinding/summary.png[role="screenshot"]
 
 In the *AddWebSiteBinding* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
 
@@ -900,7 +900,7 @@ Stops IIS server.
 
 To stop IIS server, enter the following parameters
 
-image::cloudbees-common::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[role="screenshot"]
 
 [[StartServer]]
 
@@ -918,7 +918,7 @@ Starts IIS server.
 
 To start IIS server, enter the following parameters
 
-image::cloudbees-common::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[role="screenshot"]
 
 [[RestartServer]]
 
@@ -936,7 +936,7 @@ Restarts IIS server.
 
 To restart IIS server, enter the following parameters
 
-image::cloudbees-common::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[role="screenshot"]
 
 [[AddSSLCertificate]]
 
@@ -959,11 +959,11 @@ Certificate should be added to IIS certificates storage. Please refer to https:/
 
 Enter the following parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/addsslcertificate/form.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/addsslcertificate/form.png[role="screenshot"]
 
 When the job is executed, you should see the following job detail:
 
-image::cloudbees-common::cd-plugins/ec-iis/addsslcertificate/summary.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/addsslcertificate/summary.png[role="screenshot"]
 
 Logs will look like the following:
 
@@ -987,33 +987,33 @@ STDERR: N/A
 
 == Examples and use cases
 
-=== Create web site
+=== Create website
 
-This example, shows the way to create a web site from the beginning.
+This example, shows the way to create a website from the beginning.
 
-First, run the CheckServerStatus with the appropiate parameters to verify the server disponibility:
+First, run the CheckServerStatus with the appropriate parameters to verify the server disponibility:
 
-image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7checkserver1.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7checkserver1.png[role="screenshot"]
 
-Now, check the result of the server staus, it must be running:
+Now, check the result of the server status, it must be running:
 
-image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7checkserver2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7checkserver2.png[role="screenshot"]
 
-Now that the server is running, the webSite can be created with these parameters:
+Now that the server is running, the website can be created with these parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7createwebsite1.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7createwebsite1.png[role="screenshot"]
 
 Check the result of the creation of the site:
 
-image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7createwebsite2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7createwebsite2.png[role="screenshot"]
 
-If the creation of the site was successfully, the site can be started with these paramters:
+If the creation of the site was successfully, the site can be started with these parameters:
 
-image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7startwebsite1.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite1.png[role="screenshot"]
 
 Finally, check that the created application was started successfully:
 
-image::cloudbees-common::cd-plugins/ec-iis/case1/ec-iis7startwebsite2.png[image]
+image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite2.png[role="screenshot"]
 
 [[KnownIssues]]
 == Known issues
@@ -1038,7 +1038,7 @@ Due to escape issues, double quote (") is not supported in parameter values.
 
 === EC-IIS 3.1.6
 
-* Renaming  to "{CD}"
+* Renaming  to "{CDRO}"
 
 === EC-IIS 3.1.5
 
@@ -1066,7 +1066,7 @@ Renaming  to "CloudBees"
 * Field "Computer Name" in configuration is deprecated.
 * "Credentials" field was added to "CheckServerStatus" procedure.
 * "Configuration Name" field is no longer required in "CheckServerStatus" procedure.
-* Deploy logic has changed: if no application name is provided to Deploy procedure, but Application Pool parameters are provided, root application of the Web Site (/) is moved into the specified Application Pool and parameters are applied to this application pool.
+* Deploy logic has changed: if no application name is provided to Deploy procedure, but Application Pool parameters are provided, root application of the website (/) is moved into the specified Application Pool and parameters are applied to this application pool.
 * Support for virtual directory credentials was added for CreateWebSite, CreateWebApplication, CreateVirtualDirectory procedures.
 * "Create Directory?" option was added for CreateWebSite, CreateWebApplication, CreateVirtualDirectory procedures.
 * AddSSLCertificate procedure has been added.
