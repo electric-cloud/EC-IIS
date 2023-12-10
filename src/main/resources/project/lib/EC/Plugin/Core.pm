@@ -767,12 +767,25 @@ sub get_params_as_hashref {
     my $ec = $self->ec();
     for my $param_name (@params_list) {
         my $param = $self->get_param($param_name);
+
+        my $formal_parameter = $ec->getFormalParameter({
+            projectName => '@PLUGIN_NAME@',
+            procedureName => '$[/myProcedure/name]',
+            formalParameterName => $param_name
+        });
+        if ($formal_parameter->findvalue('//required')->string_value eq '1') {
+            if (!$param) {
+                $self->bail_out(qq{Parameter "$param_name" is required});
+            }
+        }
         next unless defined $param;
         $retval->{$param_name} = trim_input($param);
     }
     for my $param_name (sort keys %$retval) {
         $self->logger->info(qq{Got parameter "$param_name" with value "$retval->{$param_name}"});
     }
+
+
     return $retval;
 }
 
