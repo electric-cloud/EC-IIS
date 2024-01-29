@@ -5,7 +5,7 @@ Revised on November 27, 2023
 
 == Integrated version
 
-This plugin supports next versions of IIS:
+The IIS plugin supports the following versions of IIS:
 
 * 7.0
 * 7.5
@@ -13,1100 +13,939 @@ This plugin supports next versions of IIS:
 * 8.5
 * 10
 
-This plugin supports next versions of Web Deploy:
+The IIS plugin supports the following versions of Web Deploy:
 
 * 3.5
 * 3.6
 
 
 [[CreateConfiguration]]
+== Create IIS plugin configurations
 
+include::cloudbees-cd-plugin-docs::partial$create-configuration-intro.adoc[]
 
-== Plugin configuration
+include::cloudbees-cd-plugin-docs::partial$create-configuration.adoc[]
 
-Plugin configurations are sets of parameters that apply across some or all of the plugin's procedures. They are intended to reduce repetition of common values, create predefined sets of parameters for end users, and to securely store credentials where needed. Each configuration is given a unique name that is entered in designated parameters on procedures that use them.
+=== IIS plugin configuration parameters
 
-Plugin configurations are created by going to the {CDRO} "Administration" tab, then to the "Plugins" sub-tab. On the right side of the line for the specific plugin, there is a "Configure" link which will open the Configuration page.
+NOTE: The configuration is only used with the *<<CheckServerStatus>>* procedure.
 
-Please note, that configuration is used only for CheckServerStatus procedure (for now).
-
-To enable {CDRO} to communicate with your IIS server, create an IIS configuration, supplying the following information:
-
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Configuration Name |Provide a unique name for the configuration, keeping in mind that you may need to create additional configurations over time.
-|IIS IP Address |Provide the URL for the IIS server, it must include the protocol. i.e: 'http://192.168.1.100'.
-|IIS Port |Provide the port for the IIS server. This port is used in conjunction with the IP address to conform the URL. If not provided, {CDRO} uses the default port '80'. i.e: '8081'.
-|Computer Name (DEPRECATED) |Provide the computer name or IP address without backslashes. i.e: 'server01'. Is not used, will be removed in the next release.
-|Login as |_Username_: Provide the username {CDRO} uses to communicate with the IIS server.
+|Parameter
+|Description
 
-_Password_: Provide the password for the specified Username.
+|Configuration Name
+|Required. The unique name for the configuration.
 
-_Retype Password_: Retype the password specified.
+|IIS IP Address
+|URL for the IIS server. It must include the protocol (for example, `\http://192.168.1.100`).
+
+|IIS Port
+|Port for the IIS server. This port is used in conjunction with the IP address to conform the URL (for example, `8081`). If not provided, {PRODUCT} uses the default port `80`.
+
+|Computer Name (DEPRECATED)
+|Computer name or IP address without backslashes (for example, `server01`).
+
+WARNING: This parameter has been deprecated and will be removed in the future.
+
+|Login as
+|
+* *Username:* Username that {PRODUCT} uses to communicate with the IIS server.
+* *Password:* Password for the specified username.
+* *Retype Password:* Retype the password.
 |===
 
-Enter these parameters in the configuration panel:
+== Create IIS plugin procedures
 
-image::cloudbees-common-sda::cd-plugins/ec-iis/config/configform.png[role="screenshot"]
-
-== Plugin procedures
-
-IMPORTANT: In the {CDRO} UI, from the Home page, open the Main Menu, and click *Admin* > *Plugins* to open the Plugin Manager.
-
-IMPORTANT: For all parameter descriptions below, required parameters are shown in [.required]#bold italics#.
-
+include::cloudbees-cd-plugin-docs::partial$create-procedure-intro.adoc[]
 
 [[CheckServerStatus]]
 === CheckServerStatus
 
 Checks the status of the specified server.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Configuration name |Provide the name of the configuration that holds connection information for the IIS server. In this case, only credentials are taken from the configuration if the _Use Credentials_ parameter is checked.
-|Use Credentials (Deprecated) |Indicate if credentials must be used. If checked, {CDRO} uses the user and password typed in the configuration. This parameter is deprecated, credentials will be used if they are provided.
-|Credential |Specify username and password for check. Will be used for basic authentication.
-|Link to Check For |Url to check. If not given, one will be constructed from IIS conf.
-|Expected Status |3-digit HTTP status to wait for. Default is 200. Can be regular expression, e.g. 200|201.
-|Check Unavailable |If checked, the server:port will just be checked for availability and URL path and status parameters will be ignored. If server is available, the procedure will fail.
-|Timeout |Specify connection timeout. Default is 30s.
-|Retries |Specify number of retries. Default is 1. This only affects connecting to server, NOT the status returned by server.
+|Parameter
+|Description
+
+|Configuration name
+|Provide the name of the configuration that holds connection information for the IIS server. Credentials are only used from the plugin configuration if the *Use Credentials* parameter is selected.
+
+|Use Credentials (Deprecated)
+|Indicate if credentials must be used. If selected, {PRODUCT} uses the username and password from the plugin configuration.
+
+WARNING: This parameter has been deprecated and will be removed in the future. Credentials are used if they are provided.
+
+|Credential
+|Username and password for basic authentication.
+
+|Link to Check For
+|URL to check. If not specified, a URL is constructed from the IIS configuration.
+
+|Expected Status
+|3-digit HTTP status to wait for. Default is `200`. This can also be a regular expression (for example, `200\|201`).
+
+|Check Unavailable
+|If selected, the `server:port` is checked for availability and the URL path and status parameters are ignored. If the server is available, the procedure fails.
+
+|Timeout
+|Connection timeout. Default is `30` seconds.
+
+|Retries
+|Number of retries. This only affects connecting to server, and not the status returned by the server. Default is `1`.
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/checkserverstatus/form.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the result of the check:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/checkserverstatus/outcome.png[role="screenshot"]
-
-The logs similar to the following must appear:
-
-....
-Using plugin EC-IIS-3.1.0.0
-Logs are redirected to property /myJob/debug_logs
-Got parameter "checkRetries" with value ""
-Got parameter "checkTimeout" with value ""
-Got parameter "checkUrl" with value "http://localhost:80"
-Got parameter "configname" with value ""
-Got parameter "credential" with value ""
-Got parameter "expectStatus" with value "200"
-Got parameter "unavailable" with value "0"
-Using timeout: 30 seconds
-Request: GET http://localhost:80
-
-
-Retries left: 0
-URL successful (expected 200):
-....
 
 [[CreateAppPool]]
 === CreateAppPool
 
 Creates an IIS application pool or updates the existed one.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Application pool name |The name of the Application Pool to create. i.e: 'FirstAppPool'.
-|.NET framework version |Configures the application pool to load a specific version of the .NET Framework. Selecting No Managed Code causes all ASP.NET requests to fail.
-|Enable 32-bit applications |If set to True for an application pool on a 64-bit operating system, the worker process(es) serving the application pool run in WOW64 (Windows on Windows64) mode. In WOW64 mode, 32-bit processes load only 32-bit applications.
-|Managed pipeline mode |Configures ASP.NET to run in classic mode as an ISAPI extension or in integrated mode where managed code is integrated into the request-processing pipeline.
-|Queue length |Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.
-|Start automatically |If True, the application pool starts on creation or when IIS starts. Starting an application pool sets this property to True. Stopping an application sets this property to False.
-|Limit |Configures the maximum percentage of CPU time (in 1/1000ths of a percent) that the worker processes in an application pool are allowed to consume over a period of time as indicated by the Limit Interval setting (resetInterval property). If the limit set by Limit (limit property) is exceeded, the event is written to the event log and an optional set of events can be triggered or determined by the Limit Action setting (action property). Setting the value of Limit to 0 disables limiting the worker processes to a percentage of CPU time.
-|Limit action |If set to NoAction, an event log entry is generated. If set to KillW3WP, the application pool is shut down for the duration of the reset interval and an event log entry is generated.
-|Limit interval (minutes) |Specifies the reset period (in minutes) for CPU monitoring and throttling limits on the application pool. When the number of minutes elapsed since the last process accounting reset equals the number specified by this property, IIS resets the CPU timers for both the logging and limit intervals. Setting the value of Limit Interval to 0 disables CPU monitoring.
-|Processor affinity enabled |If True, Processor Affinity Enabled forces the worker process(es) serving this application pool to run on specific CPUs. This enables sufficient use of CPU caches on multiprocessor servers.
-|Processor affinity mask |Hexadecimal mask that forces the worker process(es) for this application pool to run on a specific CPU. If processor affinity is enabled, a value of 0 causes an error condition.
-|Identity |Configures the application pool to run as a built-in account, such as Network Service (recommended), Local Service, or as a specific user identity.
-|Idle timeout (minutes) |Amount of time (in minutes) a worker process remains idle before it shuts down. A worker process is idle if it is not processing requests and no new requests are received.
-|Load user profile |Specifies whether IIS loads the user profile for an application pool identity. When set to True, IIS loads the user profile for the application pool identity. Set to False when you require IIS 6.0 behavior.
-|Maximum worker processes |Maximum number of worker processes permitted to service requests for the application pool. If this number is greater than 1, the application pool is called a Web garden.
-|Ping enabled |If True, the worker process(es) serving this application pool are pinged periodically to ensure that they are still responsive. This process is called health monitoring.
-|Ping maximum response time (seconds) |Maximum time (in seconds) that a worker process is given to respond to a health monitoring ping. If the worker process does not respond, it is terminated.
-|Ping period (seconds) |Period of time (in seconds) between health monitoring pings sent to the worker process(es) serving this application pool.
-|Shutdown time limit (seconds) |Period of time (in seconds) a worker process is given to finish processing requests and shut down. If the worker process exceeds the shutdown time limit, it is terminated.
-|Startup time limit (seconds) |Period of time (in seconds) a worker process is given to start up and initialize. If the worker process initialization exceeds the startup time limit, it is terminated.
-|Application pool process orphaning enabled |If True, an unresponsive worker process is abandoned (orphaned) instead of terminated. This feature can be used to debug a worker process failure.
-|Orphan action executable |Executable to run when a worker process is abandoned (orphaned). For example, "C:\dbgtools\ntsd.exe" would invoke NTSD to debug a worker process failure.
-|Orphan action executable parameters |Parameters for the executable that is run when a worker process is abandoned (orphaned). For example, -g -p %1% is appropriate if the NTSD is the executable invoked for debugging worker process failures.
-|Service unavailable response type |If set to HttpLevel and the application pool is stopped, Http.sys returns an HTTP 503 error. If set to TcpLevel, Http.sys resets the connection. This is useful if the load balancer recognizes one of the response types and subsequently redirects it.
-|Rapid fail protection enabled |If True, the application pool is shut down if there are a specified number of worker process failures (Maximum Failures) within a specified period (Failure Interval). By default, an application pool is shut down if there are five failures in a five-minute period.
-|Failure interval (minutes) |The time interval (in minutes) during which the specified number of worker process failures (Maximum Failures) must occur before the application pool is shut down by Rapid Fail Protection.
-|Maximum failures |Maximum number of worker process failures permitted before the application pool is shut down by Rapid Fail Protection.
-|Shutdown executable |Executable to run when an application pool is shut down by Rapid Fail Protection. This can be used to configure a load balancer to redirect traffic for this application to another server.
-|Shutdown executable parameters |Parameters for the executable to run when an application pool is shut down by Rapid Fail Protection.
-|Disable overlapped recycle |If True, when the application pool recycles, the existing worker process exits before another worker process is created. Set to True if the worker process loads an application that does not support multiple instances.
-|Disable recycling for configuration changes |If True, the application pool does not recycle when its configuration is changed.
-|Private memory limit (KB) |Maximum amount of private memory (in KB) a worker process can consume before causing the application pool to recycle. A value of 0 means there is no limit.
-|Regular time interval (minutes) |Period of time (in minutes) after which an application pool recycles. A value of 0 means the application pool does not recycle at a regular interval.
-|Request limit |Maximum number of requests an application pool can process before it is recycled. A value of 0 means the application pool can process an unlimited number of requests.
-|Specific times |A set of specific local times, in 24-hour format, when the application pool is recycled.
-|Virtual memory limit (KB) |Maximum amount of virtual memory (in KB) a worker process can consume before causing the application pool to recycle. A value of 0 means there is no limit.
-|Additional parameters |Additional parameters to pass to appcmd.exe.
+|Parameter
+|Description
+
+|Application pool name
+|Name of the application pool to create (for example, `FirstAppPool`).
+
+|.NET framework version
+|Configures the application pool to load a specific version of the .NET Framework.
+
+NOTE: If *No Managed Code* is selected, all ASP.NET requests will fail.
+
+|Enable 32-bit applications
+|If selected for an application pool on a 64-bit operating system, the worker processes serving the application pool run in WOW64 (Windows on Windows64) mode. In WOW64 mode, 32-bit processes load only 32-bit applications.
+
+|Managed pipeline mode
+|Configures ASP.NET to run in classic mode as an ISAPI extension or in integrated mode where managed code is integrated into the request-processing pipeline.
+
+|Queue length
+|Maximum number of requests that HTTP.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.
+
+|Start automatically
+|If selected, the application pool starts on creation or when IIS starts. Starting an application pool sets this property to `True`. Stopping an application sets this property to `False`.
+
+|Limit
+|Configures the maximum percentage of CPU time (in 1/1000ths of a percent) that the worker processes in an application pool are allowed to consume over a period of time, as indicated by the *Limit Interval* parameter (`resetInterval` property). If the limit set by this parameter is exceeded, the event is written to the event log and an optional set of events can be triggered or determined by the *Limit action* parameter (action property). Setting the value to `0` disables the limiting of worker processes to a percentage of CPU time.
+
+|Limit action
+|Specifies the action to take when the specified *Limit* is exceeded.
+
+* *NoAction:* An event log entry is generated.
+* *KillW3WP:* An event log entry is generated and the application pool is shut down for the duration of the reset interval.
+
+|Limit interval (minutes)
+|Specifies the reset period, in minutes, for CPU monitoring and throttling limits on the application pool. When the number of minutes elapsed since the last process accounting reset equals the *Limit interval*, IIS resets the CPU timers for both the logging and limit intervals. Setting the value of *Limit interval* to `0` disables CPU monitoring.
+
+|Processor affinity enabled
+|If selected, the worker processes serving this application pool are forced to run on specific CPUs. This enables sufficient use of CPU caches on multiprocessor servers.
+
+|Processor affinity mask
+|Hexadecimal mask that forces the worker processes for this application pool to run on a specific CPU. If selected, a value of `0` results in an error condition.
+
+|Identity
+|Configures the application pool to run as a built-in account, such as *Network Service* (recommended), *Local Service*, or as a specific user identity.
+
+|Idle timeout (minutes)
+|Amount of time, in minutes, a worker process remains idle before it shuts down. A worker process is idle if it is not processing requests and no new requests are received.
+
+|Load user profile
+|If selected, IIS loads the user profile for the application pool identity. If not selected, IIS 6.0 behavior is used.
+
+|Maximum worker processes
+|Maximum number of worker processes permitted to service requests for the application pool. If this number is greater than `1`, the application pool is referred to as a "Web Garden".
+
+|Ping enabled
+|If selected, the worker processes serving this application pool are pinged periodically to ensure that they are still responsive. This process is called health monitoring.
+
+|Ping maximum response time (seconds)
+|Maximum time, in seconds, that a worker process is given to respond to a health monitoring ping. If the worker process does not respond, it is terminated.
+
+|Ping period (seconds)
+|Period of time, in seconds, between health monitoring pings sent to the worker processes serving this application pool.
+
+|Shutdown time limit (seconds)
+|Period of time, in seconds, a worker process is given to finish processing requests and shut down. If the worker process exceeds the shutdown time limit, it is terminated.
+
+|Startup time limit (seconds)
+|Period of time, in seconds, a worker process is given to start up and initialize. If the worker process initialization exceeds the startup time limit, it is terminated.
+
+|Application pool process orphaning enabled
+|If selected, an unresponsive worker process is abandoned (orphaned) instead of terminated. This feature can be used to debug a worker process failure.
+
+|Orphan action executable
+|Executable to run when a worker process is abandoned (orphaned). For example, `C:\dbgtools\ntsd.exe` invokes NTSD to debug a worker process failure.
+
+|Orphan action executable parameters
+|Parameters for the executable that are run when a worker process is abandoned (orphaned). For example, `-g -p %1%` is appropriate if the NTSD is the executable invoked for debugging worker process failures.
+
+|Service unavailable response type
+|
+* *HttpLevel:* If the application pool is stopped, HTTP.sys returns an HTTP 503 error.
+* *TcpLevel:* If the application pool is stopped, HTTP.sys resets the connection. This is useful if the load balancer recognizes one of the response types and subsequently redirects it.
+
+|Rapid fail protection enabled
+|If selected, the application pool is shut down if there are a specified number of worker process failures (Maximum failures) within a specified period (Failure interval). By default, an application pool is shut down if there are five failures in a five-minute period.
+
+|Failure interval (minutes)
+|The time interval, in minutes, during which the specified number of worker process failures (Maximum failures) must occur before the application pool is shut down by Rapid Fail Protection.
+
+|Maximum failures
+|Maximum number of worker process failures permitted before the application pool is shut down by Rapid Fail Protection.
+
+|Shutdown executable
+|Executable to run when an application pool is shut down by Rapid Fail Protection. This can be used to configure a load balancer to redirect traffic for this application to another server.
+
+|Shutdown executable parameters
+|Parameters for the executable to run when an application pool is shut down by Rapid Fail Protection.
+
+|Disable overlapped recycle
+|If selected, when the application pool recycles, the existing worker process exits before another worker process is created.
+
+NOTE: Select this option if the worker process loads an application that does not support multiple instances.
+
+|Disable recycling for configuration changes
+|If selected, the application pool does not recycle when its configuration is changed.
+
+|Private memory limit (KB)
+|Maximum amount of private memory, in KB, that a worker process can consume before the application pool is recycled. A value of `0` means there is no limit.
+
+|Regular time interval (minutes)
+|Period of time, in minutes, after which an application pool recycles. A value of `0` means the application pool does not recycle at a regular interval.
+
+|Request limit
+|Maximum number of requests an application pool can process before it is recycled. A value of `0` means the application pool can process an unlimited number of requests.
+
+|Specific times
+|A set of specific local times, in 24-hour format, when the application pool is recycled.
+
+|Virtual memory limit (KB)
+|Maximum amount of virtual memory, in KB, that a worker process can consume before the application pool is recycled. A value of `0` means there is no limit.
+
+|Additional parameters
+|Additional parameters to pass to appcmd.exe.
 |===
 
-To create an application pool, select the following highlighted step:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createapppool/ec-iis7createapppool1.png[role="screenshot"]
-
-Then, enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createapppool/ec-iis7createapppool2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the application pool was created successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createapppool/ec-iis7createapppool3.png[role="screenshot"]
-
-In the *CreateAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createapppool/ec-iis7createapppool4.png[role="screenshot"]
 
 [[CreateVirtualDirectory]]
 === CreateVirtualDirectory
 
-Creates a new virtual directory in the specified website or updates the existed one.
+Creates a new virtual directory in the specified website or updates the existing virtual directory.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Application name |The website and virtual path to contain the Virtual Directory to create, i.e: 'Default Web Site/myapp02'.
-|Virtual path |Virtual path of the virtual directory, i.e: '/myvirtualdir'.
-|Absolute physical path |The absolute physical path of the Virtual Directory to create, i.e: 'c:/Inetpub/wwwroot/myvdir'.
-|Create Directory? |If checked, the specified directory will be created if it does not exist.
-|Credential |If provided, this credential will be used to access site folder. Can be used for network paths. Please notice, that passwords are stored in clear text in the IIS configuration. If this field is not set, Application User (Pass-through authentication) will be used. Double-quote '"' is not supported in username/password due to escape issues.
+|Parameter
+|Description
+
+|Application name
+|The website and virtual path to contain the virtual directory to create (for example, `Default Web Site/myapp02`).
+
+|Virtual path
+|Virtual path of the virtual directory (for example, `/myvirtualdir`).
+
+|Absolute physical path
+|The absolute physical path of the Virtual Directory to create (for example, `c:/Inetpub/wwwroot/myvdir`).
+
+|Create Directory?
+|If selected, the specified directory is created if it does not exist.
+
+|Credential
+|Credentials used to access the site folder. It can be used for network paths.
+
+NOTE: Passwords are stored in clear text in the IIS configuration. If this field is not set, application user (pass-through authentication) is issued. Double quotation marks `"` are not supported in the username and password due to escape issues.
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createvirtualdirectory/form.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the virtual directory was created successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createvirtualdirectory/outcome.png[role="screenshot"]
-
-Logs will be similar to the following:
-
-....
-Using plugin EC-IIS-3.1.0.0
-Got parameter "appname" with value "Default Web Site/"
-Got parameter "createDirectory" with value "1"
-Got parameter "credential" with value "credential"
-Got parameter "path" with value "mydir"
-Got parameter "physicalpath" with value "c:/tmp/path"
-Going to create directory "C:\tmp\path"
-Directory "C:\tmp\path" already exists, skipping
-Virtual directory Default Web Site/mydir does not exist, proceeding to creating it
-Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add vdir /app.name:"Default Web Site/" /path:"/mydir" /physicalPath:"C:\tmp\path"
-Exit code: 0
-STDOUT: VDIR object "Default Web Site/mydir" added
-STDERR: N/A
-Going to set credentials for directory "Default Web Site/mydir"
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Web Site/mydir" /username:"build" /password:"*****"
-Exit code: 0
-STDOUT: VDIR object "Default Web Site/mydir" changed
-STDERR: N/A
-....
 
 [[CreateWebApplication]]
 === CreateWebApplication
 
 Creates or updates and starts an in-process web application in the given directory. This procedure assumes that the specified application path exists as a virtual directory.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Website Name |The name of the website to add the application, i.e: 'Default Web Site'.
-|Virtual Path |Virtual path of the application, i.e: '/myApplication'.
-|Absolute Physical Path |The absolute physical path of the application to create, i.e: 'c:/Inetpub/wwwroot/myApp'.
-|Create Directory? |If checked, the specified directory will be created if it does not exist.
-|Credential |If provided, this credential will be used to access site folder. Can be used for network paths. Please notice, that passwords are stored in clear text in the IIS configuration. If this field is not set, Application User (Pass-through authentication) will be used. Double-quote '"' is not supported in username/password due to escape issues.
+|Parameter
+|Description
+
+|Website Name
+|The name of the website to add the application to (for example, `Default Web Site`).
+
+|Virtual Path
+|Virtual path of the application (for example, `/myApplication`).
+
+|Absolute Physical Path
+|The absolute physical path of the application to create (for example,`c:/Inetpub/wwwroot/myApp`).
+
+|Create Directory?
+|If selected, the specified directory is created if it does not already exist.
+
+|Credential
+|Credentials used to access the site folder. It can be used for network paths.
+
+NOTE: Passwords are stored in clear text in the IIS configuration. If this field is not set, application user (pass-through authentication) is issued. Double quotation marks `"` are not supported in the username and password due to escape issues
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createwebapplication/form.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the web application was created successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createwebapplication/outcome.png[role="screenshot"]
-
-Logs will look like the following:
-
-....
-Using plugin EC-IIS-3.1.0.0
-Got parameter "appname" with value "Default Web Site"
-Got parameter "createDirectory" with value "1"
-Got parameter "credential" with value "credential"
-Got parameter "path" with value "myApp"
-Got parameter "physicalpath" with value "c:/tmp/myApp"
-Application full name: Default Web Site/myApp
-Going to create directory "C:\tmp\myApp"
-Created directory "C:\tmp\myApp"
-Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add app /site.name:"Default Web Site" /path:"/myApp" /physicalPath:"C:\tmp\myApp"
-Exit code: 0
-STDOUT: APP object "Default Web Site/myApp" added
-VDIR object "Default Web Site/myApp" added
-STDERR: N/A
-Going to set credentails for directory Default Web Site/myApp/
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set vdir /vdir.name:"Default Web Site/myApp/" /username:"build" /password:"*****"
-Exit code: 0
-STDOUT: VDIR object "Default Web Site/myApp/" changed
-STDERR: N/A
-....
 
 [[CreateWebSite]]
 === CreateWebSite
 
 Creates or updates a website configuration on a local or remote computer.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Website name |The name of the Website to create.
-|Website path |If specified, will cause the root application containing a root virtual directory pointing to the specified path to be created for this site. If omitted, the site is created without a root application and will not be startable until one is created.
-|Website ID |The id of the Website.
-|List of bindings |List of bindings in the friendly form of 'http://domain:port,...' or raw form of 'protocol/bindingInformation,...'. Bindings should be separated by comma.
-|Create Directory? |If checked, the specified directory will be created if it does not exist.
-|Credential |If provided, this credential will be used to access site folder. Can be used for network paths. Please notice, that passwords are stored in clear text in the IIS configuration. If this field is not set, Application User (Pass-through authentication) will be used. Double-quote '"' is not supported in username/password due to escape issues.
+|Parameter
+|Description
+
+|Website name
+|The name of the website to create.
+
+|Website path
+|If specified, the root application containing a root virtual directory pointing to the specified path is created for this site. If omitted, the site is created without a root application and cannot be started until one is created.
+
+|Website ID
+|ID of the website.
+
+|List of bindings
+|Comma-separated list of bindings that use the friendly form of `\http://domain:port,...` or raw form of `protocol/bindingInformation,...`.
+
+|Create Directory?
+|If selected, the specified directory is created if it does not already exist.
+
+|Credential
+|Credentials used to access the site folder. It can be used for network paths.
+
+NOTE: Passwords are stored in clear text in the IIS configuration. If this field is not set, application user (pass-through authentication) is issued. Double quotation marks `"` are not supported in the username and password due to escape issues.
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createwebsite/form.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the website was created successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/createwebsite/outcome.png[role="screenshot"]
-
-Logs should look like the following:
-
-....
-Using plugin EC-IIS-3.1.0.0
-Got parameter "bindings" with value "http://*:8080"
-Got parameter "createDirectory" with value "1"
-Got parameter "credential" with value ""
-Got parameter "websiteid" with value ""
-Got parameter "websitename" with value "My Site"
-Got parameter "websitepath" with value "c:/tmp/my site"
-Going to create directory "C:\tmp\my site"
-Created directory "C:\tmp\my site"
-Site My Site does not exist
-Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" add site /site.name:"My Site" /bindings:"http://*:8080" /physicalPath:"C:\tmp\my site"
-Exit code: 0
-STDOUT: SITE object "My Site" added
-APP object "My Site/" added
-VDIR object "My Site/" added
-STDERR: N/A
-....
 
 [[DeleteWebApplication]]
 === DeleteWebApplication
 
-Deletes a web application from the specified Website.
+Deletes a web application from the specified website.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Application Name |The Website that contains the Application to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
-|Strict Mode |If checked, the procedure will fail in case the specified application does not exist.
+|Parameter
+|Description
+
+|Application Name
+|The website that contains the application to delete (for example, `Default Web Site/` or `Site1/myapp`).
+
+|Strict Mode
+|If selected, the procedure fails if the specified application does not exist.
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the web application was deleted successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication3.png[role="screenshot"]
-
-In the *DeleteWebApplication* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebapplication/ec-iis7deletewebapplication4.png[role="screenshot"]
 
 [[DeleteVirtualDirectory]]
 === DeleteVirtualDirectory
 
 Deletes a virtual directory from the specified website.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Virtual directory name |The Website and virtual path that contains the Virtual Directory to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
-|Strict mode |If checked, the procedure will fail in case the specified virtual directory does not exist.
+|Parameter
+|Description
+
+|Virtual directory name
+|The website and virtual path that contain the virtual directory to delete (for example, `Default Web Site/` or `Site1/myapp`).
+
+|Strict mode
+|If selected, the procedure fails if the specified virtual directory does not exist.
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the virtual directory was deleted successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory3.png[role="screenshot"]
-
-In the *DeleteVirtualDirectory* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deletevirtualdirectory/ec-iis7deletevirtualdirectory4.png[role="screenshot"]
 
 [[DeleteWebSite]]
 === DeleteWebSite
 
 Deletes a website.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Website name |The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
-|Strict mode |If checked, the procedure will fail in case the specified website does not exist.
+|Parameter
+|Description
+
+|Website name
+|The name of the website to delete (for example, `Default Web Site/` or `Site1/myapp`).
+
+|Strict mode
+|If selected, the procedure fails if the specified application does not exist.
 |===
 
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the website was deleted successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite3.png[role="screenshot"]
-
-In the *DeleteWebSite* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deletewebsite/ec-iis7deletewebsite4.png[role="screenshot"]
 
 [[DeleteAppPool]]
 === DeleteAppPool
 
 Deletes an application pool.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Application pool name |The name of the website to delete. i.e: 'Default Web Site/' or 'Site1/myapp'.
-|Strict mode |If checked, the procedure will fail in case the specified application pool does not exist.
+|Parameter
+|Description
+
+|Application pool name
+|The name of the website to delete (for example, `Default Web Site/` or `Site1/myapp`).
+
+|Strict mode
+|If selected, the procedure fails if the specified application pool does not exist.
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the application pool was deleted successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool3.png[role="screenshot"]
-
-In the *DeleteAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deleteapppool/ec-iis7deleteapppool4.png[role="screenshot"]
 
 [[DeployCopy]]
 === DeployCopy
 
-Copies the application files recursively to the website application's physical directory.
+Copies the application files recursively to the website application`s physical directory.
 
-[width="100%",cols="50%,50%",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Destination path |Provide the path to the destination directory. This must be a physical directory, but it may have an IIS virtual directory pointing to it. i.e: 'C:\inetpub\wwwroot\copyTest'. (Required)
-|Path to XCOPY |Provide the relative or absolute path to the XCOPY (or similar) executable. (Required)
-|Source path |Provide the path to the source directory. i.e: 'C:\inetpub\wwwroot\test'.(Required)
-|Additional options a|
-Indicate option switches for the XCOPY executable, excluding source and destination directories. The default options are those recommended by Microsoft for ASP.NET and IIS website deployment; exercise caution when changing these options.
+|Parameter
+|Description
 
-* */E* - Deep copy including empty dirs
-* */K* - Copy attributes
-* */R* - Overwrite read-only files
-* */H* - Copy hidden and system files
-* */I* - If the destination does not exist, and you are copying more than one file, it is assumed that the destination is a directory.
-* */Y* - Suppress prompting for overwrite confirmation
+|Destination path
+|Required. Path to the destination directory. This must be a physical directory, but it may have an IIS virtual directory pointing to it (for example, `C:\inetpub\wwwroot\copyTest`).
+
+|Path to XCOPY
+|Required. Provide the relative or absolute path to the XCOPY executable.
+
+|Source path
+|Required. Provide the path to the source directory (for example, `C:\inetpub\wwwroot\test`).
+
+|Additional options
+|
+Option switches for the XCOPY executable, excluding source and destination directories. The default options are those recommended by Microsoft for ASP.NET and IIS website deployment; exercise caution when changing these options.
+
+* `/E` - Deep copy including empty dirs
+* `/K` - Copy attributes
+* `/R` - Overwrite read-only files
+* `/H` - Copy hidden and system files
+* `/I` - If the destination does not exist, and you are copying more than one file, it is assumed that the destination is a directory.
+* `/Y` - Suppress prompting for overwrite confirmation
 
 |===
-
-To deploy copy, select the following highlighted step:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy1.png[role="screenshot"]
-
-Then, enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the copy was success:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy3.png[role="screenshot"]
-
-In the *DeployCopy* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deploycopy/ec-iis7deploycopy4.png[role="screenshot"]
 
 [[Deploy]]
 === Deploy
 
-Uses MsDeploy (WebDeploy) to deploy a package or a site from directory into the specified destination. Also allows you to configure the application pool.
+Uses MSDeploy (WebDeploy) to deploy a package or a site from a directory into the specified destination and allows you to configure the application pool.
 
-MsDeploy is required for this procedure.
+NOTE: MSDeploy is required for this procedure.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|MS deploy path |Provide the relative or absolute path to the MSDeploy executable.
-|Deploy source path |A path to package (application.zip) or to directory which contains the content to be deployed.
-|Destination website |A name of the website to be deployed.
-|Destination application |A name of the application to be deployed. If not provided, the content will be placed under the website.
-|Application pool name |Application pool name. If the application pool does not exist, it will be created. If this parameter was not specified, the application will be placed into the default pool, which has the same name as website.
-|.NET framework version |.NET Framework version 3.5 includes all the functionality of earlier versions, and introduces new features for the technologies in versions 2.0 and 3.0 and additional technologies in the form of new assemblies. To use version 3.5, install the appropriate version of .NET Framework and use product-specific guidelines.
-|Enable 32-bit applications |If set to True for an application pool on a 64-bit operating system, the worker process(es) serving the application pool run in WOW64 (Windows on Windows64) mode. In WOW64 mode, 32-bit processes load only 32-bit applications.
-|Managed pipeline mode |Configures ASP.NET to run in classic mode as an ISAPI extension or in integrated mode where managed code is integrated into the request-processing pipeline.
-|Queue length |Maximum number of requests that Http.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.
-|Start automatically |If True, the application pool starts on creation or when IIS starts. Starting an application pool sets this property to True. Stopping an application sets this property to False.
-|Additional settings for application pool |Additonal parameters to pass to appcmd.exe for application pool configuration.
-|Additional Parameters |Additional parameters to pass to Web Deploy. For the list of available settings please refer to https://technet.microsoft.com/en-us/library/dd568991(v=ws.10).aspx[Web Deploy Command Line Reference]. E.g., -enableRule:AppOffline.
+|Parameter
+|Description
+
+|MS deploy path
+|Provide the relative or absolute path to the MSDeploy executable.
+
+|Deploy source path
+|A path to package (for example, `application.zip`) or to a directory that contains the content to be deployed.
+
+|Destination website
+|Name of the website to be deployed.
+
+|Destination application
+|Name of the application to be deployed. If not provided, the content is placed under the website.
+
+|Application pool name
+|Application pool name. If the application pool does not exist, it is created. If not specified, the application is placed into the default pool, which has the same name as the website.
+
+| +.NET+ framework version
+| The Microsoft(R) .NET Framework version 3.5 includes all the functionality of earlier versions, introduces new features for the technologies in versions 2.0 and 3.0, and provides additional functionality in the form of new assemblies. To use version 3.5, install the appropriate version of .NET Framework and use the product-specific guidelines.
+
+|Enable 32-bit applications
+|If selected for an application pool on a 64-bit operating system, the worker processes serving the application pool run in WOW64 (Windows on Windows64) mode. In WOW64 mode, 32-bit processes load only 32-bit applications.
+
+|Managed pipeline mode
+|Configures ASP.NET to run in classic mode as an ISAPI extension or in integrated mode where managed code is integrated into the request-processing pipeline.
+
+|Queue length
+|Maximum number of requests that HTTP.sys queues for the application pool. When the queue is full, new requests receive a 503 "Service Unavailable" response.
+
+|Start automatically
+|If selected, the application pool starts on creation or when IIS starts. Starting an application pool sets this property to `True`. Stopping an application sets this property to `False`.
+
+|Additional settings for application pool
+|Additional parameters to pass to `appcmd.exe` for application pool configuration.
+
+|Additional Parameters
+|Additional parameters (for example, `-enableRule:AppOffline`) to pass to Web Deploy. For the list of available settings, refer to link:https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd568991(v=ws.10)[Web Deploy Command Line Reference].
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deploy/form.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the copy was success:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deploy/ec-iis7deploy3.png[role="screenshot"]
-
-In the *Deploy* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deploy/ec-iis7deploy4.png[role="screenshot"]
 
 [[Undeploy]]
 === Undeploy
 
-Uses MsDeploy to undeploy an application or site.
+Uses MSDeploy to undeploy an application or site.
 
-MsDeploy is required for this procedure.
+NOTE: MSDeploy is required for this procedure.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|MS deploy path |Provide the relative or absolute path to the MSDeploy executable.
-|Web site name |A website name to undeploy.
-|Application name |An application name to undeploy. Warning: if not specified, the website with the name above will be undeployed.
-|Delete virtual directories? |Deletes the specified website or web application, including any virtual directories and their content.
-|Strict mode |If selected, the procedure will fail in case the specified website does not exist.
+|Parameter
+|Description
+
+|MS deploy path
+|Relative or absolute path to the MSDeploy executable.
+
+|Web site name
+|Website name to undeploy.
+
+|Application name
+|An application name to undeploy.
+
+WARNING: If not specified, the website that you specified for the *Web site name* parameter will be undeployed.
+
+|Delete virtual directories?
+|Deletes the specified website or web application, including any virtual directories and their content.
+
+|Strict mode
+|If selected, the procedure fail if the specified website does not exist.
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/undeploy/form.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the copy was success:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/undeploy/summary.png[role="screenshot"]
-
-The logs will look like thw following:
-
-....
-Using plugin EC-IIS-3.1.0.0
-Got parameter "applicationName" with value ""
-Got parameter "deleteVirtualDirectories" with value "0"
-Got parameter "msdeployPath" with value "msdeploy"
-Got parameter "strictMode" with value "0"
-Got parameter "websiteName" with value "NetDash"
-Wrote command to property cmdLine
-Going to run command: "msdeploy" -verb:delete -dest:iisApp="NetDash"
-Exit code: 0
-STDOUT: Info: Deleting application (NetDash)
-Info: Deleting iisApp (NetDash).
-Info: Deleting MSDeploy.iisApp (MSDeploy.iisApp).
-Total changes: 3 (0 added, 3 deleted, 0 updated, 0 parameters changed, 0 bytes copied)
-STDERR: N/A
-....
 
 [[DeployAdvanced]]
 === Deploy advanced
 
-An interface to msdeploy.exe utility.
+An interface to the utility.
 
-MsDeploy is required for this procedure.
+NOTE: MSDeploy is required for this procedure.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|MSDeploy path |Provide the relative or absolute path to the MSDeploy executable.
-|Verb |Web Deploy operations enable you to gather information from, move, or delete deployment objects like websites and web applications. Web Deploy operations are specified on the command line with the -verb argument. The Web Deploy operations are dump, sync, delete, getDependencies, and getSystemInfo.
-|Source provider |Providers process specific source or destination data for Web Deploy. For example, the contentPath provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the -source: or -dest: argument.
-|Source provider object path |Specifies a path of the provider object. Some providers require a path and some do not. If required, the kind of path depends on the provider.
-|Source provider settings |Providers can be optionally modified by using provider settings. Provider settings can be added to either a source or a destination by using the general syntax
-|Destination provider |Providers process specific source or destination data for Web Deploy. For example, the contentPath provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the -source: or -dest: argument.
-|Destination provider object path |Specifies a path of the provider object. Some providers require a path and some do not. If required, the kind of path depends on the provider.
-|Destination provider settings |Providers can be optionally modified by using provider settings. Provider settings can be added to either a source or a destination by using the general syntax
-|Allow untrusted? |If checked, allows untrusted server certificate when using SSL. .
-|Pre-sync command |A command to execute before the synchronization on the destination. For instance, net stop a service.
-|Post-sync command |A command to execute after the synchronization on the destination. For instance, net start a service.
-|Additional options |Additional options to be passed to msdeploy.exe. E.g. -retryAttempts=5.
-|Set param file |Applies parameter settings from an XML file. Can be set to file path or file content.
-|Declare param file |Includes parameter declarations from an XML file. Can be set to file path or file content.
+|Parameter
+|Description
+
+|MSDeploy path
+|Provide the relative or absolute path to the MSDeploy executable.
+
+|Verb
+|Web Deploy operations enable you to gather information from, move, or delete deployment objects like websites and web applications. Web Deploy operations are specified on the command line with the `-verb` argument. The Web Deploy operations are dump, sync, delete, getDependencies, and getSystemInfo.
+
+|Source provider
+|Provider that processes specific source or destination data for Web Deploy. For example, the `contentPath` provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the `-source:` or `-dest:` argument.
+
+|Source provider object path
+|Path of the provider object. Some providers require a path and some do not. If required, the type of path depends on the provider.
+
+|Source provider settings
+|Settings to modify a source provider using the general syntax.
+
+|Destination provider
+|Providers process specific source or destination data for Web Deploy. For example, the `contentPath` provider determines how to work with directory, file, site, and application paths. On the Web Deploy command line, the provider name is specified immediately after the `-source:` or `-dest:` argument.
+
+|Destination provider object path
+|Path of the provider object. Some providers require a path and some do not. If required, the kind of path depends on the provider.
+
+|Destination provider settings
+|Settings to modify a destination provider using the general syntax.
+
+|Allow untrusted?
+|If selected, untrusted server certificates are allowed when using SSL.
+
+|Pre-sync command
+|A command to execute before the synchronization on the destination. For instance, `net stop [service name]`.
+
+|Post-sync command
+|A command to execute after the synchronization on the destination. For instance, `net start [service name]`.
+
+|Additional options
+|Additional options to be passed to `msdeploy.exe` (for example, `-retryAttempts=5`).
+
+|Set param file
+|Applies parameter settings from an XML file. This can be a file path or file content.
+
+|Declare param file
+|Includes parameter declarations from an XML file. This can be a file path or file content.
 |===
-
-To deploy, select the following highlighted step:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced1.png[role="screenshot"]
-
-Then, enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the copy was success:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced3.png[role="screenshot"]
-
-In the *Deploy* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/deployadvanced/ec-iis7deployadvanced4.png[role="screenshot"]
 
 [[StartAppPool]]
 === StartAppPool
 
 Starts an IIS application pool.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Application pool name |The name of the application pool to start. i.e: 'FirstAppPool'.
+|Parameter
+|Description
+
+|Application pool name
+|The name of the application pool to start (for example, `FirstAppPool`).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/startapppool/ec-iis7startapppool2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the application pool was started successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/startapppool/ec-iis7startapppool3.png[role="screenshot"]
-
-In the *StartAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/startapppool/ec-iis7startapppool4.png[role="screenshot"]
 
 [[StartWebSite]]
 === StartWebSite
 
 Starts a website into an IIS Server.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Website name |Provide the descriptive name of the website you want to start. i.e: 'Default Web Site'.
+|Parameter
+|Description
+
+|Website name
+|Provide the descriptive name of the website you want to start (for example, `Default Web Site`).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the website was started successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite3.png[role="screenshot"]
-
-In the *StartWebSite* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/startwebsite/ec-iis7startwebsite4.png[role="screenshot"]
 
 [[StopAppPool]]
 === StopAppPool
 
 Stops an IIS application pool.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Application pool name |The name of the application pool to stop. i.e: 'FirstAppPool'.
+|Parameter
+|Description
+
+|Application pool name
+|The name of the application pool to stop (for example, `FirstAppPool`).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the application pool was stopped successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool3.png[role="screenshot"]
-
-In the *StopAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/stopapppool/ec-iis7stopapppool4.png[role="screenshot"]
 
 [[StopWebSite]]
 === StopWebSite
 
 Stops a website.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Website name |Provide the descriptive name of the website you want to stop. i.e: 'Default Web Site'.
+|Parameter
+|Description
+
+|Website name
+|Provide the descriptive name of the website you want to stop (for example, `Default Web Site`).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the website was stopped successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite3.png[role="screenshot"]
-
-In the *StopWebSite* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/stopwebsite/ec-iis7stopwebsite4.png[role="screenshot"]
 
 [[RecycleAppPool]]
 === RecycleAppPool
 
 Recycles the specified application pool.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Application pool name |Provide the name of the application pool to be recycled.
+|Parameter
+|Description
+
+|Application pool name
+|Name of the application pool to recycle.
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the website was stopped successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool3.png[role="screenshot"]
-
-In the *RecycleAppPool* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/recycleapppool/ec-iis7recycleapppool4.png[role="screenshot"]
 
 [[AssignAppToAppPool]]
 === AssignAppToAppPool
 
 Assigns an application to an application pool.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Application pool name |The name of the Application Pool to assign the application. i.e: 'FirstAppPool'.
-|Application name |The name of the application to assign. i.e: '/test'.
-|Site name |The name of the site that contains the app to assign. i.e: 'Default Web Site'.
+|Parameter
+|Description
+
+|Application pool name
+|Name of the application pool to assign the application (for example, `FirstAppPool`).
+
+|Application name
+|Name of the application to assign (for example, `/test`).
+
+|Site name
+|Name of the site that contains the application to assign (for example, `Default Web Site`).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the application was moved successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool3.png[role="screenshot"]
-
-In the *AssignApp* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/addapptoapppool/ec-iis7addapptoapppool4.png[role="screenshot"]
 
 [[ListSites]]
 === ListSites
 
 List the sites on a web server and writes the retrieved data under the specified property.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|User-defined criteria |The user-defined criteria to search the sites. Blank lists all sites. i.e: '/bindings:http/*:80:'.
-|Property name |Property to write retrieved data.
-|Dump format |Choose the format to represent retrieved data. Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
+|Parameter
+|Description
+
+|User-defined criteria
+|User-defined criteria to search the sites (for example, `/bindings:http/*:80:`). If not specified, all sites are listed.
+
+|Property name
+|Property to write retrieved data.
+
+|Dump format
+|Format to represent retrieved data. Data can be represented as XML, JSON, raw (only `stdout` from `appcmd.exe`) and property sheet (hierarchy).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listsites/ec-iis7listsites2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the sites detected and started:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listsites/ec-iis7listsites3.png[role="screenshot"]
-
-In the *ListSites* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listsites/ec-iis7listsites4.png[role="screenshot"]
-
-Under the specified property you will see extracted sites data.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listsites/ec-iis7listsites5.png[role="screenshot"]
 
 [[ListSiteApps]]
 === ListSiteApps
 
-List the apps of a Website.
+Lists website applications.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Site name |The name of the site to look for Applications. Blank lists all apps.
-|Property name |Property to write retrieved data.
-|Dump format |Choose the format to represent retrieved data. Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
+|Parameter
+|Description
+
+|Site name
+|Name of the site to search for applications. If not specified, all applications are listed.
+
+|Property name
+|Property to write retrieved data.
+
+|Dump format
+|Choose the format to represent retrieved data. Data can be represented as XML, JSON, raw (only `stdout` from `appcmd.exe`) and property sheet (hierarchy).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listsiteapps/ec-iis7listsiteapps2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the applications detected:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listsiteapps/ec-iis7listsiteapps3.png[role="screenshot"]
-
-The logs will look like the following:
-
-....
-Using plugin EC-IIS-3.1.0.0
-Got parameter "dumpFormat" with value "propertySheet"
-Got parameter "propertyName" with value "/myJob/IISApps"
-Got parameter "sitename" with value ""
-Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" list apps
-Exit code: 0
-STDOUT: APP "Default Web Site/" (applicationPool:DefaultAppPool)
-APP "Default Web Site/myApp" (applicationPool:DefaultAppPool)
-APP "NetDash/" (applicationPool:NetDash)
-APP "MySite/" (applicationPool:DefaultAppPool)
-APP "NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934/" (applicationPool:DefaultAppPool)
-STDERR: N/A
-Wrote property: /myJob/IISApps/Default Web Site//applicationPool -> DefaultAppPool
-Wrote property: /myJob/IISApps/Default Web Site/myApp/applicationPool -> DefaultAppPool
-Wrote property: /myJob/IISApps/MySite//applicationPool -> DefaultAppPool
-Wrote property: /myJob/IISApps/NetDash//applicationPool -> NetDash
-Wrote property: /myJob/IISApps/NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934//applicationPool -> DefaultAppPool
-....
 
 [[ListAppPools]]
 === ListAppPools
 
-List the application pools.
+Lists the application pools.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|User-defined criteria |The user-defined criteria to search the application pools. Blank lists all pools. i.e: '/apppool.name:"my pool"'.
-|Property name |Property to write retrieved data.
-|Dump format |Choose the format to represent retrieved data. Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
+|Parameter
+|Description
+
+|User-defined criteria
+|User-defined criteria to search the application pools (for example, `/apppool.name:"my pool"`). If not specified, all pools are listed.
+
+|Property name
+|Property to write retrieved data.
+
+|Dump format
+|Format to represent retrieved data. Data can be represented as XML, JSON, raw (only `stdout` from `appcmd.exe`) and property sheet (hierarchy).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listapppools/ec-iis7listapppools2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the applications detected:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listapppools/ec-iis7listapppools3.png[role="screenshot"]
-
-In the *ListAppPools* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listapppools/ec-iis7listapppools4.png[role="screenshot"]
 
 [[ListVirtualDirectories]]
 === ListVirtualDirectories
 
-List the virtual directories.
+Lists the virtual directories.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Virtual directory name |Virtual directory name to retrieve. If not provided, will retrieve all the virtual directories.
-|Property name |Property to write retrieved data.
-|Dump format |Choose the format to represent retrieved data. Data can be represented as XML, JSON, raw (just stdout from appcmd.exe) and property sheet (hierarchy).
+|Parameter
+|Description
+
+|Virtual directory name
+|Virtual directory name to retrieve. If not provided, all virtual directory names are retrieved.
+
+|Property name
+|Property to write retrieved data.
+
+|Dump format
+|Format to represent retrieved data. Data can be represented as XML, JSON, raw (only `stdout` from `appcmd.exe`) and property sheet (hierarchy).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listvirtualdirectories/ec-iis7listvirtualdirectories2.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the applications detected:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/listvirtualdirectories/ec-iis7listvirtualdirectories3.png[role="screenshot"]
-
-The logs will look like the following:
-
-....
-Using plugin EC-IIS-3.1.0.0
-Got parameter "dumpFormat" with value "propertySheet"
-Got parameter "propertyName" with value "/myJob/IISVirtualDirectories"
-Got parameter "vdirName" with value ""
-Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" list vdirs
-Exit code: 0
-STDOUT: VDIR "Default Web Site/" (physicalPath:%SystemDrive%\inetpub\wwwroot)
-VDIR "Default Web Site/mydir" (physicalPath:C:\tmp\path)
-VDIR "Default Web Site/myApp/" (physicalPath:C:\tmp\myApp)
-VDIR "NetDash/" (physicalPath:C:\inetpub\NetDash)
-VDIR "MySite/" (physicalPath:c:/wrong_dir)
-VDIR "NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934/" (physicalPath:c:/site_NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934)
-STDERR: N/A
-Wrote property: /myJob/IISVirtualDirectories/Default Web Site//physicalPath -> %SystemDrive%\inetpub\wwwroot
-Wrote property: /myJob/IISVirtualDirectories/Default Web Site/myApp//physicalPath -> C:\tmp\myApp
-Wrote property: /myJob/IISVirtualDirectories/Default Web Site/mydir/physicalPath -> C:\tmp\path
-Wrote property: /myJob/IISVirtualDirectories/MySite//physicalPath -> c:/wrong_dir
-Wrote property: /myJob/IISVirtualDirectories/NetDash//physicalPath -> C:\inetpub\NetDash
-Wrote property: /myJob/IISVirtualDirectories/NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934//physicalPath -> c:/site_NetDash_25d14fc9-a891-4c5f-bd49-07e73bf1a934
-....
 
 [[AddWebSiteBinding]]
 === AddWebSiteBinding
 
-Adds a binding to a Website.
+Adds a binding to a website.
 
-[cols=",",options="header"]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Website Name |The name of the Website to add a binding, i.e: 'Default Web Site'. The site should exist on server.
-|Binding Protocol |Protocol of the binding to add, e.g. 'http'. Usually the protocol is http or https, for FTP binding please refer to https://technet.microsoft.com/en-us/library/cc731692%28v=ws.10%29.aspx[Add a Binding to a Site] article.
-|Binding Information |Information of the binding to add, including the host and the port, e.g.: 'localhost:443', '*:81'.
-|Host Header |Host headers (also known as domain names or host names) let you assign more than one site to a single IP address on a Web server. E.g., myhost.com.
+|Parameter
+|Description
+
+|Website Name
+|The name of the website to add a binding, i.e: `Default Web Site`. The site should exist on server.
+
+|Binding Protocol
+|Binding protocol to add (for example, `http`). Typically, the protocol is `http` or `https`. For FTP binding, refer to link:https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731692(v=ws.10)[Add a Binding to a Site (IIS 7)].
+
+|Binding Information
+|Information of the binding to add, including the host and the port (for example, `localhost:443`, `*:81`).
+
+|Host Header
+|Host headers (also known as domain names or host names) that allow you to assign more than one site to a single IP address on a web server (for example, `myhost.com`).
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/addwebsitebinding/form.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail, note the output indicating the binding was added successfully:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/addwebsitebinding/summary.png[role="screenshot"]
-
-In the *AddWebSiteBinding* step, click the Log icon to see the diagnostic info. The output is similar to the following diagnostic report.
-
-....
-Using plugin EC-IIS-3.1.0.0
-Got parameter "bindinginformation" with value "*:8080"
-Got parameter "bindingprotocol" with value "http"
-Got parameter "hostHeader" with value "mysite.com"
-Got parameter "websitename" with value "website"
-Found binding: protocol http, info: *:80:
-Wrote command to property cmdLine
-Going to run command: "C:\WINDOWS\system32\inetsrv\appcmd" set site /site.name:"website" /+bindings.[protocol='http',bindingInformation='*:8080:mysite.com']
-Exit code: 0
-STDOUT: SITE object "website" changed
-STDERR: N/A
-....
 
 [[StopServer]]
 === StopServer
 
-Stops IIS server.
+Stops the IIS server.
 
-[cols=",",options="header",]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Absolute location of the iisreset utility |Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'.
-|Additional parameters |Additional parameters to pass to iisreset utility.
+|Parameter
+|Description
+
+|Absolute location of the IISRESET utility.
+|Absolute path of the script utility that executes this step. If only `iisreset` is entered, the IISRESET tool must be located on the system path `c:/windows/system32` (for example, `iisreset` or `c:/MyDir/IISFiles/iisreset.exe`).
+
+|Additional parameters
+|Additional parameters to pass to the IISRESET utility.
 |===
-
-To stop IIS server, enter the following parameters
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[role="screenshot"]
 
 [[StartServer]]
-
-
 === StartServer
 
-Starts IIS server.
+Starts the IIS server.
 
-[cols=",",options="header",]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Absolute location of the iisreset utility |Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'.
-|Additional parameters |Additional parameters to pass to iisreset utility.
+|Parameter
+|Description
+
+|Absolute location of the IISRESET utility.
+|Absolute path of the script utility that execute this step. If only `iisreset` is entered, the IISRESET tool must be located on the system path `c:/windows/system32` (for example, `iisreset` or `c:/MyDir/IISFiles/iisreset.exe`).
+
+|Additional parameters
+|Additional parameters to pass to the IISRESET utility.
 |===
-
-To start IIS server, enter the following parameters
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[role="screenshot"]
 
 [[RestartServer]]
-
-
 === ResetServer
 
 Restarts IIS server.
 
-[cols=",",options="header",]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|Absolute location of the iisreset utility |Provide the absolute path of the script utility used to execute this step. If only 'iisreset' is entered, the 'iisreset' tool must be located on the system path 'c:/windows/system32'. i.e: 'iisreset' or 'c:/MyDir/IISFiles/iisreset.exe'.
-|Additional parameters |Additional parameters to pass to iisreset utility.
+|Parameter
+|Description
+
+|Absolute location of the IISRESET utility.
+|Absolute path of the script utility used to execute this step. If only `iisreset` is entered, the IISRESET tool must be located on the system path `c:/windows/system32` (for example, `iisreset` or `c:/MyDir/IISFiles/iisreset.exe`).
+
+|Additional parameters
+|Additional parameters to pass to the IISRESET utility.
 |===
-
-To restart IIS server, enter the following parameters
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/stopserver/ec-iis7stopserver.png[role="screenshot"]
 
 [[AddSSLCertificate]]
-
-
 === AddSSLCertificate
 
-Adds SSL certificate to the specified port or updates if one already exists.
+Adds an SSL certificate to the specified port or updates an SSL certificate if one already exists.
 
-Certificate should be added to IIS certificates storage. Please refer to https://forums.iis.net/t/1158284.aspx?Binding+an+existing+certificate+to+default+web+site+with+appcmd[IIS.NET Forums] for instructions.
+The certificate should be added to IIS certificates storage. For instructions, refer to link:https://learn.microsoft.com/en-us/archive/msdn-technet-forums/8a09b2b8-0f72-4920-ae78-4d9d82f1e704[IIS.NET Forums].
 
-[cols=",",options="header",]
+[cols="1a,1a",options="header"]
 |===
-|Parameter |Description
-|IP |IP address or hostname to add certificate, e.g. 0.0.0.0. Either this parameter or Hostname should be provided.
-|Hostname |Hostname for the certificate, e.g. mysite.com. Either this parameter or IP should be provided. This parameter is not supported on Windows Server 2008.
-|Port |Port to add SSL certificate, e.g. 443.
-|Certificate Store |The name of the certificate store, e.g. My.
-|Certificate Hash (Thumbprint) |The certificate hash. Can be found in "Server Certificates" tab of IIS console. E.g., 'b4 7c 04 0c 0a 7e fc f5 3f 9e 12 fc df 07 30 ee b1 d6 04 88'. Spaces are not required.
+|Parameter
+|Description
+
+|IP
+|IP address for the certificate (for example, `0.0.0.0`). Either the IP address or the *Hostname* parameter hostname must be provided.
+
+|Hostname
+|Hostname for the certificate (for example, `mysite.com`). Either this hostname or the *IP* parameter should be provided.
+
+NOTE: This parameter is not supported on Windows Server 2008.
+
+|Port
+|Port to add the SSL certificate to (for example, `443`).
+
+|Certificate Store
+|The name of the certificate store (for example, `My`).
+
+|Certificate Hash (Thumbprint)
+|The certificate hash. The certificate hash can be found on the *Server Certificates* tab of the IIS console (for example, `b4 7c 04 0c 0a 7e fc f5 3f 9e 12 fc df 07 30 ee b1 d6 04 88`). Spaces are not required.
 |===
-
-Enter the following parameters:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/addsslcertificate/form.png[role="screenshot"]
-
-When the job is executed, you should see the following job detail:
-
-image::cloudbees-common-sda::cd-plugins/ec-iis/addsslcertificate/summary.png[role="screenshot"]
-
-Logs will look like the following:
-
-....
-Using plugin EC-IIS-3.1.0.0
-Logs are redirected to property /myJob/debug_logs
-Got parameter "certHash" with value "b4 7c 04 0c 0a 7e fc f5 3f 9e 12 fc df 07 30 ee b1 d6 04 88"
-Got parameter "certHostName" with value ""
-Got parameter "certStore" with value "My"
-Got parameter "ip" with value "0.0.0.0"
-Got parameter "port" with value "444"
-Logs are redirected to property /myJob/debug_logs
-Certificate already exists, with hash b47c040c0a7efcf53f9e12fcdf0730eeb1d60488
-Going to run command: netsh http update sslcert ipport=0.0.0.0:444 certstore="My" certhash=B47C040C0A7EFCF53F9E12FCDF0730EEB1D60488 appid="{8c12f395-efc4-11e7-8b93-005056a5a0d0}"
-Exit code: 0
-STDOUT:
-SSL Certificate successfully updated
-
-STDERR: N/A
-....
 
 == Examples and use cases
 
-=== Create website
+=== Create a website
 
-This example, shows the way to create a website from the beginning.
+This example shows the how to create a website.
 
-First, run the CheckServerStatus with the appropriate parameters to verify the server disponibility:
-
+. Run the CheckServerStatus with the appropriate parameters to verify the server availability:
++
 image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7checkserver1.png[role="screenshot"]
 
-Now, check the result of the server status, it must be running:
-
+. Verify the result of the server status; it must be running:
++
 image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7checkserver2.png[role="screenshot"]
 
-Now that the server is running, the website can be created with these parameters:
-
+. Once the server is running, the website can be created with these parameters:
++
 image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7createwebsite1.png[role="screenshot"]
 
-Check the result of the creation of the site:
-
+. Verify the result of the creation of the site:
++
 image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7createwebsite2.png[role="screenshot"]
 
-If the creation of the site was successfully, the site can be started with these parameters:
-
+. If the creation of the site was successful, the site can be started with these parameters:
++
 image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite1.png[role="screenshot"]
 
-Finally, check that the created application was started successfully:
-
+. Finally, verify that the application was started successfully:
++
 image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite2.png[role="screenshot"]
+
+[[rns]]
+== IIS plugin release notes
+
+=== 4.0.0
+
+* Upgraded from Perl 5.8 to Perl 5.32. The plugin is not backward compatibility with releases prior to {PRODUCT} 10.3. Starting with this release, a new agent is required to run the plugin procedures.
+
+=== 3.1.8
+
+* Added session validation.
+
+=== 3.1.7
+
+* The documentation has been migrated to the main documentation site.
+
+=== 3.1.6
+
+* Renamed  to "{CDRO}"
+
+=== 3.1.5
+
+* Renamed to "CloudBees".
+
+=== 3.1.4
+
+* Configurations can now be created by users with "@" sign in a name.
+
+=== 3.1.3
+
+* The plugin icon has been updated.
+
+=== 3.1.2
+
+* Configured the plugin to allow the ElectricFlow UI to create configs inline of a procedure form.
+
+=== 3.1.1
+
+* Configured the plugin to allow the ElectricFlow UI to render the plugin procedure parameters entirely using the configured form XMLs.
+* Enabled the plugin for managing the plugin configurations inline when defining an application process step or a pipeline stage task.
+
+=== 3.1.0
+
+* The *Computer Name* parameter in the plugin configuration has been deprecated.
+* The *Credentials* parameter was added to *CheckServerStatus* procedure.
+* The *Configuration Name* parameter is no longer required in the *CheckServerStatus* procedure.
+* The deployment logic has been changed; if no application name is provided to the *Deploy* procedure, but the application pool parameters are specified, the root application of the website (`/`) is moved into the specified application pool and parameters are applied to this application pool.
+* Support for virtual directory credentials has been added for the *CreateWebSite*, *CreateWebApplication*, *CreateVirtualDirectory* procedures.
+* The *Create Directory?* parameter was added for the *CreateWebSite*, *CreateWebApplication*, and *CreateVirtualDirectory* procedures.
+* Support for the *AddSSLCertificate* procedure has been added.
+
+=== 3.0.0
+
+* The plugin has been fully redesigned and IIS version 7 and later is now supported.
+
+=== 2.0.7
+
+* Fixed issue with configurations being cached for Internet Explorer.
+
+=== 2.0.6
+
+* Renamed ElectricCommander to ElectricFlow.
+* Added link to the plugin configuration page in the plugin step panels.
+
+=== 2.0.5
+
+* Fixed manifest file.
+* Removed need for agent/lib directories.
+
+=== 2.0.4
+
+* Procedure names were changed in the step picker section.
+
+=== 2.0.3
+
+* Improved the documentation.
+
+=== 2.0.2
+
+* Improved the documentation.
+
+=== 2.0.1
+
+* Upgraded to use the new Parameter Form XML.
+* Added a link directly to the new documentation.
+
+=== 2.0.0
+
+* Improved XML parameter panels.
+* Introduced a new documentation format.
 
 [[KnownIssues]]
 == Known issues
 
-Due to escape issues, double quote (") is not supported in parameter values.
-
-[[rns]]
-== Release notes
-
-=== EC-IIS 4.0.0
-
-* Upgraded from Perl 5.8 to Perl 5.32. The plugin is not backward compatibility with releases prior to {PRODUCT} 10.3. Starting with this release, a new agent is required to run the plugin procedures.
-
-=== EC-IIS 3.1.8
-
-* Added session validation.
-
-
-=== EC-IIS 3.1.7
-
-* The documentation has been migrated to the main documentation site.
-
-=== EC-IIS 3.1.6
-
-* Renaming  to "{CDRO}"
-
-=== EC-IIS 3.1.5
-
-Renaming  to "CloudBees"
-
-=== EC-IIS 3.1.4
-
-* Configurations can be created by users with "@" sign in a name.
-
-=== EC-IIS 3.1.3
-
-* The plugin icon has been updated.
-
-=== EC-IIS 3.1.2
-
-* Configured the plugin to allow the ElectricFlow UI to create configs inline of procedure form.
-
-=== EC-IIS 3.1.1
-
-* Configured the plugin to allow the ElectricFlow UI to render the plugin procedure parameters entirely using the configured form XMLs.
-* Enabled the plugin for managing the plugin configurations in-line when defining an application process step or a pipeline stage task.
-
-=== EC-IIS 3.1.0
-
-* Field "Computer Name" in configuration is deprecated.
-* "Credentials" field was added to "CheckServerStatus" procedure.
-* "Configuration Name" field is no longer required in "CheckServerStatus" procedure.
-* Deploy logic has changed: if no application name is provided to Deploy procedure, but Application Pool parameters are provided, root application of the website (/) is moved into the specified Application Pool and parameters are applied to this application pool.
-* Support for virtual directory credentials was added for CreateWebSite, CreateWebApplication, CreateVirtualDirectory procedures.
-* "Create Directory?" option was added for CreateWebSite, CreateWebApplication, CreateVirtualDirectory procedures.
-* AddSSLCertificate procedure has been added.
-
-=== EC-IIS 3.0.0
-
-* Full plugin redesign, IIS from version 7 is now supported.
-
-=== EC-IIS 2.0.7
-
-* Fixed issue with configurations being cached for IE.
-
-=== EC-IIS 2.0.6
-
-* Renamed ElectricCommander to ElectricFlow.
-* Added link to plugin Configuration Page in plugin step panels.
-
-=== EC-IIS 2.0.5
-
-* Fixed manifest file.
-* Removed need for agent/lib directory.
-
-=== EC-IIS 2.0.4
-
-* Procedure name(s) were changed in the step picker section
-
-=== EC-IIS 2.0.3
-
-* Improves to the help page document.
-
-=== EC-IIS 2.0.2
-
-* Improves to the help page document.
-
-=== EC-IIS 2.0.1
-
-* Upgrade to use the new Parameter Form XML.
-* Added a link directly to the new help document.
-
-=== EC-IIS 2.0.0
-
-* Improve xml parameter panels.
-* New help page format.
+Due to escape issues, double quote (`"`) is not supported in parameter values.
