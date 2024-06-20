@@ -59,7 +59,7 @@ configurations.all {
 
 group = "com.electriccloud"
 description = "Plugins : EC-IIS"
-version = "4.0.0"
+version = "4.0.1"
 
 apply plugin: 'flow-gradle-plugin'
 
