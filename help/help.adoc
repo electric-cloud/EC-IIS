@@ -860,7 +860,7 @@ image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite2.png[ro
 
 === 4.0.1
 
-* Fixed unnecessary diagnostics.
+* Removed unnecessary diagnostics to reduce false positive error reporting and improve performance.
 
 === 4.0.0
 
