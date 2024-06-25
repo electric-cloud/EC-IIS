@@ -858,6 +858,10 @@ image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite2.png[ro
 [[rns]]
 == IIS plugin release notes
 
+=== 4.0.1
+
+* Removed unnecessary diagnostics to reduce false positive error reporting and improve performance.
+
 === 4.0.0
 
 * Upgraded from Perl 5.8 to Perl 5.32. The plugin is not backward compatibility with releases prior to {PRODUCT} 10.3. Starting with this release, a new agent is required to run the plugin procedures.
