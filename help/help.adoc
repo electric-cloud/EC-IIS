@@ -1,7 +1,13 @@
+= EC IIS plugin
 
-Plugin Version @PLUGIN_VERSION@
-Revised on November 27, 2023
+The IIS plugin allows users to interact with the Internet Information Services Server 7 (IIS7) and higher versions and accomplish tasks such as managing website and virtual directories using the specific tools of IIS7 through the command line. Using this plugin, users can configure IIS from scripts or executables, run tasks as create a virtual directory and create a website. Also, users can check the status of running processes to see if they ran successfully or if an error existed, and determine what caused the error.
 
+The IIS plugin uses `appcmd.exe` to interact with IIS, so the procedures run on the resource with the IIS server.
+
+NOTE: The *Deploy* and *AdvancedDeploy* procedures use the WebDeploy utility. WebDeploy must be installed separately; it is not included in the default IIS setup. It can be downloaded from the link:https://www.iis.net/downloads/microsoft/web-deploy[Microsoft site]. After installation, WebDeploy can typically be found in `C:\Program Files\IIS\Microsoft Web Deploy V3` directory.
+
+== Prerequisites
+This plugin uses an updated version of Perl, cb-perl shell (Perl v5.32), and requires CloudBees CD/RO agents version 10.3 or later to work.
 
 == Integrated version
 
@@ -22,9 +28,32 @@ The IIS plugin supports the following versions of Web Deploy:
 [[CreateConfiguration]]
 == Create IIS plugin configurations
 
-include::cloudbees-cd-plugin-docs::partial$create-configuration-intro.adoc[]
+Plugin configurations are sets of parameters that can be applied across some, or all, plugin procedures. They can reduce the repetition of common values, create predefined parameter sets, and securely store credentials. Each configuration is given a unique name that is entered in the designated parameter for the plugin procedures that use them. The following steps illustrate how to create a plugin configuration that can be used by one or more plugin procedures.
 
-include::cloudbees-cd-plugin-docs::partial$create-configuration.adoc[]
+To create a plugin configuration:
+
+. Navigate to *DevOps Essentials > Plugin Management > Plugin configurations*.
+
+. Select *Add plugin configuration* to create a new configuration.
+
+. In the *New Configuration* window, specify a *Name* for the configuration.
+
+. Select the *Project* that the configuration belongs to.
+
+. Optionally, add a *Description* for the configuration.
+
+. Select the appropriate *Plugin* for the configuration.
+
+. Configure the plugin configuration parameters.
++
+For more information, refer to link:https://docs.cloudbees.com/docs/cloudbees-cd-plugin-docs/latest/[CloudBees CD/RO plugins].
+
+. Select *OK*.
+
+[NOTE]
+====
+Depending on your plugin configuration and how you run procedures, the *Input parameters > Configuration name* field may behave differently in the CloudBees CD/RO UI. For more information, refer to link:https://docs.cloudbees.com/docs/cloudbees-cd-plugin-docs/latest/#plugin-ui-differences[Differences in plugin UI behavior].
+====
 
 === IIS plugin configuration parameters
 
@@ -42,7 +71,7 @@ NOTE: The configuration is only used with the *<<CheckServerStatus>>* procedure.
 |URL for the IIS server. It must include the protocol (for example, `\http://192.168.1.100`).
 
 |IIS Port
-|Port for the IIS server. This port is used in conjunction with the IP address to conform the URL (for example, `8081`). If not provided, {PRODUCT} uses the default port `80`.
+|Port for the IIS server. This port is used in conjunction with the IP address to conform the URL (for example, `8081`). If not provided, CloudBees CD/RO uses the default port `80`.
 
 |Computer Name (DEPRECATED)
 |Computer name or IP address without backslashes (for example, `server01`).
@@ -51,16 +80,20 @@ WARNING: This parameter has been deprecated and will be removed in the future.
 
 |Login as
 |
-* *Username:* Username that {PRODUCT} uses to communicate with the IIS server.
+* *Username:* Username that CloudBees CD/RO uses to communicate with the IIS server.
 * *Password:* Password for the specified username.
 * *Retype Password:* Retype the password.
 |===
 
 == Create IIS plugin procedures
 
-include::cloudbees-cd-plugin-docs::partial$create-procedure-intro.adoc[]
+Plugin procedures can be used in link:https://docs.cloudbees.com/docs/cloudbees-cd/latest/procedures/[procedure steps], link:https://docs.cloudbees.com/docs/cloudbees-cd/latest/applications-processes/plugin-process-steps[process steps], and link:https://docs.cloudbees.com/docs/cloudbees-cd/latest/pipelines/example-plugin-task[pipeline tasks], allowing you to orchestrate third-party tools at the appropriate time in your component, application process, or pipeline.
 
-[[CheckServerStatus]]
+[NOTE]
+====
+Depending on your plugin configuration and how you run procedures, the *Input parameters > Configuration name* field may behave differently in the CloudBees CD/RO UI. For more information, refer to link:https://docs.cloudbees.com/docs/cloudbees-cd-plugin-docs/latest/#plugin-ui-differences[Differences in plugin UI behavior].
+====
+
 === CheckServerStatus
 
 Checks the status of the specified server.
@@ -74,7 +107,7 @@ Checks the status of the specified server.
 |Provide the name of the configuration that holds connection information for the IIS server. Credentials are only used from the plugin configuration if the *Use Credentials* parameter is selected.
 
 |Use Credentials (Deprecated)
-|Indicate if credentials must be used. If selected, {PRODUCT} uses the username and password from the plugin configuration.
+|Indicate if credentials must be used. If selected, CloudBees CD/RO uses the username and password from the plugin configuration.
 
 WARNING: This parameter has been deprecated and will be removed in the future. Credentials are used if they are provided.
 
@@ -833,27 +866,29 @@ This example shows the how to create a website.
 
 . Run the CheckServerStatus with the appropriate parameters to verify the server availability:
 +
-image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7checkserver1.png[role="screenshot"]
+image::../htdocs/images/case1/ec-iis7checkserver1.png[role="screenshot"]
+
+image::../htdocs/images/case1/ec-iis7checkserver1.png[role="screenshot"]
 
 . Verify the result of the server status; it must be running:
 +
-image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7checkserver2.png[role="screenshot"]
+image::../htdocs/images/case1/ec-iis7checkserver2.png[role="screenshot"]
 
 . Once the server is running, the website can be created with these parameters:
 +
-image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7createwebsite1.png[role="screenshot"]
+image::../htdocs/images/case1/ec-iis7createwebsite1.png[role="screenshot"]
 
 . Verify the result of the creation of the site:
 +
-image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7createwebsite2.png[role="screenshot"]
+image::../htdocs/images/case1/ec-iis7createwebsite2.png[role="screenshot"]
 
 . If the creation of the site was successful, the site can be started with these parameters:
 +
-image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite1.png[role="screenshot"]
+image::../htdocs/images/case1/ec-iis7startwebsite1.png[role="screenshot"]
 
 . Finally, verify that the application was started successfully:
 +
-image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite2.png[role="screenshot"]
+image::../htdocs/images/case1/ec-iis7startwebsite2.png[role="screenshot"]
 
 [[rns]]
 == IIS plugin release notes
@@ -864,7 +899,7 @@ image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite2.png[ro
 
 === 4.0.0
 
-* Upgraded from Perl 5.8 to Perl 5.32. The plugin is not backward compatibility with releases prior to {PRODUCT} 10.3. Starting with this release, a new agent is required to run the plugin procedures.
+* Upgraded from Perl 5.8 to Perl 5.32. The plugin is not backward compatibility with releases prior to CloudBees CD/RO 10.3. Starting with this release, a new agent is required to run the plugin procedures.
 
 === 3.1.8
 
@@ -876,7 +911,7 @@ image::cloudbees-common-sda::cd-plugins/ec-iis/case1/ec-iis7startwebsite2.png[ro
 
 === 3.1.6
 
-* Renamed  to "{CDRO}"
+* Renamed  to "CloudBees CD/RO"
 
 === 3.1.5
 
