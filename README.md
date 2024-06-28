@@ -44,7 +44,7 @@ The IIS plugin supports the following versions of Web Deploy:
 
 -   3.6
 
-## Compule
+## Compile
 
 Run gradlew to compile the plugin
 
