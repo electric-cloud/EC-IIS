@@ -868,8 +868,6 @@ This example shows the how to create a website.
 +
 image::../htdocs/images/case1/ec-iis7checkserver1.png[role="screenshot"]
 
-image::../htdocs/images/case1/ec-iis7checkserver1.png[role="screenshot"]
-
 . Verify the result of the server status; it must be running:
 +
 image::../htdocs/images/case1/ec-iis7checkserver2.png[role="screenshot"]
